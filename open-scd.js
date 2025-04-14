@@ -94,46 +94,46 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t$3=window,e$9=t$3.ShadowRoot&&(void 0===t$3.ShadyCSS||t$3.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$4=Symbol(),n$5=new WeakMap;class o$7{constructor(t,e,n){if(this._$cssResult$=!0,n!==s$4)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$9&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=n$5.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&n$5.set(s,t));}return t}toString(){return this.cssText}}const r$2=t=>new o$7("string"==typeof t?t:t+"",void 0,s$4),i$5=(t,...e)=>{const n=1===t.length?t[0]:e.reduce(((e,s,n)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[n+1]),t[0]);return new o$7(n,t,s$4)},S$1=(s,n)=>{e$9?s.adoptedStyleSheets=n.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet)):n.forEach((e=>{const n=document.createElement("style"),o=t$3.litNonce;void 0!==o&&n.setAttribute("nonce",o),n.textContent=e.cssText,s.appendChild(n);}));},c$1=e$9?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$2(e)})(t):t;
+const t$3=window,e$a=t$3.ShadowRoot&&(void 0===t$3.ShadyCSS||t$3.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$5=Symbol(),n$5=new WeakMap;class o$7{constructor(t,e,n){if(this._$cssResult$=!0,n!==s$5)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$a&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=n$5.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&n$5.set(s,t));}return t}toString(){return this.cssText}}const r$2=t=>new o$7("string"==typeof t?t:t+"",void 0,s$5),i$5=(t,...e)=>{const n=1===t.length?t[0]:e.reduce(((e,s,n)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[n+1]),t[0]);return new o$7(n,t,s$5)},S$1=(s,n)=>{e$a?s.adoptedStyleSheets=n.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet)):n.forEach((e=>{const n=document.createElement("style"),o=t$3.litNonce;void 0!==o&&n.setAttribute("nonce",o),n.textContent=e.cssText,s.appendChild(n);}));},c$1=e$a?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$2(e)})(t):t;
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */var s$3;const e$8=window,r$1=e$8.trustedTypes,h$1=r$1?r$1.emptyScript:"",o$6=e$8.reactiveElementPolyfillSupport,n$4={toAttribute(t,i){switch(i){case Boolean:t=t?h$1:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,i){let s=t;switch(i){case Boolean:s=null!==t;break;case Number:s=null===t?null:Number(t);break;case Object:case Array:try{s=JSON.parse(t);}catch(t){s=null;}}return s}},a$2=(t,i)=>i!==t&&(i==i||t==t),l$5={attribute:!0,type:String,converter:n$4,reflect:!1,hasChanged:a$2};class d$1 extends HTMLElement{constructor(){super(),this._$Ei=new Map,this.isUpdatePending=!1,this.hasUpdated=!1,this._$El=null,this.u();}static addInitializer(t){var i;null!==(i=this.h)&&void 0!==i||(this.h=[]),this.h.push(t);}static get observedAttributes(){this.finalize();const t=[];return this.elementProperties.forEach(((i,s)=>{const e=this._$Ep(s,i);void 0!==e&&(this._$Ev.set(e,s),t.push(e));})),t}static createProperty(t,i=l$5){if(i.state&&(i.attribute=!1),this.finalize(),this.elementProperties.set(t,i),!i.noAccessor&&!this.prototype.hasOwnProperty(t)){const s="symbol"==typeof t?Symbol():"__"+t,e=this.getPropertyDescriptor(t,s,i);void 0!==e&&Object.defineProperty(this.prototype,t,e);}}static getPropertyDescriptor(t,i,s){return {get(){return this[i]},set(e){const r=this[t];this[i]=e,this.requestUpdate(t,r,s);},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)||l$5}static finalize(){if(this.hasOwnProperty("finalized"))return !1;this.finalized=!0;const t=Object.getPrototypeOf(this);if(t.finalize(),this.elementProperties=new Map(t.elementProperties),this._$Ev=new Map,this.hasOwnProperty("properties")){const t=this.properties,i=[...Object.getOwnPropertyNames(t),...Object.getOwnPropertySymbols(t)];for(const s of i)this.createProperty(s,t[s]);}return this.elementStyles=this.finalizeStyles(this.styles),!0}static finalizeStyles(i){const s=[];if(Array.isArray(i)){const e=new Set(i.flat(1/0).reverse());for(const i of e)s.unshift(c$1(i));}else void 0!==i&&s.push(c$1(i));return s}static _$Ep(t,i){const s=i.attribute;return !1===s?void 0:"string"==typeof s?s:"string"==typeof t?t.toLowerCase():void 0}u(){var t;this._$E_=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$Eg(),this.requestUpdate(),null===(t=this.constructor.h)||void 0===t||t.forEach((t=>t(this)));}addController(t){var i,s;(null!==(i=this._$ES)&&void 0!==i?i:this._$ES=[]).push(t),void 0!==this.renderRoot&&this.isConnected&&(null===(s=t.hostConnected)||void 0===s||s.call(t));}removeController(t){var i;null===(i=this._$ES)||void 0===i||i.splice(this._$ES.indexOf(t)>>>0,1);}_$Eg(){this.constructor.elementProperties.forEach(((t,i)=>{this.hasOwnProperty(i)&&(this._$Ei.set(i,this[i]),delete this[i]);}));}createRenderRoot(){var t;const s=null!==(t=this.shadowRoot)&&void 0!==t?t:this.attachShadow(this.constructor.shadowRootOptions);return S$1(s,this.constructor.elementStyles),s}connectedCallback(){var t;void 0===this.renderRoot&&(this.renderRoot=this.createRenderRoot()),this.enableUpdating(!0),null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostConnected)||void 0===i?void 0:i.call(t)}));}enableUpdating(t){}disconnectedCallback(){var t;null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostDisconnected)||void 0===i?void 0:i.call(t)}));}attributeChangedCallback(t,i,s){this._$AK(t,s);}_$EO(t,i,s=l$5){var e;const r=this.constructor._$Ep(t,s);if(void 0!==r&&!0===s.reflect){const h=(void 0!==(null===(e=s.converter)||void 0===e?void 0:e.toAttribute)?s.converter:n$4).toAttribute(i,s.type);this._$El=t,null==h?this.removeAttribute(r):this.setAttribute(r,h),this._$El=null;}}_$AK(t,i){var s;const e=this.constructor,r=e._$Ev.get(t);if(void 0!==r&&this._$El!==r){const t=e.getPropertyOptions(r),h="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==(null===(s=t.converter)||void 0===s?void 0:s.fromAttribute)?t.converter:n$4;this._$El=r,this[r]=h.fromAttribute(i,t.type),this._$El=null;}}requestUpdate(t,i,s){let e=!0;void 0!==t&&(((s=s||this.constructor.getPropertyOptions(t)).hasChanged||a$2)(this[t],i)?(this._$AL.has(t)||this._$AL.set(t,i),!0===s.reflect&&this._$El!==t&&(void 0===this._$EC&&(this._$EC=new Map),this._$EC.set(t,s))):e=!1),!this.isUpdatePending&&e&&(this._$E_=this._$Ej());}async _$Ej(){this.isUpdatePending=!0;try{await this._$E_;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){var t;if(!this.isUpdatePending)return;this.hasUpdated,this._$Ei&&(this._$Ei.forEach(((t,i)=>this[i]=t)),this._$Ei=void 0);let i=!1;const s=this._$AL;try{i=this.shouldUpdate(s),i?(this.willUpdate(s),null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostUpdate)||void 0===i?void 0:i.call(t)})),this.update(s)):this._$Ek();}catch(t){throw i=!1,this._$Ek(),t}i&&this._$AE(s);}willUpdate(t){}_$AE(t){var i;null===(i=this._$ES)||void 0===i||i.forEach((t=>{var i;return null===(i=t.hostUpdated)||void 0===i?void 0:i.call(t)})),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t);}_$Ek(){this._$AL=new Map,this.isUpdatePending=!1;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$E_}shouldUpdate(t){return !0}update(t){void 0!==this._$EC&&(this._$EC.forEach(((t,i)=>this._$EO(i,this[i],t))),this._$EC=void 0),this._$Ek();}updated(t){}firstUpdated(t){}}d$1.finalized=!0,d$1.elementProperties=new Map,d$1.elementStyles=[],d$1.shadowRootOptions={mode:"open"},null==o$6||o$6({ReactiveElement:d$1}),(null!==(s$3=e$8.reactiveElementVersions)&&void 0!==s$3?s$3:e$8.reactiveElementVersions=[]).push("1.4.1");
-
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
-var t$2;const i$4=window,s$2=i$4.trustedTypes,e$7=s$2?s$2.createPolicy("lit-html",{createHTML:t=>t}):void 0,o$5=`lit$${(Math.random()+"").slice(9)}$`,n$3="?"+o$5,l$4=`<${n$3}>`,h=document,r=(t="")=>h.createComment(t),d=t=>null===t||"object"!=typeof t&&"function"!=typeof t,u=Array.isArray,c=t=>u(t)||"function"==typeof(null==t?void 0:t[Symbol.iterator]),v=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,a$1=/-->/g,f=/>/g,_=RegExp(">|[ \t\n\f\r](?:([^\\s\"'>=/]+)([ \t\n\f\r]*=[ \t\n\f\r]*(?:[^ \t\n\f\r\"'`<>=]|(\"|')|))|$)","g"),m=/'/g,p=/"/g,$=/^(?:script|style|textarea|title)$/i,g=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),y=g(1),x=Symbol.for("lit-noChange"),b=Symbol.for("lit-nothing"),T=new WeakMap,A=(t,i,s)=>{var e,o;const n=null!==(e=null==s?void 0:s.renderBefore)&&void 0!==e?e:i;let l=n._$litPart$;if(void 0===l){const t=null!==(o=null==s?void 0:s.renderBefore)&&void 0!==o?o:null;n._$litPart$=l=new S(i.insertBefore(r(),t),t,void 0,null!=s?s:{});}return l._$AI(t),l},E=h.createTreeWalker(h,129,null,!1),C=(t,i)=>{const s=t.length-1,n=[];let h,r=2===i?"<svg>":"",d=v;for(let i=0;i<s;i++){const s=t[i];let e,u,c=-1,g=0;for(;g<s.length&&(d.lastIndex=g,u=d.exec(s),null!==u);)g=d.lastIndex,d===v?"!--"===u[1]?d=a$1:void 0!==u[1]?d=f:void 0!==u[2]?($.test(u[2])&&(h=RegExp("</"+u[2],"g")),d=_):void 0!==u[3]&&(d=_):d===_?">"===u[0]?(d=null!=h?h:v,c=-1):void 0===u[1]?c=-2:(c=d.lastIndex-u[2].length,e=u[1],d=void 0===u[3]?_:'"'===u[3]?p:m):d===p||d===m?d=_:d===a$1||d===f?d=v:(d=_,h=void 0);const y=d===_&&t[i+1].startsWith("/>")?" ":"";r+=d===v?s+l$4:c>=0?(n.push(e),s.slice(0,c)+"$lit$"+s.slice(c)+o$5+y):s+o$5+(-2===c?(n.push(void 0),i):y);}const u=r+(t[s]||"<?>")+(2===i?"</svg>":"");if(!Array.isArray(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return [void 0!==e$7?e$7.createHTML(u):u,n]};class P{constructor({strings:t,_$litType$:i},e){let l;this.parts=[];let h=0,d=0;const u=t.length-1,c=this.parts,[v,a]=C(t,i);if(this.el=P.createElement(v,e),E.currentNode=this.el.content,2===i){const t=this.el.content,i=t.firstChild;i.remove(),t.append(...i.childNodes);}for(;null!==(l=E.nextNode())&&c.length<u;){if(1===l.nodeType){if(l.hasAttributes()){const t=[];for(const i of l.getAttributeNames())if(i.endsWith("$lit$")||i.startsWith(o$5)){const s=a[d++];if(t.push(i),void 0!==s){const t=l.getAttribute(s.toLowerCase()+"$lit$").split(o$5),i=/([.?@])?(.*)/.exec(s);c.push({type:1,index:h,name:i[2],strings:t,ctor:"."===i[1]?R:"?"===i[1]?H:"@"===i[1]?I:M});}else c.push({type:6,index:h});}for(const i of t)l.removeAttribute(i);}if($.test(l.tagName)){const t=l.textContent.split(o$5),i=t.length-1;if(i>0){l.textContent=s$2?s$2.emptyScript:"";for(let s=0;s<i;s++)l.append(t[s],r()),E.nextNode(),c.push({type:2,index:++h});l.append(t[i],r());}}}else if(8===l.nodeType)if(l.data===n$3)c.push({type:2,index:h});else {let t=-1;for(;-1!==(t=l.data.indexOf(o$5,t+1));)c.push({type:7,index:h}),t+=o$5.length-1;}h++;}}static createElement(t,i){const s=h.createElement("template");return s.innerHTML=t,s}}function V(t,i,s=t,e){var o,n,l,h;if(i===x)return i;let r=void 0!==e?null===(o=s._$Cl)||void 0===o?void 0:o[e]:s._$Cu;const u=d(i)?void 0:i._$litDirective$;return (null==r?void 0:r.constructor)!==u&&(null===(n=null==r?void 0:r._$AO)||void 0===n||n.call(r,!1),void 0===u?r=void 0:(r=new u(t),r._$AT(t,s,e)),void 0!==e?(null!==(l=(h=s)._$Cl)&&void 0!==l?l:h._$Cl=[])[e]=r:s._$Cu=r),void 0!==r&&(i=V(t,r._$AS(t,i.values),r,e)),i}class N{constructor(t,i){this.v=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}p(t){var i;const{el:{content:s},parts:e}=this._$AD,o=(null!==(i=null==t?void 0:t.creationScope)&&void 0!==i?i:h).importNode(s,!0);E.currentNode=o;let n=E.nextNode(),l=0,r=0,d=e[0];for(;void 0!==d;){if(l===d.index){let i;2===d.type?i=new S(n,n.nextSibling,this,t):1===d.type?i=new d.ctor(n,d.name,d.strings,this,t):6===d.type&&(i=new L(n,this,t)),this.v.push(i),d=e[++r];}l!==(null==d?void 0:d.index)&&(n=E.nextNode(),l++);}return o}m(t){let i=0;for(const s of this.v)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class S{constructor(t,i,s,e){var o;this.type=2,this._$AH=b,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$C_=null===(o=null==e?void 0:e.isConnected)||void 0===o||o;}get _$AU(){var t,i;return null!==(i=null===(t=this._$AM)||void 0===t?void 0:t._$AU)&&void 0!==i?i:this._$C_}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=V(this,t,i),d(t)?t===b||null==t||""===t?(this._$AH!==b&&this._$AR(),this._$AH=b):t!==this._$AH&&t!==x&&this.$(t):void 0!==t._$litType$?this.T(t):void 0!==t.nodeType?this.k(t):c(t)?this.O(t):this.$(t);}S(t,i=this._$AB){return this._$AA.parentNode.insertBefore(t,i)}k(t){this._$AH!==t&&(this._$AR(),this._$AH=this.S(t));}$(t){this._$AH!==b&&d(this._$AH)?this._$AA.nextSibling.data=t:this.k(h.createTextNode(t)),this._$AH=t;}T(t){var i;const{values:s,_$litType$:e}=t,o="number"==typeof e?this._$AC(t):(void 0===e.el&&(e.el=P.createElement(e.h,this.options)),e);if((null===(i=this._$AH)||void 0===i?void 0:i._$AD)===o)this._$AH.m(s);else {const t=new N(o,this),i=t.p(this.options);t.m(s),this.k(i),this._$AH=t;}}_$AC(t){let i=T.get(t.strings);return void 0===i&&T.set(t.strings,i=new P(t)),i}O(t){u(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const o of t)e===i.length?i.push(s=new S(this.S(r()),this.S(r()),this,this.options)):s=i[e],s._$AI(o),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){var s;for(null===(s=this._$AP)||void 0===s||s.call(this,!1,!0,i);t&&t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){var i;void 0===this._$AM&&(this._$C_=t,null===(i=this._$AP)||void 0===i||i.call(this,t));}}class M{constructor(t,i,s,e,o){this.type=1,this._$AH=b,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=o,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=b;}get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}_$AI(t,i=this,s,e){const o=this.strings;let n=!1;if(void 0===o)t=V(this,t,i,0),n=!d(t)||t!==this._$AH&&t!==x,n&&(this._$AH=t);else {const e=t;let l,h;for(t=o[0],l=0;l<o.length-1;l++)h=V(this,e[s+l],i,l),h===x&&(h=this._$AH[l]),n||(n=!d(h)||h!==this._$AH[l]),h===b?t=b:t!==b&&(t+=(null!=h?h:"")+o[l+1]),this._$AH[l]=h;}n&&!e&&this.P(t);}P(t){t===b?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,null!=t?t:"");}}class R extends M{constructor(){super(...arguments),this.type=3;}P(t){this.element[this.name]=t===b?void 0:t;}}const k=s$2?s$2.emptyScript:"";class H extends M{constructor(){super(...arguments),this.type=4;}P(t){t&&t!==b?this.element.setAttribute(this.name,k):this.element.removeAttribute(this.name);}}class I extends M{constructor(t,i,s,e,o){super(t,i,s,e,o),this.type=5;}_$AI(t,i=this){var s;if((t=null!==(s=V(this,t,i,0))&&void 0!==s?s:b)===x)return;const e=this._$AH,o=t===b&&e!==b||t.capture!==e.capture||t.once!==e.once||t.passive!==e.passive,n=t!==b&&(e===b||o);o&&this.element.removeEventListener(this.name,this,e),n&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){var i,s;"function"==typeof this._$AH?this._$AH.call(null!==(s=null===(i=this.options)||void 0===i?void 0:i.host)&&void 0!==s?s:this.element,t):this._$AH.handleEvent(t);}}class L{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){V(this,t);}}const Z=i$4.litHtmlPolyfillSupport;null==Z||Z(P,S),(null!==(t$2=i$4.litHtmlVersions)&&void 0!==t$2?t$2:i$4.litHtmlVersions=[]).push("2.3.1");
-
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */var l$3,o$4;class s$1 extends d$1{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){var t,e;const i=super.createRenderRoot();return null!==(t=(e=this.renderOptions).renderBefore)&&void 0!==t||(e.renderBefore=i.firstChild),i}update(t){const i=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=A(i,this.renderRoot,this.renderOptions);}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!0);}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!1);}render(){return x}}s$1.finalized=!0,s$1._$litElement$=!0,null===(l$3=globalThis.litElementHydrateSupport)||void 0===l$3||l$3.call(globalThis,{LitElement:s$1});const n$2=globalThis.litElementPolyfillSupport;null==n$2||n$2({LitElement:s$1});(null!==(o$4=globalThis.litElementVersions)&&void 0!==o$4?o$4:globalThis.litElementVersions=[]).push("3.2.1");
+ */var s$4;const e$9=window,r$1=e$9.trustedTypes,h$1=r$1?r$1.emptyScript:"",o$6=e$9.reactiveElementPolyfillSupport,n$4={toAttribute(t,i){switch(i){case Boolean:t=t?h$1:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,i){let s=t;switch(i){case Boolean:s=null!==t;break;case Number:s=null===t?null:Number(t);break;case Object:case Array:try{s=JSON.parse(t);}catch(t){s=null;}}return s}},a$2=(t,i)=>i!==t&&(i==i||t==t),l$6={attribute:!0,type:String,converter:n$4,reflect:!1,hasChanged:a$2};class d$1 extends HTMLElement{constructor(){super(),this._$Ei=new Map,this.isUpdatePending=!1,this.hasUpdated=!1,this._$El=null,this.u();}static addInitializer(t){var i;null!==(i=this.h)&&void 0!==i||(this.h=[]),this.h.push(t);}static get observedAttributes(){this.finalize();const t=[];return this.elementProperties.forEach(((i,s)=>{const e=this._$Ep(s,i);void 0!==e&&(this._$Ev.set(e,s),t.push(e));})),t}static createProperty(t,i=l$6){if(i.state&&(i.attribute=!1),this.finalize(),this.elementProperties.set(t,i),!i.noAccessor&&!this.prototype.hasOwnProperty(t)){const s="symbol"==typeof t?Symbol():"__"+t,e=this.getPropertyDescriptor(t,s,i);void 0!==e&&Object.defineProperty(this.prototype,t,e);}}static getPropertyDescriptor(t,i,s){return {get(){return this[i]},set(e){const r=this[t];this[i]=e,this.requestUpdate(t,r,s);},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)||l$6}static finalize(){if(this.hasOwnProperty("finalized"))return !1;this.finalized=!0;const t=Object.getPrototypeOf(this);if(t.finalize(),this.elementProperties=new Map(t.elementProperties),this._$Ev=new Map,this.hasOwnProperty("properties")){const t=this.properties,i=[...Object.getOwnPropertyNames(t),...Object.getOwnPropertySymbols(t)];for(const s of i)this.createProperty(s,t[s]);}return this.elementStyles=this.finalizeStyles(this.styles),!0}static finalizeStyles(i){const s=[];if(Array.isArray(i)){const e=new Set(i.flat(1/0).reverse());for(const i of e)s.unshift(c$1(i));}else void 0!==i&&s.push(c$1(i));return s}static _$Ep(t,i){const s=i.attribute;return !1===s?void 0:"string"==typeof s?s:"string"==typeof t?t.toLowerCase():void 0}u(){var t;this._$E_=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$Eg(),this.requestUpdate(),null===(t=this.constructor.h)||void 0===t||t.forEach((t=>t(this)));}addController(t){var i,s;(null!==(i=this._$ES)&&void 0!==i?i:this._$ES=[]).push(t),void 0!==this.renderRoot&&this.isConnected&&(null===(s=t.hostConnected)||void 0===s||s.call(t));}removeController(t){var i;null===(i=this._$ES)||void 0===i||i.splice(this._$ES.indexOf(t)>>>0,1);}_$Eg(){this.constructor.elementProperties.forEach(((t,i)=>{this.hasOwnProperty(i)&&(this._$Ei.set(i,this[i]),delete this[i]);}));}createRenderRoot(){var t;const s=null!==(t=this.shadowRoot)&&void 0!==t?t:this.attachShadow(this.constructor.shadowRootOptions);return S$1(s,this.constructor.elementStyles),s}connectedCallback(){var t;void 0===this.renderRoot&&(this.renderRoot=this.createRenderRoot()),this.enableUpdating(!0),null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostConnected)||void 0===i?void 0:i.call(t)}));}enableUpdating(t){}disconnectedCallback(){var t;null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostDisconnected)||void 0===i?void 0:i.call(t)}));}attributeChangedCallback(t,i,s){this._$AK(t,s);}_$EO(t,i,s=l$6){var e;const r=this.constructor._$Ep(t,s);if(void 0!==r&&!0===s.reflect){const h=(void 0!==(null===(e=s.converter)||void 0===e?void 0:e.toAttribute)?s.converter:n$4).toAttribute(i,s.type);this._$El=t,null==h?this.removeAttribute(r):this.setAttribute(r,h),this._$El=null;}}_$AK(t,i){var s;const e=this.constructor,r=e._$Ev.get(t);if(void 0!==r&&this._$El!==r){const t=e.getPropertyOptions(r),h="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==(null===(s=t.converter)||void 0===s?void 0:s.fromAttribute)?t.converter:n$4;this._$El=r,this[r]=h.fromAttribute(i,t.type),this._$El=null;}}requestUpdate(t,i,s){let e=!0;void 0!==t&&(((s=s||this.constructor.getPropertyOptions(t)).hasChanged||a$2)(this[t],i)?(this._$AL.has(t)||this._$AL.set(t,i),!0===s.reflect&&this._$El!==t&&(void 0===this._$EC&&(this._$EC=new Map),this._$EC.set(t,s))):e=!1),!this.isUpdatePending&&e&&(this._$E_=this._$Ej());}async _$Ej(){this.isUpdatePending=!0;try{await this._$E_;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){var t;if(!this.isUpdatePending)return;this.hasUpdated,this._$Ei&&(this._$Ei.forEach(((t,i)=>this[i]=t)),this._$Ei=void 0);let i=!1;const s=this._$AL;try{i=this.shouldUpdate(s),i?(this.willUpdate(s),null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostUpdate)||void 0===i?void 0:i.call(t)})),this.update(s)):this._$Ek();}catch(t){throw i=!1,this._$Ek(),t}i&&this._$AE(s);}willUpdate(t){}_$AE(t){var i;null===(i=this._$ES)||void 0===i||i.forEach((t=>{var i;return null===(i=t.hostUpdated)||void 0===i?void 0:i.call(t)})),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t);}_$Ek(){this._$AL=new Map,this.isUpdatePending=!1;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$E_}shouldUpdate(t){return !0}update(t){void 0!==this._$EC&&(this._$EC.forEach(((t,i)=>this._$EO(i,this[i],t))),this._$EC=void 0),this._$Ek();}updated(t){}firstUpdated(t){}}d$1.finalized=!0,d$1.elementProperties=new Map,d$1.elementStyles=[],d$1.shadowRootOptions={mode:"open"},null==o$6||o$6({ReactiveElement:d$1}),(null!==(s$4=e$9.reactiveElementVersions)&&void 0!==s$4?s$4:e$9.reactiveElementVersions=[]).push("1.4.1");
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const e$6=e=>n=>"function"==typeof n?((e,n)=>(customElements.define(e,n),n))(e,n):((e,n)=>{const{kind:t,elements:s}=n;return {kind:t,elements:s,finisher(n){customElements.define(e,n);}}})(e,n);
+var t$2;const i$4=window,s$3=i$4.trustedTypes,e$8=s$3?s$3.createPolicy("lit-html",{createHTML:t=>t}):void 0,o$5=`lit$${(Math.random()+"").slice(9)}$`,n$3="?"+o$5,l$5=`<${n$3}>`,h=document,r=(t="")=>h.createComment(t),d=t=>null===t||"object"!=typeof t&&"function"!=typeof t,u=Array.isArray,c=t=>u(t)||"function"==typeof(null==t?void 0:t[Symbol.iterator]),v=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,a$1=/-->/g,f$1=/>/g,_=RegExp(">|[ \t\n\f\r](?:([^\\s\"'>=/]+)([ \t\n\f\r]*=[ \t\n\f\r]*(?:[^ \t\n\f\r\"'`<>=]|(\"|')|))|$)","g"),m=/'/g,p=/"/g,$=/^(?:script|style|textarea|title)$/i,g=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),y=g(1),x=Symbol.for("lit-noChange"),b=Symbol.for("lit-nothing"),T=new WeakMap,A=(t,i,s)=>{var e,o;const n=null!==(e=null==s?void 0:s.renderBefore)&&void 0!==e?e:i;let l=n._$litPart$;if(void 0===l){const t=null!==(o=null==s?void 0:s.renderBefore)&&void 0!==o?o:null;n._$litPart$=l=new S(i.insertBefore(r(),t),t,void 0,null!=s?s:{});}return l._$AI(t),l},E=h.createTreeWalker(h,129,null,!1),C=(t,i)=>{const s=t.length-1,n=[];let h,r=2===i?"<svg>":"",d=v;for(let i=0;i<s;i++){const s=t[i];let e,u,c=-1,g=0;for(;g<s.length&&(d.lastIndex=g,u=d.exec(s),null!==u);)g=d.lastIndex,d===v?"!--"===u[1]?d=a$1:void 0!==u[1]?d=f$1:void 0!==u[2]?($.test(u[2])&&(h=RegExp("</"+u[2],"g")),d=_):void 0!==u[3]&&(d=_):d===_?">"===u[0]?(d=null!=h?h:v,c=-1):void 0===u[1]?c=-2:(c=d.lastIndex-u[2].length,e=u[1],d=void 0===u[3]?_:'"'===u[3]?p:m):d===p||d===m?d=_:d===a$1||d===f$1?d=v:(d=_,h=void 0);const y=d===_&&t[i+1].startsWith("/>")?" ":"";r+=d===v?s+l$5:c>=0?(n.push(e),s.slice(0,c)+"$lit$"+s.slice(c)+o$5+y):s+o$5+(-2===c?(n.push(void 0),i):y);}const u=r+(t[s]||"<?>")+(2===i?"</svg>":"");if(!Array.isArray(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return [void 0!==e$8?e$8.createHTML(u):u,n]};class P{constructor({strings:t,_$litType$:i},e){let l;this.parts=[];let h=0,d=0;const u=t.length-1,c=this.parts,[v,a]=C(t,i);if(this.el=P.createElement(v,e),E.currentNode=this.el.content,2===i){const t=this.el.content,i=t.firstChild;i.remove(),t.append(...i.childNodes);}for(;null!==(l=E.nextNode())&&c.length<u;){if(1===l.nodeType){if(l.hasAttributes()){const t=[];for(const i of l.getAttributeNames())if(i.endsWith("$lit$")||i.startsWith(o$5)){const s=a[d++];if(t.push(i),void 0!==s){const t=l.getAttribute(s.toLowerCase()+"$lit$").split(o$5),i=/([.?@])?(.*)/.exec(s);c.push({type:1,index:h,name:i[2],strings:t,ctor:"."===i[1]?R:"?"===i[1]?H:"@"===i[1]?I:M});}else c.push({type:6,index:h});}for(const i of t)l.removeAttribute(i);}if($.test(l.tagName)){const t=l.textContent.split(o$5),i=t.length-1;if(i>0){l.textContent=s$3?s$3.emptyScript:"";for(let s=0;s<i;s++)l.append(t[s],r()),E.nextNode(),c.push({type:2,index:++h});l.append(t[i],r());}}}else if(8===l.nodeType)if(l.data===n$3)c.push({type:2,index:h});else {let t=-1;for(;-1!==(t=l.data.indexOf(o$5,t+1));)c.push({type:7,index:h}),t+=o$5.length-1;}h++;}}static createElement(t,i){const s=h.createElement("template");return s.innerHTML=t,s}}function V(t,i,s=t,e){var o,n,l,h;if(i===x)return i;let r=void 0!==e?null===(o=s._$Cl)||void 0===o?void 0:o[e]:s._$Cu;const u=d(i)?void 0:i._$litDirective$;return (null==r?void 0:r.constructor)!==u&&(null===(n=null==r?void 0:r._$AO)||void 0===n||n.call(r,!1),void 0===u?r=void 0:(r=new u(t),r._$AT(t,s,e)),void 0!==e?(null!==(l=(h=s)._$Cl)&&void 0!==l?l:h._$Cl=[])[e]=r:s._$Cu=r),void 0!==r&&(i=V(t,r._$AS(t,i.values),r,e)),i}class N{constructor(t,i){this.v=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}p(t){var i;const{el:{content:s},parts:e}=this._$AD,o=(null!==(i=null==t?void 0:t.creationScope)&&void 0!==i?i:h).importNode(s,!0);E.currentNode=o;let n=E.nextNode(),l=0,r=0,d=e[0];for(;void 0!==d;){if(l===d.index){let i;2===d.type?i=new S(n,n.nextSibling,this,t):1===d.type?i=new d.ctor(n,d.name,d.strings,this,t):6===d.type&&(i=new L(n,this,t)),this.v.push(i),d=e[++r];}l!==(null==d?void 0:d.index)&&(n=E.nextNode(),l++);}return o}m(t){let i=0;for(const s of this.v)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class S{constructor(t,i,s,e){var o;this.type=2,this._$AH=b,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$C_=null===(o=null==e?void 0:e.isConnected)||void 0===o||o;}get _$AU(){var t,i;return null!==(i=null===(t=this._$AM)||void 0===t?void 0:t._$AU)&&void 0!==i?i:this._$C_}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=V(this,t,i),d(t)?t===b||null==t||""===t?(this._$AH!==b&&this._$AR(),this._$AH=b):t!==this._$AH&&t!==x&&this.$(t):void 0!==t._$litType$?this.T(t):void 0!==t.nodeType?this.k(t):c(t)?this.O(t):this.$(t);}S(t,i=this._$AB){return this._$AA.parentNode.insertBefore(t,i)}k(t){this._$AH!==t&&(this._$AR(),this._$AH=this.S(t));}$(t){this._$AH!==b&&d(this._$AH)?this._$AA.nextSibling.data=t:this.k(h.createTextNode(t)),this._$AH=t;}T(t){var i;const{values:s,_$litType$:e}=t,o="number"==typeof e?this._$AC(t):(void 0===e.el&&(e.el=P.createElement(e.h,this.options)),e);if((null===(i=this._$AH)||void 0===i?void 0:i._$AD)===o)this._$AH.m(s);else {const t=new N(o,this),i=t.p(this.options);t.m(s),this.k(i),this._$AH=t;}}_$AC(t){let i=T.get(t.strings);return void 0===i&&T.set(t.strings,i=new P(t)),i}O(t){u(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const o of t)e===i.length?i.push(s=new S(this.S(r()),this.S(r()),this,this.options)):s=i[e],s._$AI(o),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){var s;for(null===(s=this._$AP)||void 0===s||s.call(this,!1,!0,i);t&&t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){var i;void 0===this._$AM&&(this._$C_=t,null===(i=this._$AP)||void 0===i||i.call(this,t));}}class M{constructor(t,i,s,e,o){this.type=1,this._$AH=b,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=o,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=b;}get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}_$AI(t,i=this,s,e){const o=this.strings;let n=!1;if(void 0===o)t=V(this,t,i,0),n=!d(t)||t!==this._$AH&&t!==x,n&&(this._$AH=t);else {const e=t;let l,h;for(t=o[0],l=0;l<o.length-1;l++)h=V(this,e[s+l],i,l),h===x&&(h=this._$AH[l]),n||(n=!d(h)||h!==this._$AH[l]),h===b?t=b:t!==b&&(t+=(null!=h?h:"")+o[l+1]),this._$AH[l]=h;}n&&!e&&this.P(t);}P(t){t===b?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,null!=t?t:"");}}class R extends M{constructor(){super(...arguments),this.type=3;}P(t){this.element[this.name]=t===b?void 0:t;}}const k=s$3?s$3.emptyScript:"";class H extends M{constructor(){super(...arguments),this.type=4;}P(t){t&&t!==b?this.element.setAttribute(this.name,k):this.element.removeAttribute(this.name);}}class I extends M{constructor(t,i,s,e,o){super(t,i,s,e,o),this.type=5;}_$AI(t,i=this){var s;if((t=null!==(s=V(this,t,i,0))&&void 0!==s?s:b)===x)return;const e=this._$AH,o=t===b&&e!==b||t.capture!==e.capture||t.once!==e.once||t.passive!==e.passive,n=t!==b&&(e===b||o);o&&this.element.removeEventListener(this.name,this,e),n&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){var i,s;"function"==typeof this._$AH?this._$AH.call(null!==(s=null===(i=this.options)||void 0===i?void 0:i.host)&&void 0!==s?s:this.element,t):this._$AH.handleEvent(t);}}class L{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){V(this,t);}}const Z=i$4.litHtmlPolyfillSupport;null==Z||Z(P,S),(null!==(t$2=i$4.litHtmlVersions)&&void 0!==t$2?t$2:i$4.litHtmlVersions=[]).push("2.3.1");
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */var l$4,o$4;class s$2 extends d$1{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){var t,e;const i=super.createRenderRoot();return null!==(t=(e=this.renderOptions).renderBefore)&&void 0!==t||(e.renderBefore=i.firstChild),i}update(t){const i=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=A(i,this.renderRoot,this.renderOptions);}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!0);}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!1);}render(){return x}}s$2.finalized=!0,s$2._$litElement$=!0,null===(l$4=globalThis.litElementHydrateSupport)||void 0===l$4||l$4.call(globalThis,{LitElement:s$2});const n$2=globalThis.litElementPolyfillSupport;null==n$2||n$2({LitElement:s$2});(null!==(o$4=globalThis.litElementVersions)&&void 0!==o$4?o$4:globalThis.litElementVersions=[]).push("3.2.1");
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const i$3=(i,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e,finisher(n){n.createProperty(e.key,i);}}:{kind:"field",key:Symbol(),placement:"own",descriptor:{},originalKey:e.key,initializer(){"function"==typeof e.initializer&&(this[e.key]=e.initializer.call(this));},finisher(n){n.createProperty(e.key,i);}};function e$5(e){return (n,t)=>void 0!==t?((i,e,n)=>{e.constructor.createProperty(n,i);})(e,n,t):i$3(e,n)}
+const e$7=e=>n=>"function"==typeof n?((e,n)=>(customElements.define(e,n),n))(e,n):((e,n)=>{const{kind:t,elements:s}=n;return {kind:t,elements:s,finisher(n){customElements.define(e,n);}}})(e,n);
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function t$1(t){return e$5({...t,state:!0})}
+ */
+const i$3=(i,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e,finisher(n){n.createProperty(e.key,i);}}:{kind:"field",key:Symbol(),placement:"own",descriptor:{},originalKey:e.key,initializer(){"function"==typeof e.initializer&&(this[e.key]=e.initializer.call(this));},finisher(n){n.createProperty(e.key,i);}};function e$6(e){return (n,t)=>void 0!==t?((i,e,n)=>{e.constructor.createProperty(n,i);})(e,n,t):i$3(e,n)}
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */function t$1(t){return e$6({...t,state:!0})}
 
 /**
  * @license
@@ -146,7 +146,7 @@ const o$3=({finisher:e,descriptor:t})=>(o,n)=>{var r;if(void 0===n){const n=null
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function e$4(e){return o$3({finisher:(r,t)=>{Object.assign(r.prototype[t],e);}})}
+ */function e$5(e){return o$3({finisher:(r,t)=>{Object.assign(r.prototype[t],e);}})}
 
 /**
  * @license
@@ -159,25 +159,25 @@ const o$3=({finisher:e,descriptor:t})=>(o,n)=>{var r;if(void 0===n){const n=null
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-function e$3(e){return o$3({descriptor:r=>({async get(){var r;return await this.updateComplete,null===(r=this.renderRoot)||void 0===r?void 0:r.querySelector(e)},enumerable:!0,configurable:!0})})}
+function e$4(e){return o$3({descriptor:r=>({async get(){var r;return await this.updateComplete,null===(r=this.renderRoot)||void 0===r?void 0:r.querySelector(e)},enumerable:!0,configurable:!0})})}
 
 /**
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */var n$1;const e$2=null!=(null===(n$1=window.HTMLSlotElement)||void 0===n$1?void 0:n$1.prototype.assignedElements)?(o,n)=>o.assignedElements(n):(o,n)=>o.assignedNodes(n).filter((o=>o.nodeType===Node.ELEMENT_NODE));function l$2(n){const{slot:l,selector:t}=null!=n?n:{};return o$3({descriptor:o=>({get(){var o;const r="slot"+(l?`[name=${l}]`:":not([name])"),i=null===(o=this.renderRoot)||void 0===o?void 0:o.querySelector(r),s=null!=i?e$2(i,n):[];return t?s.filter((o=>o.matches(t))):s},enumerable:!0,configurable:!0})})}
+ */var n$1;const e$3=null!=(null===(n$1=window.HTMLSlotElement)||void 0===n$1?void 0:n$1.prototype.assignedElements)?(o,n)=>o.assignedElements(n):(o,n)=>o.assignedNodes(n).filter((o=>o.nodeType===Node.ELEMENT_NODE));function l$3(n){const{slot:l,selector:t}=null!=n?n:{};return o$3({descriptor:o=>({get(){var o;const r="slot"+(l?`[name=${l}]`:":not([name])"),i=null===(o=this.renderRoot)||void 0===o?void 0:o.querySelector(r),s=null!=i?e$3(i,n):[];return t?s.filter((o=>o.matches(t))):s},enumerable:!0,configurable:!0})})}
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function o$2(o,n,r){let l,s=o;return "object"==typeof o?(s=o.slot,l=o):l={flatten:n},r?l$2({slot:s,flatten:n,selector:r}):o$3({descriptor:e=>({get(){var e,t;const o="slot"+(s?`[name=${s}]`:":not([name])"),n=null===(e=this.renderRoot)||void 0===e?void 0:e.querySelector(o);return null!==(t=null==n?void 0:n.assignedNodes(l))&&void 0!==t?t:[]},enumerable:!0,configurable:!0})})}
+ */function o$2(o,n,r){let l,s=o;return "object"==typeof o?(s=o.slot,l=o):l={flatten:n},r?l$3({slot:s,flatten:n,selector:r}):o$3({descriptor:e=>({get(){var e,t;const o="slot"+(s?`[name=${s}]`:":not([name])"),n=null===(e=this.renderRoot)||void 0===e?void 0:e.querySelector(o);return null!==(t=null==n?void 0:n.assignedNodes(l))&&void 0!==t?t:[]},enumerable:!0,configurable:!0})})}
 
 /**
  * @license
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const e$1=Symbol.for(""),l$1=t=>{if((null==t?void 0:t.r)===e$1)return null==t?void 0:t._$litStatic$},o$1=t=>({_$litStatic$:t,r:e$1}),s=new Map,a=t=>(r,...e)=>{const o=e.length;let i,a;const n=[],u=[];let c,$=0,f=!1;for(;$<o;){for(c=r[$];$<o&&void 0!==(a=e[$],i=l$1(a));)c+=i+r[++$],f=!0;u.push(a),n.push(c),$++;}if($===o&&n.push(r[o]),f){const t=n.join("$$lit$$");void 0===(r=s.get(t))&&(n.raw=n,s.set(t,r=n)),e=u;}return t(r,...e)},n=a(y);
+ */const e$2=Symbol.for(""),l$2=t=>{if((null==t?void 0:t.r)===e$2)return null==t?void 0:t._$litStatic$},o$1=t=>({_$litStatic$:t,r:e$2}),s$1=new Map,a=t=>(r,...e)=>{const o=e.length;let i,a;const n=[],u=[];let c,$=0,f=!1;for(;$<o;){for(c=r[$];$<o&&void 0!==(a=e[$],i=l$2(a));)c+=i+r[++$],f=!0;u.push(a),n.push(c),$++;}if($===o&&n.push(r[o]),f){const t=n.join("$$lit$$");void 0===(r=s$1.get(t))&&(n.raw=n,s$1.set(t,r=n)),e=u;}return t(r,...e)},n=a(y);
 
 /**
  * @license
@@ -679,7 +679,7 @@ function _installMsgImplementation(impl) {
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$c = i$5 `:host{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}`;
+const styles$h = i$5 `:host{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}`;
 
 /**
  * @license
@@ -687,15 +687,15 @@ const styles$c = i$5 `:host{font-family:var(--mdc-icon-font, "Material Icons");f
  * SPDX-License-Identifier: Apache-2.0
  */
 /** @soyCompatible */
-let Icon = class Icon extends s$1 {
+let Icon = class Icon extends s$2 {
     /** @soyTemplate */
     render() {
         return y `<span><slot></slot></span>`;
     }
 };
-Icon.styles = [styles$c];
+Icon.styles = [styles$h];
 Icon = __decorate([
-    e$6('mwc-icon')
+    e$7('mwc-icon')
 ], Icon);
 
 /**
@@ -824,7 +824,7 @@ const doesElementContainFocus = (element) => {
  * SPDX-License-Identifier: Apache-2.0
  */
 /** @soyCompatible */
-class BaseElement extends s$1 {
+class BaseElement extends s$2 {
     click() {
         if (this.mdcRoot) {
             this.mdcRoot.focus();
@@ -945,7 +945,7 @@ var MDCFoundation = /** @class */ (function () {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var cssClasses$7 = {
+var cssClasses$e = {
     // Ripple is a special case where the "root" component is really a "mixin" of sorts,
     // given that it's an 'upgrade' to an existing component. That being said it is the root
     // CSS class that all other CSS classes derive from.
@@ -955,7 +955,7 @@ var cssClasses$7 = {
     ROOT: 'mdc-ripple-upgraded',
     UNBOUNDED: 'mdc-ripple-upgraded--unbounded',
 };
-var strings$8 = {
+var strings$d = {
     VAR_FG_SCALE: '--mdc-ripple-fg-scale',
     VAR_FG_SIZE: '--mdc-ripple-fg-size',
     VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
@@ -963,7 +963,7 @@ var strings$8 = {
     VAR_LEFT: '--mdc-ripple-left',
     VAR_TOP: '--mdc-ripple-top',
 };
-var numbers$4 = {
+var numbers$9 = {
     DEACTIVATION_TIMEOUT_MS: 225,
     FG_DEACTIVATION_MS: 150,
     INITIAL_ORIGIN_SCALE: 0.6,
@@ -1067,21 +1067,21 @@ var MDCRippleFoundation = /** @class */ (function (_super) {
     }
     Object.defineProperty(MDCRippleFoundation, "cssClasses", {
         get: function () {
-            return cssClasses$7;
+            return cssClasses$e;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCRippleFoundation, "strings", {
         get: function () {
-            return strings$8;
+            return strings$d;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCRippleFoundation, "numbers", {
         get: function () {
-            return numbers$4;
+            return numbers$9;
         },
         enumerable: false,
         configurable: true
@@ -1426,7 +1426,7 @@ var MDCRippleFoundation = /** @class */ (function (_super) {
             this.adapter.addClass(FG_DEACTIVATION);
             this.fgDeactivationRemovalTimer = setTimeout(function () {
                 _this.adapter.removeClass(FG_DEACTIVATION);
-            }, numbers$4.FG_DEACTIVATION_MS);
+            }, numbers$9.FG_DEACTIVATION_MS);
         }
     };
     MDCRippleFoundation.prototype.rmBoundedActivationClasses = function () {
@@ -1522,19 +1522,19 @@ var MDCRippleFoundation$1 = MDCRippleFoundation;
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},e=t=>(...e)=>({_$litDirective$:t,values:e});class i$1{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,i){this._$Ct=t,this._$AM=e,this._$Ci=i;}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}}
+const t={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},e$1=t=>(...e)=>({_$litDirective$:t,values:e});class i$1{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,i){this._$Ct=t,this._$AM=e,this._$Ci=i;}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}}
 
 /**
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const o=e(class extends i$1{constructor(t$1){var i;if(super(t$1),t$1.type!==t.ATTRIBUTE||"class"!==t$1.name||(null===(i=t$1.strings)||void 0===i?void 0:i.length)>2)throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.")}render(t){return " "+Object.keys(t).filter((i=>t[i])).join(" ")+" "}update(i,[s]){var r,o;if(void 0===this.nt){this.nt=new Set,void 0!==i.strings&&(this.st=new Set(i.strings.join(" ").split(/\s/).filter((t=>""!==t))));for(const t in s)s[t]&&!(null===(r=this.st)||void 0===r?void 0:r.has(t))&&this.nt.add(t);return this.render(s)}const e=i.element.classList;this.nt.forEach((t=>{t in s||(e.remove(t),this.nt.delete(t));}));for(const t in s){const i=!!s[t];i===this.nt.has(t)||(null===(o=this.st)||void 0===o?void 0:o.has(t))||(i?(e.add(t),this.nt.add(t)):(e.remove(t),this.nt.delete(t)));}return x}});
+ */const o=e$1(class extends i$1{constructor(t$1){var i;if(super(t$1),t$1.type!==t.ATTRIBUTE||"class"!==t$1.name||(null===(i=t$1.strings)||void 0===i?void 0:i.length)>2)throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.")}render(t){return " "+Object.keys(t).filter((i=>t[i])).join(" ")+" "}update(i,[s]){var r,o;if(void 0===this.nt){this.nt=new Set,void 0!==i.strings&&(this.st=new Set(i.strings.join(" ").split(/\s/).filter((t=>""!==t))));for(const t in s)s[t]&&!(null===(r=this.st)||void 0===r?void 0:r.has(t))&&this.nt.add(t);return this.render(s)}const e=i.element.classList;this.nt.forEach((t=>{t in s||(e.remove(t),this.nt.delete(t));}));for(const t in s){const i=!!s[t];i===this.nt.has(t)||(null===(o=this.st)||void 0===o?void 0:o.has(t))||(i?(e.add(t),this.nt.add(t)):(e.remove(t),this.nt.delete(t)));}return x}});
 
 /**
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const i=e(class extends i$1{constructor(t$1){var e;if(super(t$1),t$1.type!==t.ATTRIBUTE||"style"!==t$1.name||(null===(e=t$1.strings)||void 0===e?void 0:e.length)>2)throw Error("The `styleMap` directive must be used in the `style` attribute and must be the only part in the attribute.")}render(t){return Object.keys(t).reduce(((e,r)=>{const s=t[r];return null==s?e:e+`${r=r.replace(/(?:^(webkit|moz|ms|o)|)(?=[A-Z])/g,"-$&").toLowerCase()}:${s};`}),"")}update(e,[r]){const{style:s}=e.element;if(void 0===this.vt){this.vt=new Set;for(const t in r)this.vt.add(t);return this.render(r)}this.vt.forEach((t=>{null==r[t]&&(this.vt.delete(t),t.includes("-")?s.removeProperty(t):s[t]="");}));for(const t in r){const e=r[t];null!=e&&(this.vt.add(t),t.includes("-")?s.setProperty(t,e):s[t]=e);}return x}});
+ */const i=e$1(class extends i$1{constructor(t$1){var e;if(super(t$1),t$1.type!==t.ATTRIBUTE||"style"!==t$1.name||(null===(e=t$1.strings)||void 0===e?void 0:e.length)>2)throw Error("The `styleMap` directive must be used in the `style` attribute and must be the only part in the attribute.")}render(t){return Object.keys(t).reduce(((e,r)=>{const s=t[r];return null==s?e:e+`${r=r.replace(/(?:^(webkit|moz|ms|o)|)(?=[A-Z])/g,"-$&").toLowerCase()}:${s};`}),"")}update(e,[r]){const{style:s}=e.element;if(void 0===this.vt){this.vt=new Set;for(const t in r)this.vt.add(t);return this.render(r)}this.vt.forEach((t=>{null==r[t]&&(this.vt.delete(t),t.includes("-")?s.removeProperty(t):s[t]="");}));for(const t in r){const e=r[t];null!=e&&(this.vt.add(t),t.includes("-")?s.setProperty(t,e):s[t]=e);}return x}});
 
 /**
  * @license
@@ -1717,25 +1717,25 @@ __decorate([
     i$2('.mdc-ripple-surface')
 ], RippleBase.prototype, "mdcRoot", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], RippleBase.prototype, "primary", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], RippleBase.prototype, "accent", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], RippleBase.prototype, "unbounded", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], RippleBase.prototype, "disabled", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], RippleBase.prototype, "activated", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], RippleBase.prototype, "selected", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], RippleBase.prototype, "internalUseStateLayerCustomProperties", void 0);
 __decorate([
     t$1()
@@ -1773,7 +1773,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$b = i$5 `.mdc-ripple-surface{--mdc-ripple-fg-size: 0;--mdc-ripple-left: 0;--mdc-ripple-top: 0;--mdc-ripple-fg-scale: 1;--mdc-ripple-fg-translate-end: 0;--mdc-ripple-fg-translate-start: 0;-webkit-tap-highlight-color:rgba(0,0,0,0);will-change:transform,opacity;position:relative;outline:none;overflow:hidden}.mdc-ripple-surface::before,.mdc-ripple-surface::after{position:absolute;border-radius:50%;opacity:0;pointer-events:none;content:""}.mdc-ripple-surface::before{transition:opacity 15ms linear,background-color 15ms linear;z-index:1;z-index:var(--mdc-ripple-z-index, 1)}.mdc-ripple-surface::after{z-index:0;z-index:var(--mdc-ripple-z-index, 0)}.mdc-ripple-surface.mdc-ripple-upgraded::before{transform:scale(var(--mdc-ripple-fg-scale, 1))}.mdc-ripple-surface.mdc-ripple-upgraded::after{top:0;left:0;transform:scale(0);transform-origin:center center}.mdc-ripple-surface.mdc-ripple-upgraded--unbounded::after{top:var(--mdc-ripple-top, 0);left:var(--mdc-ripple-left, 0)}.mdc-ripple-surface.mdc-ripple-upgraded--foreground-activation::after{animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards}.mdc-ripple-surface.mdc-ripple-upgraded--foreground-deactivation::after{animation:mdc-ripple-fg-opacity-out 150ms;transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}.mdc-ripple-surface::before,.mdc-ripple-surface::after{top:calc(50% - 100%);left:calc(50% - 100%);width:200%;height:200%}.mdc-ripple-surface.mdc-ripple-upgraded::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-ripple-surface[data-mdc-ripple-is-unbounded],.mdc-ripple-upgraded--unbounded{overflow:visible}.mdc-ripple-surface[data-mdc-ripple-is-unbounded]::before,.mdc-ripple-surface[data-mdc-ripple-is-unbounded]::after,.mdc-ripple-upgraded--unbounded::before,.mdc-ripple-upgraded--unbounded::after{top:calc(50% - 50%);left:calc(50% - 50%);width:100%;height:100%}.mdc-ripple-surface[data-mdc-ripple-is-unbounded].mdc-ripple-upgraded::before,.mdc-ripple-surface[data-mdc-ripple-is-unbounded].mdc-ripple-upgraded::after,.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded::before,.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded::after{top:var(--mdc-ripple-top, calc(50% - 50%));left:var(--mdc-ripple-left, calc(50% - 50%));width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-ripple-surface[data-mdc-ripple-is-unbounded].mdc-ripple-upgraded::after,.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-ripple-surface::before,.mdc-ripple-surface::after{background-color:#000;background-color:var(--mdc-ripple-color, #000)}.mdc-ripple-surface:hover::before,.mdc-ripple-surface.mdc-ripple-surface--hover::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-ripple-surface.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-ripple-surface:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}:host{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;display:block}:host .mdc-ripple-surface{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;will-change:unset}.mdc-ripple-surface--primary::before,.mdc-ripple-surface--primary::after{background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-ripple-surface--primary:hover::before,.mdc-ripple-surface--primary.mdc-ripple-surface--hover::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-ripple-surface--primary.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--primary:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-ripple-surface--primary:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--primary:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface--primary.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface--primary--activated::before{opacity:0.12;opacity:var(--mdc-ripple-activated-opacity, 0.12)}.mdc-ripple-surface--primary--activated::before,.mdc-ripple-surface--primary--activated::after{background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-ripple-surface--primary--activated:hover::before,.mdc-ripple-surface--primary--activated.mdc-ripple-surface--hover::before{opacity:0.16;opacity:var(--mdc-ripple-hover-opacity, 0.16)}.mdc-ripple-surface--primary--activated.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--primary--activated:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.24;opacity:var(--mdc-ripple-focus-opacity, 0.24)}.mdc-ripple-surface--primary--activated:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--primary--activated:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.24;opacity:var(--mdc-ripple-press-opacity, 0.24)}.mdc-ripple-surface--primary--activated.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.24)}.mdc-ripple-surface--primary--selected::before{opacity:0.08;opacity:var(--mdc-ripple-selected-opacity, 0.08)}.mdc-ripple-surface--primary--selected::before,.mdc-ripple-surface--primary--selected::after{background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-ripple-surface--primary--selected:hover::before,.mdc-ripple-surface--primary--selected.mdc-ripple-surface--hover::before{opacity:0.12;opacity:var(--mdc-ripple-hover-opacity, 0.12)}.mdc-ripple-surface--primary--selected.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--primary--selected:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.2;opacity:var(--mdc-ripple-focus-opacity, 0.2)}.mdc-ripple-surface--primary--selected:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--primary--selected:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.2;opacity:var(--mdc-ripple-press-opacity, 0.2)}.mdc-ripple-surface--primary--selected.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.2)}.mdc-ripple-surface--accent::before,.mdc-ripple-surface--accent::after{background-color:#018786;background-color:var(--mdc-ripple-color, var(--mdc-theme-secondary, #018786))}.mdc-ripple-surface--accent:hover::before,.mdc-ripple-surface--accent.mdc-ripple-surface--hover::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-ripple-surface--accent.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--accent:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-ripple-surface--accent:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--accent:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface--accent.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface--accent--activated::before{opacity:0.12;opacity:var(--mdc-ripple-activated-opacity, 0.12)}.mdc-ripple-surface--accent--activated::before,.mdc-ripple-surface--accent--activated::after{background-color:#018786;background-color:var(--mdc-ripple-color, var(--mdc-theme-secondary, #018786))}.mdc-ripple-surface--accent--activated:hover::before,.mdc-ripple-surface--accent--activated.mdc-ripple-surface--hover::before{opacity:0.16;opacity:var(--mdc-ripple-hover-opacity, 0.16)}.mdc-ripple-surface--accent--activated.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--accent--activated:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.24;opacity:var(--mdc-ripple-focus-opacity, 0.24)}.mdc-ripple-surface--accent--activated:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--accent--activated:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.24;opacity:var(--mdc-ripple-press-opacity, 0.24)}.mdc-ripple-surface--accent--activated.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.24)}.mdc-ripple-surface--accent--selected::before{opacity:0.08;opacity:var(--mdc-ripple-selected-opacity, 0.08)}.mdc-ripple-surface--accent--selected::before,.mdc-ripple-surface--accent--selected::after{background-color:#018786;background-color:var(--mdc-ripple-color, var(--mdc-theme-secondary, #018786))}.mdc-ripple-surface--accent--selected:hover::before,.mdc-ripple-surface--accent--selected.mdc-ripple-surface--hover::before{opacity:0.12;opacity:var(--mdc-ripple-hover-opacity, 0.12)}.mdc-ripple-surface--accent--selected.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--accent--selected:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.2;opacity:var(--mdc-ripple-focus-opacity, 0.2)}.mdc-ripple-surface--accent--selected:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--accent--selected:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.2;opacity:var(--mdc-ripple-press-opacity, 0.2)}.mdc-ripple-surface--accent--selected.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.2)}.mdc-ripple-surface--disabled{opacity:0}.mdc-ripple-surface--internal-use-state-layer-custom-properties::before,.mdc-ripple-surface--internal-use-state-layer-custom-properties::after{background-color:#000;background-color:var(--mdc-ripple-hover-state-layer-color, #000)}.mdc-ripple-surface--internal-use-state-layer-custom-properties:hover::before,.mdc-ripple-surface--internal-use-state-layer-custom-properties.mdc-ripple-surface--hover::before{opacity:0.04;opacity:var(--mdc-ripple-hover-state-layer-opacity, 0.04)}.mdc-ripple-surface--internal-use-state-layer-custom-properties.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--internal-use-state-layer-custom-properties:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-state-layer-opacity, 0.12)}.mdc-ripple-surface--internal-use-state-layer-custom-properties:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--internal-use-state-layer-custom-properties:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-pressed-state-layer-opacity, 0.12)}.mdc-ripple-surface--internal-use-state-layer-custom-properties.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-pressed-state-layer-opacity, 0.12)}`;
+const styles$g = i$5 `.mdc-ripple-surface{--mdc-ripple-fg-size: 0;--mdc-ripple-left: 0;--mdc-ripple-top: 0;--mdc-ripple-fg-scale: 1;--mdc-ripple-fg-translate-end: 0;--mdc-ripple-fg-translate-start: 0;-webkit-tap-highlight-color:rgba(0,0,0,0);will-change:transform,opacity;position:relative;outline:none;overflow:hidden}.mdc-ripple-surface::before,.mdc-ripple-surface::after{position:absolute;border-radius:50%;opacity:0;pointer-events:none;content:""}.mdc-ripple-surface::before{transition:opacity 15ms linear,background-color 15ms linear;z-index:1;z-index:var(--mdc-ripple-z-index, 1)}.mdc-ripple-surface::after{z-index:0;z-index:var(--mdc-ripple-z-index, 0)}.mdc-ripple-surface.mdc-ripple-upgraded::before{transform:scale(var(--mdc-ripple-fg-scale, 1))}.mdc-ripple-surface.mdc-ripple-upgraded::after{top:0;left:0;transform:scale(0);transform-origin:center center}.mdc-ripple-surface.mdc-ripple-upgraded--unbounded::after{top:var(--mdc-ripple-top, 0);left:var(--mdc-ripple-left, 0)}.mdc-ripple-surface.mdc-ripple-upgraded--foreground-activation::after{animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards}.mdc-ripple-surface.mdc-ripple-upgraded--foreground-deactivation::after{animation:mdc-ripple-fg-opacity-out 150ms;transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}.mdc-ripple-surface::before,.mdc-ripple-surface::after{top:calc(50% - 100%);left:calc(50% - 100%);width:200%;height:200%}.mdc-ripple-surface.mdc-ripple-upgraded::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-ripple-surface[data-mdc-ripple-is-unbounded],.mdc-ripple-upgraded--unbounded{overflow:visible}.mdc-ripple-surface[data-mdc-ripple-is-unbounded]::before,.mdc-ripple-surface[data-mdc-ripple-is-unbounded]::after,.mdc-ripple-upgraded--unbounded::before,.mdc-ripple-upgraded--unbounded::after{top:calc(50% - 50%);left:calc(50% - 50%);width:100%;height:100%}.mdc-ripple-surface[data-mdc-ripple-is-unbounded].mdc-ripple-upgraded::before,.mdc-ripple-surface[data-mdc-ripple-is-unbounded].mdc-ripple-upgraded::after,.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded::before,.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded::after{top:var(--mdc-ripple-top, calc(50% - 50%));left:var(--mdc-ripple-left, calc(50% - 50%));width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-ripple-surface[data-mdc-ripple-is-unbounded].mdc-ripple-upgraded::after,.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-ripple-surface::before,.mdc-ripple-surface::after{background-color:#000;background-color:var(--mdc-ripple-color, #000)}.mdc-ripple-surface:hover::before,.mdc-ripple-surface.mdc-ripple-surface--hover::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-ripple-surface.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-ripple-surface:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}:host{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;display:block}:host .mdc-ripple-surface{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;will-change:unset}.mdc-ripple-surface--primary::before,.mdc-ripple-surface--primary::after{background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-ripple-surface--primary:hover::before,.mdc-ripple-surface--primary.mdc-ripple-surface--hover::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-ripple-surface--primary.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--primary:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-ripple-surface--primary:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--primary:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface--primary.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface--primary--activated::before{opacity:0.12;opacity:var(--mdc-ripple-activated-opacity, 0.12)}.mdc-ripple-surface--primary--activated::before,.mdc-ripple-surface--primary--activated::after{background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-ripple-surface--primary--activated:hover::before,.mdc-ripple-surface--primary--activated.mdc-ripple-surface--hover::before{opacity:0.16;opacity:var(--mdc-ripple-hover-opacity, 0.16)}.mdc-ripple-surface--primary--activated.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--primary--activated:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.24;opacity:var(--mdc-ripple-focus-opacity, 0.24)}.mdc-ripple-surface--primary--activated:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--primary--activated:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.24;opacity:var(--mdc-ripple-press-opacity, 0.24)}.mdc-ripple-surface--primary--activated.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.24)}.mdc-ripple-surface--primary--selected::before{opacity:0.08;opacity:var(--mdc-ripple-selected-opacity, 0.08)}.mdc-ripple-surface--primary--selected::before,.mdc-ripple-surface--primary--selected::after{background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-ripple-surface--primary--selected:hover::before,.mdc-ripple-surface--primary--selected.mdc-ripple-surface--hover::before{opacity:0.12;opacity:var(--mdc-ripple-hover-opacity, 0.12)}.mdc-ripple-surface--primary--selected.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--primary--selected:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.2;opacity:var(--mdc-ripple-focus-opacity, 0.2)}.mdc-ripple-surface--primary--selected:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--primary--selected:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.2;opacity:var(--mdc-ripple-press-opacity, 0.2)}.mdc-ripple-surface--primary--selected.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.2)}.mdc-ripple-surface--accent::before,.mdc-ripple-surface--accent::after{background-color:#018786;background-color:var(--mdc-ripple-color, var(--mdc-theme-secondary, #018786))}.mdc-ripple-surface--accent:hover::before,.mdc-ripple-surface--accent.mdc-ripple-surface--hover::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-ripple-surface--accent.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--accent:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-ripple-surface--accent:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--accent:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface--accent.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-ripple-surface--accent--activated::before{opacity:0.12;opacity:var(--mdc-ripple-activated-opacity, 0.12)}.mdc-ripple-surface--accent--activated::before,.mdc-ripple-surface--accent--activated::after{background-color:#018786;background-color:var(--mdc-ripple-color, var(--mdc-theme-secondary, #018786))}.mdc-ripple-surface--accent--activated:hover::before,.mdc-ripple-surface--accent--activated.mdc-ripple-surface--hover::before{opacity:0.16;opacity:var(--mdc-ripple-hover-opacity, 0.16)}.mdc-ripple-surface--accent--activated.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--accent--activated:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.24;opacity:var(--mdc-ripple-focus-opacity, 0.24)}.mdc-ripple-surface--accent--activated:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--accent--activated:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.24;opacity:var(--mdc-ripple-press-opacity, 0.24)}.mdc-ripple-surface--accent--activated.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.24)}.mdc-ripple-surface--accent--selected::before{opacity:0.08;opacity:var(--mdc-ripple-selected-opacity, 0.08)}.mdc-ripple-surface--accent--selected::before,.mdc-ripple-surface--accent--selected::after{background-color:#018786;background-color:var(--mdc-ripple-color, var(--mdc-theme-secondary, #018786))}.mdc-ripple-surface--accent--selected:hover::before,.mdc-ripple-surface--accent--selected.mdc-ripple-surface--hover::before{opacity:0.12;opacity:var(--mdc-ripple-hover-opacity, 0.12)}.mdc-ripple-surface--accent--selected.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--accent--selected:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.2;opacity:var(--mdc-ripple-focus-opacity, 0.2)}.mdc-ripple-surface--accent--selected:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--accent--selected:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.2;opacity:var(--mdc-ripple-press-opacity, 0.2)}.mdc-ripple-surface--accent--selected.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.2)}.mdc-ripple-surface--disabled{opacity:0}.mdc-ripple-surface--internal-use-state-layer-custom-properties::before,.mdc-ripple-surface--internal-use-state-layer-custom-properties::after{background-color:#000;background-color:var(--mdc-ripple-hover-state-layer-color, #000)}.mdc-ripple-surface--internal-use-state-layer-custom-properties:hover::before,.mdc-ripple-surface--internal-use-state-layer-custom-properties.mdc-ripple-surface--hover::before{opacity:0.04;opacity:var(--mdc-ripple-hover-state-layer-opacity, 0.04)}.mdc-ripple-surface--internal-use-state-layer-custom-properties.mdc-ripple-upgraded--background-focused::before,.mdc-ripple-surface--internal-use-state-layer-custom-properties:not(.mdc-ripple-upgraded):focus::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-state-layer-opacity, 0.12)}.mdc-ripple-surface--internal-use-state-layer-custom-properties:not(.mdc-ripple-upgraded)::after{transition:opacity 150ms linear}.mdc-ripple-surface--internal-use-state-layer-custom-properties:not(.mdc-ripple-upgraded):active::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-pressed-state-layer-opacity, 0.12)}.mdc-ripple-surface--internal-use-state-layer-custom-properties.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-pressed-state-layer-opacity, 0.12)}`;
 
 /**
  * @license
@@ -1783,9 +1783,9 @@ const styles$b = i$5 `.mdc-ripple-surface{--mdc-ripple-fg-size: 0;--mdc-ripple-l
 /** @soyCompatible */
 let Ripple = class Ripple extends RippleBase {
 };
-Ripple.styles = [styles$b];
+Ripple.styles = [styles$g];
 Ripple = __decorate([
-    e$6('mwc-ripple')
+    e$7('mwc-ripple')
 ], Ripple);
 
 /**
@@ -1950,7 +1950,7 @@ class RippleHandlers {
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const l=l=>null!=l?l:b;
+ */const l$1=l=>null!=l?l:b;
 
 /**
  * @license
@@ -1958,7 +1958,7 @@ class RippleHandlers {
  * SPDX-License-Identifier: Apache-2.0
  */
 /** @soyCompatible */
-class ButtonBase extends s$1 {
+class ButtonBase extends s$2 {
     constructor() {
         super(...arguments);
         this.raised = false;
@@ -2023,7 +2023,7 @@ class ButtonBase extends s$1 {
           class="mdc-button ${o(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}"
-          aria-haspopup="${l(this.ariaHasPopup)}"
+          aria-haspopup="${l$1(this.ariaHasPopup)}"
           @focus="${this.handleRippleFocus}"
           @blur="${this.handleRippleBlur}"
           @mousedown="${this.handleRippleActivate}"
@@ -2086,49 +2086,49 @@ class ButtonBase extends s$1 {
 ButtonBase.shadowRootOptions = { mode: 'open', delegatesFocus: true };
 __decorate([
     ariaProperty,
-    e$5({ type: String, attribute: 'aria-haspopup' })
+    e$6({ type: String, attribute: 'aria-haspopup' })
 ], ButtonBase.prototype, "ariaHasPopup", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], ButtonBase.prototype, "raised", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], ButtonBase.prototype, "unelevated", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], ButtonBase.prototype, "outlined", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], ButtonBase.prototype, "dense", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], ButtonBase.prototype, "disabled", void 0);
 __decorate([
-    e$5({ type: Boolean, attribute: 'trailingicon' })
+    e$6({ type: Boolean, attribute: 'trailingicon' })
 ], ButtonBase.prototype, "trailingIcon", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], ButtonBase.prototype, "fullwidth", void 0);
 __decorate([
-    e$5({ type: String })
+    e$6({ type: String })
 ], ButtonBase.prototype, "icon", void 0);
 __decorate([
-    e$5({ type: String })
+    e$6({ type: String })
 ], ButtonBase.prototype, "label", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], ButtonBase.prototype, "expandContent", void 0);
 __decorate([
     i$2('#button')
 ], ButtonBase.prototype, "buttonElement", void 0);
 __decorate([
-    e$3('mwc-ripple')
+    e$4('mwc-ripple')
 ], ButtonBase.prototype, "ripple", void 0);
 __decorate([
     t$1()
 ], ButtonBase.prototype, "shouldRenderRipple", void 0);
 __decorate([
-    e$4({ passive: true })
+    e$5({ passive: true })
 ], ButtonBase.prototype, "handleRippleActivate", null);
 
 /**
@@ -2136,7 +2136,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$a = i$5 `.mdc-button{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-button-font-size, 0.875rem);line-height:2.25rem;line-height:var(--mdc-typography-button-line-height, 2.25rem);font-weight:500;font-weight:var(--mdc-typography-button-font-weight, 500);letter-spacing:0.0892857143em;letter-spacing:var(--mdc-typography-button-letter-spacing, 0.0892857143em);text-decoration:none;text-decoration:var(--mdc-typography-button-text-decoration, none);text-transform:uppercase;text-transform:var(--mdc-typography-button-text-transform, uppercase)}.mdc-touch-target-wrapper{display:inline}.mdc-elevation-overlay{position:absolute;border-radius:inherit;pointer-events:none;opacity:0;opacity:var(--mdc-elevation-overlay-opacity, 0);transition:opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);background-color:#fff;background-color:var(--mdc-elevation-overlay-color, #fff)}.mdc-button{position:relative;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:64px;border:none;outline:none;line-height:inherit;user-select:none;-webkit-appearance:none;overflow:visible;vertical-align:middle;background:transparent}.mdc-button .mdc-elevation-overlay{width:100%;height:100%;top:0;left:0}.mdc-button::-moz-focus-inner{padding:0;border:0}.mdc-button:active{outline:none}.mdc-button:hover{cursor:pointer}.mdc-button:disabled{cursor:default;pointer-events:none}.mdc-button .mdc-button__icon{margin-left:0;margin-right:8px;display:inline-block;position:relative;vertical-align:top}[dir=rtl] .mdc-button .mdc-button__icon,.mdc-button .mdc-button__icon[dir=rtl]{margin-left:8px;margin-right:0}.mdc-button .mdc-button__label{position:relative}.mdc-button .mdc-button__focus-ring{display:none}@media screen and (forced-colors: active){.mdc-button.mdc-ripple-upgraded--background-focused .mdc-button__focus-ring,.mdc-button:not(.mdc-ripple-upgraded):focus .mdc-button__focus-ring{pointer-events:none;border:2px solid transparent;border-radius:6px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc( 100% + 4px );width:calc( 100% + 4px );display:block}}@media screen and (forced-colors: active)and (forced-colors: active){.mdc-button.mdc-ripple-upgraded--background-focused .mdc-button__focus-ring,.mdc-button:not(.mdc-ripple-upgraded):focus .mdc-button__focus-ring{border-color:CanvasText}}@media screen and (forced-colors: active){.mdc-button.mdc-ripple-upgraded--background-focused .mdc-button__focus-ring::after,.mdc-button:not(.mdc-ripple-upgraded):focus .mdc-button__focus-ring::after{content:"";border:2px solid transparent;border-radius:8px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}}@media screen and (forced-colors: active)and (forced-colors: active){.mdc-button.mdc-ripple-upgraded--background-focused .mdc-button__focus-ring::after,.mdc-button:not(.mdc-ripple-upgraded):focus .mdc-button__focus-ring::after{border-color:CanvasText}}.mdc-button .mdc-button__touch{position:absolute;top:50%;height:48px;left:0;right:0;transform:translateY(-50%)}.mdc-button__label+.mdc-button__icon{margin-left:8px;margin-right:0}[dir=rtl] .mdc-button__label+.mdc-button__icon,.mdc-button__label+.mdc-button__icon[dir=rtl]{margin-left:0;margin-right:8px}svg.mdc-button__icon{fill:currentColor}.mdc-button--touch{margin-top:6px;margin-bottom:6px}.mdc-button{padding:0 8px 0 8px}.mdc-button--unelevated{transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);padding:0 16px 0 16px}.mdc-button--unelevated.mdc-button--icon-trailing{padding:0 12px 0 16px}.mdc-button--unelevated.mdc-button--icon-leading{padding:0 16px 0 12px}.mdc-button--raised{transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);padding:0 16px 0 16px}.mdc-button--raised.mdc-button--icon-trailing{padding:0 12px 0 16px}.mdc-button--raised.mdc-button--icon-leading{padding:0 16px 0 12px}.mdc-button--outlined{border-style:solid;transition:border 280ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-button--outlined .mdc-button__ripple{border-style:solid;border-color:transparent}.mdc-button{height:36px;border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button:not(:disabled){color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}.mdc-button:disabled{color:rgba(0, 0, 0, 0.38)}.mdc-button .mdc-button__icon{font-size:1.125rem;width:1.125rem;height:1.125rem}.mdc-button .mdc-button__ripple{border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button--raised,.mdc-button--unelevated{height:36px;border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button--raised:not(:disabled),.mdc-button--unelevated:not(:disabled){background-color:#6200ee;background-color:var(--mdc-theme-primary, #6200ee)}.mdc-button--raised:disabled,.mdc-button--unelevated:disabled{background-color:rgba(0, 0, 0, 0.12)}.mdc-button--raised:not(:disabled),.mdc-button--unelevated:not(:disabled){color:#fff;color:var(--mdc-theme-on-primary, #fff)}.mdc-button--raised:disabled,.mdc-button--unelevated:disabled{color:rgba(0, 0, 0, 0.38)}.mdc-button--raised .mdc-button__icon,.mdc-button--unelevated .mdc-button__icon{font-size:1.125rem;width:1.125rem;height:1.125rem}.mdc-button--raised .mdc-button__ripple,.mdc-button--unelevated .mdc-button__ripple{border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button--outlined{height:36px;border-radius:4px;border-radius:var(--mdc-shape-small, 4px);padding:0 15px 0 15px;border-width:1px}.mdc-button--outlined:not(:disabled){color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}.mdc-button--outlined:disabled{color:rgba(0, 0, 0, 0.38)}.mdc-button--outlined .mdc-button__icon{font-size:1.125rem;width:1.125rem;height:1.125rem}.mdc-button--outlined .mdc-button__ripple{border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button--outlined:not(:disabled){border-color:rgba(0, 0, 0, 0.12)}.mdc-button--outlined:disabled{border-color:rgba(0, 0, 0, 0.12)}.mdc-button--outlined.mdc-button--icon-trailing{padding:0 11px 0 15px}.mdc-button--outlined.mdc-button--icon-leading{padding:0 15px 0 11px}.mdc-button--outlined .mdc-button__ripple{top:-1px;left:-1px;bottom:-1px;right:-1px;border-width:1px}.mdc-button--outlined .mdc-button__touch{left:calc(-1 * 1px);width:calc(100% + 2 * 1px)}.mdc-button--raised{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-button--raised:hover,.mdc-button--raised:focus{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14),0px 1px 10px 0px rgba(0,0,0,.12)}.mdc-button--raised:active{box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0,0,0,.12)}.mdc-button--raised:disabled{box-shadow:0px 0px 0px 0px rgba(0, 0, 0, 0.2),0px 0px 0px 0px rgba(0, 0, 0, 0.14),0px 0px 0px 0px rgba(0,0,0,.12)}:host{display:inline-flex;outline:none;-webkit-tap-highlight-color:transparent;vertical-align:top}:host([fullwidth]){width:100%}:host([raised]),:host([unelevated]){--mdc-ripple-color:#fff;--mdc-ripple-focus-opacity:0.24;--mdc-ripple-hover-opacity:0.08;--mdc-ripple-press-opacity:0.24}.trailing-icon ::slotted(*),.trailing-icon .mdc-button__icon,.leading-icon ::slotted(*),.leading-icon .mdc-button__icon{margin-left:0;margin-right:8px;display:inline-block;position:relative;vertical-align:top;font-size:1.125rem;height:1.125rem;width:1.125rem}[dir=rtl] .trailing-icon ::slotted(*),[dir=rtl] .trailing-icon .mdc-button__icon,[dir=rtl] .leading-icon ::slotted(*),[dir=rtl] .leading-icon .mdc-button__icon,.trailing-icon ::slotted(*[dir=rtl]),.trailing-icon .mdc-button__icon[dir=rtl],.leading-icon ::slotted(*[dir=rtl]),.leading-icon .mdc-button__icon[dir=rtl]{margin-left:8px;margin-right:0}.trailing-icon ::slotted(*),.trailing-icon .mdc-button__icon{margin-left:8px;margin-right:0}[dir=rtl] .trailing-icon ::slotted(*),[dir=rtl] .trailing-icon .mdc-button__icon,.trailing-icon ::slotted(*[dir=rtl]),.trailing-icon .mdc-button__icon[dir=rtl]{margin-left:0;margin-right:8px}.slot-container{display:inline-flex;align-items:center;justify-content:center}.slot-container.flex{flex:auto}.mdc-button{flex:auto;overflow:hidden;padding-left:8px;padding-left:var(--mdc-button-horizontal-padding, 8px);padding-right:8px;padding-right:var(--mdc-button-horizontal-padding, 8px)}.mdc-button--raised{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12))}.mdc-button--raised:focus{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow-focus, var(--mdc-button-raised-box-shadow-hover, 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)))}.mdc-button--raised:hover{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow-hover, 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12))}.mdc-button--raised:active{box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow-active, 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12))}.mdc-button--raised:disabled{box-shadow:0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow-disabled, 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12))}.mdc-button--raised,.mdc-button--unelevated{padding-left:16px;padding-left:var(--mdc-button-horizontal-padding, 16px);padding-right:16px;padding-right:var(--mdc-button-horizontal-padding, 16px)}.mdc-button--outlined{border-width:1px;border-width:var(--mdc-button-outline-width, 1px);padding-left:calc(16px - 1px);padding-left:calc(var(--mdc-button-horizontal-padding, 16px) - var(--mdc-button-outline-width, 1px));padding-right:calc(16px - 1px);padding-right:calc(var(--mdc-button-horizontal-padding, 16px) - var(--mdc-button-outline-width, 1px))}.mdc-button--outlined:not(:disabled){border-color:rgba(0, 0, 0, 0.12);border-color:var(--mdc-button-outline-color, rgba(0, 0, 0, 0.12))}.mdc-button--outlined .ripple{top:calc(-1 * 1px);top:calc(-1 * var(--mdc-button-outline-width, 1px));left:calc(-1 * 1px);left:calc(-1 * var(--mdc-button-outline-width, 1px));right:initial;right:initial;border-width:1px;border-width:var(--mdc-button-outline-width, 1px);border-style:solid;border-color:transparent}[dir=rtl] .mdc-button--outlined .ripple,.mdc-button--outlined .ripple[dir=rtl]{left:initial;left:initial;right:calc(-1 * 1px);right:calc(-1 * var(--mdc-button-outline-width, 1px))}.mdc-button--dense{height:28px;margin-top:0;margin-bottom:0}.mdc-button--dense .mdc-button__touch{height:100%}:host([disabled]){pointer-events:none}:host([disabled]) .mdc-button{color:rgba(0, 0, 0, 0.38);color:var(--mdc-button-disabled-ink-color, rgba(0, 0, 0, 0.38))}:host([disabled]) .mdc-button--raised,:host([disabled]) .mdc-button--unelevated{background-color:rgba(0, 0, 0, 0.12);background-color:var(--mdc-button-disabled-fill-color, rgba(0, 0, 0, 0.12))}:host([disabled]) .mdc-button--outlined{border-color:rgba(0, 0, 0, 0.12);border-color:var(--mdc-button-disabled-outline-color, rgba(0, 0, 0, 0.12))}`;
+const styles$f = i$5 `.mdc-button{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-button-font-size, 0.875rem);line-height:2.25rem;line-height:var(--mdc-typography-button-line-height, 2.25rem);font-weight:500;font-weight:var(--mdc-typography-button-font-weight, 500);letter-spacing:0.0892857143em;letter-spacing:var(--mdc-typography-button-letter-spacing, 0.0892857143em);text-decoration:none;text-decoration:var(--mdc-typography-button-text-decoration, none);text-transform:uppercase;text-transform:var(--mdc-typography-button-text-transform, uppercase)}.mdc-touch-target-wrapper{display:inline}.mdc-elevation-overlay{position:absolute;border-radius:inherit;pointer-events:none;opacity:0;opacity:var(--mdc-elevation-overlay-opacity, 0);transition:opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);background-color:#fff;background-color:var(--mdc-elevation-overlay-color, #fff)}.mdc-button{position:relative;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:64px;border:none;outline:none;line-height:inherit;user-select:none;-webkit-appearance:none;overflow:visible;vertical-align:middle;background:transparent}.mdc-button .mdc-elevation-overlay{width:100%;height:100%;top:0;left:0}.mdc-button::-moz-focus-inner{padding:0;border:0}.mdc-button:active{outline:none}.mdc-button:hover{cursor:pointer}.mdc-button:disabled{cursor:default;pointer-events:none}.mdc-button .mdc-button__icon{margin-left:0;margin-right:8px;display:inline-block;position:relative;vertical-align:top}[dir=rtl] .mdc-button .mdc-button__icon,.mdc-button .mdc-button__icon[dir=rtl]{margin-left:8px;margin-right:0}.mdc-button .mdc-button__label{position:relative}.mdc-button .mdc-button__focus-ring{display:none}@media screen and (forced-colors: active){.mdc-button.mdc-ripple-upgraded--background-focused .mdc-button__focus-ring,.mdc-button:not(.mdc-ripple-upgraded):focus .mdc-button__focus-ring{pointer-events:none;border:2px solid transparent;border-radius:6px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc( 100% + 4px );width:calc( 100% + 4px );display:block}}@media screen and (forced-colors: active)and (forced-colors: active){.mdc-button.mdc-ripple-upgraded--background-focused .mdc-button__focus-ring,.mdc-button:not(.mdc-ripple-upgraded):focus .mdc-button__focus-ring{border-color:CanvasText}}@media screen and (forced-colors: active){.mdc-button.mdc-ripple-upgraded--background-focused .mdc-button__focus-ring::after,.mdc-button:not(.mdc-ripple-upgraded):focus .mdc-button__focus-ring::after{content:"";border:2px solid transparent;border-radius:8px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}}@media screen and (forced-colors: active)and (forced-colors: active){.mdc-button.mdc-ripple-upgraded--background-focused .mdc-button__focus-ring::after,.mdc-button:not(.mdc-ripple-upgraded):focus .mdc-button__focus-ring::after{border-color:CanvasText}}.mdc-button .mdc-button__touch{position:absolute;top:50%;height:48px;left:0;right:0;transform:translateY(-50%)}.mdc-button__label+.mdc-button__icon{margin-left:8px;margin-right:0}[dir=rtl] .mdc-button__label+.mdc-button__icon,.mdc-button__label+.mdc-button__icon[dir=rtl]{margin-left:0;margin-right:8px}svg.mdc-button__icon{fill:currentColor}.mdc-button--touch{margin-top:6px;margin-bottom:6px}.mdc-button{padding:0 8px 0 8px}.mdc-button--unelevated{transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);padding:0 16px 0 16px}.mdc-button--unelevated.mdc-button--icon-trailing{padding:0 12px 0 16px}.mdc-button--unelevated.mdc-button--icon-leading{padding:0 16px 0 12px}.mdc-button--raised{transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);padding:0 16px 0 16px}.mdc-button--raised.mdc-button--icon-trailing{padding:0 12px 0 16px}.mdc-button--raised.mdc-button--icon-leading{padding:0 16px 0 12px}.mdc-button--outlined{border-style:solid;transition:border 280ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-button--outlined .mdc-button__ripple{border-style:solid;border-color:transparent}.mdc-button{height:36px;border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button:not(:disabled){color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}.mdc-button:disabled{color:rgba(0, 0, 0, 0.38)}.mdc-button .mdc-button__icon{font-size:1.125rem;width:1.125rem;height:1.125rem}.mdc-button .mdc-button__ripple{border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button--raised,.mdc-button--unelevated{height:36px;border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button--raised:not(:disabled),.mdc-button--unelevated:not(:disabled){background-color:#6200ee;background-color:var(--mdc-theme-primary, #6200ee)}.mdc-button--raised:disabled,.mdc-button--unelevated:disabled{background-color:rgba(0, 0, 0, 0.12)}.mdc-button--raised:not(:disabled),.mdc-button--unelevated:not(:disabled){color:#fff;color:var(--mdc-theme-on-primary, #fff)}.mdc-button--raised:disabled,.mdc-button--unelevated:disabled{color:rgba(0, 0, 0, 0.38)}.mdc-button--raised .mdc-button__icon,.mdc-button--unelevated .mdc-button__icon{font-size:1.125rem;width:1.125rem;height:1.125rem}.mdc-button--raised .mdc-button__ripple,.mdc-button--unelevated .mdc-button__ripple{border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button--outlined{height:36px;border-radius:4px;border-radius:var(--mdc-shape-small, 4px);padding:0 15px 0 15px;border-width:1px}.mdc-button--outlined:not(:disabled){color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}.mdc-button--outlined:disabled{color:rgba(0, 0, 0, 0.38)}.mdc-button--outlined .mdc-button__icon{font-size:1.125rem;width:1.125rem;height:1.125rem}.mdc-button--outlined .mdc-button__ripple{border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-button--outlined:not(:disabled){border-color:rgba(0, 0, 0, 0.12)}.mdc-button--outlined:disabled{border-color:rgba(0, 0, 0, 0.12)}.mdc-button--outlined.mdc-button--icon-trailing{padding:0 11px 0 15px}.mdc-button--outlined.mdc-button--icon-leading{padding:0 15px 0 11px}.mdc-button--outlined .mdc-button__ripple{top:-1px;left:-1px;bottom:-1px;right:-1px;border-width:1px}.mdc-button--outlined .mdc-button__touch{left:calc(-1 * 1px);width:calc(100% + 2 * 1px)}.mdc-button--raised{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-button--raised:hover,.mdc-button--raised:focus{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14),0px 1px 10px 0px rgba(0,0,0,.12)}.mdc-button--raised:active{box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0,0,0,.12)}.mdc-button--raised:disabled{box-shadow:0px 0px 0px 0px rgba(0, 0, 0, 0.2),0px 0px 0px 0px rgba(0, 0, 0, 0.14),0px 0px 0px 0px rgba(0,0,0,.12)}:host{display:inline-flex;outline:none;-webkit-tap-highlight-color:transparent;vertical-align:top}:host([fullwidth]){width:100%}:host([raised]),:host([unelevated]){--mdc-ripple-color:#fff;--mdc-ripple-focus-opacity:0.24;--mdc-ripple-hover-opacity:0.08;--mdc-ripple-press-opacity:0.24}.trailing-icon ::slotted(*),.trailing-icon .mdc-button__icon,.leading-icon ::slotted(*),.leading-icon .mdc-button__icon{margin-left:0;margin-right:8px;display:inline-block;position:relative;vertical-align:top;font-size:1.125rem;height:1.125rem;width:1.125rem}[dir=rtl] .trailing-icon ::slotted(*),[dir=rtl] .trailing-icon .mdc-button__icon,[dir=rtl] .leading-icon ::slotted(*),[dir=rtl] .leading-icon .mdc-button__icon,.trailing-icon ::slotted(*[dir=rtl]),.trailing-icon .mdc-button__icon[dir=rtl],.leading-icon ::slotted(*[dir=rtl]),.leading-icon .mdc-button__icon[dir=rtl]{margin-left:8px;margin-right:0}.trailing-icon ::slotted(*),.trailing-icon .mdc-button__icon{margin-left:8px;margin-right:0}[dir=rtl] .trailing-icon ::slotted(*),[dir=rtl] .trailing-icon .mdc-button__icon,.trailing-icon ::slotted(*[dir=rtl]),.trailing-icon .mdc-button__icon[dir=rtl]{margin-left:0;margin-right:8px}.slot-container{display:inline-flex;align-items:center;justify-content:center}.slot-container.flex{flex:auto}.mdc-button{flex:auto;overflow:hidden;padding-left:8px;padding-left:var(--mdc-button-horizontal-padding, 8px);padding-right:8px;padding-right:var(--mdc-button-horizontal-padding, 8px)}.mdc-button--raised{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12))}.mdc-button--raised:focus{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow-focus, var(--mdc-button-raised-box-shadow-hover, 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)))}.mdc-button--raised:hover{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow-hover, 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12))}.mdc-button--raised:active{box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow-active, 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12))}.mdc-button--raised:disabled{box-shadow:0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);box-shadow:var(--mdc-button-raised-box-shadow-disabled, 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12))}.mdc-button--raised,.mdc-button--unelevated{padding-left:16px;padding-left:var(--mdc-button-horizontal-padding, 16px);padding-right:16px;padding-right:var(--mdc-button-horizontal-padding, 16px)}.mdc-button--outlined{border-width:1px;border-width:var(--mdc-button-outline-width, 1px);padding-left:calc(16px - 1px);padding-left:calc(var(--mdc-button-horizontal-padding, 16px) - var(--mdc-button-outline-width, 1px));padding-right:calc(16px - 1px);padding-right:calc(var(--mdc-button-horizontal-padding, 16px) - var(--mdc-button-outline-width, 1px))}.mdc-button--outlined:not(:disabled){border-color:rgba(0, 0, 0, 0.12);border-color:var(--mdc-button-outline-color, rgba(0, 0, 0, 0.12))}.mdc-button--outlined .ripple{top:calc(-1 * 1px);top:calc(-1 * var(--mdc-button-outline-width, 1px));left:calc(-1 * 1px);left:calc(-1 * var(--mdc-button-outline-width, 1px));right:initial;right:initial;border-width:1px;border-width:var(--mdc-button-outline-width, 1px);border-style:solid;border-color:transparent}[dir=rtl] .mdc-button--outlined .ripple,.mdc-button--outlined .ripple[dir=rtl]{left:initial;left:initial;right:calc(-1 * 1px);right:calc(-1 * var(--mdc-button-outline-width, 1px))}.mdc-button--dense{height:28px;margin-top:0;margin-bottom:0}.mdc-button--dense .mdc-button__touch{height:100%}:host([disabled]){pointer-events:none}:host([disabled]) .mdc-button{color:rgba(0, 0, 0, 0.38);color:var(--mdc-button-disabled-ink-color, rgba(0, 0, 0, 0.38))}:host([disabled]) .mdc-button--raised,:host([disabled]) .mdc-button--unelevated{background-color:rgba(0, 0, 0, 0.12);background-color:var(--mdc-button-disabled-fill-color, rgba(0, 0, 0, 0.12))}:host([disabled]) .mdc-button--outlined{border-color:rgba(0, 0, 0, 0.12);border-color:var(--mdc-button-disabled-outline-color, rgba(0, 0, 0, 0.12))}`;
 
 /**
  * @license
@@ -2146,9 +2146,9 @@ const styles$a = i$5 `.mdc-button{-moz-osx-font-smoothing:grayscale;-webkit-font
 /** @soyCompatible */
 let Button = class Button extends ButtonBase {
 };
-Button.styles = [styles$a];
+Button.styles = [styles$f];
 Button = __decorate([
-    e$6('mwc-button')
+    e$7('mwc-button')
 ], Button);
 
 /**
@@ -3353,7 +3353,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var cssClasses$6 = {
+var cssClasses$d = {
     CLOSING: 'mdc-dialog--closing',
     OPEN: 'mdc-dialog--open',
     OPENING: 'mdc-dialog--opening',
@@ -3387,7 +3387,7 @@ var cssClasses$6 = {
     // scrim clicks.
     SCRIM_HIDDEN: 'mdc-dialog__scrim--hidden',
 };
-var strings$7 = {
+var strings$c = {
     ACTION_ATTRIBUTE: 'data-mdc-dialog-action',
     BUTTON_DEFAULT_ATTRIBUTE: 'data-mdc-dialog-button-default',
     BUTTON_SELECTOR: '.mdc-dialog__button',
@@ -3408,7 +3408,7 @@ var strings$7 = {
     ].join(', '),
     SURFACE_SELECTOR: '.mdc-dialog__surface',
 };
-var numbers$3 = {
+var numbers$8 = {
     DIALOG_ANIMATION_CLOSE_TIME_MS: 75,
     DIALOG_ANIMATION_OPEN_TIME_MS: 150,
 };
@@ -3533,11 +3533,11 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
         _this.isFullscreen = false;
         _this.animationFrame = 0;
         _this.animationTimer = 0;
-        _this.escapeKeyAction = strings$7.CLOSE_ACTION;
-        _this.scrimClickAction = strings$7.CLOSE_ACTION;
+        _this.escapeKeyAction = strings$c.CLOSE_ACTION;
+        _this.scrimClickAction = strings$c.CLOSE_ACTION;
         _this.autoStackButtons = true;
         _this.areButtonsStacked = false;
-        _this.suppressDefaultPressSelector = strings$7.SUPPRESS_DEFAULT_PRESS_SELECTOR;
+        _this.suppressDefaultPressSelector = strings$c.SUPPRESS_DEFAULT_PRESS_SELECTOR;
         _this.animFrame = new AnimationFrame();
         _this.contentScrollHandler = function () {
             _this.handleScrollEvent();
@@ -3552,21 +3552,21 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
     }
     Object.defineProperty(MDCDialogFoundation, "cssClasses", {
         get: function () {
-            return cssClasses$6;
+            return cssClasses$d;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCDialogFoundation, "strings", {
         get: function () {
-            return strings$7;
+            return strings$c;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCDialogFoundation, "numbers", {
         get: function () {
-            return numbers$3;
+            return numbers$8;
         },
         enumerable: false,
         configurable: true
@@ -3604,10 +3604,10 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
         configurable: true
     });
     MDCDialogFoundation.prototype.init = function () {
-        if (this.adapter.hasClass(cssClasses$6.STACKED)) {
+        if (this.adapter.hasClass(cssClasses$d.STACKED)) {
             this.setAutoStackButtons(false);
         }
-        this.isFullscreen = this.adapter.hasClass(cssClasses$6.FULLSCREEN);
+        this.isFullscreen = this.adapter.hasClass(cssClasses$d.FULLSCREEN);
     };
     MDCDialogFoundation.prototype.destroy = function () {
         if (this.animationTimer) {
@@ -3625,7 +3625,7 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
         var _this = this;
         this.dialogOpen = true;
         this.adapter.notifyOpening();
-        this.adapter.addClass(cssClasses$6.OPENING);
+        this.adapter.addClass(cssClasses$d.OPENING);
         if (this.isFullscreen) {
             // A scroll event listener is registered even if the dialog is not
             // scrollable on open, since the window resize event, or orientation
@@ -3633,21 +3633,21 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
             this.adapter.registerContentEventHandler('scroll', this.contentScrollHandler);
         }
         if (dialogOptions && dialogOptions.isAboveFullscreenDialog) {
-            this.adapter.addClass(cssClasses$6.SCRIM_HIDDEN);
+            this.adapter.addClass(cssClasses$d.SCRIM_HIDDEN);
         }
         this.adapter.registerWindowEventHandler('resize', this.windowResizeHandler);
         this.adapter.registerWindowEventHandler('orientationchange', this.windowOrientationChangeHandler);
         // Wait a frame once display is no longer "none", to establish basis for
         // animation
         this.runNextAnimationFrame(function () {
-            _this.adapter.addClass(cssClasses$6.OPEN);
-            _this.adapter.addBodyClass(cssClasses$6.SCROLL_LOCK);
+            _this.adapter.addClass(cssClasses$d.OPEN);
+            _this.adapter.addBodyClass(cssClasses$d.SCROLL_LOCK);
             _this.layout();
             _this.animationTimer = setTimeout(function () {
                 _this.handleAnimationTimerEnd();
                 _this.adapter.trapFocus(_this.adapter.getInitialFocusEl());
                 _this.adapter.notifyOpened();
-            }, numbers$3.DIALOG_ANIMATION_OPEN_TIME_MS);
+            }, numbers$8.DIALOG_ANIMATION_OPEN_TIME_MS);
         });
     };
     MDCDialogFoundation.prototype.close = function (action) {
@@ -3660,9 +3660,9 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
         }
         this.dialogOpen = false;
         this.adapter.notifyClosing(action);
-        this.adapter.addClass(cssClasses$6.CLOSING);
-        this.adapter.removeClass(cssClasses$6.OPEN);
-        this.adapter.removeBodyClass(cssClasses$6.SCROLL_LOCK);
+        this.adapter.addClass(cssClasses$d.CLOSING);
+        this.adapter.removeClass(cssClasses$d.OPEN);
+        this.adapter.removeBodyClass(cssClasses$d.SCROLL_LOCK);
         if (this.isFullscreen) {
             this.adapter.deregisterContentEventHandler('scroll', this.contentScrollHandler);
         }
@@ -3675,7 +3675,7 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
             _this.adapter.releaseFocus();
             _this.handleAnimationTimerEnd();
             _this.adapter.notifyClosed(action);
-        }, numbers$3.DIALOG_ANIMATION_CLOSE_TIME_MS);
+        }, numbers$8.DIALOG_ANIMATION_CLOSE_TIME_MS);
     };
     /**
      * Used only in instances of showing a secondary dialog over a full-screen
@@ -3683,9 +3683,9 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
      */
     MDCDialogFoundation.prototype.showSurfaceScrim = function () {
         var _this = this;
-        this.adapter.addClass(cssClasses$6.SURFACE_SCRIM_SHOWING);
+        this.adapter.addClass(cssClasses$d.SURFACE_SCRIM_SHOWING);
         this.runNextAnimationFrame(function () {
-            _this.adapter.addClass(cssClasses$6.SURFACE_SCRIM_SHOWN);
+            _this.adapter.addClass(cssClasses$d.SURFACE_SCRIM_SHOWN);
         });
     };
     /**
@@ -3693,16 +3693,16 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
      * dialog. Hides the "surface scrim" displayed over the full-screen dialog.
      */
     MDCDialogFoundation.prototype.hideSurfaceScrim = function () {
-        this.adapter.removeClass(cssClasses$6.SURFACE_SCRIM_SHOWN);
-        this.adapter.addClass(cssClasses$6.SURFACE_SCRIM_HIDING);
+        this.adapter.removeClass(cssClasses$d.SURFACE_SCRIM_SHOWN);
+        this.adapter.addClass(cssClasses$d.SURFACE_SCRIM_HIDING);
     };
     /**
      * Handles `transitionend` event triggered when surface scrim animation is
      * finished.
      */
     MDCDialogFoundation.prototype.handleSurfaceScrimTransitionEnd = function () {
-        this.adapter.removeClass(cssClasses$6.SURFACE_SCRIM_HIDING);
-        this.adapter.removeClass(cssClasses$6.SURFACE_SCRIM_SHOWING);
+        this.adapter.removeClass(cssClasses$d.SURFACE_SCRIM_HIDING);
+        this.adapter.removeClass(cssClasses$d.SURFACE_SCRIM_SHOWING);
     };
     MDCDialogFoundation.prototype.isOpen = function () {
         return this.dialogOpen;
@@ -3739,7 +3739,7 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
     };
     /** Handles click on the dialog root element. */
     MDCDialogFoundation.prototype.handleClick = function (evt) {
-        var isScrim = this.adapter.eventTargetMatches(evt.target, strings$7.SCRIM_SELECTOR);
+        var isScrim = this.adapter.eventTargetMatches(evt.target, strings$c.SCRIM_SELECTOR);
         // Check for scrim click first since it doesn't require querying ancestors.
         if (isScrim && this.scrimClickAction !== '') {
             this.close(this.scrimClickAction);
@@ -3813,8 +3813,8 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
     };
     MDCDialogFoundation.prototype.handleAnimationTimerEnd = function () {
         this.animationTimer = 0;
-        this.adapter.removeClass(cssClasses$6.OPENING);
-        this.adapter.removeClass(cssClasses$6.CLOSING);
+        this.adapter.removeClass(cssClasses$d.OPENING);
+        this.adapter.removeClass(cssClasses$d.CLOSING);
     };
     /**
      * Runs the given logic on the next animation frame, using setTimeout to
@@ -3831,10 +3831,10 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
     };
     MDCDialogFoundation.prototype.detectStackedButtons = function () {
         // Remove the class first to let us measure the buttons' natural positions.
-        this.adapter.removeClass(cssClasses$6.STACKED);
+        this.adapter.removeClass(cssClasses$d.STACKED);
         var areButtonsStacked = this.adapter.areButtonsStacked();
         if (areButtonsStacked) {
-            this.adapter.addClass(cssClasses$6.STACKED);
+            this.adapter.addClass(cssClasses$d.STACKED);
         }
         if (areButtonsStacked !== this.areButtonsStacked) {
             this.adapter.reverseButtons();
@@ -3844,9 +3844,9 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
     MDCDialogFoundation.prototype.toggleScrollableClasses = function () {
         // Remove the class first to let us measure the natural height of the
         // content.
-        this.adapter.removeClass(cssClasses$6.SCROLLABLE);
+        this.adapter.removeClass(cssClasses$d.SCROLLABLE);
         if (this.adapter.isContentScrollable()) {
-            this.adapter.addClass(cssClasses$6.SCROLLABLE);
+            this.adapter.addClass(cssClasses$d.SCROLLABLE);
             if (this.isFullscreen) {
                 // If dialog is full-screen and scrollable, check if a scroll divider
                 // should be shown.
@@ -3857,18 +3857,18 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
     };
     MDCDialogFoundation.prototype.toggleScrollDividerHeader = function () {
         if (!this.adapter.isScrollableContentAtTop()) {
-            this.adapter.addClass(cssClasses$6.SCROLL_DIVIDER_HEADER);
+            this.adapter.addClass(cssClasses$d.SCROLL_DIVIDER_HEADER);
         }
-        else if (this.adapter.hasClass(cssClasses$6.SCROLL_DIVIDER_HEADER)) {
-            this.adapter.removeClass(cssClasses$6.SCROLL_DIVIDER_HEADER);
+        else if (this.adapter.hasClass(cssClasses$d.SCROLL_DIVIDER_HEADER)) {
+            this.adapter.removeClass(cssClasses$d.SCROLL_DIVIDER_HEADER);
         }
     };
     MDCDialogFoundation.prototype.toggleScrollDividerFooter = function () {
         if (!this.adapter.isScrollableContentAtBottom()) {
-            this.adapter.addClass(cssClasses$6.SCROLL_DIVIDER_FOOTER);
+            this.adapter.addClass(cssClasses$d.SCROLL_DIVIDER_FOOTER);
         }
-        else if (this.adapter.hasClass(cssClasses$6.SCROLL_DIVIDER_FOOTER)) {
-            this.adapter.removeClass(cssClasses$6.SCROLL_DIVIDER_FOOTER);
+        else if (this.adapter.hasClass(cssClasses$d.SCROLL_DIVIDER_FOOTER)) {
+            this.adapter.removeClass(cssClasses$d.SCROLL_DIVIDER_FOOTER);
         }
     };
     return MDCDialogFoundation;
@@ -4132,7 +4132,7 @@ class DialogBase extends BaseElement {
     }
     render() {
         const classes = {
-            [cssClasses$6.STACKED]: this.stacked,
+            [cssClasses$d.STACKED]: this.stacked,
         };
         let heading = y ``;
         if (this.heading) {
@@ -4293,31 +4293,31 @@ __decorate([
     i$2('.mdc-container')
 ], DialogBase.prototype, "conatinerElement", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], DialogBase.prototype, "hideActions", void 0);
 __decorate([
-    e$5({ type: Boolean }),
+    e$6({ type: Boolean }),
     observer(function () {
         this.forceLayout();
     })
 ], DialogBase.prototype, "stacked", void 0);
 __decorate([
-    e$5({ type: String })
+    e$6({ type: String })
 ], DialogBase.prototype, "heading", void 0);
 __decorate([
-    e$5({ type: String }),
+    e$6({ type: String }),
     observer(function (newAction) {
         this.mdcFoundation.setScrimClickAction(newAction);
     })
 ], DialogBase.prototype, "scrimClickAction", void 0);
 __decorate([
-    e$5({ type: String }),
+    e$6({ type: String }),
     observer(function (newAction) {
         this.mdcFoundation.setEscapeKeyAction(newAction);
     })
 ], DialogBase.prototype, "escapeKeyAction", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true }),
+    e$6({ type: Boolean, reflect: true }),
     observer(function (isOpen) {
         // Check isConnected because we could have been disconnected before first
         // update. If we're now closed, then we shouldn't start the MDC foundation
@@ -4337,13 +4337,13 @@ __decorate([
     })
 ], DialogBase.prototype, "open", void 0);
 __decorate([
-    e$5()
+    e$6()
 ], DialogBase.prototype, "defaultAction", void 0);
 __decorate([
-    e$5()
+    e$6()
 ], DialogBase.prototype, "actionAttribute", void 0);
 __decorate([
-    e$5()
+    e$6()
 ], DialogBase.prototype, "initialFocusAttribute", void 0);
 
 /**
@@ -4351,7 +4351,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$9 = i$5 `.mdc-dialog .mdc-dialog__surface{background-color:#fff;background-color:var(--mdc-theme-surface, #fff)}.mdc-dialog .mdc-dialog__scrim{background-color:rgba(0,0,0,.32)}.mdc-dialog .mdc-dialog__surface-scrim{background-color:rgba(0,0,0,.32)}.mdc-dialog .mdc-dialog__title{color:rgba(0,0,0,.87)}.mdc-dialog .mdc-dialog__content{color:rgba(0,0,0,.6)}.mdc-dialog .mdc-dialog__close{color:#000;color:var(--mdc-theme-on-surface, #000)}.mdc-dialog .mdc-dialog__close .mdc-icon-button__ripple::before,.mdc-dialog .mdc-dialog__close .mdc-icon-button__ripple::after{background-color:#000;background-color:var(--mdc-ripple-color, var(--mdc-theme-on-surface, #000))}.mdc-dialog .mdc-dialog__close:hover .mdc-icon-button__ripple::before,.mdc-dialog .mdc-dialog__close.mdc-ripple-surface--hover .mdc-icon-button__ripple::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-dialog .mdc-dialog__close.mdc-ripple-upgraded--background-focused .mdc-icon-button__ripple::before,.mdc-dialog .mdc-dialog__close:not(.mdc-ripple-upgraded):focus .mdc-icon-button__ripple::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-dialog .mdc-dialog__close:not(.mdc-ripple-upgraded) .mdc-icon-button__ripple::after{transition:opacity 150ms linear}.mdc-dialog .mdc-dialog__close:not(.mdc-ripple-upgraded):active .mdc-icon-button__ripple::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-dialog .mdc-dialog__close.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__title,.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__actions,.mdc-dialog.mdc-dialog--scrollable.mdc-dialog-scroll-divider-footer .mdc-dialog__actions{border-color:rgba(0,0,0,.12)}.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__title{border-bottom:1px solid rgba(0,0,0,.12);margin-bottom:0}.mdc-dialog.mdc-dialog-scroll-divider-header.mdc-dialog--fullscreen .mdc-dialog__header{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12)}.mdc-dialog .mdc-dialog__surface{border-radius:4px;border-radius:var(--mdc-shape-medium, 4px)}.mdc-dialog__surface{box-shadow:0px 11px 15px -7px rgba(0, 0, 0, 0.2),0px 24px 38px 3px rgba(0, 0, 0, 0.14),0px 9px 46px 8px rgba(0,0,0,.12)}.mdc-dialog__title{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1.25rem;font-size:var(--mdc-typography-headline6-font-size, 1.25rem);line-height:2rem;line-height:var(--mdc-typography-headline6-line-height, 2rem);font-weight:500;font-weight:var(--mdc-typography-headline6-font-weight, 500);letter-spacing:0.0125em;letter-spacing:var(--mdc-typography-headline6-letter-spacing, 0.0125em);text-decoration:inherit;text-decoration:var(--mdc-typography-headline6-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-headline6-text-transform, inherit)}.mdc-dialog__content{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-body1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-body1-font-size, 1rem);line-height:1.5rem;line-height:var(--mdc-typography-body1-line-height, 1.5rem);font-weight:400;font-weight:var(--mdc-typography-body1-font-weight, 400);letter-spacing:0.03125em;letter-spacing:var(--mdc-typography-body1-letter-spacing, 0.03125em);text-decoration:inherit;text-decoration:var(--mdc-typography-body1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-body1-text-transform, inherit)}.mdc-elevation-overlay{position:absolute;border-radius:inherit;pointer-events:none;opacity:0;opacity:var(--mdc-elevation-overlay-opacity, 0);transition:opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);background-color:#fff;background-color:var(--mdc-elevation-overlay-color, #fff)}.mdc-dialog,.mdc-dialog__scrim{position:fixed;top:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;width:100%;height:100%}.mdc-dialog{display:none;z-index:7;z-index:var(--mdc-dialog-z-index, 7)}.mdc-dialog .mdc-dialog__content{padding:20px 24px 20px 24px}.mdc-dialog .mdc-dialog__surface{min-width:280px}@media(max-width: 592px){.mdc-dialog .mdc-dialog__surface{max-width:calc(100vw - 32px)}}@media(min-width: 592px){.mdc-dialog .mdc-dialog__surface{max-width:560px}}.mdc-dialog .mdc-dialog__surface{max-height:calc(100% - 32px)}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-width:none}@media(max-width: 960px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:560px;width:560px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}@media(max-width: 720px)and (max-width: 672px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:calc(100vw - 112px)}}@media(max-width: 720px)and (min-width: 672px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:560px}}@media(max-width: 720px)and (max-height: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:calc(100vh - 160px)}}@media(max-width: 720px)and (min-height: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:560px}}@media(max-width: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}@media(max-width: 720px)and (max-height: 400px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{height:100%;max-height:100vh;max-width:100vw;width:100vw;border-radius:0}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{order:-1;left:-12px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__header{padding:0 16px 9px;justify-content:flex-start}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__title{margin-left:calc(16px - 2 * 12px)}}@media(max-width: 600px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{height:100%;max-height:100vh;max-width:100vw;width:100vw;border-radius:0}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{order:-1;left:-12px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__header{padding:0 16px 9px;justify-content:flex-start}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__title{margin-left:calc(16px - 2 * 12px)}}@media(min-width: 960px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:calc(100vw - 400px)}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}.mdc-dialog.mdc-dialog__scrim--hidden .mdc-dialog__scrim{opacity:0}.mdc-dialog__scrim{opacity:0;z-index:-1}.mdc-dialog__container{display:flex;flex-direction:row;align-items:center;justify-content:space-around;box-sizing:border-box;height:100%;transform:scale(0.8);opacity:0;pointer-events:none}.mdc-dialog__surface{position:relative;display:flex;flex-direction:column;flex-grow:0;flex-shrink:0;box-sizing:border-box;max-width:100%;max-height:100%;pointer-events:auto;overflow-y:auto}.mdc-dialog__surface .mdc-elevation-overlay{width:100%;height:100%;top:0;left:0}[dir=rtl] .mdc-dialog__surface,.mdc-dialog__surface[dir=rtl]{text-align:right}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-dialog__surface{outline:2px solid windowText}}.mdc-dialog__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:2px solid transparent;border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-dialog__surface::before{border-color:CanvasText}}@media screen and (-ms-high-contrast: active),screen and (-ms-high-contrast: none){.mdc-dialog__surface::before{content:none}}.mdc-dialog__title{display:block;margin-top:0;position:relative;flex-shrink:0;box-sizing:border-box;margin:0 0 1px;padding:0 24px 9px}.mdc-dialog__title::before{display:inline-block;width:0;height:40px;content:"";vertical-align:0}[dir=rtl] .mdc-dialog__title,.mdc-dialog__title[dir=rtl]{text-align:right}.mdc-dialog--scrollable .mdc-dialog__title{margin-bottom:1px;padding-bottom:15px}.mdc-dialog--fullscreen .mdc-dialog__header{align-items:baseline;border-bottom:1px solid transparent;display:inline-flex;justify-content:space-between;padding:0 24px 9px;z-index:1}@media screen and (forced-colors: active){.mdc-dialog--fullscreen .mdc-dialog__header{border-bottom-color:CanvasText}}.mdc-dialog--fullscreen .mdc-dialog__header .mdc-dialog__close{right:-12px}.mdc-dialog--fullscreen .mdc-dialog__title{margin-bottom:0;padding:0;border-bottom:0}.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__title{border-bottom:0;margin-bottom:0}.mdc-dialog--fullscreen .mdc-dialog__close{top:5px}.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__actions{border-top:1px solid transparent}@media screen and (forced-colors: active){.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__actions{border-top-color:CanvasText}}.mdc-dialog__content{flex-grow:1;box-sizing:border-box;margin:0;overflow:auto}.mdc-dialog__content>:first-child{margin-top:0}.mdc-dialog__content>:last-child{margin-bottom:0}.mdc-dialog__title+.mdc-dialog__content,.mdc-dialog__header+.mdc-dialog__content{padding-top:0}.mdc-dialog--scrollable .mdc-dialog__title+.mdc-dialog__content{padding-top:8px;padding-bottom:8px}.mdc-dialog__content .mdc-deprecated-list:first-child:last-child{padding:6px 0 0}.mdc-dialog--scrollable .mdc-dialog__content .mdc-deprecated-list:first-child:last-child{padding:0}.mdc-dialog__actions{display:flex;position:relative;flex-shrink:0;flex-wrap:wrap;align-items:center;justify-content:flex-end;box-sizing:border-box;min-height:52px;margin:0;padding:8px;border-top:1px solid transparent}@media screen and (forced-colors: active){.mdc-dialog__actions{border-top-color:CanvasText}}.mdc-dialog--stacked .mdc-dialog__actions{flex-direction:column;align-items:flex-end}.mdc-dialog__button{margin-left:8px;margin-right:0;max-width:100%;text-align:right}[dir=rtl] .mdc-dialog__button,.mdc-dialog__button[dir=rtl]{margin-left:0;margin-right:8px}.mdc-dialog__button:first-child{margin-left:0;margin-right:0}[dir=rtl] .mdc-dialog__button:first-child,.mdc-dialog__button:first-child[dir=rtl]{margin-left:0;margin-right:0}[dir=rtl] .mdc-dialog__button,.mdc-dialog__button[dir=rtl]{text-align:left}.mdc-dialog--stacked .mdc-dialog__button:not(:first-child){margin-top:12px}.mdc-dialog--open,.mdc-dialog--opening,.mdc-dialog--closing{display:flex}.mdc-dialog--opening .mdc-dialog__scrim{transition:opacity 150ms linear}.mdc-dialog--opening .mdc-dialog__container{transition:opacity 75ms linear,transform 150ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-dialog--closing .mdc-dialog__scrim,.mdc-dialog--closing .mdc-dialog__container{transition:opacity 75ms linear}.mdc-dialog--closing .mdc-dialog__container{transform:none}.mdc-dialog--open .mdc-dialog__scrim{opacity:1}.mdc-dialog--open .mdc-dialog__container{transform:none;opacity:1}.mdc-dialog--open.mdc-dialog__surface-scrim--shown .mdc-dialog__surface-scrim{opacity:1;z-index:1}.mdc-dialog--open.mdc-dialog__surface-scrim--hiding .mdc-dialog__surface-scrim{transition:opacity 75ms linear}.mdc-dialog--open.mdc-dialog__surface-scrim--showing .mdc-dialog__surface-scrim{transition:opacity 150ms linear}.mdc-dialog__surface-scrim{display:none;opacity:0;position:absolute;width:100%;height:100%}.mdc-dialog__surface-scrim--shown .mdc-dialog__surface-scrim,.mdc-dialog__surface-scrim--showing .mdc-dialog__surface-scrim,.mdc-dialog__surface-scrim--hiding .mdc-dialog__surface-scrim{display:block}.mdc-dialog-scroll-lock{overflow:hidden}.mdc-dialog--no-content-padding .mdc-dialog__content{padding:0}.mdc-dialog--sheet .mdc-dialog__close{right:12px;top:9px;position:absolute;z-index:1}#actions:not(.mdc-dialog__actions){display:none}.mdc-dialog__surface{box-shadow:var(--mdc-dialog-box-shadow, 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12))}@media(min-width: 560px){.mdc-dialog .mdc-dialog__surface{max-width:560px;max-width:var(--mdc-dialog-max-width, 560px)}}.mdc-dialog .mdc-dialog__scrim{background-color:rgba(0, 0, 0, 0.32);background-color:var(--mdc-dialog-scrim-color, rgba(0, 0, 0, 0.32))}.mdc-dialog .mdc-dialog__title{color:rgba(0, 0, 0, 0.87);color:var(--mdc-dialog-heading-ink-color, rgba(0, 0, 0, 0.87))}.mdc-dialog .mdc-dialog__content{color:rgba(0, 0, 0, 0.6);color:var(--mdc-dialog-content-ink-color, rgba(0, 0, 0, 0.6))}.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__title,.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__actions{border-color:rgba(0, 0, 0, 0.12);border-color:var(--mdc-dialog-scroll-divider-color, rgba(0, 0, 0, 0.12))}.mdc-dialog .mdc-dialog__surface{min-width:280px;min-width:var(--mdc-dialog-min-width, 280px)}.mdc-dialog .mdc-dialog__surface{max-height:var(--mdc-dialog-max-height, calc(100% - 32px))}#actions ::slotted(*){margin-left:8px;margin-right:0;max-width:100%;text-align:right}[dir=rtl] #actions ::slotted(*),#actions ::slotted(*[dir=rtl]){margin-left:0;margin-right:8px}[dir=rtl] #actions ::slotted(*),#actions ::slotted(*[dir=rtl]){text-align:left}.mdc-dialog--stacked #actions{flex-direction:column-reverse}.mdc-dialog--stacked #actions *:not(:last-child) ::slotted(*){flex-basis:.000000001px;margin-top:12px}`;
+const styles$e = i$5 `.mdc-dialog .mdc-dialog__surface{background-color:#fff;background-color:var(--mdc-theme-surface, #fff)}.mdc-dialog .mdc-dialog__scrim{background-color:rgba(0,0,0,.32)}.mdc-dialog .mdc-dialog__surface-scrim{background-color:rgba(0,0,0,.32)}.mdc-dialog .mdc-dialog__title{color:rgba(0,0,0,.87)}.mdc-dialog .mdc-dialog__content{color:rgba(0,0,0,.6)}.mdc-dialog .mdc-dialog__close{color:#000;color:var(--mdc-theme-on-surface, #000)}.mdc-dialog .mdc-dialog__close .mdc-icon-button__ripple::before,.mdc-dialog .mdc-dialog__close .mdc-icon-button__ripple::after{background-color:#000;background-color:var(--mdc-ripple-color, var(--mdc-theme-on-surface, #000))}.mdc-dialog .mdc-dialog__close:hover .mdc-icon-button__ripple::before,.mdc-dialog .mdc-dialog__close.mdc-ripple-surface--hover .mdc-icon-button__ripple::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-dialog .mdc-dialog__close.mdc-ripple-upgraded--background-focused .mdc-icon-button__ripple::before,.mdc-dialog .mdc-dialog__close:not(.mdc-ripple-upgraded):focus .mdc-icon-button__ripple::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-dialog .mdc-dialog__close:not(.mdc-ripple-upgraded) .mdc-icon-button__ripple::after{transition:opacity 150ms linear}.mdc-dialog .mdc-dialog__close:not(.mdc-ripple-upgraded):active .mdc-icon-button__ripple::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-dialog .mdc-dialog__close.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__title,.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__actions,.mdc-dialog.mdc-dialog--scrollable.mdc-dialog-scroll-divider-footer .mdc-dialog__actions{border-color:rgba(0,0,0,.12)}.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__title{border-bottom:1px solid rgba(0,0,0,.12);margin-bottom:0}.mdc-dialog.mdc-dialog-scroll-divider-header.mdc-dialog--fullscreen .mdc-dialog__header{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12)}.mdc-dialog .mdc-dialog__surface{border-radius:4px;border-radius:var(--mdc-shape-medium, 4px)}.mdc-dialog__surface{box-shadow:0px 11px 15px -7px rgba(0, 0, 0, 0.2),0px 24px 38px 3px rgba(0, 0, 0, 0.14),0px 9px 46px 8px rgba(0,0,0,.12)}.mdc-dialog__title{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1.25rem;font-size:var(--mdc-typography-headline6-font-size, 1.25rem);line-height:2rem;line-height:var(--mdc-typography-headline6-line-height, 2rem);font-weight:500;font-weight:var(--mdc-typography-headline6-font-weight, 500);letter-spacing:0.0125em;letter-spacing:var(--mdc-typography-headline6-letter-spacing, 0.0125em);text-decoration:inherit;text-decoration:var(--mdc-typography-headline6-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-headline6-text-transform, inherit)}.mdc-dialog__content{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-body1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-body1-font-size, 1rem);line-height:1.5rem;line-height:var(--mdc-typography-body1-line-height, 1.5rem);font-weight:400;font-weight:var(--mdc-typography-body1-font-weight, 400);letter-spacing:0.03125em;letter-spacing:var(--mdc-typography-body1-letter-spacing, 0.03125em);text-decoration:inherit;text-decoration:var(--mdc-typography-body1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-body1-text-transform, inherit)}.mdc-elevation-overlay{position:absolute;border-radius:inherit;pointer-events:none;opacity:0;opacity:var(--mdc-elevation-overlay-opacity, 0);transition:opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);background-color:#fff;background-color:var(--mdc-elevation-overlay-color, #fff)}.mdc-dialog,.mdc-dialog__scrim{position:fixed;top:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;width:100%;height:100%}.mdc-dialog{display:none;z-index:7;z-index:var(--mdc-dialog-z-index, 7)}.mdc-dialog .mdc-dialog__content{padding:20px 24px 20px 24px}.mdc-dialog .mdc-dialog__surface{min-width:280px}@media(max-width: 592px){.mdc-dialog .mdc-dialog__surface{max-width:calc(100vw - 32px)}}@media(min-width: 592px){.mdc-dialog .mdc-dialog__surface{max-width:560px}}.mdc-dialog .mdc-dialog__surface{max-height:calc(100% - 32px)}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-width:none}@media(max-width: 960px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:560px;width:560px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}@media(max-width: 720px)and (max-width: 672px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:calc(100vw - 112px)}}@media(max-width: 720px)and (min-width: 672px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:560px}}@media(max-width: 720px)and (max-height: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:calc(100vh - 160px)}}@media(max-width: 720px)and (min-height: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:560px}}@media(max-width: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}@media(max-width: 720px)and (max-height: 400px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{height:100%;max-height:100vh;max-width:100vw;width:100vw;border-radius:0}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{order:-1;left:-12px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__header{padding:0 16px 9px;justify-content:flex-start}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__title{margin-left:calc(16px - 2 * 12px)}}@media(max-width: 600px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{height:100%;max-height:100vh;max-width:100vw;width:100vw;border-radius:0}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{order:-1;left:-12px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__header{padding:0 16px 9px;justify-content:flex-start}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__title{margin-left:calc(16px - 2 * 12px)}}@media(min-width: 960px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:calc(100vw - 400px)}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}.mdc-dialog.mdc-dialog__scrim--hidden .mdc-dialog__scrim{opacity:0}.mdc-dialog__scrim{opacity:0;z-index:-1}.mdc-dialog__container{display:flex;flex-direction:row;align-items:center;justify-content:space-around;box-sizing:border-box;height:100%;transform:scale(0.8);opacity:0;pointer-events:none}.mdc-dialog__surface{position:relative;display:flex;flex-direction:column;flex-grow:0;flex-shrink:0;box-sizing:border-box;max-width:100%;max-height:100%;pointer-events:auto;overflow-y:auto}.mdc-dialog__surface .mdc-elevation-overlay{width:100%;height:100%;top:0;left:0}[dir=rtl] .mdc-dialog__surface,.mdc-dialog__surface[dir=rtl]{text-align:right}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-dialog__surface{outline:2px solid windowText}}.mdc-dialog__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:2px solid transparent;border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-dialog__surface::before{border-color:CanvasText}}@media screen and (-ms-high-contrast: active),screen and (-ms-high-contrast: none){.mdc-dialog__surface::before{content:none}}.mdc-dialog__title{display:block;margin-top:0;position:relative;flex-shrink:0;box-sizing:border-box;margin:0 0 1px;padding:0 24px 9px}.mdc-dialog__title::before{display:inline-block;width:0;height:40px;content:"";vertical-align:0}[dir=rtl] .mdc-dialog__title,.mdc-dialog__title[dir=rtl]{text-align:right}.mdc-dialog--scrollable .mdc-dialog__title{margin-bottom:1px;padding-bottom:15px}.mdc-dialog--fullscreen .mdc-dialog__header{align-items:baseline;border-bottom:1px solid transparent;display:inline-flex;justify-content:space-between;padding:0 24px 9px;z-index:1}@media screen and (forced-colors: active){.mdc-dialog--fullscreen .mdc-dialog__header{border-bottom-color:CanvasText}}.mdc-dialog--fullscreen .mdc-dialog__header .mdc-dialog__close{right:-12px}.mdc-dialog--fullscreen .mdc-dialog__title{margin-bottom:0;padding:0;border-bottom:0}.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__title{border-bottom:0;margin-bottom:0}.mdc-dialog--fullscreen .mdc-dialog__close{top:5px}.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__actions{border-top:1px solid transparent}@media screen and (forced-colors: active){.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__actions{border-top-color:CanvasText}}.mdc-dialog__content{flex-grow:1;box-sizing:border-box;margin:0;overflow:auto}.mdc-dialog__content>:first-child{margin-top:0}.mdc-dialog__content>:last-child{margin-bottom:0}.mdc-dialog__title+.mdc-dialog__content,.mdc-dialog__header+.mdc-dialog__content{padding-top:0}.mdc-dialog--scrollable .mdc-dialog__title+.mdc-dialog__content{padding-top:8px;padding-bottom:8px}.mdc-dialog__content .mdc-deprecated-list:first-child:last-child{padding:6px 0 0}.mdc-dialog--scrollable .mdc-dialog__content .mdc-deprecated-list:first-child:last-child{padding:0}.mdc-dialog__actions{display:flex;position:relative;flex-shrink:0;flex-wrap:wrap;align-items:center;justify-content:flex-end;box-sizing:border-box;min-height:52px;margin:0;padding:8px;border-top:1px solid transparent}@media screen and (forced-colors: active){.mdc-dialog__actions{border-top-color:CanvasText}}.mdc-dialog--stacked .mdc-dialog__actions{flex-direction:column;align-items:flex-end}.mdc-dialog__button{margin-left:8px;margin-right:0;max-width:100%;text-align:right}[dir=rtl] .mdc-dialog__button,.mdc-dialog__button[dir=rtl]{margin-left:0;margin-right:8px}.mdc-dialog__button:first-child{margin-left:0;margin-right:0}[dir=rtl] .mdc-dialog__button:first-child,.mdc-dialog__button:first-child[dir=rtl]{margin-left:0;margin-right:0}[dir=rtl] .mdc-dialog__button,.mdc-dialog__button[dir=rtl]{text-align:left}.mdc-dialog--stacked .mdc-dialog__button:not(:first-child){margin-top:12px}.mdc-dialog--open,.mdc-dialog--opening,.mdc-dialog--closing{display:flex}.mdc-dialog--opening .mdc-dialog__scrim{transition:opacity 150ms linear}.mdc-dialog--opening .mdc-dialog__container{transition:opacity 75ms linear,transform 150ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-dialog--closing .mdc-dialog__scrim,.mdc-dialog--closing .mdc-dialog__container{transition:opacity 75ms linear}.mdc-dialog--closing .mdc-dialog__container{transform:none}.mdc-dialog--open .mdc-dialog__scrim{opacity:1}.mdc-dialog--open .mdc-dialog__container{transform:none;opacity:1}.mdc-dialog--open.mdc-dialog__surface-scrim--shown .mdc-dialog__surface-scrim{opacity:1;z-index:1}.mdc-dialog--open.mdc-dialog__surface-scrim--hiding .mdc-dialog__surface-scrim{transition:opacity 75ms linear}.mdc-dialog--open.mdc-dialog__surface-scrim--showing .mdc-dialog__surface-scrim{transition:opacity 150ms linear}.mdc-dialog__surface-scrim{display:none;opacity:0;position:absolute;width:100%;height:100%}.mdc-dialog__surface-scrim--shown .mdc-dialog__surface-scrim,.mdc-dialog__surface-scrim--showing .mdc-dialog__surface-scrim,.mdc-dialog__surface-scrim--hiding .mdc-dialog__surface-scrim{display:block}.mdc-dialog-scroll-lock{overflow:hidden}.mdc-dialog--no-content-padding .mdc-dialog__content{padding:0}.mdc-dialog--sheet .mdc-dialog__close{right:12px;top:9px;position:absolute;z-index:1}#actions:not(.mdc-dialog__actions){display:none}.mdc-dialog__surface{box-shadow:var(--mdc-dialog-box-shadow, 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12))}@media(min-width: 560px){.mdc-dialog .mdc-dialog__surface{max-width:560px;max-width:var(--mdc-dialog-max-width, 560px)}}.mdc-dialog .mdc-dialog__scrim{background-color:rgba(0, 0, 0, 0.32);background-color:var(--mdc-dialog-scrim-color, rgba(0, 0, 0, 0.32))}.mdc-dialog .mdc-dialog__title{color:rgba(0, 0, 0, 0.87);color:var(--mdc-dialog-heading-ink-color, rgba(0, 0, 0, 0.87))}.mdc-dialog .mdc-dialog__content{color:rgba(0, 0, 0, 0.6);color:var(--mdc-dialog-content-ink-color, rgba(0, 0, 0, 0.6))}.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__title,.mdc-dialog.mdc-dialog--scrollable .mdc-dialog__actions{border-color:rgba(0, 0, 0, 0.12);border-color:var(--mdc-dialog-scroll-divider-color, rgba(0, 0, 0, 0.12))}.mdc-dialog .mdc-dialog__surface{min-width:280px;min-width:var(--mdc-dialog-min-width, 280px)}.mdc-dialog .mdc-dialog__surface{max-height:var(--mdc-dialog-max-height, calc(100% - 32px))}#actions ::slotted(*){margin-left:8px;margin-right:0;max-width:100%;text-align:right}[dir=rtl] #actions ::slotted(*),#actions ::slotted(*[dir=rtl]){margin-left:0;margin-right:8px}[dir=rtl] #actions ::slotted(*),#actions ::slotted(*[dir=rtl]){text-align:left}.mdc-dialog--stacked #actions{flex-direction:column-reverse}.mdc-dialog--stacked #actions *:not(:last-child) ::slotted(*){flex-basis:.000000001px;margin-top:12px}`;
 
 /**
  * @license
@@ -4360,9 +4360,9 @@ const styles$9 = i$5 `.mdc-dialog .mdc-dialog__surface{background-color:#fff;bac
  */
 let Dialog = class Dialog extends DialogBase {
 };
-Dialog.styles = [styles$9];
+Dialog.styles = [styles$e];
 Dialog = __decorate([
-    e$6('mwc-dialog')
+    e$7('mwc-dialog')
 ], Dialog);
 
 /**
@@ -4387,7 +4387,7 @@ Dialog = __decorate([
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var cssClasses$5 = {
+var cssClasses$c = {
     ANIMATE: 'mdc-drawer--animate',
     CLOSING: 'mdc-drawer--closing',
     DISMISSIBLE: 'mdc-drawer--dismissible',
@@ -4396,7 +4396,7 @@ var cssClasses$5 = {
     OPENING: 'mdc-drawer--opening',
     ROOT: 'mdc-drawer',
 };
-var strings$6 = {
+var strings$b = {
     APP_CONTENT_SELECTOR: '.mdc-drawer-app-content',
     CLOSE_EVENT: 'MDCDrawer:closed',
     OPEN_EVENT: 'MDCDrawer:opened',
@@ -4437,14 +4437,14 @@ var MDCDismissibleDrawerFoundation = /** @class */ (function (_super) {
     }
     Object.defineProperty(MDCDismissibleDrawerFoundation, "strings", {
         get: function () {
-            return strings$6;
+            return strings$b;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCDismissibleDrawerFoundation, "cssClasses", {
         get: function () {
-            return cssClasses$5;
+            return cssClasses$c;
         },
         enumerable: false,
         configurable: true
@@ -4486,11 +4486,11 @@ var MDCDismissibleDrawerFoundation = /** @class */ (function (_super) {
         if (this.isOpen() || this.isOpening() || this.isClosing()) {
             return;
         }
-        this.adapter.addClass(cssClasses$5.OPEN);
-        this.adapter.addClass(cssClasses$5.ANIMATE);
+        this.adapter.addClass(cssClasses$c.OPEN);
+        this.adapter.addClass(cssClasses$c.ANIMATE);
         // Wait a frame once display is no longer "none", to establish basis for animation
         this.runNextAnimationFrame(function () {
-            _this.adapter.addClass(cssClasses$5.OPENING);
+            _this.adapter.addClass(cssClasses$c.OPENING);
         });
         this.adapter.saveFocus();
     };
@@ -4501,29 +4501,29 @@ var MDCDismissibleDrawerFoundation = /** @class */ (function (_super) {
         if (!this.isOpen() || this.isOpening() || this.isClosing()) {
             return;
         }
-        this.adapter.addClass(cssClasses$5.CLOSING);
+        this.adapter.addClass(cssClasses$c.CLOSING);
     };
     /**
      * Returns true if the drawer is in the open position.
      * @return true if drawer is in open state.
      */
     MDCDismissibleDrawerFoundation.prototype.isOpen = function () {
-        return this.adapter.hasClass(cssClasses$5.OPEN);
+        return this.adapter.hasClass(cssClasses$c.OPEN);
     };
     /**
      * Returns true if the drawer is animating open.
      * @return true if drawer is animating open.
      */
     MDCDismissibleDrawerFoundation.prototype.isOpening = function () {
-        return this.adapter.hasClass(cssClasses$5.OPENING) ||
-            this.adapter.hasClass(cssClasses$5.ANIMATE);
+        return this.adapter.hasClass(cssClasses$c.OPENING) ||
+            this.adapter.hasClass(cssClasses$c.ANIMATE);
     };
     /**
      * Returns true if the drawer is animating closed.
      * @return true if drawer is animating closed.
      */
     MDCDismissibleDrawerFoundation.prototype.isClosing = function () {
-        return this.adapter.hasClass(cssClasses$5.CLOSING);
+        return this.adapter.hasClass(cssClasses$c.CLOSING);
     };
     /**
      * Keydown handler to close drawer when key is escape.
@@ -4539,7 +4539,7 @@ var MDCDismissibleDrawerFoundation = /** @class */ (function (_super) {
      * Handles the `transitionend` event when the drawer finishes opening/closing.
      */
     MDCDismissibleDrawerFoundation.prototype.handleTransitionEnd = function (evt) {
-        var OPENING = cssClasses$5.OPENING, CLOSING = cssClasses$5.CLOSING, OPEN = cssClasses$5.OPEN, ANIMATE = cssClasses$5.ANIMATE, ROOT = cssClasses$5.ROOT;
+        var OPENING = cssClasses$c.OPENING, CLOSING = cssClasses$c.CLOSING, OPEN = cssClasses$c.OPEN, ANIMATE = cssClasses$c.ANIMATE, ROOT = cssClasses$c.ROOT;
         // In Edge, transitionend on ripple pseudo-elements yields a target without classList, so check for Element first.
         var isRootElement = this.isElement(evt.target) &&
             this.adapter.elementHasClass(evt.target, ROOT);
@@ -4672,10 +4672,10 @@ class DrawerBase extends BaseElement {
                 }
             }, notifyClose: () => {
                 this.open = false;
-                this.dispatchEvent(new Event(strings$6.CLOSE_EVENT, { bubbles: true, cancelable: true }));
+                this.dispatchEvent(new Event(strings$b.CLOSE_EVENT, { bubbles: true, cancelable: true }));
             }, notifyOpen: () => {
                 this.open = true;
-                this.dispatchEvent(new Event(strings$6.OPEN_EVENT, { bubbles: true, cancelable: true }));
+                this.dispatchEvent(new Event(strings$b.OPEN_EVENT, { bubbles: true, cancelable: true }));
             }, focusActiveNavigationItem: () => { }, trapFocus: () => {
                 blockingElements.push(this);
                 this.appContent.inert = true;
@@ -4747,13 +4747,13 @@ __decorate([
             this.mdcFoundation.close();
         }
     }),
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], DrawerBase.prototype, "open", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], DrawerBase.prototype, "hasHeader", void 0);
 __decorate([
-    e$5({ reflect: true })
+    e$6({ reflect: true })
 ], DrawerBase.prototype, "type", void 0);
 
 /**
@@ -4761,7 +4761,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$8 = i$5 `.mdc-drawer{border-color:rgba(0, 0, 0, 0.12);background-color:#fff;background-color:var(--mdc-theme-surface, #fff);border-top-left-radius:0;border-top-right-radius:0;border-top-right-radius:var(--mdc-shape-large, 0);border-bottom-right-radius:0;border-bottom-right-radius:var(--mdc-shape-large, 0);border-bottom-left-radius:0;z-index:6;width:256px;display:flex;flex-direction:column;flex-shrink:0;box-sizing:border-box;height:100%;border-right-width:1px;border-right-style:solid;overflow:hidden;transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1)}.mdc-drawer .mdc-drawer__title{color:rgba(0, 0, 0, 0.87)}.mdc-drawer .mdc-deprecated-list-group__subheader{color:rgba(0, 0, 0, 0.6)}.mdc-drawer .mdc-drawer__subtitle{color:rgba(0, 0, 0, 0.6)}.mdc-drawer .mdc-deprecated-list-item__graphic{color:rgba(0, 0, 0, 0.6)}.mdc-drawer .mdc-deprecated-list-item{color:rgba(0, 0, 0, 0.87)}.mdc-drawer .mdc-deprecated-list-item--activated .mdc-deprecated-list-item__graphic{color:#6200ee}.mdc-drawer .mdc-deprecated-list-item--activated{color:rgba(98, 0, 238, 0.87)}[dir=rtl] .mdc-drawer,.mdc-drawer[dir=rtl]{border-top-left-radius:0;border-top-left-radius:var(--mdc-shape-large, 0);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;border-bottom-left-radius:var(--mdc-shape-large, 0)}.mdc-drawer .mdc-deprecated-list-item{border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content{margin-left:256px;margin-right:0}[dir=rtl] .mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content,.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content[dir=rtl]{margin-left:0;margin-right:256px}[dir=rtl] .mdc-drawer,.mdc-drawer[dir=rtl]{border-right-width:0;border-left-width:1px;border-right-style:none;border-left-style:solid}.mdc-drawer .mdc-deprecated-list-item{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-subtitle2-font-size, 0.875rem);line-height:1.375rem;line-height:var(--mdc-typography-subtitle2-line-height, 1.375rem);font-weight:500;font-weight:var(--mdc-typography-subtitle2-font-weight, 500);letter-spacing:0.0071428571em;letter-spacing:var(--mdc-typography-subtitle2-letter-spacing, 0.0071428571em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle2-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle2-text-transform, inherit);height:calc(48px - 2 * 4px);margin:8px 8px;padding:0 8px}.mdc-drawer .mdc-deprecated-list-item:nth-child(1){margin-top:2px}.mdc-drawer .mdc-deprecated-list-item:nth-last-child(1){margin-bottom:0}.mdc-drawer .mdc-deprecated-list-group__subheader{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-body2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-body2-font-size, 0.875rem);line-height:1.25rem;line-height:var(--mdc-typography-body2-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-body2-font-weight, 400);letter-spacing:0.0178571429em;letter-spacing:var(--mdc-typography-body2-letter-spacing, 0.0178571429em);text-decoration:inherit;text-decoration:var(--mdc-typography-body2-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-body2-text-transform, inherit);display:block;margin-top:0;line-height:normal;margin:0;padding:0 16px}.mdc-drawer .mdc-deprecated-list-group__subheader::before{display:inline-block;width:0;height:24px;content:"";vertical-align:0}.mdc-drawer .mdc-deprecated-list-divider{margin:3px 0 4px}.mdc-drawer .mdc-deprecated-list-item__text,.mdc-drawer .mdc-deprecated-list-item__graphic{pointer-events:none}.mdc-drawer--animate{transform:translateX(-100%)}[dir=rtl] .mdc-drawer--animate,.mdc-drawer--animate[dir=rtl]{transform:translateX(100%)}.mdc-drawer--opening{transform:translateX(0);transition-duration:250ms}[dir=rtl] .mdc-drawer--opening,.mdc-drawer--opening[dir=rtl]{transform:translateX(0)}.mdc-drawer--closing{transform:translateX(-100%);transition-duration:200ms}[dir=rtl] .mdc-drawer--closing,.mdc-drawer--closing[dir=rtl]{transform:translateX(100%)}.mdc-drawer__header{flex-shrink:0;box-sizing:border-box;min-height:64px;padding:0 16px 4px}.mdc-drawer__title{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1.25rem;font-size:var(--mdc-typography-headline6-font-size, 1.25rem);line-height:2rem;line-height:var(--mdc-typography-headline6-line-height, 2rem);font-weight:500;font-weight:var(--mdc-typography-headline6-font-weight, 500);letter-spacing:0.0125em;letter-spacing:var(--mdc-typography-headline6-letter-spacing, 0.0125em);text-decoration:inherit;text-decoration:var(--mdc-typography-headline6-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-headline6-text-transform, inherit);display:block;margin-top:0;line-height:normal;margin-bottom:-20px}.mdc-drawer__title::before{display:inline-block;width:0;height:36px;content:"";vertical-align:0}.mdc-drawer__title::after{display:inline-block;width:0;height:20px;content:"";vertical-align:-20px}.mdc-drawer__subtitle{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-body2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-body2-font-size, 0.875rem);line-height:1.25rem;line-height:var(--mdc-typography-body2-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-body2-font-weight, 400);letter-spacing:0.0178571429em;letter-spacing:var(--mdc-typography-body2-letter-spacing, 0.0178571429em);text-decoration:inherit;text-decoration:var(--mdc-typography-body2-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-body2-text-transform, inherit);display:block;margin-top:0;line-height:normal;margin-bottom:0}.mdc-drawer__subtitle::before{display:inline-block;width:0;height:20px;content:"";vertical-align:0}.mdc-drawer__content{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch}.mdc-drawer--dismissible{left:0;right:initial;display:none;position:absolute}[dir=rtl] .mdc-drawer--dismissible,.mdc-drawer--dismissible[dir=rtl]{left:initial;right:0}.mdc-drawer--dismissible.mdc-drawer--open{display:flex}.mdc-drawer-app-content{margin-left:0;margin-right:0;position:relative}[dir=rtl] .mdc-drawer-app-content,.mdc-drawer-app-content[dir=rtl]{margin-left:0;margin-right:0}.mdc-drawer--modal{box-shadow:0px 8px 10px -5px rgba(0, 0, 0, 0.2),0px 16px 24px 2px rgba(0, 0, 0, 0.14),0px 6px 30px 5px rgba(0,0,0,.12);left:0;right:initial;display:none;position:fixed}.mdc-drawer--modal+.mdc-drawer-scrim{background-color:rgba(0, 0, 0, 0.32)}[dir=rtl] .mdc-drawer--modal,.mdc-drawer--modal[dir=rtl]{left:initial;right:0}.mdc-drawer--modal.mdc-drawer--open{display:flex}.mdc-drawer-scrim{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:5;transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1)}.mdc-drawer--open+.mdc-drawer-scrim{display:block}.mdc-drawer--animate+.mdc-drawer-scrim{opacity:0}.mdc-drawer--opening+.mdc-drawer-scrim{transition-duration:250ms;opacity:1}.mdc-drawer--closing+.mdc-drawer-scrim{transition-duration:200ms;opacity:0}.mdc-drawer-app-content{overflow:auto;flex:1}:host{display:flex;height:100%}.mdc-drawer{width:256px;width:var(--mdc-drawer-width, 256px)}.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content{margin-left:256px;margin-left:var(--mdc-drawer-width, 256px);margin-right:0}[dir=rtl] .mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content,.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content[dir=rtl]{margin-left:0;margin-right:256px;margin-right:var(--mdc-drawer-width, 256px)}`;
+const styles$d = i$5 `.mdc-drawer{border-color:rgba(0, 0, 0, 0.12);background-color:#fff;background-color:var(--mdc-theme-surface, #fff);border-top-left-radius:0;border-top-right-radius:0;border-top-right-radius:var(--mdc-shape-large, 0);border-bottom-right-radius:0;border-bottom-right-radius:var(--mdc-shape-large, 0);border-bottom-left-radius:0;z-index:6;width:256px;display:flex;flex-direction:column;flex-shrink:0;box-sizing:border-box;height:100%;border-right-width:1px;border-right-style:solid;overflow:hidden;transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1)}.mdc-drawer .mdc-drawer__title{color:rgba(0, 0, 0, 0.87)}.mdc-drawer .mdc-deprecated-list-group__subheader{color:rgba(0, 0, 0, 0.6)}.mdc-drawer .mdc-drawer__subtitle{color:rgba(0, 0, 0, 0.6)}.mdc-drawer .mdc-deprecated-list-item__graphic{color:rgba(0, 0, 0, 0.6)}.mdc-drawer .mdc-deprecated-list-item{color:rgba(0, 0, 0, 0.87)}.mdc-drawer .mdc-deprecated-list-item--activated .mdc-deprecated-list-item__graphic{color:#6200ee}.mdc-drawer .mdc-deprecated-list-item--activated{color:rgba(98, 0, 238, 0.87)}[dir=rtl] .mdc-drawer,.mdc-drawer[dir=rtl]{border-top-left-radius:0;border-top-left-radius:var(--mdc-shape-large, 0);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;border-bottom-left-radius:var(--mdc-shape-large, 0)}.mdc-drawer .mdc-deprecated-list-item{border-radius:4px;border-radius:var(--mdc-shape-small, 4px)}.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content{margin-left:256px;margin-right:0}[dir=rtl] .mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content,.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content[dir=rtl]{margin-left:0;margin-right:256px}[dir=rtl] .mdc-drawer,.mdc-drawer[dir=rtl]{border-right-width:0;border-left-width:1px;border-right-style:none;border-left-style:solid}.mdc-drawer .mdc-deprecated-list-item{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-subtitle2-font-size, 0.875rem);line-height:1.375rem;line-height:var(--mdc-typography-subtitle2-line-height, 1.375rem);font-weight:500;font-weight:var(--mdc-typography-subtitle2-font-weight, 500);letter-spacing:0.0071428571em;letter-spacing:var(--mdc-typography-subtitle2-letter-spacing, 0.0071428571em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle2-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle2-text-transform, inherit);height:calc(48px - 2 * 4px);margin:8px 8px;padding:0 8px}.mdc-drawer .mdc-deprecated-list-item:nth-child(1){margin-top:2px}.mdc-drawer .mdc-deprecated-list-item:nth-last-child(1){margin-bottom:0}.mdc-drawer .mdc-deprecated-list-group__subheader{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-body2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-body2-font-size, 0.875rem);line-height:1.25rem;line-height:var(--mdc-typography-body2-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-body2-font-weight, 400);letter-spacing:0.0178571429em;letter-spacing:var(--mdc-typography-body2-letter-spacing, 0.0178571429em);text-decoration:inherit;text-decoration:var(--mdc-typography-body2-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-body2-text-transform, inherit);display:block;margin-top:0;line-height:normal;margin:0;padding:0 16px}.mdc-drawer .mdc-deprecated-list-group__subheader::before{display:inline-block;width:0;height:24px;content:"";vertical-align:0}.mdc-drawer .mdc-deprecated-list-divider{margin:3px 0 4px}.mdc-drawer .mdc-deprecated-list-item__text,.mdc-drawer .mdc-deprecated-list-item__graphic{pointer-events:none}.mdc-drawer--animate{transform:translateX(-100%)}[dir=rtl] .mdc-drawer--animate,.mdc-drawer--animate[dir=rtl]{transform:translateX(100%)}.mdc-drawer--opening{transform:translateX(0);transition-duration:250ms}[dir=rtl] .mdc-drawer--opening,.mdc-drawer--opening[dir=rtl]{transform:translateX(0)}.mdc-drawer--closing{transform:translateX(-100%);transition-duration:200ms}[dir=rtl] .mdc-drawer--closing,.mdc-drawer--closing[dir=rtl]{transform:translateX(100%)}.mdc-drawer__header{flex-shrink:0;box-sizing:border-box;min-height:64px;padding:0 16px 4px}.mdc-drawer__title{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1.25rem;font-size:var(--mdc-typography-headline6-font-size, 1.25rem);line-height:2rem;line-height:var(--mdc-typography-headline6-line-height, 2rem);font-weight:500;font-weight:var(--mdc-typography-headline6-font-weight, 500);letter-spacing:0.0125em;letter-spacing:var(--mdc-typography-headline6-letter-spacing, 0.0125em);text-decoration:inherit;text-decoration:var(--mdc-typography-headline6-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-headline6-text-transform, inherit);display:block;margin-top:0;line-height:normal;margin-bottom:-20px}.mdc-drawer__title::before{display:inline-block;width:0;height:36px;content:"";vertical-align:0}.mdc-drawer__title::after{display:inline-block;width:0;height:20px;content:"";vertical-align:-20px}.mdc-drawer__subtitle{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-body2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-body2-font-size, 0.875rem);line-height:1.25rem;line-height:var(--mdc-typography-body2-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-body2-font-weight, 400);letter-spacing:0.0178571429em;letter-spacing:var(--mdc-typography-body2-letter-spacing, 0.0178571429em);text-decoration:inherit;text-decoration:var(--mdc-typography-body2-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-body2-text-transform, inherit);display:block;margin-top:0;line-height:normal;margin-bottom:0}.mdc-drawer__subtitle::before{display:inline-block;width:0;height:20px;content:"";vertical-align:0}.mdc-drawer__content{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch}.mdc-drawer--dismissible{left:0;right:initial;display:none;position:absolute}[dir=rtl] .mdc-drawer--dismissible,.mdc-drawer--dismissible[dir=rtl]{left:initial;right:0}.mdc-drawer--dismissible.mdc-drawer--open{display:flex}.mdc-drawer-app-content{margin-left:0;margin-right:0;position:relative}[dir=rtl] .mdc-drawer-app-content,.mdc-drawer-app-content[dir=rtl]{margin-left:0;margin-right:0}.mdc-drawer--modal{box-shadow:0px 8px 10px -5px rgba(0, 0, 0, 0.2),0px 16px 24px 2px rgba(0, 0, 0, 0.14),0px 6px 30px 5px rgba(0,0,0,.12);left:0;right:initial;display:none;position:fixed}.mdc-drawer--modal+.mdc-drawer-scrim{background-color:rgba(0, 0, 0, 0.32)}[dir=rtl] .mdc-drawer--modal,.mdc-drawer--modal[dir=rtl]{left:initial;right:0}.mdc-drawer--modal.mdc-drawer--open{display:flex}.mdc-drawer-scrim{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:5;transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1)}.mdc-drawer--open+.mdc-drawer-scrim{display:block}.mdc-drawer--animate+.mdc-drawer-scrim{opacity:0}.mdc-drawer--opening+.mdc-drawer-scrim{transition-duration:250ms;opacity:1}.mdc-drawer--closing+.mdc-drawer-scrim{transition-duration:200ms;opacity:0}.mdc-drawer-app-content{overflow:auto;flex:1}:host{display:flex;height:100%}.mdc-drawer{width:256px;width:var(--mdc-drawer-width, 256px)}.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content{margin-left:256px;margin-left:var(--mdc-drawer-width, 256px);margin-right:0}[dir=rtl] .mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content,.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing)+.mdc-drawer-app-content[dir=rtl]{margin-left:0;margin-right:256px;margin-right:var(--mdc-drawer-width, 256px)}`;
 
 /**
  * @license
@@ -4770,9 +4770,9 @@ const styles$8 = i$5 `.mdc-drawer{border-color:rgba(0, 0, 0, 0.12);background-co
  */
 let Drawer = class Drawer extends DrawerBase {
 };
-Drawer.styles = [styles$8];
+Drawer.styles = [styles$d];
 Drawer = __decorate([
-    e$6('mwc-drawer')
+    e$7('mwc-drawer')
 ], Drawer);
 
 /**
@@ -4781,7 +4781,7 @@ Drawer = __decorate([
  * SPDX-License-Identifier: Apache-2.0
  */
 /** @soyCompatible */
-class IconButtonBase extends s$1 {
+class IconButtonBase extends s$2 {
     constructor() {
         super(...arguments);
         this.disabled = false;
@@ -4820,7 +4820,7 @@ class IconButtonBase extends s$1 {
         return y `<button
         class="mdc-icon-button mdc-icon-button--display-flex"
         aria-label="${this.ariaLabel || this.icon}"
-        aria-haspopup="${l(this.ariaHasPopup)}"
+        aria-haspopup="${l$1(this.ariaHasPopup)}"
         ?disabled="${this.disabled}"
         @focus="${this.handleRippleFocus}"
         @blur="${this.handleRippleBlur}"
@@ -4865,33 +4865,33 @@ class IconButtonBase extends s$1 {
     }
 }
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], IconButtonBase.prototype, "disabled", void 0);
 __decorate([
-    e$5({ type: String })
+    e$6({ type: String })
 ], IconButtonBase.prototype, "icon", void 0);
 __decorate([
     ariaProperty,
-    e$5({ type: String, attribute: 'aria-label' })
+    e$6({ type: String, attribute: 'aria-label' })
 ], IconButtonBase.prototype, "ariaLabel", void 0);
 __decorate([
     ariaProperty,
-    e$5({ type: String, attribute: 'aria-haspopup' })
+    e$6({ type: String, attribute: 'aria-haspopup' })
 ], IconButtonBase.prototype, "ariaHasPopup", void 0);
 __decorate([
     i$2('button')
 ], IconButtonBase.prototype, "buttonElement", void 0);
 __decorate([
-    e$3('mwc-ripple')
+    e$4('mwc-ripple')
 ], IconButtonBase.prototype, "ripple", void 0);
 __decorate([
     t$1()
 ], IconButtonBase.prototype, "shouldRenderRipple", void 0);
 __decorate([
-    e$4({ passive: true })
+    e$5({ passive: true })
 ], IconButtonBase.prototype, "handleRippleMouseDown", null);
 __decorate([
-    e$4({ passive: true })
+    e$5({ passive: true })
 ], IconButtonBase.prototype, "handleRippleTouchStart", null);
 
 /**
@@ -4899,7 +4899,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$7 = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}.mdc-icon-button{font-size:24px;width:48px;height:48px;padding:12px}.mdc-icon-button .mdc-icon-button__focus-ring{display:none}.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring{display:block;max-height:48px;max-width:48px}@media screen and (forced-colors: active){.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring{pointer-events:none;border:2px solid transparent;border-radius:6px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:100%;width:100%}}@media screen and (forced-colors: active)and (forced-colors: active){.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring{border-color:CanvasText}}@media screen and (forced-colors: active){.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring::after,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring::after{content:"";border:2px solid transparent;border-radius:8px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}}@media screen and (forced-colors: active)and (forced-colors: active){.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring::after,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring::after{border-color:CanvasText}}.mdc-icon-button.mdc-icon-button--reduced-size .mdc-icon-button__ripple{width:40px;height:40px;margin-top:4px;margin-bottom:4px;margin-right:4px;margin-left:4px}.mdc-icon-button.mdc-icon-button--reduced-size.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring,.mdc-icon-button.mdc-icon-button--reduced-size:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring{max-height:40px;max-width:40px}.mdc-icon-button .mdc-icon-button__touch{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}.mdc-icon-button:disabled{color:rgba(0, 0, 0, 0.38);color:var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38))}.mdc-icon-button svg,.mdc-icon-button img{width:24px;height:24px}.mdc-icon-button{display:inline-block;position:relative;box-sizing:border-box;border:none;outline:none;background-color:transparent;fill:currentColor;color:inherit;text-decoration:none;cursor:pointer;user-select:none;z-index:0;overflow:visible}.mdc-icon-button .mdc-icon-button__touch{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}.mdc-icon-button:disabled{cursor:default;pointer-events:none}.mdc-icon-button--display-flex{align-items:center;display:inline-flex;justify-content:center}.mdc-icon-button__icon{display:inline-block}.mdc-icon-button__icon.mdc-icon-button__icon--on{display:none}.mdc-icon-button--on .mdc-icon-button__icon{display:none}.mdc-icon-button--on .mdc-icon-button__icon.mdc-icon-button__icon--on{display:inline-block}.mdc-icon-button__link{height:100%;left:0;outline:none;position:absolute;top:0;width:100%}.mdc-icon-button{display:inline-block;position:relative;box-sizing:border-box;border:none;outline:none;background-color:transparent;fill:currentColor;color:inherit;text-decoration:none;cursor:pointer;user-select:none;z-index:0;overflow:visible}.mdc-icon-button .mdc-icon-button__touch{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}.mdc-icon-button:disabled{cursor:default;pointer-events:none}.mdc-icon-button--display-flex{align-items:center;display:inline-flex;justify-content:center}.mdc-icon-button__icon{display:inline-block}.mdc-icon-button__icon.mdc-icon-button__icon--on{display:none}.mdc-icon-button--on .mdc-icon-button__icon{display:none}.mdc-icon-button--on .mdc-icon-button__icon.mdc-icon-button__icon--on{display:inline-block}.mdc-icon-button__link{height:100%;left:0;outline:none;position:absolute;top:0;width:100%}:host{display:inline-block;outline:none}:host([disabled]){pointer-events:none}.mdc-icon-button i,.mdc-icon-button svg,.mdc-icon-button img,.mdc-icon-button ::slotted(*){display:block}:host{--mdc-ripple-color: currentcolor;-webkit-tap-highlight-color:transparent}:host,.mdc-icon-button{vertical-align:top}.mdc-icon-button{width:var(--mdc-icon-button-size, 48px);height:var(--mdc-icon-button-size, 48px);padding:calc( (var(--mdc-icon-button-size, 48px) - var(--mdc-icon-size, 24px)) / 2 )}.mdc-icon-button i,.mdc-icon-button svg,.mdc-icon-button img,.mdc-icon-button ::slotted(*){display:block;width:var(--mdc-icon-size, 24px);height:var(--mdc-icon-size, 24px)}`;
+const styles$c = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}.mdc-icon-button{font-size:24px;width:48px;height:48px;padding:12px}.mdc-icon-button .mdc-icon-button__focus-ring{display:none}.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring{display:block;max-height:48px;max-width:48px}@media screen and (forced-colors: active){.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring{pointer-events:none;border:2px solid transparent;border-radius:6px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:100%;width:100%}}@media screen and (forced-colors: active)and (forced-colors: active){.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring{border-color:CanvasText}}@media screen and (forced-colors: active){.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring::after,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring::after{content:"";border:2px solid transparent;border-radius:8px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}}@media screen and (forced-colors: active)and (forced-colors: active){.mdc-icon-button.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring::after,.mdc-icon-button:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring::after{border-color:CanvasText}}.mdc-icon-button.mdc-icon-button--reduced-size .mdc-icon-button__ripple{width:40px;height:40px;margin-top:4px;margin-bottom:4px;margin-right:4px;margin-left:4px}.mdc-icon-button.mdc-icon-button--reduced-size.mdc-ripple-upgraded--background-focused .mdc-icon-button__focus-ring,.mdc-icon-button.mdc-icon-button--reduced-size:not(.mdc-ripple-upgraded):focus .mdc-icon-button__focus-ring{max-height:40px;max-width:40px}.mdc-icon-button .mdc-icon-button__touch{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}.mdc-icon-button:disabled{color:rgba(0, 0, 0, 0.38);color:var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38))}.mdc-icon-button svg,.mdc-icon-button img{width:24px;height:24px}.mdc-icon-button{display:inline-block;position:relative;box-sizing:border-box;border:none;outline:none;background-color:transparent;fill:currentColor;color:inherit;text-decoration:none;cursor:pointer;user-select:none;z-index:0;overflow:visible}.mdc-icon-button .mdc-icon-button__touch{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}.mdc-icon-button:disabled{cursor:default;pointer-events:none}.mdc-icon-button--display-flex{align-items:center;display:inline-flex;justify-content:center}.mdc-icon-button__icon{display:inline-block}.mdc-icon-button__icon.mdc-icon-button__icon--on{display:none}.mdc-icon-button--on .mdc-icon-button__icon{display:none}.mdc-icon-button--on .mdc-icon-button__icon.mdc-icon-button__icon--on{display:inline-block}.mdc-icon-button__link{height:100%;left:0;outline:none;position:absolute;top:0;width:100%}.mdc-icon-button{display:inline-block;position:relative;box-sizing:border-box;border:none;outline:none;background-color:transparent;fill:currentColor;color:inherit;text-decoration:none;cursor:pointer;user-select:none;z-index:0;overflow:visible}.mdc-icon-button .mdc-icon-button__touch{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}.mdc-icon-button:disabled{cursor:default;pointer-events:none}.mdc-icon-button--display-flex{align-items:center;display:inline-flex;justify-content:center}.mdc-icon-button__icon{display:inline-block}.mdc-icon-button__icon.mdc-icon-button__icon--on{display:none}.mdc-icon-button--on .mdc-icon-button__icon{display:none}.mdc-icon-button--on .mdc-icon-button__icon.mdc-icon-button__icon--on{display:inline-block}.mdc-icon-button__link{height:100%;left:0;outline:none;position:absolute;top:0;width:100%}:host{display:inline-block;outline:none}:host([disabled]){pointer-events:none}.mdc-icon-button i,.mdc-icon-button svg,.mdc-icon-button img,.mdc-icon-button ::slotted(*){display:block}:host{--mdc-ripple-color: currentcolor;-webkit-tap-highlight-color:transparent}:host,.mdc-icon-button{vertical-align:top}.mdc-icon-button{width:var(--mdc-icon-button-size, 48px);height:var(--mdc-icon-button-size, 48px);padding:calc( (var(--mdc-icon-button-size, 48px) - var(--mdc-icon-size, 24px)) / 2 )}.mdc-icon-button i,.mdc-icon-button svg,.mdc-icon-button img,.mdc-icon-button ::slotted(*){display:block;width:var(--mdc-icon-size, 24px);height:var(--mdc-icon-size, 24px)}`;
 
 /**
  * @license
@@ -4909,9 +4909,9 @@ const styles$7 = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material
 /** @soyCompatible */
 let IconButton = class IconButton extends IconButtonBase {
 };
-IconButton.styles = [styles$7];
+IconButton.styles = [styles$c];
 IconButton = __decorate([
-    e$6('mwc-icon-button')
+    e$7('mwc-icon-button')
 ], IconButton);
 
 /**
@@ -4923,7 +4923,7 @@ IconButton = __decorate([
  * @fires request-selected {RequestSelectedDetail}
  * @fires list-item-rendered
  */
-class ListItemBase extends s$1 {
+class ListItemBase extends s$2 {
     constructor() {
         super(...arguments);
         this.value = '';
@@ -5099,19 +5099,19 @@ __decorate([
     i$2('slot')
 ], ListItemBase.prototype, "slotElement", void 0);
 __decorate([
-    e$3('mwc-ripple')
+    e$4('mwc-ripple')
 ], ListItemBase.prototype, "ripple", void 0);
 __decorate([
-    e$5({ type: String })
+    e$6({ type: String })
 ], ListItemBase.prototype, "value", void 0);
 __decorate([
-    e$5({ type: String, reflect: true })
+    e$6({ type: String, reflect: true })
 ], ListItemBase.prototype, "group", void 0);
 __decorate([
-    e$5({ type: Number, reflect: true })
+    e$6({ type: Number, reflect: true })
 ], ListItemBase.prototype, "tabindex", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true }),
+    e$6({ type: Boolean, reflect: true }),
     observer(function (value) {
         if (value) {
             this.setAttribute('aria-disabled', 'true');
@@ -5122,22 +5122,22 @@ __decorate([
     })
 ], ListItemBase.prototype, "disabled", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], ListItemBase.prototype, "twoline", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], ListItemBase.prototype, "activated", void 0);
 __decorate([
-    e$5({ type: String, reflect: true })
+    e$6({ type: String, reflect: true })
 ], ListItemBase.prototype, "graphic", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], ListItemBase.prototype, "multipleGraphics", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], ListItemBase.prototype, "hasMeta", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true }),
+    e$6({ type: Boolean, reflect: true }),
     observer(function (value) {
         if (value) {
             this.removeAttribute('aria-checked');
@@ -5152,7 +5152,7 @@ __decorate([
     })
 ], ListItemBase.prototype, "noninteractive", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true }),
+    e$6({ type: Boolean, reflect: true }),
     observer(function (value) {
         const role = this.getAttribute('role');
         const isAriaSelectable = role === 'gridcell' || role === 'option' ||
@@ -5185,7 +5185,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$6 = i$5 `:host{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;height:48px;display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;padding:0;padding-left:var(--mdc-list-side-padding, 16px);padding-right:var(--mdc-list-side-padding, 16px);outline:none;height:48px;color:rgba(0,0,0,.87);color:var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87))}:host:focus{outline:none}:host([activated]){color:#6200ee;color:var(--mdc-theme-primary, #6200ee);--mdc-ripple-color: var( --mdc-theme-primary, #6200ee )}:host([activated]) .mdc-deprecated-list-item__graphic{color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}:host([activated]) .fake-activated-ripple::before{position:absolute;display:block;top:0;bottom:0;left:0;right:0;width:100%;height:100%;pointer-events:none;z-index:1;content:"";opacity:0.12;opacity:var(--mdc-ripple-activated-opacity, 0.12);background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-deprecated-list-item__graphic{flex-shrink:0;align-items:center;justify-content:center;fill:currentColor;display:inline-flex}.mdc-deprecated-list-item__graphic ::slotted(*){flex-shrink:0;align-items:center;justify-content:center;fill:currentColor;width:100%;height:100%;text-align:center}.mdc-deprecated-list-item__meta{width:var(--mdc-list-item-meta-size, 24px);height:var(--mdc-list-item-meta-size, 24px);margin-left:auto;margin-right:0;color:rgba(0, 0, 0, 0.38);color:var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.38))}.mdc-deprecated-list-item__meta.multi{width:auto}.mdc-deprecated-list-item__meta ::slotted(*){width:var(--mdc-list-item-meta-size, 24px);line-height:var(--mdc-list-item-meta-size, 24px)}.mdc-deprecated-list-item__meta ::slotted(.material-icons),.mdc-deprecated-list-item__meta ::slotted(mwc-icon){line-height:var(--mdc-list-item-meta-size, 24px) !important}.mdc-deprecated-list-item__meta ::slotted(:not(.material-icons):not(mwc-icon)){-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-caption-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.75rem;font-size:var(--mdc-typography-caption-font-size, 0.75rem);line-height:1.25rem;line-height:var(--mdc-typography-caption-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-caption-font-weight, 400);letter-spacing:0.0333333333em;letter-spacing:var(--mdc-typography-caption-letter-spacing, 0.0333333333em);text-decoration:inherit;text-decoration:var(--mdc-typography-caption-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-caption-text-transform, inherit)}[dir=rtl] .mdc-deprecated-list-item__meta,.mdc-deprecated-list-item__meta[dir=rtl]{margin-left:0;margin-right:auto}.mdc-deprecated-list-item__meta ::slotted(*){width:100%;height:100%}.mdc-deprecated-list-item__text{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.mdc-deprecated-list-item__text ::slotted([for]),.mdc-deprecated-list-item__text[for]{pointer-events:none}.mdc-deprecated-list-item__primary-text{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:block;margin-top:0;line-height:normal;margin-bottom:-20px;display:block}.mdc-deprecated-list-item__primary-text::before{display:inline-block;width:0;height:32px;content:"";vertical-align:0}.mdc-deprecated-list-item__primary-text::after{display:inline-block;width:0;height:20px;content:"";vertical-align:-20px}.mdc-deprecated-list-item__secondary-text{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-body2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-body2-font-size, 0.875rem);line-height:1.25rem;line-height:var(--mdc-typography-body2-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-body2-font-weight, 400);letter-spacing:0.0178571429em;letter-spacing:var(--mdc-typography-body2-letter-spacing, 0.0178571429em);text-decoration:inherit;text-decoration:var(--mdc-typography-body2-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-body2-text-transform, inherit);text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:block;margin-top:0;line-height:normal;display:block}.mdc-deprecated-list-item__secondary-text::before{display:inline-block;width:0;height:20px;content:"";vertical-align:0}.mdc-deprecated-list--dense .mdc-deprecated-list-item__secondary-text{font-size:inherit}* ::slotted(a),a{color:inherit;text-decoration:none}:host([twoline]){height:72px}:host([twoline]) .mdc-deprecated-list-item__text{align-self:flex-start}:host([disabled]),:host([noninteractive]){cursor:default;pointer-events:none}:host([disabled]) .mdc-deprecated-list-item__text ::slotted(*){opacity:.38}:host([disabled]) .mdc-deprecated-list-item__text ::slotted(*),:host([disabled]) .mdc-deprecated-list-item__primary-text ::slotted(*),:host([disabled]) .mdc-deprecated-list-item__secondary-text ::slotted(*){color:#000;color:var(--mdc-theme-on-surface, #000)}.mdc-deprecated-list-item__secondary-text ::slotted(*){color:rgba(0, 0, 0, 0.54);color:var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54))}.mdc-deprecated-list-item__graphic ::slotted(*){background-color:transparent;color:rgba(0, 0, 0, 0.38);color:var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38))}.mdc-deprecated-list-group__subheader ::slotted(*){color:rgba(0, 0, 0, 0.87);color:var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87))}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic{width:var(--mdc-list-item-graphic-size, 40px);height:var(--mdc-list-item-graphic-size, 40px)}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic.multi{width:auto}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic ::slotted(*){width:var(--mdc-list-item-graphic-size, 40px);line-height:var(--mdc-list-item-graphic-size, 40px)}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic ::slotted(.material-icons),:host([graphic=avatar]) .mdc-deprecated-list-item__graphic ::slotted(mwc-icon){line-height:var(--mdc-list-item-graphic-size, 40px) !important}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic ::slotted(*){border-radius:50%}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic,:host([graphic=medium]) .mdc-deprecated-list-item__graphic,:host([graphic=large]) .mdc-deprecated-list-item__graphic,:host([graphic=control]) .mdc-deprecated-list-item__graphic{margin-left:0;margin-right:var(--mdc-list-item-graphic-margin, 16px)}[dir=rtl] :host([graphic=avatar]) .mdc-deprecated-list-item__graphic,[dir=rtl] :host([graphic=medium]) .mdc-deprecated-list-item__graphic,[dir=rtl] :host([graphic=large]) .mdc-deprecated-list-item__graphic,[dir=rtl] :host([graphic=control]) .mdc-deprecated-list-item__graphic,:host([graphic=avatar]) .mdc-deprecated-list-item__graphic[dir=rtl],:host([graphic=medium]) .mdc-deprecated-list-item__graphic[dir=rtl],:host([graphic=large]) .mdc-deprecated-list-item__graphic[dir=rtl],:host([graphic=control]) .mdc-deprecated-list-item__graphic[dir=rtl]{margin-left:var(--mdc-list-item-graphic-margin, 16px);margin-right:0}:host([graphic=icon]) .mdc-deprecated-list-item__graphic{width:var(--mdc-list-item-graphic-size, 24px);height:var(--mdc-list-item-graphic-size, 24px);margin-left:0;margin-right:var(--mdc-list-item-graphic-margin, 32px)}:host([graphic=icon]) .mdc-deprecated-list-item__graphic.multi{width:auto}:host([graphic=icon]) .mdc-deprecated-list-item__graphic ::slotted(*){width:var(--mdc-list-item-graphic-size, 24px);line-height:var(--mdc-list-item-graphic-size, 24px)}:host([graphic=icon]) .mdc-deprecated-list-item__graphic ::slotted(.material-icons),:host([graphic=icon]) .mdc-deprecated-list-item__graphic ::slotted(mwc-icon){line-height:var(--mdc-list-item-graphic-size, 24px) !important}[dir=rtl] :host([graphic=icon]) .mdc-deprecated-list-item__graphic,:host([graphic=icon]) .mdc-deprecated-list-item__graphic[dir=rtl]{margin-left:var(--mdc-list-item-graphic-margin, 32px);margin-right:0}:host([graphic=avatar]:not([twoLine])),:host([graphic=icon]:not([twoLine])){height:56px}:host([graphic=medium]:not([twoLine])),:host([graphic=large]:not([twoLine])){height:72px}:host([graphic=medium]) .mdc-deprecated-list-item__graphic,:host([graphic=large]) .mdc-deprecated-list-item__graphic{width:var(--mdc-list-item-graphic-size, 56px);height:var(--mdc-list-item-graphic-size, 56px)}:host([graphic=medium]) .mdc-deprecated-list-item__graphic.multi,:host([graphic=large]) .mdc-deprecated-list-item__graphic.multi{width:auto}:host([graphic=medium]) .mdc-deprecated-list-item__graphic ::slotted(*),:host([graphic=large]) .mdc-deprecated-list-item__graphic ::slotted(*){width:var(--mdc-list-item-graphic-size, 56px);line-height:var(--mdc-list-item-graphic-size, 56px)}:host([graphic=medium]) .mdc-deprecated-list-item__graphic ::slotted(.material-icons),:host([graphic=medium]) .mdc-deprecated-list-item__graphic ::slotted(mwc-icon),:host([graphic=large]) .mdc-deprecated-list-item__graphic ::slotted(.material-icons),:host([graphic=large]) .mdc-deprecated-list-item__graphic ::slotted(mwc-icon){line-height:var(--mdc-list-item-graphic-size, 56px) !important}:host([graphic=large]){padding-left:0px}`;
+const styles$b = i$5 `:host{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;height:48px;display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;padding:0;padding-left:var(--mdc-list-side-padding, 16px);padding-right:var(--mdc-list-side-padding, 16px);outline:none;height:48px;color:rgba(0,0,0,.87);color:var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87))}:host:focus{outline:none}:host([activated]){color:#6200ee;color:var(--mdc-theme-primary, #6200ee);--mdc-ripple-color: var( --mdc-theme-primary, #6200ee )}:host([activated]) .mdc-deprecated-list-item__graphic{color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}:host([activated]) .fake-activated-ripple::before{position:absolute;display:block;top:0;bottom:0;left:0;right:0;width:100%;height:100%;pointer-events:none;z-index:1;content:"";opacity:0.12;opacity:var(--mdc-ripple-activated-opacity, 0.12);background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-deprecated-list-item__graphic{flex-shrink:0;align-items:center;justify-content:center;fill:currentColor;display:inline-flex}.mdc-deprecated-list-item__graphic ::slotted(*){flex-shrink:0;align-items:center;justify-content:center;fill:currentColor;width:100%;height:100%;text-align:center}.mdc-deprecated-list-item__meta{width:var(--mdc-list-item-meta-size, 24px);height:var(--mdc-list-item-meta-size, 24px);margin-left:auto;margin-right:0;color:rgba(0, 0, 0, 0.38);color:var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.38))}.mdc-deprecated-list-item__meta.multi{width:auto}.mdc-deprecated-list-item__meta ::slotted(*){width:var(--mdc-list-item-meta-size, 24px);line-height:var(--mdc-list-item-meta-size, 24px)}.mdc-deprecated-list-item__meta ::slotted(.material-icons),.mdc-deprecated-list-item__meta ::slotted(mwc-icon){line-height:var(--mdc-list-item-meta-size, 24px) !important}.mdc-deprecated-list-item__meta ::slotted(:not(.material-icons):not(mwc-icon)){-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-caption-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.75rem;font-size:var(--mdc-typography-caption-font-size, 0.75rem);line-height:1.25rem;line-height:var(--mdc-typography-caption-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-caption-font-weight, 400);letter-spacing:0.0333333333em;letter-spacing:var(--mdc-typography-caption-letter-spacing, 0.0333333333em);text-decoration:inherit;text-decoration:var(--mdc-typography-caption-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-caption-text-transform, inherit)}[dir=rtl] .mdc-deprecated-list-item__meta,.mdc-deprecated-list-item__meta[dir=rtl]{margin-left:0;margin-right:auto}.mdc-deprecated-list-item__meta ::slotted(*){width:100%;height:100%}.mdc-deprecated-list-item__text{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.mdc-deprecated-list-item__text ::slotted([for]),.mdc-deprecated-list-item__text[for]{pointer-events:none}.mdc-deprecated-list-item__primary-text{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:block;margin-top:0;line-height:normal;margin-bottom:-20px;display:block}.mdc-deprecated-list-item__primary-text::before{display:inline-block;width:0;height:32px;content:"";vertical-align:0}.mdc-deprecated-list-item__primary-text::after{display:inline-block;width:0;height:20px;content:"";vertical-align:-20px}.mdc-deprecated-list-item__secondary-text{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-body2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-body2-font-size, 0.875rem);line-height:1.25rem;line-height:var(--mdc-typography-body2-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-body2-font-weight, 400);letter-spacing:0.0178571429em;letter-spacing:var(--mdc-typography-body2-letter-spacing, 0.0178571429em);text-decoration:inherit;text-decoration:var(--mdc-typography-body2-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-body2-text-transform, inherit);text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:block;margin-top:0;line-height:normal;display:block}.mdc-deprecated-list-item__secondary-text::before{display:inline-block;width:0;height:20px;content:"";vertical-align:0}.mdc-deprecated-list--dense .mdc-deprecated-list-item__secondary-text{font-size:inherit}* ::slotted(a),a{color:inherit;text-decoration:none}:host([twoline]){height:72px}:host([twoline]) .mdc-deprecated-list-item__text{align-self:flex-start}:host([disabled]),:host([noninteractive]){cursor:default;pointer-events:none}:host([disabled]) .mdc-deprecated-list-item__text ::slotted(*){opacity:.38}:host([disabled]) .mdc-deprecated-list-item__text ::slotted(*),:host([disabled]) .mdc-deprecated-list-item__primary-text ::slotted(*),:host([disabled]) .mdc-deprecated-list-item__secondary-text ::slotted(*){color:#000;color:var(--mdc-theme-on-surface, #000)}.mdc-deprecated-list-item__secondary-text ::slotted(*){color:rgba(0, 0, 0, 0.54);color:var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54))}.mdc-deprecated-list-item__graphic ::slotted(*){background-color:transparent;color:rgba(0, 0, 0, 0.38);color:var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38))}.mdc-deprecated-list-group__subheader ::slotted(*){color:rgba(0, 0, 0, 0.87);color:var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87))}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic{width:var(--mdc-list-item-graphic-size, 40px);height:var(--mdc-list-item-graphic-size, 40px)}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic.multi{width:auto}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic ::slotted(*){width:var(--mdc-list-item-graphic-size, 40px);line-height:var(--mdc-list-item-graphic-size, 40px)}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic ::slotted(.material-icons),:host([graphic=avatar]) .mdc-deprecated-list-item__graphic ::slotted(mwc-icon){line-height:var(--mdc-list-item-graphic-size, 40px) !important}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic ::slotted(*){border-radius:50%}:host([graphic=avatar]) .mdc-deprecated-list-item__graphic,:host([graphic=medium]) .mdc-deprecated-list-item__graphic,:host([graphic=large]) .mdc-deprecated-list-item__graphic,:host([graphic=control]) .mdc-deprecated-list-item__graphic{margin-left:0;margin-right:var(--mdc-list-item-graphic-margin, 16px)}[dir=rtl] :host([graphic=avatar]) .mdc-deprecated-list-item__graphic,[dir=rtl] :host([graphic=medium]) .mdc-deprecated-list-item__graphic,[dir=rtl] :host([graphic=large]) .mdc-deprecated-list-item__graphic,[dir=rtl] :host([graphic=control]) .mdc-deprecated-list-item__graphic,:host([graphic=avatar]) .mdc-deprecated-list-item__graphic[dir=rtl],:host([graphic=medium]) .mdc-deprecated-list-item__graphic[dir=rtl],:host([graphic=large]) .mdc-deprecated-list-item__graphic[dir=rtl],:host([graphic=control]) .mdc-deprecated-list-item__graphic[dir=rtl]{margin-left:var(--mdc-list-item-graphic-margin, 16px);margin-right:0}:host([graphic=icon]) .mdc-deprecated-list-item__graphic{width:var(--mdc-list-item-graphic-size, 24px);height:var(--mdc-list-item-graphic-size, 24px);margin-left:0;margin-right:var(--mdc-list-item-graphic-margin, 32px)}:host([graphic=icon]) .mdc-deprecated-list-item__graphic.multi{width:auto}:host([graphic=icon]) .mdc-deprecated-list-item__graphic ::slotted(*){width:var(--mdc-list-item-graphic-size, 24px);line-height:var(--mdc-list-item-graphic-size, 24px)}:host([graphic=icon]) .mdc-deprecated-list-item__graphic ::slotted(.material-icons),:host([graphic=icon]) .mdc-deprecated-list-item__graphic ::slotted(mwc-icon){line-height:var(--mdc-list-item-graphic-size, 24px) !important}[dir=rtl] :host([graphic=icon]) .mdc-deprecated-list-item__graphic,:host([graphic=icon]) .mdc-deprecated-list-item__graphic[dir=rtl]{margin-left:var(--mdc-list-item-graphic-margin, 32px);margin-right:0}:host([graphic=avatar]:not([twoLine])),:host([graphic=icon]:not([twoLine])){height:56px}:host([graphic=medium]:not([twoLine])),:host([graphic=large]:not([twoLine])){height:72px}:host([graphic=medium]) .mdc-deprecated-list-item__graphic,:host([graphic=large]) .mdc-deprecated-list-item__graphic{width:var(--mdc-list-item-graphic-size, 56px);height:var(--mdc-list-item-graphic-size, 56px)}:host([graphic=medium]) .mdc-deprecated-list-item__graphic.multi,:host([graphic=large]) .mdc-deprecated-list-item__graphic.multi{width:auto}:host([graphic=medium]) .mdc-deprecated-list-item__graphic ::slotted(*),:host([graphic=large]) .mdc-deprecated-list-item__graphic ::slotted(*){width:var(--mdc-list-item-graphic-size, 56px);line-height:var(--mdc-list-item-graphic-size, 56px)}:host([graphic=medium]) .mdc-deprecated-list-item__graphic ::slotted(.material-icons),:host([graphic=medium]) .mdc-deprecated-list-item__graphic ::slotted(mwc-icon),:host([graphic=large]) .mdc-deprecated-list-item__graphic ::slotted(.material-icons),:host([graphic=large]) .mdc-deprecated-list-item__graphic ::slotted(mwc-icon){line-height:var(--mdc-list-item-graphic-size, 56px) !important}:host([graphic=large]){padding-left:0px}`;
 
 /**
  * @license
@@ -5194,9 +5194,9 @@ const styles$6 = i$5 `:host{cursor:pointer;user-select:none;-webkit-tap-highligh
  */
 let ListItem = class ListItem extends ListItemBase {
 };
-ListItem.styles = [styles$6];
+ListItem.styles = [styles$b];
 ListItem = __decorate([
-    e$6('mwc-list-item')
+    e$7('mwc-list-item')
 ], ListItem);
 
 /**
@@ -5341,8 +5341,8 @@ function normalizeKey(evt) {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var _a, _b;
-var cssClasses$4 = {
+var _a$1, _b$1;
+var cssClasses$b = {
     LIST_ITEM_ACTIVATED_CLASS: 'mdc-list-item--activated',
     LIST_ITEM_CLASS: 'mdc-list-item',
     LIST_ITEM_DISABLED_CLASS: 'mdc-list-item--disabled',
@@ -5351,24 +5351,24 @@ var cssClasses$4 = {
     LIST_ITEM_PRIMARY_TEXT_CLASS: 'mdc-list-item__primary-text',
     ROOT: 'mdc-list',
 };
-(_a = {},
-    _a["" + cssClasses$4.LIST_ITEM_ACTIVATED_CLASS] = 'mdc-list-item--activated',
-    _a["" + cssClasses$4.LIST_ITEM_CLASS] = 'mdc-list-item',
-    _a["" + cssClasses$4.LIST_ITEM_DISABLED_CLASS] = 'mdc-list-item--disabled',
-    _a["" + cssClasses$4.LIST_ITEM_SELECTED_CLASS] = 'mdc-list-item--selected',
-    _a["" + cssClasses$4.LIST_ITEM_PRIMARY_TEXT_CLASS] = 'mdc-list-item__primary-text',
-    _a["" + cssClasses$4.ROOT] = 'mdc-list',
-    _a);
-var deprecatedClassNameMap = (_b = {},
-    _b["" + cssClasses$4.LIST_ITEM_ACTIVATED_CLASS] = 'mdc-deprecated-list-item--activated',
-    _b["" + cssClasses$4.LIST_ITEM_CLASS] = 'mdc-deprecated-list-item',
-    _b["" + cssClasses$4.LIST_ITEM_DISABLED_CLASS] = 'mdc-deprecated-list-item--disabled',
-    _b["" + cssClasses$4.LIST_ITEM_SELECTED_CLASS] = 'mdc-deprecated-list-item--selected',
-    _b["" + cssClasses$4.LIST_ITEM_TEXT_CLASS] = 'mdc-deprecated-list-item__text',
-    _b["" + cssClasses$4.LIST_ITEM_PRIMARY_TEXT_CLASS] = 'mdc-deprecated-list-item__primary-text',
-    _b["" + cssClasses$4.ROOT] = 'mdc-deprecated-list',
-    _b);
-var strings$5 = {
+(_a$1 = {},
+    _a$1["" + cssClasses$b.LIST_ITEM_ACTIVATED_CLASS] = 'mdc-list-item--activated',
+    _a$1["" + cssClasses$b.LIST_ITEM_CLASS] = 'mdc-list-item',
+    _a$1["" + cssClasses$b.LIST_ITEM_DISABLED_CLASS] = 'mdc-list-item--disabled',
+    _a$1["" + cssClasses$b.LIST_ITEM_SELECTED_CLASS] = 'mdc-list-item--selected',
+    _a$1["" + cssClasses$b.LIST_ITEM_PRIMARY_TEXT_CLASS] = 'mdc-list-item__primary-text',
+    _a$1["" + cssClasses$b.ROOT] = 'mdc-list',
+    _a$1);
+var deprecatedClassNameMap = (_b$1 = {},
+    _b$1["" + cssClasses$b.LIST_ITEM_ACTIVATED_CLASS] = 'mdc-deprecated-list-item--activated',
+    _b$1["" + cssClasses$b.LIST_ITEM_CLASS] = 'mdc-deprecated-list-item',
+    _b$1["" + cssClasses$b.LIST_ITEM_DISABLED_CLASS] = 'mdc-deprecated-list-item--disabled',
+    _b$1["" + cssClasses$b.LIST_ITEM_SELECTED_CLASS] = 'mdc-deprecated-list-item--selected',
+    _b$1["" + cssClasses$b.LIST_ITEM_TEXT_CLASS] = 'mdc-deprecated-list-item__text',
+    _b$1["" + cssClasses$b.LIST_ITEM_PRIMARY_TEXT_CLASS] = 'mdc-deprecated-list-item__primary-text',
+    _b$1["" + cssClasses$b.ROOT] = 'mdc-deprecated-list',
+    _b$1);
+var strings$a = {
     ACTION_EVENT: 'MDCList:action',
     SELECTION_CHANGE_EVENT: 'MDCList:selectionChange',
     ARIA_CHECKED: 'aria-checked',
@@ -5384,13 +5384,13 @@ var strings$5 = {
     ARIA_MULTI_SELECTABLE_SELECTOR: '[aria-multiselectable="true"]',
     CHECKBOX_RADIO_SELECTOR: 'input[type="checkbox"], input[type="radio"]',
     CHECKBOX_SELECTOR: 'input[type="checkbox"]',
-    CHILD_ELEMENTS_TO_TOGGLE_TABINDEX: "\n    ." + cssClasses$4.LIST_ITEM_CLASS + " button:not(:disabled),\n    ." + cssClasses$4.LIST_ITEM_CLASS + " a,\n    ." + deprecatedClassNameMap[cssClasses$4.LIST_ITEM_CLASS] + " button:not(:disabled),\n    ." + deprecatedClassNameMap[cssClasses$4.LIST_ITEM_CLASS] + " a\n  ",
+    CHILD_ELEMENTS_TO_TOGGLE_TABINDEX: "\n    ." + cssClasses$b.LIST_ITEM_CLASS + " button:not(:disabled),\n    ." + cssClasses$b.LIST_ITEM_CLASS + " a,\n    ." + deprecatedClassNameMap[cssClasses$b.LIST_ITEM_CLASS] + " button:not(:disabled),\n    ." + deprecatedClassNameMap[cssClasses$b.LIST_ITEM_CLASS] + " a\n  ",
     DEPRECATED_SELECTOR: '.mdc-deprecated-list',
-    FOCUSABLE_CHILD_ELEMENTS: "\n    ." + cssClasses$4.LIST_ITEM_CLASS + " button:not(:disabled),\n    ." + cssClasses$4.LIST_ITEM_CLASS + " a,\n    ." + cssClasses$4.LIST_ITEM_CLASS + " input[type=\"radio\"]:not(:disabled),\n    ." + cssClasses$4.LIST_ITEM_CLASS + " input[type=\"checkbox\"]:not(:disabled),\n    ." + deprecatedClassNameMap[cssClasses$4.LIST_ITEM_CLASS] + " button:not(:disabled),\n    ." + deprecatedClassNameMap[cssClasses$4.LIST_ITEM_CLASS] + " a,\n    ." + deprecatedClassNameMap[cssClasses$4.LIST_ITEM_CLASS] + " input[type=\"radio\"]:not(:disabled),\n    ." + deprecatedClassNameMap[cssClasses$4.LIST_ITEM_CLASS] + " input[type=\"checkbox\"]:not(:disabled)\n  ",
+    FOCUSABLE_CHILD_ELEMENTS: "\n    ." + cssClasses$b.LIST_ITEM_CLASS + " button:not(:disabled),\n    ." + cssClasses$b.LIST_ITEM_CLASS + " a,\n    ." + cssClasses$b.LIST_ITEM_CLASS + " input[type=\"radio\"]:not(:disabled),\n    ." + cssClasses$b.LIST_ITEM_CLASS + " input[type=\"checkbox\"]:not(:disabled),\n    ." + deprecatedClassNameMap[cssClasses$b.LIST_ITEM_CLASS] + " button:not(:disabled),\n    ." + deprecatedClassNameMap[cssClasses$b.LIST_ITEM_CLASS] + " a,\n    ." + deprecatedClassNameMap[cssClasses$b.LIST_ITEM_CLASS] + " input[type=\"radio\"]:not(:disabled),\n    ." + deprecatedClassNameMap[cssClasses$b.LIST_ITEM_CLASS] + " input[type=\"checkbox\"]:not(:disabled)\n  ",
     RADIO_SELECTOR: 'input[type="radio"]',
     SELECTED_ITEM_SELECTOR: '[aria-selected="true"], [aria-current="true"]',
 };
-var numbers$2 = {
+var numbers$7 = {
     UNSET_INDEX: -1,
     TYPEAHEAD_BUFFER_CLEAR_TIMEOUT_MS: 300
 };
@@ -5432,12 +5432,12 @@ const findIndexDiff = (oldSet, newSet) => {
     }
     return diff;
 };
-const ELEMENTS_KEY_ALLOWED_IN = ['input', 'button', 'textarea', 'select'];
+const ELEMENTS_KEY_ALLOWED_IN$1 = ['input', 'button', 'textarea', 'select'];
 function isIndexSet(selectedIndex) {
     return selectedIndex instanceof Set;
 }
 const createSetFromIndex = (index) => {
-    const entry = index === numbers$2.UNSET_INDEX ? new Set() : index;
+    const entry = index === numbers$7.UNSET_INDEX ? new Set() : index;
     return isIndexSet(entry) ? new Set(entry) : new Set([entry]);
 };
 class MDCListFoundation extends MDCFoundation {
@@ -5446,16 +5446,16 @@ class MDCListFoundation extends MDCFoundation {
         this.isMulti_ = false;
         this.wrapFocus_ = false;
         this.isVertical_ = true;
-        this.selectedIndex_ = numbers$2.UNSET_INDEX;
-        this.focusedItemIndex_ = numbers$2.UNSET_INDEX;
+        this.selectedIndex_ = numbers$7.UNSET_INDEX;
+        this.focusedItemIndex_ = numbers$7.UNSET_INDEX;
         this.useActivatedClass_ = false;
         this.ariaCurrentAttrValue_ = null;
     }
     static get strings() {
-        return strings$5;
+        return strings$a;
     }
     static get numbers() {
-        return numbers$2;
+        return numbers$7;
     }
     static get defaultAdapter() {
         return {
@@ -5491,7 +5491,7 @@ class MDCListFoundation extends MDCFoundation {
         if (value) {
             // number to set
             if (!isIndexSet(currentIndex)) {
-                const isUnset = currentIndex === numbers$2.UNSET_INDEX;
+                const isUnset = currentIndex === numbers$7.UNSET_INDEX;
                 this.selectedIndex_ = isUnset ? new Set() : new Set([currentIndex]);
             }
         }
@@ -5503,7 +5503,7 @@ class MDCListFoundation extends MDCFoundation {
                     this.selectedIndex_ = vals[0];
                 }
                 else {
-                    this.selectedIndex_ = numbers$2.UNSET_INDEX;
+                    this.selectedIndex_ = numbers$7.UNSET_INDEX;
                 }
             }
         }
@@ -5631,7 +5631,7 @@ class MDCListFoundation extends MDCFoundation {
      * Click handler for the list.
      */
     handleSingleSelection(index, isInteraction, force) {
-        if (index === numbers$2.UNSET_INDEX) {
+        if (index === numbers$7.UNSET_INDEX) {
             return;
         }
         this.setSelectedIndexOnAction_(index, isInteraction, force);
@@ -5699,7 +5699,7 @@ class MDCListFoundation extends MDCFoundation {
     preventDefaultEvent(evt) {
         const target = evt.target;
         const tagName = `${target.tagName}`.toLowerCase();
-        if (ELEMENTS_KEY_ALLOWED_IN.indexOf(tagName) === -1) {
+        if (ELEMENTS_KEY_ALLOWED_IN$1.indexOf(tagName) === -1) {
             evt.preventDefault();
         }
     }
@@ -5708,7 +5708,7 @@ class MDCListFoundation extends MDCFoundation {
             return;
         }
         // unset previous
-        if (this.selectedIndex_ !== numbers$2.UNSET_INDEX) {
+        if (this.selectedIndex_ !== numbers$7.UNSET_INDEX) {
             this.adapter.setSelectedStateForElementIndex(this.selectedIndex_, false);
             if (this.useActivatedClass_) {
                 this.adapter.setActivatedStateForElementIndex(this.selectedIndex_, false);
@@ -5756,20 +5756,20 @@ class MDCListFoundation extends MDCFoundation {
     setAriaForSingleSelectionAtIndex_(index) {
         // Detect the presence of aria-current and get the value only during list
         // initialization when it is in unset state.
-        if (this.selectedIndex_ === numbers$2.UNSET_INDEX) {
+        if (this.selectedIndex_ === numbers$7.UNSET_INDEX) {
             this.ariaCurrentAttrValue_ =
-                this.adapter.getAttributeForElementIndex(index, strings$5.ARIA_CURRENT);
+                this.adapter.getAttributeForElementIndex(index, strings$a.ARIA_CURRENT);
         }
         const isAriaCurrent = this.ariaCurrentAttrValue_ !== null;
-        const ariaAttribute = isAriaCurrent ? strings$5.ARIA_CURRENT : strings$5.ARIA_SELECTED;
-        if (this.selectedIndex_ !== numbers$2.UNSET_INDEX) {
+        const ariaAttribute = isAriaCurrent ? strings$a.ARIA_CURRENT : strings$a.ARIA_SELECTED;
+        if (this.selectedIndex_ !== numbers$7.UNSET_INDEX) {
             this.adapter.setAttributeForElementIndex(this.selectedIndex_, ariaAttribute, 'false');
         }
         const ariaAttributeValue = isAriaCurrent ? this.ariaCurrentAttrValue_ : 'true';
         this.adapter.setAttributeForElementIndex(index, ariaAttribute, ariaAttributeValue);
     }
     setTabindexAtIndex_(index) {
-        if (this.focusedItemIndex_ === numbers$2.UNSET_INDEX && index !== 0) {
+        if (this.focusedItemIndex_ === numbers$7.UNSET_INDEX && index !== 0) {
             // If no list item was selected set first list item's tabindex to -1.
             // Generally, tabindex is set to 0 on first list item of list that has no
             // preselected items.
@@ -5783,7 +5783,7 @@ class MDCListFoundation extends MDCFoundation {
     setTabindexToFirstSelectedItem_() {
         let targetIndex = 0;
         if (typeof this.selectedIndex_ === 'number' &&
-            this.selectedIndex_ !== numbers$2.UNSET_INDEX) {
+            this.selectedIndex_ !== numbers$7.UNSET_INDEX) {
             targetIndex = this.selectedIndex_;
         }
         else if (isIndexSet(this.selectedIndex_) && this.selectedIndex_.size > 0) {
@@ -5815,7 +5815,7 @@ class MDCListFoundation extends MDCFoundation {
                 throw new Error('MDCListFoundation: Expected array of index for checkbox based list but got number: ' +
                     index);
             }
-            return index === numbers$2.UNSET_INDEX || this.isIndexInRange_(index);
+            return index === numbers$7.UNSET_INDEX || this.isIndexInRange_(index);
         }
         else {
             return false;
@@ -5851,7 +5851,7 @@ class MDCListFoundation extends MDCFoundation {
             else {
                 const isDeselection = this.selectedIndex_ === index;
                 if (isDeselection) {
-                    this.setSingleSelectionAtIndex_(numbers$2.UNSET_INDEX);
+                    this.setSingleSelectionAtIndex_(numbers$7.UNSET_INDEX);
                 }
             }
         }
@@ -6011,8 +6011,8 @@ class ListBase extends BaseElement {
       <!-- @ts-ignore -->
       <ul
           tabindex=${tabindex}
-          role="${l(role)}"
-          aria-label="${l(ariaLabel)}"
+          role="${l$1(role)}"
+          aria-label="${l$1(ariaLabel)}"
           class="mdc-deprecated-list"
           @keydown=${this.onKeydown}
           @focusin=${this.onFocusIn}
@@ -6287,7 +6287,7 @@ class ListBase extends BaseElement {
     }
 }
 __decorate([
-    e$5({ type: String })
+    e$6({ type: String })
 ], ListBase.prototype, "emptyMessage", void 0);
 __decorate([
     i$2('.mdc-deprecated-list')
@@ -6299,7 +6299,7 @@ __decorate([
     o$2('', true, '[tabindex="0"]')
 ], ListBase.prototype, "tabbableElements", void 0);
 __decorate([
-    e$5({ type: Boolean }),
+    e$6({ type: Boolean }),
     observer(function (value) {
         if (this.mdcFoundation) {
             this.mdcFoundation.setUseActivatedClass(value);
@@ -6307,7 +6307,7 @@ __decorate([
     })
 ], ListBase.prototype, "activatable", void 0);
 __decorate([
-    e$5({ type: Boolean }),
+    e$6({ type: Boolean }),
     observer(function (newValue, oldValue) {
         if (this.mdcFoundation) {
             this.mdcFoundation.setMulti(newValue);
@@ -6318,7 +6318,7 @@ __decorate([
     })
 ], ListBase.prototype, "multi", void 0);
 __decorate([
-    e$5({ type: Boolean }),
+    e$6({ type: Boolean }),
     observer(function (value) {
         if (this.mdcFoundation) {
             this.mdcFoundation.setWrapFocus(value);
@@ -6326,7 +6326,7 @@ __decorate([
     })
 ], ListBase.prototype, "wrapFocus", void 0);
 __decorate([
-    e$5({ type: String }),
+    e$6({ type: String }),
     observer(function (_newValue, oldValue) {
         if (oldValue !== undefined) {
             this.updateItems();
@@ -6334,16 +6334,16 @@ __decorate([
     })
 ], ListBase.prototype, "itemRoles", void 0);
 __decorate([
-    e$5({ type: String })
+    e$6({ type: String })
 ], ListBase.prototype, "innerRole", void 0);
 __decorate([
-    e$5({ type: String })
+    e$6({ type: String })
 ], ListBase.prototype, "innerAriaLabel", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], ListBase.prototype, "rootTabbable", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true }),
+    e$6({ type: Boolean, reflect: true }),
     observer(function (value) {
         var _a, _b;
         if (value) {
@@ -6365,7 +6365,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$5 = i$5 `@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}:host{display:block}.mdc-deprecated-list{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-subtitle1-font-size, 1rem);line-height:1.75rem;line-height:var(--mdc-typography-subtitle1-line-height, 1.75rem);font-weight:400;font-weight:var(--mdc-typography-subtitle1-font-weight, 400);letter-spacing:0.009375em;letter-spacing:var(--mdc-typography-subtitle1-letter-spacing, 0.009375em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle1-text-transform, inherit);line-height:1.5rem;margin:0;padding:8px 0;list-style-type:none;color:rgba(0, 0, 0, 0.87);color:var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));padding:var(--mdc-list-vertical-padding, 8px) 0}.mdc-deprecated-list:focus{outline:none}.mdc-deprecated-list-item{height:48px}.mdc-deprecated-list--dense{padding-top:4px;padding-bottom:4px;font-size:.812rem}.mdc-deprecated-list ::slotted([divider]){height:0;margin:0;border:none;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgba(0, 0, 0, 0.12)}.mdc-deprecated-list ::slotted([divider][padded]){margin:0 var(--mdc-list-side-padding, 16px)}.mdc-deprecated-list ::slotted([divider][inset]){margin-left:var(--mdc-list-inset-margin, 72px);margin-right:0;width:calc( 100% - var(--mdc-list-inset-margin, 72px) )}[dir=rtl] .mdc-deprecated-list ::slotted([divider][inset]),.mdc-deprecated-list ::slotted([divider][inset][dir=rtl]){margin-left:0;margin-right:var(--mdc-list-inset-margin, 72px)}.mdc-deprecated-list ::slotted([divider][inset][padded]){width:calc( 100% - var(--mdc-list-inset-margin, 72px) - var(--mdc-list-side-padding, 16px) )}.mdc-deprecated-list--dense ::slotted([mwc-list-item]){height:40px}.mdc-deprecated-list--dense ::slotted([mwc-list]){--mdc-list-item-graphic-size: 20px}.mdc-deprecated-list--two-line.mdc-deprecated-list--dense ::slotted([mwc-list-item]),.mdc-deprecated-list--avatar-list.mdc-deprecated-list--dense ::slotted([mwc-list-item]){height:60px}.mdc-deprecated-list--avatar-list.mdc-deprecated-list--dense ::slotted([mwc-list]){--mdc-list-item-graphic-size: 36px}:host([noninteractive]){pointer-events:none;cursor:default}.mdc-deprecated-list--dense ::slotted(.mdc-deprecated-list-item__primary-text){display:block;margin-top:0;line-height:normal;margin-bottom:-20px}.mdc-deprecated-list--dense ::slotted(.mdc-deprecated-list-item__primary-text)::before{display:inline-block;width:0;height:24px;content:"";vertical-align:0}.mdc-deprecated-list--dense ::slotted(.mdc-deprecated-list-item__primary-text)::after{display:inline-block;width:0;height:20px;content:"";vertical-align:-20px}`;
+const styles$a = i$5 `@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}:host{display:block}.mdc-deprecated-list{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-subtitle1-font-size, 1rem);line-height:1.75rem;line-height:var(--mdc-typography-subtitle1-line-height, 1.75rem);font-weight:400;font-weight:var(--mdc-typography-subtitle1-font-weight, 400);letter-spacing:0.009375em;letter-spacing:var(--mdc-typography-subtitle1-letter-spacing, 0.009375em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle1-text-transform, inherit);line-height:1.5rem;margin:0;padding:8px 0;list-style-type:none;color:rgba(0, 0, 0, 0.87);color:var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));padding:var(--mdc-list-vertical-padding, 8px) 0}.mdc-deprecated-list:focus{outline:none}.mdc-deprecated-list-item{height:48px}.mdc-deprecated-list--dense{padding-top:4px;padding-bottom:4px;font-size:.812rem}.mdc-deprecated-list ::slotted([divider]){height:0;margin:0;border:none;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgba(0, 0, 0, 0.12)}.mdc-deprecated-list ::slotted([divider][padded]){margin:0 var(--mdc-list-side-padding, 16px)}.mdc-deprecated-list ::slotted([divider][inset]){margin-left:var(--mdc-list-inset-margin, 72px);margin-right:0;width:calc( 100% - var(--mdc-list-inset-margin, 72px) )}[dir=rtl] .mdc-deprecated-list ::slotted([divider][inset]),.mdc-deprecated-list ::slotted([divider][inset][dir=rtl]){margin-left:0;margin-right:var(--mdc-list-inset-margin, 72px)}.mdc-deprecated-list ::slotted([divider][inset][padded]){width:calc( 100% - var(--mdc-list-inset-margin, 72px) - var(--mdc-list-side-padding, 16px) )}.mdc-deprecated-list--dense ::slotted([mwc-list-item]){height:40px}.mdc-deprecated-list--dense ::slotted([mwc-list]){--mdc-list-item-graphic-size: 20px}.mdc-deprecated-list--two-line.mdc-deprecated-list--dense ::slotted([mwc-list-item]),.mdc-deprecated-list--avatar-list.mdc-deprecated-list--dense ::slotted([mwc-list-item]){height:60px}.mdc-deprecated-list--avatar-list.mdc-deprecated-list--dense ::slotted([mwc-list]){--mdc-list-item-graphic-size: 36px}:host([noninteractive]){pointer-events:none;cursor:default}.mdc-deprecated-list--dense ::slotted(.mdc-deprecated-list-item__primary-text){display:block;margin-top:0;line-height:normal;margin-bottom:-20px}.mdc-deprecated-list--dense ::slotted(.mdc-deprecated-list-item__primary-text)::before{display:inline-block;width:0;height:24px;content:"";vertical-align:0}.mdc-deprecated-list--dense ::slotted(.mdc-deprecated-list-item__primary-text)::after{display:inline-block;width:0;height:20px;content:"";vertical-align:-20px}`;
 
 /**
  * @license
@@ -6374,9 +6374,9 @@ const styles$5 = i$5 `@keyframes mdc-ripple-fg-radius-in{from{animation-timing-f
  */
 let List = class List extends ListBase {
 };
-List.styles = [styles$5];
+List.styles = [styles$a];
 List = __decorate([
-    e$6('mwc-list')
+    e$7('mwc-list')
 ], List);
 
 /**
@@ -6401,12 +6401,3951 @@ List = __decorate([
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var cssClasses$3 = {
+var cssClasses$a = {
+    ANCHOR: 'mdc-menu-surface--anchor',
+    ANIMATING_CLOSED: 'mdc-menu-surface--animating-closed',
+    ANIMATING_OPEN: 'mdc-menu-surface--animating-open',
+    FIXED: 'mdc-menu-surface--fixed',
+    IS_OPEN_BELOW: 'mdc-menu-surface--is-open-below',
+    OPEN: 'mdc-menu-surface--open',
+    ROOT: 'mdc-menu-surface',
+};
+// tslint:disable:object-literal-sort-keys
+var strings$9 = {
+    CLOSED_EVENT: 'MDCMenuSurface:closed',
+    CLOSING_EVENT: 'MDCMenuSurface:closing',
+    OPENED_EVENT: 'MDCMenuSurface:opened',
+    OPENING_EVENT: 'MDCMenuSurface:opening',
+    FOCUSABLE_ELEMENTS: [
+        'button:not(:disabled)',
+        '[href]:not([aria-disabled="true"])',
+        'input:not(:disabled)',
+        'select:not(:disabled)',
+        'textarea:not(:disabled)',
+        '[tabindex]:not([tabindex="-1"]):not([aria-disabled="true"])',
+    ].join(', '),
+};
+// tslint:enable:object-literal-sort-keys
+var numbers$6 = {
+    /** Total duration of menu-surface open animation. */
+    TRANSITION_OPEN_DURATION: 120,
+    /** Total duration of menu-surface close animation. */
+    TRANSITION_CLOSE_DURATION: 75,
+    /**
+     * Margin left to the edge of the viewport when menu-surface is at maximum
+     * possible height. Also used as a viewport margin.
+     */
+    MARGIN_TO_EDGE: 32,
+    /**
+     * Ratio of anchor width to menu-surface width for switching from corner
+     * positioning to center positioning.
+     */
+    ANCHOR_TO_MENU_SURFACE_WIDTH_RATIO: 0.67,
+    /**
+     * Amount of time to wait before restoring focus when closing the menu
+     * surface. This is important because if a touch event triggered the menu
+     * close, and the subsequent mouse event occurs after focus is restored, then
+     * the restored focus would be lost.
+     */
+    TOUCH_EVENT_WAIT_MS: 30,
+};
+/**
+ * Enum for bits in the {@see Corner) bitmap.
+ */
+var CornerBit;
+(function (CornerBit) {
+    CornerBit[CornerBit["BOTTOM"] = 1] = "BOTTOM";
+    CornerBit[CornerBit["CENTER"] = 2] = "CENTER";
+    CornerBit[CornerBit["RIGHT"] = 4] = "RIGHT";
+    CornerBit[CornerBit["FLIP_RTL"] = 8] = "FLIP_RTL";
+})(CornerBit || (CornerBit = {}));
+/**
+ * Enum for representing an element corner for positioning the menu-surface.
+ *
+ * The START constants map to LEFT if element directionality is left
+ * to right and RIGHT if the directionality is right to left.
+ * Likewise END maps to RIGHT or LEFT depending on the directionality.
+ */
+var Corner;
+(function (Corner) {
+    Corner[Corner["TOP_LEFT"] = 0] = "TOP_LEFT";
+    Corner[Corner["TOP_RIGHT"] = 4] = "TOP_RIGHT";
+    Corner[Corner["BOTTOM_LEFT"] = 1] = "BOTTOM_LEFT";
+    Corner[Corner["BOTTOM_RIGHT"] = 5] = "BOTTOM_RIGHT";
+    Corner[Corner["TOP_START"] = 8] = "TOP_START";
+    Corner[Corner["TOP_END"] = 12] = "TOP_END";
+    Corner[Corner["BOTTOM_START"] = 9] = "BOTTOM_START";
+    Corner[Corner["BOTTOM_END"] = 13] = "BOTTOM_END";
+})(Corner || (Corner = {}));
+
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCMenuSurfaceFoundation = /** @class */ (function (_super) {
+    __extends(MDCMenuSurfaceFoundation, _super);
+    function MDCMenuSurfaceFoundation(adapter) {
+        var _this = _super.call(this, __assign(__assign({}, MDCMenuSurfaceFoundation.defaultAdapter), adapter)) || this;
+        _this.isSurfaceOpen = false;
+        _this.isQuickOpen = false;
+        _this.isHoistedElement = false;
+        _this.isFixedPosition = false;
+        _this.isHorizontallyCenteredOnViewport = false;
+        _this.maxHeight = 0;
+        _this.openBottomBias = 0;
+        _this.openAnimationEndTimerId = 0;
+        _this.closeAnimationEndTimerId = 0;
+        _this.animationRequestId = 0;
+        _this.anchorCorner = Corner.TOP_START;
+        /**
+         * Corner of the menu surface to which menu surface is attached to anchor.
+         *
+         *  Anchor corner --->+----------+
+         *                    |  ANCHOR  |
+         *                    +----------+
+         *  Origin corner --->+--------------+
+         *                    |              |
+         *                    |              |
+         *                    | MENU SURFACE |
+         *                    |              |
+         *                    |              |
+         *                    +--------------+
+         */
+        _this.originCorner = Corner.TOP_START;
+        _this.anchorMargin = { top: 0, right: 0, bottom: 0, left: 0 };
+        _this.position = { x: 0, y: 0 };
+        return _this;
+    }
+    Object.defineProperty(MDCMenuSurfaceFoundation, "cssClasses", {
+        get: function () {
+            return cssClasses$a;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenuSurfaceFoundation, "strings", {
+        get: function () {
+            return strings$9;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenuSurfaceFoundation, "numbers", {
+        get: function () {
+            return numbers$6;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenuSurfaceFoundation, "Corner", {
+        get: function () {
+            return Corner;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenuSurfaceFoundation, "defaultAdapter", {
+        /**
+         * @see {@link MDCMenuSurfaceAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                hasClass: function () { return false; },
+                hasAnchor: function () { return false; },
+                isElementInContainer: function () { return false; },
+                isFocused: function () { return false; },
+                isRtl: function () { return false; },
+                getInnerDimensions: function () { return ({ height: 0, width: 0 }); },
+                getAnchorDimensions: function () { return null; },
+                getWindowDimensions: function () { return ({ height: 0, width: 0 }); },
+                getBodyDimensions: function () { return ({ height: 0, width: 0 }); },
+                getWindowScroll: function () { return ({ x: 0, y: 0 }); },
+                setPosition: function () { return undefined; },
+                setMaxHeight: function () { return undefined; },
+                setTransformOrigin: function () { return undefined; },
+                saveFocus: function () { return undefined; },
+                restoreFocus: function () { return undefined; },
+                notifyClose: function () { return undefined; },
+                notifyClosing: function () { return undefined; },
+                notifyOpen: function () { return undefined; },
+                notifyOpening: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCMenuSurfaceFoundation.prototype.init = function () {
+        var _a = MDCMenuSurfaceFoundation.cssClasses, ROOT = _a.ROOT, OPEN = _a.OPEN;
+        if (!this.adapter.hasClass(ROOT)) {
+            throw new Error(ROOT + " class required in root element.");
+        }
+        if (this.adapter.hasClass(OPEN)) {
+            this.isSurfaceOpen = true;
+        }
+    };
+    MDCMenuSurfaceFoundation.prototype.destroy = function () {
+        clearTimeout(this.openAnimationEndTimerId);
+        clearTimeout(this.closeAnimationEndTimerId);
+        // Cancel any currently running animations.
+        cancelAnimationFrame(this.animationRequestId);
+    };
+    /**
+     * @param corner Default anchor corner alignment of top-left menu surface
+     *     corner.
+     */
+    MDCMenuSurfaceFoundation.prototype.setAnchorCorner = function (corner) {
+        this.anchorCorner = corner;
+    };
+    /**
+     * Flip menu corner horizontally.
+     */
+    MDCMenuSurfaceFoundation.prototype.flipCornerHorizontally = function () {
+        this.originCorner = this.originCorner ^ CornerBit.RIGHT;
+    };
+    /**
+     * @param margin Set of margin values from anchor.
+     */
+    MDCMenuSurfaceFoundation.prototype.setAnchorMargin = function (margin) {
+        this.anchorMargin.top = margin.top || 0;
+        this.anchorMargin.right = margin.right || 0;
+        this.anchorMargin.bottom = margin.bottom || 0;
+        this.anchorMargin.left = margin.left || 0;
+    };
+    /** Used to indicate if the menu-surface is hoisted to the body. */
+    MDCMenuSurfaceFoundation.prototype.setIsHoisted = function (isHoisted) {
+        this.isHoistedElement = isHoisted;
+    };
+    /**
+     * Used to set the menu-surface calculations based on a fixed position menu.
+     */
+    MDCMenuSurfaceFoundation.prototype.setFixedPosition = function (isFixedPosition) {
+        this.isFixedPosition = isFixedPosition;
+    };
+    /**
+     * @return Returns true if menu is in fixed (`position: fixed`) position.
+     */
+    MDCMenuSurfaceFoundation.prototype.isFixed = function () {
+        return this.isFixedPosition;
+    };
+    /** Sets the menu-surface position on the page. */
+    MDCMenuSurfaceFoundation.prototype.setAbsolutePosition = function (x, y) {
+        this.position.x = this.isFinite(x) ? x : 0;
+        this.position.y = this.isFinite(y) ? y : 0;
+    };
+    /** Sets whether menu-surface should be horizontally centered to viewport. */
+    MDCMenuSurfaceFoundation.prototype.setIsHorizontallyCenteredOnViewport = function (isCentered) {
+        this.isHorizontallyCenteredOnViewport = isCentered;
+    };
+    MDCMenuSurfaceFoundation.prototype.setQuickOpen = function (quickOpen) {
+        this.isQuickOpen = quickOpen;
+    };
+    /**
+     * Sets maximum menu-surface height on open.
+     * @param maxHeight The desired max-height. Set to 0 (default) to
+     *     automatically calculate max height based on available viewport space.
+     */
+    MDCMenuSurfaceFoundation.prototype.setMaxHeight = function (maxHeight) {
+        this.maxHeight = maxHeight;
+    };
+    /**
+     * Set to a positive integer to influence the menu to preferentially open
+     * below the anchor instead of above.
+     * @param bias A value of `x` simulates an extra `x` pixels of available space
+     *     below the menu during positioning calculations.
+     */
+    MDCMenuSurfaceFoundation.prototype.setOpenBottomBias = function (bias) {
+        this.openBottomBias = bias;
+    };
+    MDCMenuSurfaceFoundation.prototype.isOpen = function () {
+        return this.isSurfaceOpen;
+    };
+    /**
+     * Open the menu surface.
+     */
+    MDCMenuSurfaceFoundation.prototype.open = function () {
+        var _this = this;
+        if (this.isSurfaceOpen) {
+            return;
+        }
+        this.adapter.notifyOpening();
+        this.adapter.saveFocus();
+        if (this.isQuickOpen) {
+            this.isSurfaceOpen = true;
+            this.adapter.addClass(MDCMenuSurfaceFoundation.cssClasses.OPEN);
+            this.dimensions = this.adapter.getInnerDimensions();
+            this.autoposition();
+            this.adapter.notifyOpen();
+        }
+        else {
+            this.adapter.addClass(MDCMenuSurfaceFoundation.cssClasses.ANIMATING_OPEN);
+            this.animationRequestId = requestAnimationFrame(function () {
+                _this.dimensions = _this.adapter.getInnerDimensions();
+                _this.autoposition();
+                _this.adapter.addClass(MDCMenuSurfaceFoundation.cssClasses.OPEN);
+                _this.openAnimationEndTimerId = setTimeout(function () {
+                    _this.openAnimationEndTimerId = 0;
+                    _this.adapter.removeClass(MDCMenuSurfaceFoundation.cssClasses.ANIMATING_OPEN);
+                    _this.adapter.notifyOpen();
+                }, numbers$6.TRANSITION_OPEN_DURATION);
+            });
+            this.isSurfaceOpen = true;
+        }
+    };
+    /**
+     * Closes the menu surface.
+     */
+    MDCMenuSurfaceFoundation.prototype.close = function (skipRestoreFocus) {
+        var _this = this;
+        if (skipRestoreFocus === void 0) { skipRestoreFocus = false; }
+        if (!this.isSurfaceOpen) {
+            return;
+        }
+        this.adapter.notifyClosing();
+        if (this.isQuickOpen) {
+            this.isSurfaceOpen = false;
+            if (!skipRestoreFocus) {
+                this.maybeRestoreFocus();
+            }
+            this.adapter.removeClass(MDCMenuSurfaceFoundation.cssClasses.OPEN);
+            this.adapter.removeClass(MDCMenuSurfaceFoundation.cssClasses.IS_OPEN_BELOW);
+            this.adapter.notifyClose();
+            return;
+        }
+        this.adapter.addClass(MDCMenuSurfaceFoundation.cssClasses.ANIMATING_CLOSED);
+        requestAnimationFrame(function () {
+            _this.adapter.removeClass(MDCMenuSurfaceFoundation.cssClasses.OPEN);
+            _this.adapter.removeClass(MDCMenuSurfaceFoundation.cssClasses.IS_OPEN_BELOW);
+            _this.closeAnimationEndTimerId = setTimeout(function () {
+                _this.closeAnimationEndTimerId = 0;
+                _this.adapter.removeClass(MDCMenuSurfaceFoundation.cssClasses.ANIMATING_CLOSED);
+                _this.adapter.notifyClose();
+            }, numbers$6.TRANSITION_CLOSE_DURATION);
+        });
+        this.isSurfaceOpen = false;
+        if (!skipRestoreFocus) {
+            this.maybeRestoreFocus();
+        }
+    };
+    /** Handle clicks and close if not within menu-surface element. */
+    MDCMenuSurfaceFoundation.prototype.handleBodyClick = function (evt) {
+        var el = evt.target;
+        if (this.adapter.isElementInContainer(el)) {
+            return;
+        }
+        this.close();
+    };
+    /** Handle keys that close the surface. */
+    MDCMenuSurfaceFoundation.prototype.handleKeydown = function (evt) {
+        var keyCode = evt.keyCode, key = evt.key;
+        var isEscape = key === 'Escape' || keyCode === 27;
+        if (isEscape) {
+            this.close();
+        }
+    };
+    MDCMenuSurfaceFoundation.prototype.autoposition = function () {
+        var _a;
+        // Compute measurements for autoposition methods reuse.
+        this.measurements = this.getAutoLayoutmeasurements();
+        var corner = this.getoriginCorner();
+        var maxMenuSurfaceHeight = this.getMenuSurfaceMaxHeight(corner);
+        var verticalAlignment = this.hasBit(corner, CornerBit.BOTTOM) ? 'bottom' : 'top';
+        var horizontalAlignment = this.hasBit(corner, CornerBit.RIGHT) ? 'right' : 'left';
+        var horizontalOffset = this.getHorizontalOriginOffset(corner);
+        var verticalOffset = this.getVerticalOriginOffset(corner);
+        var _b = this.measurements, anchorSize = _b.anchorSize, surfaceSize = _b.surfaceSize;
+        var position = (_a = {},
+            _a[horizontalAlignment] = horizontalOffset,
+            _a[verticalAlignment] = verticalOffset,
+            _a);
+        // Center align when anchor width is comparable or greater than menu
+        // surface, otherwise keep corner.
+        if (anchorSize.width / surfaceSize.width >
+            numbers$6.ANCHOR_TO_MENU_SURFACE_WIDTH_RATIO) {
+            horizontalAlignment = 'center';
+        }
+        // If the menu-surface has been hoisted to the body, it's no longer relative
+        // to the anchor element
+        if (this.isHoistedElement || this.isFixedPosition) {
+            this.adjustPositionForHoistedElement(position);
+        }
+        this.adapter.setTransformOrigin(horizontalAlignment + " " + verticalAlignment);
+        this.adapter.setPosition(position);
+        this.adapter.setMaxHeight(maxMenuSurfaceHeight ? maxMenuSurfaceHeight + 'px' : '');
+        // If it is opened from the top then add is-open-below class
+        if (!this.hasBit(corner, CornerBit.BOTTOM)) {
+            this.adapter.addClass(MDCMenuSurfaceFoundation.cssClasses.IS_OPEN_BELOW);
+        }
+    };
+    /**
+     * @return Measurements used to position menu surface popup.
+     */
+    MDCMenuSurfaceFoundation.prototype.getAutoLayoutmeasurements = function () {
+        var anchorRect = this.adapter.getAnchorDimensions();
+        var bodySize = this.adapter.getBodyDimensions();
+        var viewportSize = this.adapter.getWindowDimensions();
+        var windowScroll = this.adapter.getWindowScroll();
+        if (!anchorRect) {
+            // tslint:disable:object-literal-sort-keys Positional properties are more readable when they're grouped together
+            anchorRect = {
+                top: this.position.y,
+                right: this.position.x,
+                bottom: this.position.y,
+                left: this.position.x,
+                width: 0,
+                height: 0,
+            };
+            // tslint:enable:object-literal-sort-keys
+        }
+        return {
+            anchorSize: anchorRect,
+            bodySize: bodySize,
+            surfaceSize: this.dimensions,
+            viewportDistance: {
+                // tslint:disable:object-literal-sort-keys Positional properties are more readable when they're grouped together
+                top: anchorRect.top,
+                right: viewportSize.width - anchorRect.right,
+                bottom: viewportSize.height - anchorRect.bottom,
+                left: anchorRect.left,
+                // tslint:enable:object-literal-sort-keys
+            },
+            viewportSize: viewportSize,
+            windowScroll: windowScroll,
+        };
+    };
+    /**
+     * Computes the corner of the anchor from which to animate and position the
+     * menu surface.
+     *
+     * Only LEFT or RIGHT bit is used to position the menu surface ignoring RTL
+     * context. E.g., menu surface will be positioned from right side on TOP_END.
+     */
+    MDCMenuSurfaceFoundation.prototype.getoriginCorner = function () {
+        var corner = this.originCorner;
+        var _a = this.measurements, viewportDistance = _a.viewportDistance, anchorSize = _a.anchorSize, surfaceSize = _a.surfaceSize;
+        var MARGIN_TO_EDGE = MDCMenuSurfaceFoundation.numbers.MARGIN_TO_EDGE;
+        var isAnchoredToBottom = this.hasBit(this.anchorCorner, CornerBit.BOTTOM);
+        var availableTop;
+        var availableBottom;
+        if (isAnchoredToBottom) {
+            availableTop =
+                viewportDistance.top - MARGIN_TO_EDGE + this.anchorMargin.bottom;
+            availableBottom =
+                viewportDistance.bottom - MARGIN_TO_EDGE - this.anchorMargin.bottom;
+        }
+        else {
+            availableTop =
+                viewportDistance.top - MARGIN_TO_EDGE + this.anchorMargin.top;
+            availableBottom = viewportDistance.bottom - MARGIN_TO_EDGE +
+                anchorSize.height - this.anchorMargin.top;
+        }
+        var isAvailableBottom = availableBottom - surfaceSize.height > 0;
+        if (!isAvailableBottom &&
+            availableTop > availableBottom + this.openBottomBias) {
+            // Attach bottom side of surface to the anchor.
+            corner = this.setBit(corner, CornerBit.BOTTOM);
+        }
+        var isRtl = this.adapter.isRtl();
+        var isFlipRtl = this.hasBit(this.anchorCorner, CornerBit.FLIP_RTL);
+        var hasRightBit = this.hasBit(this.anchorCorner, CornerBit.RIGHT) ||
+            this.hasBit(corner, CornerBit.RIGHT);
+        // Whether surface attached to right side of anchor element.
+        var isAnchoredToRight = false;
+        // Anchored to start
+        if (isRtl && isFlipRtl) {
+            isAnchoredToRight = !hasRightBit;
+        }
+        else {
+            // Anchored to right
+            isAnchoredToRight = hasRightBit;
+        }
+        var availableLeft;
+        var availableRight;
+        if (isAnchoredToRight) {
+            availableLeft =
+                viewportDistance.left + anchorSize.width + this.anchorMargin.right;
+            availableRight = viewportDistance.right - this.anchorMargin.right;
+        }
+        else {
+            availableLeft = viewportDistance.left + this.anchorMargin.left;
+            availableRight =
+                viewportDistance.right + anchorSize.width - this.anchorMargin.left;
+        }
+        var isAvailableLeft = availableLeft - surfaceSize.width > 0;
+        var isAvailableRight = availableRight - surfaceSize.width > 0;
+        var isOriginCornerAlignedToEnd = this.hasBit(corner, CornerBit.FLIP_RTL) &&
+            this.hasBit(corner, CornerBit.RIGHT);
+        if (isAvailableRight && isOriginCornerAlignedToEnd && isRtl ||
+            !isAvailableLeft && isOriginCornerAlignedToEnd) {
+            // Attach left side of surface to the anchor.
+            corner = this.unsetBit(corner, CornerBit.RIGHT);
+        }
+        else if (isAvailableLeft && isAnchoredToRight && isRtl ||
+            (isAvailableLeft && !isAnchoredToRight && hasRightBit) ||
+            (!isAvailableRight && availableLeft >= availableRight)) {
+            // Attach right side of surface to the anchor.
+            corner = this.setBit(corner, CornerBit.RIGHT);
+        }
+        return corner;
+    };
+    /**
+     * @param corner Origin corner of the menu surface.
+     * @return Maximum height of the menu surface, based on available space. 0
+     *     indicates should not be set.
+     */
+    MDCMenuSurfaceFoundation.prototype.getMenuSurfaceMaxHeight = function (corner) {
+        if (this.maxHeight > 0) {
+            return this.maxHeight;
+        }
+        var viewportDistance = this.measurements.viewportDistance;
+        var maxHeight = 0;
+        var isBottomAligned = this.hasBit(corner, CornerBit.BOTTOM);
+        var isBottomAnchored = this.hasBit(this.anchorCorner, CornerBit.BOTTOM);
+        var MARGIN_TO_EDGE = MDCMenuSurfaceFoundation.numbers.MARGIN_TO_EDGE;
+        // When maximum height is not specified, it is handled from CSS.
+        if (isBottomAligned) {
+            maxHeight = viewportDistance.top + this.anchorMargin.top - MARGIN_TO_EDGE;
+            if (!isBottomAnchored) {
+                maxHeight += this.measurements.anchorSize.height;
+            }
+        }
+        else {
+            maxHeight = viewportDistance.bottom - this.anchorMargin.bottom +
+                this.measurements.anchorSize.height - MARGIN_TO_EDGE;
+            if (isBottomAnchored) {
+                maxHeight -= this.measurements.anchorSize.height;
+            }
+        }
+        return maxHeight;
+    };
+    /**
+     * @param corner Origin corner of the menu surface.
+     * @return Horizontal offset of menu surface origin corner from corresponding
+     *     anchor corner.
+     */
+    MDCMenuSurfaceFoundation.prototype.getHorizontalOriginOffset = function (corner) {
+        var anchorSize = this.measurements.anchorSize;
+        // isRightAligned corresponds to using the 'right' property on the surface.
+        var isRightAligned = this.hasBit(corner, CornerBit.RIGHT);
+        var avoidHorizontalOverlap = this.hasBit(this.anchorCorner, CornerBit.RIGHT);
+        if (isRightAligned) {
+            var rightOffset = avoidHorizontalOverlap ?
+                anchorSize.width - this.anchorMargin.left :
+                this.anchorMargin.right;
+            // For hoisted or fixed elements, adjust the offset by the difference
+            // between viewport width and body width so when we calculate the right
+            // value (`adjustPositionForHoistedElement`) based on the element
+            // position, the right property is correct.
+            if (this.isHoistedElement || this.isFixedPosition) {
+                return rightOffset -
+                    (this.measurements.viewportSize.width -
+                        this.measurements.bodySize.width);
+            }
+            return rightOffset;
+        }
+        return avoidHorizontalOverlap ? anchorSize.width - this.anchorMargin.right :
+            this.anchorMargin.left;
+    };
+    /**
+     * @param corner Origin corner of the menu surface.
+     * @return Vertical offset of menu surface origin corner from corresponding
+     *     anchor corner.
+     */
+    MDCMenuSurfaceFoundation.prototype.getVerticalOriginOffset = function (corner) {
+        var anchorSize = this.measurements.anchorSize;
+        var isBottomAligned = this.hasBit(corner, CornerBit.BOTTOM);
+        var avoidVerticalOverlap = this.hasBit(this.anchorCorner, CornerBit.BOTTOM);
+        var y = 0;
+        if (isBottomAligned) {
+            y = avoidVerticalOverlap ? anchorSize.height - this.anchorMargin.top :
+                -this.anchorMargin.bottom;
+        }
+        else {
+            y = avoidVerticalOverlap ?
+                (anchorSize.height + this.anchorMargin.bottom) :
+                this.anchorMargin.top;
+        }
+        return y;
+    };
+    /**
+     * Calculates the offsets for positioning the menu-surface when the
+     * menu-surface has been hoisted to the body.
+     */
+    MDCMenuSurfaceFoundation.prototype.adjustPositionForHoistedElement = function (position) {
+        var e_1, _a;
+        var _b = this.measurements, windowScroll = _b.windowScroll, viewportDistance = _b.viewportDistance, surfaceSize = _b.surfaceSize, viewportSize = _b.viewportSize;
+        var props = Object.keys(position);
+        try {
+            for (var props_1 = __values(props), props_1_1 = props_1.next(); !props_1_1.done; props_1_1 = props_1.next()) {
+                var prop = props_1_1.value;
+                var value = position[prop] || 0;
+                if (this.isHorizontallyCenteredOnViewport &&
+                    (prop === 'left' || prop === 'right')) {
+                    position[prop] = (viewportSize.width - surfaceSize.width) / 2;
+                    continue;
+                }
+                // Hoisted surfaces need to have the anchor elements location on the page
+                // added to the position properties for proper alignment on the body.
+                value += viewportDistance[prop];
+                // Surfaces that are absolutely positioned need to have additional
+                // calculations for scroll and bottom positioning.
+                if (!this.isFixedPosition) {
+                    if (prop === 'top') {
+                        value += windowScroll.y;
+                    }
+                    else if (prop === 'bottom') {
+                        value -= windowScroll.y;
+                    }
+                    else if (prop === 'left') {
+                        value += windowScroll.x;
+                    }
+                    else { // prop === 'right'
+                        value -= windowScroll.x;
+                    }
+                }
+                position[prop] = value;
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (props_1_1 && !props_1_1.done && (_a = props_1.return)) _a.call(props_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+    };
+    /**
+     * The last focused element when the menu surface was opened should regain
+     * focus, if the user is focused on or within the menu surface when it is
+     * closed.
+     */
+    MDCMenuSurfaceFoundation.prototype.maybeRestoreFocus = function () {
+        var _this = this;
+        var isRootFocused = this.adapter.isFocused();
+        var ownerDocument = this.adapter.getOwnerDocument ?
+            this.adapter.getOwnerDocument() :
+            document;
+        var childHasFocus = ownerDocument.activeElement &&
+            this.adapter.isElementInContainer(ownerDocument.activeElement);
+        if (isRootFocused || childHasFocus) {
+            // Wait before restoring focus when closing the menu surface. This is
+            // important because if a touch event triggered the menu close, and the
+            // subsequent mouse event occurs after focus is restored, then the
+            // restored focus would be lost.
+            setTimeout(function () {
+                _this.adapter.restoreFocus();
+            }, numbers$6.TOUCH_EVENT_WAIT_MS);
+        }
+    };
+    MDCMenuSurfaceFoundation.prototype.hasBit = function (corner, bit) {
+        return Boolean(corner & bit); // tslint:disable-line:no-bitwise
+    };
+    MDCMenuSurfaceFoundation.prototype.setBit = function (corner, bit) {
+        return corner | bit; // tslint:disable-line:no-bitwise
+    };
+    MDCMenuSurfaceFoundation.prototype.unsetBit = function (corner, bit) {
+        return corner ^ bit;
+    };
+    /**
+     * isFinite that doesn't force conversion to number type.
+     * Equivalent to Number.isFinite in ES2015, which is not supported in IE.
+     */
+    MDCMenuSurfaceFoundation.prototype.isFinite = function (num) {
+        return typeof num === 'number' && isFinite(num);
+    };
+    return MDCMenuSurfaceFoundation;
+}(MDCFoundation));
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+var MDCMenuSurfaceFoundation$1 = MDCMenuSurfaceFoundation;
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+// tslint:disable:no-bitwise
+// required for closure compiler
+const stringToCorner = {
+    'TOP_LEFT': Corner.TOP_LEFT,
+    'TOP_RIGHT': Corner.TOP_RIGHT,
+    'BOTTOM_LEFT': Corner.BOTTOM_LEFT,
+    'BOTTOM_RIGHT': Corner.BOTTOM_RIGHT,
+    'TOP_START': Corner.TOP_START,
+    'TOP_END': Corner.TOP_END,
+    'BOTTOM_START': Corner.BOTTOM_START,
+    'BOTTOM_END': Corner.BOTTOM_END,
+};
+/**
+ * @fires opened
+ * @fires closed
+ */
+class MenuSurfaceBase extends BaseElement {
+    constructor() {
+        super(...arguments);
+        this.mdcFoundationClass = MDCMenuSurfaceFoundation$1;
+        this.absolute = false;
+        this.fullwidth = false;
+        this.fixed = false;
+        this.x = null;
+        this.y = null;
+        // must be defined before open or else race condition in foundation occurs.
+        this.quick = false;
+        this.open = false;
+        this.stayOpenOnBodyClick = false;
+        this.bitwiseCorner = Corner.TOP_START;
+        this.previousMenuCorner = null;
+        // must be defined before observer of anchor corner for initialization
+        this.menuCorner = 'START';
+        this.corner = 'TOP_START';
+        this.styleTop = '';
+        this.styleLeft = '';
+        this.styleRight = '';
+        this.styleBottom = '';
+        this.styleMaxHeight = '';
+        this.styleTransformOrigin = '';
+        this.anchor = null;
+        this.previouslyFocused = null;
+        this.previousAnchor = null;
+        this.onBodyClickBound = () => undefined;
+    }
+    render() {
+        return this.renderSurface();
+    }
+    renderSurface() {
+        const classes = this.getRootClasses();
+        const styles = this.getRootStyles();
+        return y `
+      <div
+          class=${o(classes)}
+          style="${i(styles)}"
+          @keydown=${this.onKeydown}
+          @opened=${this.registerBodyClick}
+          @closed=${this.deregisterBodyClick}>
+        ${this.renderContent()}
+      </div>`;
+    }
+    getRootClasses() {
+        return {
+            'mdc-menu-surface': true,
+            'mdc-menu-surface--fixed': this.fixed,
+            'mdc-menu-surface--fullwidth': this.fullwidth,
+        };
+    }
+    getRootStyles() {
+        return {
+            'top': this.styleTop,
+            'left': this.styleLeft,
+            'right': this.styleRight,
+            'bottom': this.styleBottom,
+            'max-height': this.styleMaxHeight,
+            'transform-origin': this.styleTransformOrigin,
+        };
+    }
+    renderContent() {
+        return y `<slot></slot>`;
+    }
+    createAdapter() {
+        return Object.assign(Object.assign({}, addHasRemoveClass(this.mdcRoot)), { hasAnchor: () => {
+                return !!this.anchor;
+            }, notifyClose: () => {
+                const init = { bubbles: true, composed: true };
+                const ev = new CustomEvent('closed', init);
+                this.open = false;
+                this.mdcRoot.dispatchEvent(ev);
+            }, notifyClosing: () => {
+                const init = { bubbles: true, composed: true };
+                const ev = new CustomEvent('closing', init);
+                this.mdcRoot.dispatchEvent(ev);
+            }, notifyOpen: () => {
+                const init = { bubbles: true, composed: true };
+                const ev = new CustomEvent('opened', init);
+                this.open = true;
+                this.mdcRoot.dispatchEvent(ev);
+            }, notifyOpening: () => {
+                const init = { bubbles: true, composed: true };
+                const ev = new CustomEvent('opening', init);
+                this.mdcRoot.dispatchEvent(ev);
+            }, isElementInContainer: () => false, isRtl: () => {
+                if (this.mdcRoot) {
+                    return getComputedStyle(this.mdcRoot).direction === 'rtl';
+                }
+                return false;
+            }, setTransformOrigin: (origin) => {
+                const root = this.mdcRoot;
+                if (!root) {
+                    return;
+                }
+                this.styleTransformOrigin = origin;
+            }, isFocused: () => {
+                return doesElementContainFocus(this);
+            }, saveFocus: () => {
+                const activeElementPath = deepActiveElementPath();
+                const pathLength = activeElementPath.length;
+                if (!pathLength) {
+                    this.previouslyFocused = null;
+                }
+                this.previouslyFocused = activeElementPath[pathLength - 1];
+            }, restoreFocus: () => {
+                if (!this.previouslyFocused) {
+                    return;
+                }
+                if ('focus' in this.previouslyFocused) {
+                    this.previouslyFocused.focus();
+                }
+            }, getInnerDimensions: () => {
+                const mdcRoot = this.mdcRoot;
+                if (!mdcRoot) {
+                    return { width: 0, height: 0 };
+                }
+                return { width: mdcRoot.offsetWidth, height: mdcRoot.offsetHeight };
+            }, getAnchorDimensions: () => {
+                const anchorElement = this.anchor;
+                return anchorElement ? anchorElement.getBoundingClientRect() : null;
+            }, getBodyDimensions: () => {
+                return {
+                    width: document.body.clientWidth,
+                    height: document.body.clientHeight,
+                };
+            }, getWindowDimensions: () => {
+                return {
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                };
+            }, getWindowScroll: () => {
+                return {
+                    x: window.pageXOffset,
+                    y: window.pageYOffset,
+                };
+            }, setPosition: (position) => {
+                const mdcRoot = this.mdcRoot;
+                if (!mdcRoot) {
+                    return;
+                }
+                this.styleLeft = 'left' in position ? `${position.left}px` : '';
+                this.styleRight = 'right' in position ? `${position.right}px` : '';
+                this.styleTop = 'top' in position ? `${position.top}px` : '';
+                this.styleBottom = 'bottom' in position ? `${position.bottom}px` : '';
+            }, setMaxHeight: async (height) => {
+                const mdcRoot = this.mdcRoot;
+                if (!mdcRoot) {
+                    return;
+                }
+                // must set both for IE support as IE will not set a var
+                this.styleMaxHeight = height;
+                await this.updateComplete;
+                this.styleMaxHeight = `var(--mdc-menu-max-height, ${height})`;
+            } });
+    }
+    onKeydown(evt) {
+        if (this.mdcFoundation) {
+            this.mdcFoundation.handleKeydown(evt);
+        }
+    }
+    onBodyClick(evt) {
+        if (this.stayOpenOnBodyClick) {
+            return;
+        }
+        const path = evt.composedPath();
+        if (path.indexOf(this) === -1) {
+            this.close();
+        }
+    }
+    registerBodyClick() {
+        this.onBodyClickBound = this.onBodyClick.bind(this);
+        // capture otherwise listener closes menu after quick menu opens
+        document.body.addEventListener('click', this.onBodyClickBound, { passive: true, capture: true });
+    }
+    deregisterBodyClick() {
+        document.body.removeEventListener('click', this.onBodyClickBound, { capture: true });
+    }
+    onOpenChanged(isOpen, wasOpen) {
+        if (this.mdcFoundation) {
+            if (isOpen) {
+                this.mdcFoundation.open();
+                // wasOpen helps with first render (when it is `undefined`) perf
+            }
+            else if (wasOpen !== undefined) {
+                this.mdcFoundation.close();
+            }
+        }
+    }
+    close() {
+        this.open = false;
+    }
+    show() {
+        this.open = true;
+    }
+}
+__decorate([
+    i$2('.mdc-menu-surface')
+], MenuSurfaceBase.prototype, "mdcRoot", void 0);
+__decorate([
+    i$2('slot')
+], MenuSurfaceBase.prototype, "slotElement", void 0);
+__decorate([
+    e$6({ type: Boolean }),
+    observer(function (isAbsolute) {
+        if (this.mdcFoundation && !this.fixed) {
+            this.mdcFoundation.setIsHoisted(isAbsolute);
+        }
+    })
+], MenuSurfaceBase.prototype, "absolute", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuSurfaceBase.prototype, "fullwidth", void 0);
+__decorate([
+    e$6({ type: Boolean }),
+    observer(function (isFixed) {
+        if (this.mdcFoundation && !this.absolute) {
+            this.mdcFoundation.setFixedPosition(isFixed);
+        }
+    })
+], MenuSurfaceBase.prototype, "fixed", void 0);
+__decorate([
+    e$6({ type: Number }),
+    observer(function (value) {
+        if (this.mdcFoundation && this.y !== null && value !== null) {
+            this.mdcFoundation.setAbsolutePosition(value, this.y);
+            this.mdcFoundation.setAnchorMargin({ left: value, top: this.y, right: -value, bottom: this.y });
+        }
+    })
+], MenuSurfaceBase.prototype, "x", void 0);
+__decorate([
+    e$6({ type: Number }),
+    observer(function (value) {
+        if (this.mdcFoundation && this.x !== null && value !== null) {
+            this.mdcFoundation.setAbsolutePosition(this.x, value);
+            this.mdcFoundation.setAnchorMargin({ left: this.x, top: value, right: -this.x, bottom: value });
+        }
+    })
+], MenuSurfaceBase.prototype, "y", void 0);
+__decorate([
+    e$6({ type: Boolean }),
+    observer(function (value) {
+        if (this.mdcFoundation) {
+            this.mdcFoundation.setQuickOpen(value);
+        }
+    })
+], MenuSurfaceBase.prototype, "quick", void 0);
+__decorate([
+    e$6({ type: Boolean, reflect: true }),
+    observer(function (isOpen, wasOpen) {
+        this.onOpenChanged(isOpen, wasOpen);
+    })
+], MenuSurfaceBase.prototype, "open", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuSurfaceBase.prototype, "stayOpenOnBodyClick", void 0);
+__decorate([
+    t$1(),
+    observer(function (value) {
+        if (this.mdcFoundation) {
+            if (value) {
+                this.mdcFoundation.setAnchorCorner(value);
+            }
+            else {
+                this.mdcFoundation.setAnchorCorner(value);
+            }
+        }
+    })
+], MenuSurfaceBase.prototype, "bitwiseCorner", void 0);
+__decorate([
+    e$6({ type: String }),
+    observer(function (value) {
+        if (this.mdcFoundation) {
+            const isValidValue = value === 'START' || value === 'END';
+            const isFirstTimeSet = this.previousMenuCorner === null;
+            const cornerChanged = !isFirstTimeSet && value !== this.previousMenuCorner;
+            const initiallySetToEnd = isFirstTimeSet && value === 'END';
+            if (isValidValue && (cornerChanged || initiallySetToEnd)) {
+                this.bitwiseCorner = this.bitwiseCorner ^ CornerBit.RIGHT;
+                this.mdcFoundation.flipCornerHorizontally();
+                this.previousMenuCorner = value;
+            }
+        }
+    })
+], MenuSurfaceBase.prototype, "menuCorner", void 0);
+__decorate([
+    e$6({ type: String }),
+    observer(function (value) {
+        if (this.mdcFoundation) {
+            if (value) {
+                let newCorner = stringToCorner[value];
+                if (this.menuCorner === 'END') {
+                    newCorner = newCorner ^ CornerBit.RIGHT;
+                }
+                this.bitwiseCorner = newCorner;
+            }
+        }
+    })
+], MenuSurfaceBase.prototype, "corner", void 0);
+__decorate([
+    t$1()
+], MenuSurfaceBase.prototype, "styleTop", void 0);
+__decorate([
+    t$1()
+], MenuSurfaceBase.prototype, "styleLeft", void 0);
+__decorate([
+    t$1()
+], MenuSurfaceBase.prototype, "styleRight", void 0);
+__decorate([
+    t$1()
+], MenuSurfaceBase.prototype, "styleBottom", void 0);
+__decorate([
+    t$1()
+], MenuSurfaceBase.prototype, "styleMaxHeight", void 0);
+__decorate([
+    t$1()
+], MenuSurfaceBase.prototype, "styleTransformOrigin", void 0);
+
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-LIcense-Identifier: Apache-2.0
+ */
+const styles$9 = i$5 `.mdc-menu-surface{display:none;position:absolute;box-sizing:border-box;max-width:calc(100vw - 32px);max-width:var(--mdc-menu-max-width, calc(100vw - 32px));max-height:calc(100vh - 32px);max-height:var(--mdc-menu-max-height, calc(100vh - 32px));margin:0;padding:0;transform:scale(1);transform-origin:top left;opacity:0;overflow:auto;will-change:transform,opacity;z-index:8;transition:opacity .03s linear,transform .12s cubic-bezier(0, 0, 0.2, 1),height 250ms cubic-bezier(0, 0, 0.2, 1);box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0,0,0,.12);background-color:#fff;background-color:var(--mdc-theme-surface, #fff);color:#000;color:var(--mdc-theme-on-surface, #000);border-radius:4px;border-radius:var(--mdc-shape-medium, 4px);transform-origin-left:top left;transform-origin-right:top right}.mdc-menu-surface:focus{outline:none}.mdc-menu-surface--animating-open{display:inline-block;transform:scale(0.8);opacity:0}.mdc-menu-surface--open{display:inline-block;transform:scale(1);opacity:1}.mdc-menu-surface--animating-closed{display:inline-block;opacity:0;transition:opacity .075s linear}[dir=rtl] .mdc-menu-surface,.mdc-menu-surface[dir=rtl]{transform-origin-left:top right;transform-origin-right:top left}.mdc-menu-surface--anchor{position:relative;overflow:visible}.mdc-menu-surface--fixed{position:fixed}.mdc-menu-surface--fullwidth{width:100%}:host(:not([open])){display:none}.mdc-menu-surface{z-index:8;z-index:var(--mdc-menu-z-index, 8);min-width:112px;min-width:var(--mdc-menu-min-width, 112px)}`;
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+let MenuSurface = class MenuSurface extends MenuSurfaceBase {
+};
+MenuSurface.styles = [styles$9];
+MenuSurface = __decorate([
+    e$7('mwc-menu-surface')
+], MenuSurface);
+
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses$9 = {
+    MENU_SELECTED_LIST_ITEM: 'mdc-menu-item--selected',
+    MENU_SELECTION_GROUP: 'mdc-menu__selection-group',
+    ROOT: 'mdc-menu',
+};
+var strings$8 = {
+    ARIA_CHECKED_ATTR: 'aria-checked',
+    ARIA_DISABLED_ATTR: 'aria-disabled',
+    CHECKBOX_SELECTOR: 'input[type="checkbox"]',
+    LIST_SELECTOR: '.mdc-list,.mdc-deprecated-list',
+    SELECTED_EVENT: 'MDCMenu:selected',
+    SKIP_RESTORE_FOCUS: 'data-menu-item-skip-restore-focus',
+};
+var numbers$5 = {
+    FOCUS_ROOT_INDEX: -1,
+};
+var DefaultFocusState;
+(function (DefaultFocusState) {
+    DefaultFocusState[DefaultFocusState["NONE"] = 0] = "NONE";
+    DefaultFocusState[DefaultFocusState["LIST_ROOT"] = 1] = "LIST_ROOT";
+    DefaultFocusState[DefaultFocusState["FIRST_ITEM"] = 2] = "FIRST_ITEM";
+    DefaultFocusState[DefaultFocusState["LAST_ITEM"] = 3] = "LAST_ITEM";
+})(DefaultFocusState || (DefaultFocusState = {}));
+
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCMenuFoundation = /** @class */ (function (_super) {
+    __extends(MDCMenuFoundation, _super);
+    function MDCMenuFoundation(adapter) {
+        var _this = _super.call(this, __assign(__assign({}, MDCMenuFoundation.defaultAdapter), adapter)) || this;
+        _this.closeAnimationEndTimerId = 0;
+        _this.defaultFocusState = DefaultFocusState.LIST_ROOT;
+        _this.selectedIndex = -1;
+        return _this;
+    }
+    Object.defineProperty(MDCMenuFoundation, "cssClasses", {
+        get: function () {
+            return cssClasses$9;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenuFoundation, "strings", {
+        get: function () {
+            return strings$8;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenuFoundation, "numbers", {
+        get: function () {
+            return numbers$5;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenuFoundation, "defaultAdapter", {
+        /**
+         * @see {@link MDCMenuAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClassToElementAtIndex: function () { return undefined; },
+                removeClassFromElementAtIndex: function () { return undefined; },
+                addAttributeToElementAtIndex: function () { return undefined; },
+                removeAttributeFromElementAtIndex: function () { return undefined; },
+                getAttributeFromElementAtIndex: function () { return null; },
+                elementContainsClass: function () { return false; },
+                closeSurface: function () { return undefined; },
+                getElementIndex: function () { return -1; },
+                notifySelected: function () { return undefined; },
+                getMenuItemCount: function () { return 0; },
+                focusItemAtIndex: function () { return undefined; },
+                focusListRoot: function () { return undefined; },
+                getSelectedSiblingOfItemAtIndex: function () { return -1; },
+                isSelectableItemAtIndex: function () { return false; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCMenuFoundation.prototype.destroy = function () {
+        if (this.closeAnimationEndTimerId) {
+            clearTimeout(this.closeAnimationEndTimerId);
+        }
+        this.adapter.closeSurface();
+    };
+    MDCMenuFoundation.prototype.handleKeydown = function (evt) {
+        var key = evt.key, keyCode = evt.keyCode;
+        var isTab = key === 'Tab' || keyCode === 9;
+        if (isTab) {
+            this.adapter.closeSurface(/** skipRestoreFocus */ true);
+        }
+    };
+    MDCMenuFoundation.prototype.handleItemAction = function (listItem) {
+        var _this = this;
+        var index = this.adapter.getElementIndex(listItem);
+        if (index < 0) {
+            return;
+        }
+        this.adapter.notifySelected({ index: index });
+        var skipRestoreFocus = this.adapter.getAttributeFromElementAtIndex(index, strings$8.SKIP_RESTORE_FOCUS) === 'true';
+        this.adapter.closeSurface(skipRestoreFocus);
+        // Wait for the menu to close before adding/removing classes that affect styles.
+        this.closeAnimationEndTimerId = setTimeout(function () {
+            // Recompute the index in case the menu contents have changed.
+            var recomputedIndex = _this.adapter.getElementIndex(listItem);
+            if (recomputedIndex >= 0 &&
+                _this.adapter.isSelectableItemAtIndex(recomputedIndex)) {
+                _this.setSelectedIndex(recomputedIndex);
+            }
+        }, MDCMenuSurfaceFoundation.numbers.TRANSITION_CLOSE_DURATION);
+    };
+    MDCMenuFoundation.prototype.handleMenuSurfaceOpened = function () {
+        switch (this.defaultFocusState) {
+            case DefaultFocusState.FIRST_ITEM:
+                this.adapter.focusItemAtIndex(0);
+                break;
+            case DefaultFocusState.LAST_ITEM:
+                this.adapter.focusItemAtIndex(this.adapter.getMenuItemCount() - 1);
+                break;
+            case DefaultFocusState.NONE:
+                // Do nothing.
+                break;
+            default:
+                this.adapter.focusListRoot();
+                break;
+        }
+    };
+    /**
+     * Sets default focus state where the menu should focus every time when menu
+     * is opened. Focuses the list root (`DefaultFocusState.LIST_ROOT`) element by
+     * default.
+     */
+    MDCMenuFoundation.prototype.setDefaultFocusState = function (focusState) {
+        this.defaultFocusState = focusState;
+    };
+    /** @return Index of the currently selected list item within the menu. */
+    MDCMenuFoundation.prototype.getSelectedIndex = function () {
+        return this.selectedIndex;
+    };
+    /**
+     * Selects the list item at `index` within the menu.
+     * @param index Index of list item within the menu.
+     */
+    MDCMenuFoundation.prototype.setSelectedIndex = function (index) {
+        this.validatedIndex(index);
+        if (!this.adapter.isSelectableItemAtIndex(index)) {
+            throw new Error('MDCMenuFoundation: No selection group at specified index.');
+        }
+        var prevSelectedIndex = this.adapter.getSelectedSiblingOfItemAtIndex(index);
+        if (prevSelectedIndex >= 0) {
+            this.adapter.removeAttributeFromElementAtIndex(prevSelectedIndex, strings$8.ARIA_CHECKED_ATTR);
+            this.adapter.removeClassFromElementAtIndex(prevSelectedIndex, cssClasses$9.MENU_SELECTED_LIST_ITEM);
+        }
+        this.adapter.addClassToElementAtIndex(index, cssClasses$9.MENU_SELECTED_LIST_ITEM);
+        this.adapter.addAttributeToElementAtIndex(index, strings$8.ARIA_CHECKED_ATTR, 'true');
+        this.selectedIndex = index;
+    };
+    /**
+     * Sets the enabled state to isEnabled for the menu item at the given index.
+     * @param index Index of the menu item
+     * @param isEnabled The desired enabled state of the menu item.
+     */
+    MDCMenuFoundation.prototype.setEnabled = function (index, isEnabled) {
+        this.validatedIndex(index);
+        if (isEnabled) {
+            this.adapter.removeClassFromElementAtIndex(index, cssClasses$b.LIST_ITEM_DISABLED_CLASS);
+            this.adapter.addAttributeToElementAtIndex(index, strings$8.ARIA_DISABLED_ATTR, 'false');
+        }
+        else {
+            this.adapter.addClassToElementAtIndex(index, cssClasses$b.LIST_ITEM_DISABLED_CLASS);
+            this.adapter.addAttributeToElementAtIndex(index, strings$8.ARIA_DISABLED_ATTR, 'true');
+        }
+    };
+    MDCMenuFoundation.prototype.validatedIndex = function (index) {
+        var menuSize = this.adapter.getMenuItemCount();
+        var isIndexInRange = index >= 0 && index < menuSize;
+        if (!isIndexInRange) {
+            throw new Error('MDCMenuFoundation: No list item at specified index.');
+        }
+    };
+    return MDCMenuFoundation;
+}(MDCFoundation));
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+var MDCMenuFoundation$1 = MDCMenuFoundation;
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/**
+ * @fires selected {SelectedDetail}
+ * @fires action {ActionDetail}
+ * @fires items-updated
+ * @fires opened
+ * @fires closed
+ */
+class MenuBase extends BaseElement {
+    constructor() {
+        super(...arguments);
+        this.mdcFoundationClass = MDCMenuFoundation$1;
+        this.listElement_ = null;
+        this.anchor = null;
+        this.open = false;
+        this.quick = false;
+        this.wrapFocus = false;
+        this.innerRole = 'menu';
+        this.innerAriaLabel = null;
+        this.corner = 'TOP_START';
+        this.x = null;
+        this.y = null;
+        this.absolute = false;
+        this.multi = false;
+        this.activatable = false;
+        this.fixed = false;
+        this.forceGroupSelection = false;
+        this.fullwidth = false;
+        this.menuCorner = 'START';
+        this.stayOpenOnBodyClick = false;
+        this.defaultFocus = 'LIST_ROOT';
+        this._listUpdateComplete = null;
+    }
+    get listElement() {
+        if (!this.listElement_) {
+            this.listElement_ = this.renderRoot.querySelector('mwc-list');
+            return this.listElement_;
+        }
+        return this.listElement_;
+    }
+    get items() {
+        const listElement = this.listElement;
+        if (listElement) {
+            return listElement.items;
+        }
+        return [];
+    }
+    get index() {
+        const listElement = this.listElement;
+        if (listElement) {
+            return listElement.index;
+        }
+        return -1;
+    }
+    get selected() {
+        const listElement = this.listElement;
+        if (listElement) {
+            return listElement.selected;
+        }
+        return null;
+    }
+    render() {
+        return this.renderSurface();
+    }
+    renderSurface() {
+        const classes = this.getSurfaceClasses();
+        return y `
+      <mwc-menu-surface
+        ?hidden=${!this.open}
+        .anchor=${this.anchor}
+        .open=${this.open}
+        .quick=${this.quick}
+        .corner=${this.corner}
+        .x=${this.x}
+        .y=${this.y}
+        .absolute=${this.absolute}
+        .fixed=${this.fixed}
+        .fullwidth=${this.fullwidth}
+        .menuCorner=${this.menuCorner}
+        ?stayOpenOnBodyClick=${this.stayOpenOnBodyClick}
+        class=${o(classes)}
+        @closed=${this.onClosed}
+        @opened=${this.onOpened}
+        @keydown=${this.onKeydown}>
+      ${this.renderList()}
+    </mwc-menu-surface>`;
+    }
+    getSurfaceClasses() {
+        return {
+            'mdc-menu': true,
+            'mdc-menu-surface': true,
+        };
+    }
+    renderList() {
+        const itemRoles = this.innerRole === 'menu' ? 'menuitem' : 'option';
+        const classes = this.renderListClasses();
+        return y `
+      <mwc-list
+          rootTabbable
+          .innerAriaLabel=${this.innerAriaLabel}
+          .innerRole=${this.innerRole}
+          .multi=${this.multi}
+          class=${o(classes)}
+          .itemRoles=${itemRoles}
+          .wrapFocus=${this.wrapFocus}
+          .activatable=${this.activatable}
+          @action=${this.onAction}>
+        <slot></slot>
+      </mwc-list>`;
+    }
+    renderListClasses() {
+        return {
+            'mdc-deprecated-list': true,
+        };
+    }
+    createAdapter() {
+        return {
+            addClassToElementAtIndex: (index, className) => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return;
+                }
+                const element = listElement.items[index];
+                if (!element) {
+                    return;
+                }
+                if (className === 'mdc-menu-item--selected') {
+                    if (this.forceGroupSelection && !element.selected) {
+                        listElement.toggle(index, true);
+                    }
+                }
+                else {
+                    element.classList.add(className);
+                }
+            },
+            removeClassFromElementAtIndex: (index, className) => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return;
+                }
+                const element = listElement.items[index];
+                if (!element) {
+                    return;
+                }
+                if (className === 'mdc-menu-item--selected') {
+                    if (element.selected) {
+                        listElement.toggle(index, false);
+                    }
+                }
+                else {
+                    element.classList.remove(className);
+                }
+            },
+            addAttributeToElementAtIndex: (index, attr, value) => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return;
+                }
+                const element = listElement.items[index];
+                if (!element) {
+                    return;
+                }
+                element.setAttribute(attr, value);
+            },
+            removeAttributeFromElementAtIndex: (index, attr) => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return;
+                }
+                const element = listElement.items[index];
+                if (!element) {
+                    return;
+                }
+                element.removeAttribute(attr);
+            },
+            getAttributeFromElementAtIndex: (index, attr) => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return null;
+                }
+                const element = listElement.items[index];
+                if (!element) {
+                    return null;
+                }
+                return element.getAttribute(attr);
+            },
+            elementContainsClass: (element, className) => element.classList.contains(className),
+            closeSurface: () => {
+                this.open = false;
+            },
+            getElementIndex: (element) => {
+                const listElement = this.listElement;
+                if (listElement) {
+                    return listElement.items.indexOf(element);
+                }
+                return -1;
+            },
+            notifySelected: () => { },
+            getMenuItemCount: () => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return 0;
+                }
+                return listElement.items.length;
+            },
+            focusItemAtIndex: (index) => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return;
+                }
+                const element = listElement.items[index];
+                if (element) {
+                    element.focus();
+                }
+            },
+            focusListRoot: () => {
+                if (this.listElement) {
+                    this.listElement.focus();
+                }
+            },
+            getSelectedSiblingOfItemAtIndex: (index) => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return -1;
+                }
+                const elementAtIndex = listElement.items[index];
+                if (!elementAtIndex || !elementAtIndex.group) {
+                    return -1;
+                }
+                for (let i = 0; i < listElement.items.length; i++) {
+                    if (i === index) {
+                        continue;
+                    }
+                    const current = listElement.items[i];
+                    if (current.selected && current.group === elementAtIndex.group) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
+            isSelectableItemAtIndex: (index) => {
+                const listElement = this.listElement;
+                if (!listElement) {
+                    return false;
+                }
+                const elementAtIndex = listElement.items[index];
+                if (!elementAtIndex) {
+                    return false;
+                }
+                return elementAtIndex.hasAttribute('group');
+            },
+        };
+    }
+    onKeydown(evt) {
+        if (this.mdcFoundation) {
+            this.mdcFoundation.handleKeydown(evt);
+        }
+    }
+    onAction(evt) {
+        const listElement = this.listElement;
+        if (this.mdcFoundation && listElement) {
+            const index = evt.detail.index;
+            const el = listElement.items[index];
+            if (el) {
+                this.mdcFoundation.handleItemAction(el);
+            }
+        }
+    }
+    onOpened() {
+        this.open = true;
+        if (this.mdcFoundation) {
+            this.mdcFoundation.handleMenuSurfaceOpened();
+        }
+    }
+    onClosed() {
+        this.open = false;
+    }
+    // tslint:disable:ban-ts-ignore
+    async getUpdateComplete() {
+        await this._listUpdateComplete;
+        // @ts-ignore
+        const result = await super.getUpdateComplete();
+        return result;
+    }
+    // tslint:enable:ban-ts-ignore
+    async firstUpdated() {
+        super.firstUpdated();
+        const listElement = this.listElement;
+        if (listElement) {
+            this._listUpdateComplete = listElement.updateComplete;
+            await this._listUpdateComplete;
+        }
+    }
+    select(index) {
+        const listElement = this.listElement;
+        if (listElement) {
+            listElement.select(index);
+        }
+    }
+    close() {
+        this.open = false;
+    }
+    show() {
+        this.open = true;
+    }
+    getFocusedItemIndex() {
+        const listElement = this.listElement;
+        if (listElement) {
+            return listElement.getFocusedItemIndex();
+        }
+        return -1;
+    }
+    focusItemAtIndex(index) {
+        const listElement = this.listElement;
+        if (listElement) {
+            listElement.focusItemAtIndex(index);
+        }
+    }
+    layout(updateItems = true) {
+        const listElement = this.listElement;
+        if (listElement) {
+            listElement.layout(updateItems);
+        }
+    }
+}
+__decorate([
+    i$2('.mdc-menu')
+], MenuBase.prototype, "mdcRoot", void 0);
+__decorate([
+    i$2('slot')
+], MenuBase.prototype, "slotElement", void 0);
+__decorate([
+    e$6({ type: Object })
+], MenuBase.prototype, "anchor", void 0);
+__decorate([
+    e$6({ type: Boolean, reflect: true })
+], MenuBase.prototype, "open", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "quick", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "wrapFocus", void 0);
+__decorate([
+    e$6({ type: String })
+], MenuBase.prototype, "innerRole", void 0);
+__decorate([
+    e$6({ type: String })
+], MenuBase.prototype, "innerAriaLabel", void 0);
+__decorate([
+    e$6({ type: String })
+], MenuBase.prototype, "corner", void 0);
+__decorate([
+    e$6({ type: Number })
+], MenuBase.prototype, "x", void 0);
+__decorate([
+    e$6({ type: Number })
+], MenuBase.prototype, "y", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "absolute", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "multi", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "activatable", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "fixed", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "forceGroupSelection", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "fullwidth", void 0);
+__decorate([
+    e$6({ type: String })
+], MenuBase.prototype, "menuCorner", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], MenuBase.prototype, "stayOpenOnBodyClick", void 0);
+__decorate([
+    e$6({ type: String }),
+    observer(function (value) {
+        if (this.mdcFoundation) {
+            this.mdcFoundation.setDefaultFocusState(DefaultFocusState[value]);
+        }
+    })
+], MenuBase.prototype, "defaultFocus", void 0);
+
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-LIcense-Identifier: Apache-2.0
+ */
+const styles$8 = i$5 `mwc-list ::slotted([mwc-list-item]:not([twoline])),mwc-list ::slotted([noninteractive]:not([twoline])){height:var(--mdc-menu-item-height, 48px)}`;
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+let Menu = class Menu extends MenuBase {
+};
+Menu.styles = [styles$8];
+Menu = __decorate([
+    e$7('mwc-menu')
+], Menu);
+
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var strings$7 = {
+    NOTCH_ELEMENT_SELECTOR: '.mdc-notched-outline__notch',
+};
+var numbers$4 = {
+    // This should stay in sync with $mdc-notched-outline-padding * 2.
+    NOTCH_ELEMENT_PADDING: 8,
+};
+var cssClasses$8 = {
+    NO_LABEL: 'mdc-notched-outline--no-label',
+    OUTLINE_NOTCHED: 'mdc-notched-outline--notched',
+    OUTLINE_UPGRADED: 'mdc-notched-outline--upgraded',
+};
+
+/**
+ * @license
+ * Copyright 2017 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCNotchedOutlineFoundation = /** @class */ (function (_super) {
+    __extends(MDCNotchedOutlineFoundation, _super);
+    function MDCNotchedOutlineFoundation(adapter) {
+        return _super.call(this, __assign(__assign({}, MDCNotchedOutlineFoundation.defaultAdapter), adapter)) || this;
+    }
+    Object.defineProperty(MDCNotchedOutlineFoundation, "strings", {
+        get: function () {
+            return strings$7;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCNotchedOutlineFoundation, "cssClasses", {
+        get: function () {
+            return cssClasses$8;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCNotchedOutlineFoundation, "numbers", {
+        get: function () {
+            return numbers$4;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCNotchedOutlineFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCNotchedOutlineAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                setNotchWidthProperty: function () { return undefined; },
+                removeNotchWidthProperty: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    /**
+     * Adds the outline notched selector and updates the notch width calculated based off of notchWidth.
+     */
+    MDCNotchedOutlineFoundation.prototype.notch = function (notchWidth) {
+        var OUTLINE_NOTCHED = MDCNotchedOutlineFoundation.cssClasses.OUTLINE_NOTCHED;
+        if (notchWidth > 0) {
+            notchWidth += numbers$4.NOTCH_ELEMENT_PADDING; // Add padding from left/right.
+        }
+        this.adapter.setNotchWidthProperty(notchWidth);
+        this.adapter.addClass(OUTLINE_NOTCHED);
+    };
+    /**
+     * Removes notched outline selector to close the notch in the outline.
+     */
+    MDCNotchedOutlineFoundation.prototype.closeNotch = function () {
+        var OUTLINE_NOTCHED = MDCNotchedOutlineFoundation.cssClasses.OUTLINE_NOTCHED;
+        this.adapter.removeClass(OUTLINE_NOTCHED);
+        this.adapter.removeNotchWidthProperty();
+    };
+    return MDCNotchedOutlineFoundation;
+}(MDCFoundation));
+
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+class NotchedOutlineBase extends BaseElement {
+    constructor() {
+        super(...arguments);
+        this.mdcFoundationClass = MDCNotchedOutlineFoundation;
+        this.width = 0;
+        this.open = false;
+        this.lastOpen = this.open;
+    }
+    createAdapter() {
+        return {
+            addClass: (className) => this.mdcRoot.classList.add(className),
+            removeClass: (className) => this.mdcRoot.classList.remove(className),
+            setNotchWidthProperty: (width) => this.notchElement.style.setProperty('width', `${width}px`),
+            removeNotchWidthProperty: () => this.notchElement.style.removeProperty('width'),
+        };
+    }
+    openOrClose(shouldOpen, width) {
+        if (!this.mdcFoundation) {
+            return;
+        }
+        if (shouldOpen && width !== undefined) {
+            this.mdcFoundation.notch(width);
+        }
+        else {
+            this.mdcFoundation.closeNotch();
+        }
+    }
+    render() {
+        this.openOrClose(this.open, this.width);
+        const classes = o({
+            'mdc-notched-outline--notched': this.open,
+        });
+        return y `
+      <span class="mdc-notched-outline ${classes}">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
+          <slot></slot>
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>`;
+    }
+}
+__decorate([
+    i$2('.mdc-notched-outline')
+], NotchedOutlineBase.prototype, "mdcRoot", void 0);
+__decorate([
+    e$6({ type: Number })
+], NotchedOutlineBase.prototype, "width", void 0);
+__decorate([
+    e$6({ type: Boolean, reflect: true })
+], NotchedOutlineBase.prototype, "open", void 0);
+__decorate([
+    i$2('.mdc-notched-outline__notch')
+], NotchedOutlineBase.prototype, "notchElement", void 0);
+
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-LIcense-Identifier: Apache-2.0
+ */
+const styles$7 = i$5 `.mdc-notched-outline{display:flex;position:absolute;top:0;right:0;left:0;box-sizing:border-box;width:100%;max-width:100%;height:100%;text-align:left;pointer-events:none}[dir=rtl] .mdc-notched-outline,.mdc-notched-outline[dir=rtl]{text-align:right}.mdc-notched-outline__leading,.mdc-notched-outline__notch,.mdc-notched-outline__trailing{box-sizing:border-box;height:100%;border-top:1px solid;border-bottom:1px solid;pointer-events:none}.mdc-notched-outline__leading{border-left:1px solid;border-right:none;width:12px}[dir=rtl] .mdc-notched-outline__leading,.mdc-notched-outline__leading[dir=rtl]{border-left:none;border-right:1px solid}.mdc-notched-outline__trailing{border-left:none;border-right:1px solid;flex-grow:1}[dir=rtl] .mdc-notched-outline__trailing,.mdc-notched-outline__trailing[dir=rtl]{border-left:1px solid;border-right:none}.mdc-notched-outline__notch{flex:0 0 auto;width:auto;max-width:calc(100% - 12px * 2)}.mdc-notched-outline .mdc-floating-label{display:inline-block;position:relative;max-width:100%}.mdc-notched-outline .mdc-floating-label--float-above{text-overflow:clip}.mdc-notched-outline--upgraded .mdc-floating-label--float-above{max-width:calc(100% / 0.75)}.mdc-notched-outline--notched .mdc-notched-outline__notch{padding-left:0;padding-right:8px;border-top:none}[dir=rtl] .mdc-notched-outline--notched .mdc-notched-outline__notch,.mdc-notched-outline--notched .mdc-notched-outline__notch[dir=rtl]{padding-left:8px;padding-right:0}.mdc-notched-outline--no-label .mdc-notched-outline__notch{display:none}:host{display:block;position:absolute;right:0;left:0;box-sizing:border-box;width:100%;max-width:100%;height:100%;text-align:left;pointer-events:none}[dir=rtl] :host,:host([dir=rtl]){text-align:right}::slotted(.mdc-floating-label){display:inline-block;position:relative;top:17px;bottom:auto;max-width:100%}::slotted(.mdc-floating-label--float-above){text-overflow:clip}.mdc-notched-outline--upgraded ::slotted(.mdc-floating-label--float-above){max-width:calc(100% / 0.75)}.mdc-notched-outline .mdc-notched-outline__leading{border-top-left-radius:4px;border-top-left-radius:var(--mdc-shape-small, 4px);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:4px;border-bottom-left-radius:var(--mdc-shape-small, 4px)}[dir=rtl] .mdc-notched-outline .mdc-notched-outline__leading,.mdc-notched-outline .mdc-notched-outline__leading[dir=rtl]{border-top-left-radius:0;border-top-right-radius:4px;border-top-right-radius:var(--mdc-shape-small, 4px);border-bottom-right-radius:4px;border-bottom-right-radius:var(--mdc-shape-small, 4px);border-bottom-left-radius:0}@supports(top: max(0%)){.mdc-notched-outline .mdc-notched-outline__leading{width:max(12px, var(--mdc-shape-small, 4px))}}@supports(top: max(0%)){.mdc-notched-outline .mdc-notched-outline__notch{max-width:calc(100% - max(12px, var(--mdc-shape-small, 4px)) * 2)}}.mdc-notched-outline .mdc-notched-outline__trailing{border-top-left-radius:0;border-top-right-radius:4px;border-top-right-radius:var(--mdc-shape-small, 4px);border-bottom-right-radius:4px;border-bottom-right-radius:var(--mdc-shape-small, 4px);border-bottom-left-radius:0}[dir=rtl] .mdc-notched-outline .mdc-notched-outline__trailing,.mdc-notched-outline .mdc-notched-outline__trailing[dir=rtl]{border-top-left-radius:4px;border-top-left-radius:var(--mdc-shape-small, 4px);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:4px;border-bottom-left-radius:var(--mdc-shape-small, 4px)}.mdc-notched-outline__leading,.mdc-notched-outline__notch,.mdc-notched-outline__trailing{border-color:var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #6200ee));border-width:1px;border-width:var(--mdc-notched-outline-stroke-width, 1px)}.mdc-notched-outline--notched .mdc-notched-outline__notch{padding-top:0;padding-top:var(--mdc-notched-outline-notch-offset, 0)}`;
+
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+let NotchedOutline = class NotchedOutline extends NotchedOutlineBase {
+};
+NotchedOutline.styles = [styles$7];
+NotchedOutline = __decorate([
+    e$7('mwc-notched-outline')
+], NotchedOutline);
+
+/**
+ * @license
+ * Copyright 2020 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var ELEMENTS_KEY_ALLOWED_IN = ['input', 'button', 'textarea', 'select'];
+/**
+ * Ensures that preventDefault is only called if the containing element
+ * doesn't consume the event, and it will cause an unintended scroll.
+ *
+ * @param evt keyboard event to be prevented.
+ */
+var preventDefaultEvent = function (evt) {
+    var target = evt.target;
+    if (!target) {
+        return;
+    }
+    var tagName = ("" + target.tagName).toLowerCase();
+    if (ELEMENTS_KEY_ALLOWED_IN.indexOf(tagName) === -1) {
+        evt.preventDefault();
+    }
+};
+
+/**
+ * @license
+ * Copyright 2020 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/**
+ * Initializes a state object for typeahead. Use the same reference for calls to
+ * typeahead functions.
+ *
+ * @return The current state of the typeahead process. Each state reference
+ *     represents a typeahead instance as the reference is typically mutated
+ *     in-place.
+ */
+function initState() {
+    var state = {
+        bufferClearTimeout: 0,
+        currentFirstChar: '',
+        sortedIndexCursor: 0,
+        typeaheadBuffer: '',
+    };
+    return state;
+}
+/**
+ * Initializes typeahead state by indexing the current list items by primary
+ * text into the sortedIndexByFirstChar data structure.
+ *
+ * @param listItemCount numer of items in the list
+ * @param getPrimaryTextByItemIndex function that returns the primary text at a
+ *     given index
+ *
+ * @return Map that maps the first character of the primary text to the full
+ *     list text and it's index
+ */
+function initSortedIndex(listItemCount, getPrimaryTextByItemIndex) {
+    var sortedIndexByFirstChar = new Map();
+    // Aggregate item text to index mapping
+    for (var i = 0; i < listItemCount; i++) {
+        var primaryText = getPrimaryTextByItemIndex(i).trim();
+        if (!primaryText) {
+            continue;
+        }
+        var firstChar = primaryText[0].toLowerCase();
+        if (!sortedIndexByFirstChar.has(firstChar)) {
+            sortedIndexByFirstChar.set(firstChar, []);
+        }
+        sortedIndexByFirstChar.get(firstChar).push({ text: primaryText.toLowerCase(), index: i });
+    }
+    // Sort the mapping
+    // TODO(b/157162694): Investigate replacing forEach with Map.values()
+    sortedIndexByFirstChar.forEach(function (values) {
+        values.sort(function (first, second) {
+            return first.index - second.index;
+        });
+    });
+    return sortedIndexByFirstChar;
+}
+/**
+ * Given the next desired character from the user, it attempts to find the next
+ * list option matching the buffer. Wraps around if at the end of options.
+ *
+ * @param opts Options and accessors
+ *   - nextChar - the next character to match against items
+ *   - sortedIndexByFirstChar - output of `initSortedIndex(...)`
+ *   - focusedItemIndex - the index of the currently focused item
+ *   - focusItemAtIndex - function that focuses a list item at given index
+ *   - skipFocus - whether or not to focus the matched item
+ *   - isItemAtIndexDisabled - function that determines whether an item at a
+ *        given index is disabled
+ * @param state The typeahead state instance. See `initState`.
+ *
+ * @return The index of the matched item, or -1 if no match.
+ */
+function matchItem(opts, state) {
+    var nextChar = opts.nextChar, focusItemAtIndex = opts.focusItemAtIndex, sortedIndexByFirstChar = opts.sortedIndexByFirstChar, focusedItemIndex = opts.focusedItemIndex, skipFocus = opts.skipFocus, isItemAtIndexDisabled = opts.isItemAtIndexDisabled;
+    clearTimeout(state.bufferClearTimeout);
+    state.bufferClearTimeout = setTimeout(function () {
+        clearBuffer(state);
+    }, numbers$7.TYPEAHEAD_BUFFER_CLEAR_TIMEOUT_MS);
+    state.typeaheadBuffer = state.typeaheadBuffer + nextChar;
+    var index;
+    if (state.typeaheadBuffer.length === 1) {
+        index = matchFirstChar(sortedIndexByFirstChar, focusedItemIndex, isItemAtIndexDisabled, state);
+    }
+    else {
+        index = matchAllChars(sortedIndexByFirstChar, isItemAtIndexDisabled, state);
+    }
+    if (index !== -1 && !skipFocus) {
+        focusItemAtIndex(index);
+    }
+    return index;
+}
+/**
+ * Matches the user's single input character in the buffer to the
+ * next option that begins with such character. Wraps around if at
+ * end of options. Returns -1 if no match is found.
+ */
+function matchFirstChar(sortedIndexByFirstChar, focusedItemIndex, isItemAtIndexDisabled, state) {
+    var firstChar = state.typeaheadBuffer[0];
+    var itemsMatchingFirstChar = sortedIndexByFirstChar.get(firstChar);
+    if (!itemsMatchingFirstChar) {
+        return -1;
+    }
+    // Has the same firstChar been recently matched?
+    // Also, did starting index remain the same between key presses?
+    // If both hold true, simply increment index.
+    if (firstChar === state.currentFirstChar &&
+        itemsMatchingFirstChar[state.sortedIndexCursor].index ===
+            focusedItemIndex) {
+        state.sortedIndexCursor =
+            (state.sortedIndexCursor + 1) % itemsMatchingFirstChar.length;
+        var newIndex = itemsMatchingFirstChar[state.sortedIndexCursor].index;
+        if (!isItemAtIndexDisabled(newIndex)) {
+            return newIndex;
+        }
+    }
+    // If we're here, it means one of the following happened:
+    // - either firstChar or startingIndex has changed, invalidating the
+    // cursor.
+    // - The next item of typeahead is disabled, so we have to look further.
+    state.currentFirstChar = firstChar;
+    var newCursorPosition = -1;
+    var cursorPosition;
+    // Find the first non-disabled item as a fallback.
+    for (cursorPosition = 0; cursorPosition < itemsMatchingFirstChar.length; cursorPosition++) {
+        if (!isItemAtIndexDisabled(itemsMatchingFirstChar[cursorPosition].index)) {
+            newCursorPosition = cursorPosition;
+            break;
+        }
+    }
+    // Advance cursor to first item matching the firstChar that is positioned
+    // after starting item. Cursor is unchanged from fallback if there's no
+    // such item.
+    for (; cursorPosition < itemsMatchingFirstChar.length; cursorPosition++) {
+        if (itemsMatchingFirstChar[cursorPosition].index > focusedItemIndex &&
+            !isItemAtIndexDisabled(itemsMatchingFirstChar[cursorPosition].index)) {
+            newCursorPosition = cursorPosition;
+            break;
+        }
+    }
+    if (newCursorPosition !== -1) {
+        state.sortedIndexCursor = newCursorPosition;
+        return itemsMatchingFirstChar[state.sortedIndexCursor].index;
+    }
+    return -1;
+}
+/**
+ * Attempts to find the next item that matches all of the typeahead buffer.
+ * Wraps around if at end of options. Returns -1 if no match is found.
+ */
+function matchAllChars(sortedIndexByFirstChar, isItemAtIndexDisabled, state) {
+    var firstChar = state.typeaheadBuffer[0];
+    var itemsMatchingFirstChar = sortedIndexByFirstChar.get(firstChar);
+    if (!itemsMatchingFirstChar) {
+        return -1;
+    }
+    // Do nothing if text already matches
+    var startingItem = itemsMatchingFirstChar[state.sortedIndexCursor];
+    if (startingItem.text.lastIndexOf(state.typeaheadBuffer, 0) === 0 &&
+        !isItemAtIndexDisabled(startingItem.index)) {
+        return startingItem.index;
+    }
+    // Find next item that matches completely; if no match, we'll eventually
+    // loop around to same position
+    var cursorPosition = (state.sortedIndexCursor + 1) % itemsMatchingFirstChar.length;
+    var nextCursorPosition = -1;
+    while (cursorPosition !== state.sortedIndexCursor) {
+        var currentItem = itemsMatchingFirstChar[cursorPosition];
+        var matches = currentItem.text.lastIndexOf(state.typeaheadBuffer, 0) === 0;
+        var isEnabled = !isItemAtIndexDisabled(currentItem.index);
+        if (matches && isEnabled) {
+            nextCursorPosition = cursorPosition;
+            break;
+        }
+        cursorPosition = (cursorPosition + 1) % itemsMatchingFirstChar.length;
+    }
+    if (nextCursorPosition !== -1) {
+        state.sortedIndexCursor = nextCursorPosition;
+        return itemsMatchingFirstChar[state.sortedIndexCursor].index;
+    }
+    return -1;
+}
+/**
+ * Whether or not the given typeahead instaance state is currently typing.
+ *
+ * @param state The typeahead state instance. See `initState`.
+ */
+function isTypingInProgress(state) {
+    return state.typeaheadBuffer.length > 0;
+}
+/**
+ * Clears the typeahaed buffer so that it resets item matching to the first
+ * character.
+ *
+ * @param state The typeahead state instance. See `initState`.
+ */
+function clearBuffer(state) {
+    state.typeaheadBuffer = '';
+}
+/**
+ * Given a keydown event, it calculates whether or not to automatically focus a
+ * list item depending on what was typed mimicing the typeahead functionality of
+ * a standard <select> element that is open.
+ *
+ * @param opts Options and accessors
+ *   - event - the KeyboardEvent to handle and parse
+ *   - sortedIndexByFirstChar - output of `initSortedIndex(...)`
+ *   - focusedItemIndex - the index of the currently focused item
+ *   - focusItemAtIndex - function that focuses a list item at given index
+ *   - isItemAtFocusedIndexDisabled - whether or not the currently focused item
+ *      is disabled
+ *   - isTargetListItem - whether or not the event target is a list item
+ * @param state The typeahead state instance. See `initState`.
+ *
+ * @returns index of the item matched by the keydown. -1 if not matched.
+ */
+function handleKeydown(opts, state) {
+    var event = opts.event, isTargetListItem = opts.isTargetListItem, focusedItemIndex = opts.focusedItemIndex, focusItemAtIndex = opts.focusItemAtIndex, sortedIndexByFirstChar = opts.sortedIndexByFirstChar, isItemAtIndexDisabled = opts.isItemAtIndexDisabled;
+    var isArrowLeft = normalizeKey(event) === 'ArrowLeft';
+    var isArrowUp = normalizeKey(event) === 'ArrowUp';
+    var isArrowRight = normalizeKey(event) === 'ArrowRight';
+    var isArrowDown = normalizeKey(event) === 'ArrowDown';
+    var isHome = normalizeKey(event) === 'Home';
+    var isEnd = normalizeKey(event) === 'End';
+    var isEnter = normalizeKey(event) === 'Enter';
+    var isSpace = normalizeKey(event) === 'Spacebar';
+    if (event.altKey || event.ctrlKey || event.metaKey || isArrowLeft ||
+        isArrowUp || isArrowRight || isArrowDown || isHome || isEnd || isEnter) {
+        return -1;
+    }
+    var isCharacterKey = !isSpace && event.key.length === 1;
+    if (isCharacterKey) {
+        preventDefaultEvent(event);
+        var matchItemOpts = {
+            focusItemAtIndex: focusItemAtIndex,
+            focusedItemIndex: focusedItemIndex,
+            nextChar: event.key.toLowerCase(),
+            sortedIndexByFirstChar: sortedIndexByFirstChar,
+            skipFocus: false,
+            isItemAtIndexDisabled: isItemAtIndexDisabled,
+        };
+        return matchItem(matchItemOpts, state);
+    }
+    if (!isSpace) {
+        return -1;
+    }
+    if (isTargetListItem) {
+        preventDefaultEvent(event);
+    }
+    var typeaheadOnListItem = isTargetListItem && isTypingInProgress(state);
+    if (typeaheadOnListItem) {
+        var matchItemOpts = {
+            focusItemAtIndex: focusItemAtIndex,
+            focusedItemIndex: focusedItemIndex,
+            nextChar: ' ',
+            sortedIndexByFirstChar: sortedIndexByFirstChar,
+            skipFocus: false,
+            isItemAtIndexDisabled: isItemAtIndexDisabled,
+        };
+        // space participates in typeahead matching if in rapid typing mode
+        return matchItem(matchItemOpts, state);
+    }
+    return -1;
+}
+
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+var _a, _b;
+// ShadyDOM should submit <input> elements in component internals
+const USING_SHADY_DOM = (_b = (_a = window.ShadyDOM) === null || _a === void 0 ? void 0 : _a.inUse) !== null && _b !== void 0 ? _b : false;
+/** @soyCompatible */
+class FormElement extends BaseElement {
+    constructor() {
+        super(...arguments);
+        /**
+         * Disabled state for the component. When `disabled` is set to `true`, the
+         * component will not be added to form submission.
+         */
+        this.disabled = false;
+        /**
+         * Form element that contains this element
+         */
+        this.containingForm = null;
+        this.formDataListener = (ev) => {
+            if (!this.disabled) {
+                this.setFormData(ev.formData);
+            }
+        };
+    }
+    findFormElement() {
+        // If the component internals are not in Shadow DOM, subscribing to form
+        // data events could lead to duplicated data, which may not work correctly
+        // on the server side.
+        if (!this.shadowRoot || USING_SHADY_DOM) {
+            return null;
+        }
+        const root = this.getRootNode();
+        const forms = root.querySelectorAll('form');
+        for (const form of Array.from(forms)) {
+            if (form.contains(this)) {
+                return form;
+            }
+        }
+        return null;
+    }
+    connectedCallback() {
+        var _a;
+        super.connectedCallback();
+        this.containingForm = this.findFormElement();
+        (_a = this.containingForm) === null || _a === void 0 ? void 0 : _a.addEventListener('formdata', this.formDataListener);
+    }
+    disconnectedCallback() {
+        var _a;
+        super.disconnectedCallback();
+        (_a = this.containingForm) === null || _a === void 0 ? void 0 : _a.removeEventListener('formdata', this.formDataListener);
+        this.containingForm = null;
+    }
+    click() {
+        if (this.formElement && !this.disabled) {
+            this.formElement.focus();
+            this.formElement.click();
+        }
+    }
+    firstUpdated() {
+        super.firstUpdated();
+        if (this.shadowRoot) {
+            this.mdcRoot.addEventListener('change', (e) => {
+                this.dispatchEvent(new Event('change', e));
+            });
+        }
+    }
+}
+FormElement.shadowRootOptions = { mode: 'open', delegatesFocus: true };
+__decorate([
+    e$6({ type: Boolean })
+], FormElement.prototype, "disabled", void 0);
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses$7 = {
+    LABEL_FLOAT_ABOVE: 'mdc-floating-label--float-above',
+    LABEL_REQUIRED: 'mdc-floating-label--required',
+    LABEL_SHAKE: 'mdc-floating-label--shake',
+    ROOT: 'mdc-floating-label',
+};
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCFloatingLabelFoundation = /** @class */ (function (_super) {
+    __extends(MDCFloatingLabelFoundation, _super);
+    function MDCFloatingLabelFoundation(adapter) {
+        var _this = _super.call(this, __assign(__assign({}, MDCFloatingLabelFoundation.defaultAdapter), adapter)) || this;
+        _this.shakeAnimationEndHandler = function () {
+            _this.handleShakeAnimationEnd();
+        };
+        return _this;
+    }
+    Object.defineProperty(MDCFloatingLabelFoundation, "cssClasses", {
+        get: function () {
+            return cssClasses$7;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCFloatingLabelFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCFloatingLabelAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                getWidth: function () { return 0; },
+                registerInteractionHandler: function () { return undefined; },
+                deregisterInteractionHandler: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCFloatingLabelFoundation.prototype.init = function () {
+        this.adapter.registerInteractionHandler('animationend', this.shakeAnimationEndHandler);
+    };
+    MDCFloatingLabelFoundation.prototype.destroy = function () {
+        this.adapter.deregisterInteractionHandler('animationend', this.shakeAnimationEndHandler);
+    };
+    /**
+     * Returns the width of the label element.
+     */
+    MDCFloatingLabelFoundation.prototype.getWidth = function () {
+        return this.adapter.getWidth();
+    };
+    /**
+     * Styles the label to produce a shake animation to indicate an error.
+     * @param shouldShake If true, adds the shake CSS class; otherwise, removes shake class.
+     */
+    MDCFloatingLabelFoundation.prototype.shake = function (shouldShake) {
+        var LABEL_SHAKE = MDCFloatingLabelFoundation.cssClasses.LABEL_SHAKE;
+        if (shouldShake) {
+            this.adapter.addClass(LABEL_SHAKE);
+        }
+        else {
+            this.adapter.removeClass(LABEL_SHAKE);
+        }
+    };
+    /**
+     * Styles the label to float or dock.
+     * @param shouldFloat If true, adds the float CSS class; otherwise, removes float and shake classes to dock the label.
+     */
+    MDCFloatingLabelFoundation.prototype.float = function (shouldFloat) {
+        var _a = MDCFloatingLabelFoundation.cssClasses, LABEL_FLOAT_ABOVE = _a.LABEL_FLOAT_ABOVE, LABEL_SHAKE = _a.LABEL_SHAKE;
+        if (shouldFloat) {
+            this.adapter.addClass(LABEL_FLOAT_ABOVE);
+        }
+        else {
+            this.adapter.removeClass(LABEL_FLOAT_ABOVE);
+            this.adapter.removeClass(LABEL_SHAKE);
+        }
+    };
+    /**
+     * Styles the label as required.
+     * @param isRequired If true, adds an asterisk to the label, indicating that it is required.
+     */
+    MDCFloatingLabelFoundation.prototype.setRequired = function (isRequired) {
+        var LABEL_REQUIRED = MDCFloatingLabelFoundation.cssClasses.LABEL_REQUIRED;
+        if (isRequired) {
+            this.adapter.addClass(LABEL_REQUIRED);
+        }
+        else {
+            this.adapter.removeClass(LABEL_REQUIRED);
+        }
+    };
+    MDCFloatingLabelFoundation.prototype.handleShakeAnimationEnd = function () {
+        var LABEL_SHAKE = MDCFloatingLabelFoundation.cssClasses.LABEL_SHAKE;
+        this.adapter.removeClass(LABEL_SHAKE);
+    };
+    return MDCFloatingLabelFoundation;
+}(MDCFoundation));
+
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+const createAdapter$1 = (labelElement) => {
+    return {
+        addClass: (className) => labelElement.classList.add(className),
+        removeClass: (className) => labelElement.classList.remove(className),
+        getWidth: () => labelElement.scrollWidth,
+        registerInteractionHandler: (evtType, handler) => {
+            labelElement.addEventListener(evtType, handler);
+        },
+        deregisterInteractionHandler: (evtType, handler) => {
+            labelElement.removeEventListener(evtType, handler);
+        },
+    };
+};
+class FloatingLabelDirective extends i$1 {
+    constructor(partInfo) {
+        super(partInfo);
+        this.foundation = null;
+        this.previousPart = null;
+        switch (partInfo.type) {
+            // Only allow Attribute and Part bindings
+            case t.ATTRIBUTE:
+            case t.PROPERTY:
+                break;
+            default:
+                throw new Error('FloatingLabel directive only support attribute and property parts');
+        }
+    }
+    /**
+     * There is no PropertyPart in Lit 2 so far. For more info see:
+     * https://github.com/lit/lit/issues/1863
+     */
+    update(part, [label]) {
+        if (part !== this.previousPart) {
+            if (this.foundation) {
+                this.foundation.destroy();
+            }
+            this.previousPart = part;
+            const labelElement = part.element;
+            labelElement.classList.add('mdc-floating-label');
+            const adapter = createAdapter$1(labelElement);
+            this.foundation = new MDCFloatingLabelFoundation(adapter);
+            this.foundation.init();
+        }
+        return this.render(label);
+    }
+    render(_label) {
+        return this.foundation;
+    }
+}
+const floatingLabel = e$1(FloatingLabelDirective);
+
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses$6 = {
+    LINE_RIPPLE_ACTIVE: 'mdc-line-ripple--active',
+    LINE_RIPPLE_DEACTIVATING: 'mdc-line-ripple--deactivating',
+};
+
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCLineRippleFoundation = /** @class */ (function (_super) {
+    __extends(MDCLineRippleFoundation, _super);
+    function MDCLineRippleFoundation(adapter) {
+        var _this = _super.call(this, __assign(__assign({}, MDCLineRippleFoundation.defaultAdapter), adapter)) || this;
+        _this.transitionEndHandler = function (evt) {
+            _this.handleTransitionEnd(evt);
+        };
+        return _this;
+    }
+    Object.defineProperty(MDCLineRippleFoundation, "cssClasses", {
+        get: function () {
+            return cssClasses$6;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCLineRippleFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCLineRippleAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                hasClass: function () { return false; },
+                setStyle: function () { return undefined; },
+                registerEventHandler: function () { return undefined; },
+                deregisterEventHandler: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCLineRippleFoundation.prototype.init = function () {
+        this.adapter.registerEventHandler('transitionend', this.transitionEndHandler);
+    };
+    MDCLineRippleFoundation.prototype.destroy = function () {
+        this.adapter.deregisterEventHandler('transitionend', this.transitionEndHandler);
+    };
+    MDCLineRippleFoundation.prototype.activate = function () {
+        this.adapter.removeClass(cssClasses$6.LINE_RIPPLE_DEACTIVATING);
+        this.adapter.addClass(cssClasses$6.LINE_RIPPLE_ACTIVE);
+    };
+    MDCLineRippleFoundation.prototype.setRippleCenter = function (xCoordinate) {
+        this.adapter.setStyle('transform-origin', xCoordinate + "px center");
+    };
+    MDCLineRippleFoundation.prototype.deactivate = function () {
+        this.adapter.addClass(cssClasses$6.LINE_RIPPLE_DEACTIVATING);
+    };
+    MDCLineRippleFoundation.prototype.handleTransitionEnd = function (evt) {
+        // Wait for the line ripple to be either transparent or opaque
+        // before emitting the animation end event
+        var isDeactivating = this.adapter.hasClass(cssClasses$6.LINE_RIPPLE_DEACTIVATING);
+        if (evt.propertyName === 'opacity') {
+            if (isDeactivating) {
+                this.adapter.removeClass(cssClasses$6.LINE_RIPPLE_ACTIVE);
+                this.adapter.removeClass(cssClasses$6.LINE_RIPPLE_DEACTIVATING);
+            }
+        }
+    };
+    return MDCLineRippleFoundation;
+}(MDCFoundation));
+
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+const createAdapter = (lineElement) => {
+    return {
+        addClass: (className) => lineElement.classList.add(className),
+        removeClass: (className) => lineElement.classList.remove(className),
+        hasClass: (className) => lineElement.classList.contains(className),
+        setStyle: (propertyName, value) => lineElement.style.setProperty(propertyName, value),
+        registerEventHandler: (evtType, handler) => {
+            lineElement.addEventListener(evtType, handler);
+        },
+        deregisterEventHandler: (evtType, handler) => {
+            lineElement.removeEventListener(evtType, handler);
+        },
+    };
+};
+class LineRippleDirective extends i$1 {
+    constructor(partInfo) {
+        super(partInfo);
+        this.previousPart = null;
+        this.foundation = null;
+        switch (partInfo.type) {
+            case t.ATTRIBUTE:
+            case t.PROPERTY:
+                return;
+            default:
+                throw new Error('LineRipple only support attribute and property parts.');
+        }
+    }
+    /**
+     * There is no PropertyPart in Lit 2 so far. For more info see:
+     * https://github.com/lit/lit/issues/1863
+     */
+    update(part, _params) {
+        if (this.previousPart !== part) {
+            if (this.foundation) {
+                this.foundation.destroy();
+            }
+            this.previousPart = part;
+            const lineElement = part.element;
+            lineElement.classList.add('mdc-line-ripple');
+            const adapter = createAdapter(lineElement);
+            this.foundation = new MDCLineRippleFoundation(adapter);
+            this.foundation.init();
+        }
+        return this.render();
+    }
+    render() {
+        return this.foundation;
+    }
+}
+const lineRipple = e$1(LineRippleDirective);
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses$5 = {
+    ACTIVATED: 'mdc-select--activated',
+    DISABLED: 'mdc-select--disabled',
+    FOCUSED: 'mdc-select--focused',
+    INVALID: 'mdc-select--invalid',
+    MENU_INVALID: 'mdc-select__menu--invalid',
+    OUTLINED: 'mdc-select--outlined',
+    REQUIRED: 'mdc-select--required',
+    ROOT: 'mdc-select',
+    WITH_LEADING_ICON: 'mdc-select--with-leading-icon',
+};
+var strings$6 = {
+    ARIA_CONTROLS: 'aria-controls',
+    ARIA_DESCRIBEDBY: 'aria-describedby',
+    ARIA_SELECTED_ATTR: 'aria-selected',
+    CHANGE_EVENT: 'MDCSelect:change',
+    HIDDEN_INPUT_SELECTOR: 'input[type="hidden"]',
+    LABEL_SELECTOR: '.mdc-floating-label',
+    LEADING_ICON_SELECTOR: '.mdc-select__icon',
+    LINE_RIPPLE_SELECTOR: '.mdc-line-ripple',
+    MENU_SELECTOR: '.mdc-select__menu',
+    OUTLINE_SELECTOR: '.mdc-notched-outline',
+    SELECTED_TEXT_SELECTOR: '.mdc-select__selected-text',
+    SELECT_ANCHOR_SELECTOR: '.mdc-select__anchor',
+    VALUE_ATTR: 'data-value',
+};
+var numbers$3 = {
+    LABEL_SCALE: 0.75,
+    UNSET_INDEX: -1,
+    CLICK_DEBOUNCE_TIMEOUT_MS: 330,
+};
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCSelectFoundation = /** @class */ (function (_super) {
+    __extends(MDCSelectFoundation, _super);
+    /* istanbul ignore next: optional argument is not a branch statement */
+    /**
+     * @param adapter
+     * @param foundationMap Map from subcomponent names to their subfoundations.
+     */
+    function MDCSelectFoundation(adapter, foundationMap) {
+        if (foundationMap === void 0) { foundationMap = {}; }
+        var _this = _super.call(this, __assign(__assign({}, MDCSelectFoundation.defaultAdapter), adapter)) || this;
+        // Disabled state
+        _this.disabled = false;
+        // isMenuOpen is used to track the state of the menu by listening to the
+        // MDCMenuSurface:closed event For reference, menu.open will return false if
+        // the menu is still closing, but isMenuOpen returns false only after the menu
+        // has closed
+        _this.isMenuOpen = false;
+        // By default, select is invalid if it is required but no value is selected.
+        _this.useDefaultValidation = true;
+        _this.customValidity = true;
+        _this.lastSelectedIndex = numbers$3.UNSET_INDEX;
+        _this.clickDebounceTimeout = 0;
+        _this.recentlyClicked = false;
+        _this.leadingIcon = foundationMap.leadingIcon;
+        _this.helperText = foundationMap.helperText;
+        return _this;
+    }
+    Object.defineProperty(MDCSelectFoundation, "cssClasses", {
+        get: function () {
+            return cssClasses$5;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelectFoundation, "numbers", {
+        get: function () {
+            return numbers$3;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelectFoundation, "strings", {
+        get: function () {
+            return strings$6;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelectFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCSelectAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                hasClass: function () { return false; },
+                activateBottomLine: function () { return undefined; },
+                deactivateBottomLine: function () { return undefined; },
+                getSelectedIndex: function () { return -1; },
+                setSelectedIndex: function () { return undefined; },
+                hasLabel: function () { return false; },
+                floatLabel: function () { return undefined; },
+                getLabelWidth: function () { return 0; },
+                setLabelRequired: function () { return undefined; },
+                hasOutline: function () { return false; },
+                notchOutline: function () { return undefined; },
+                closeOutline: function () { return undefined; },
+                setRippleCenter: function () { return undefined; },
+                notifyChange: function () { return undefined; },
+                setSelectedText: function () { return undefined; },
+                isSelectAnchorFocused: function () { return false; },
+                getSelectAnchorAttr: function () { return ''; },
+                setSelectAnchorAttr: function () { return undefined; },
+                removeSelectAnchorAttr: function () { return undefined; },
+                addMenuClass: function () { return undefined; },
+                removeMenuClass: function () { return undefined; },
+                openMenu: function () { return undefined; },
+                closeMenu: function () { return undefined; },
+                getAnchorElement: function () { return null; },
+                setMenuAnchorElement: function () { return undefined; },
+                setMenuAnchorCorner: function () { return undefined; },
+                setMenuWrapFocus: function () { return undefined; },
+                focusMenuItemAtIndex: function () { return undefined; },
+                getMenuItemCount: function () { return 0; },
+                getMenuItemValues: function () { return []; },
+                getMenuItemTextAtIndex: function () { return ''; },
+                isTypeaheadInProgress: function () { return false; },
+                typeaheadMatchItem: function () { return -1; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    /** Returns the index of the currently selected menu item, or -1 if none. */
+    MDCSelectFoundation.prototype.getSelectedIndex = function () {
+        return this.adapter.getSelectedIndex();
+    };
+    MDCSelectFoundation.prototype.setSelectedIndex = function (index, closeMenu, skipNotify) {
+        if (closeMenu === void 0) { closeMenu = false; }
+        if (skipNotify === void 0) { skipNotify = false; }
+        if (index >= this.adapter.getMenuItemCount()) {
+            return;
+        }
+        if (index === numbers$3.UNSET_INDEX) {
+            this.adapter.setSelectedText('');
+        }
+        else {
+            this.adapter.setSelectedText(this.adapter.getMenuItemTextAtIndex(index).trim());
+        }
+        this.adapter.setSelectedIndex(index);
+        if (closeMenu) {
+            this.adapter.closeMenu();
+        }
+        if (!skipNotify && this.lastSelectedIndex !== index) {
+            this.handleChange();
+        }
+        this.lastSelectedIndex = index;
+    };
+    MDCSelectFoundation.prototype.setValue = function (value, skipNotify) {
+        if (skipNotify === void 0) { skipNotify = false; }
+        var index = this.adapter.getMenuItemValues().indexOf(value);
+        this.setSelectedIndex(index, /** closeMenu */ false, skipNotify);
+    };
+    MDCSelectFoundation.prototype.getValue = function () {
+        var index = this.adapter.getSelectedIndex();
+        var menuItemValues = this.adapter.getMenuItemValues();
+        return index !== numbers$3.UNSET_INDEX ? menuItemValues[index] : '';
+    };
+    MDCSelectFoundation.prototype.getDisabled = function () {
+        return this.disabled;
+    };
+    MDCSelectFoundation.prototype.setDisabled = function (isDisabled) {
+        this.disabled = isDisabled;
+        if (this.disabled) {
+            this.adapter.addClass(cssClasses$5.DISABLED);
+            this.adapter.closeMenu();
+        }
+        else {
+            this.adapter.removeClass(cssClasses$5.DISABLED);
+        }
+        if (this.leadingIcon) {
+            this.leadingIcon.setDisabled(this.disabled);
+        }
+        if (this.disabled) {
+            // Prevent click events from focusing select. Simply pointer-events: none
+            // is not enough since screenreader clicks may bypass this.
+            this.adapter.removeSelectAnchorAttr('tabindex');
+        }
+        else {
+            this.adapter.setSelectAnchorAttr('tabindex', '0');
+        }
+        this.adapter.setSelectAnchorAttr('aria-disabled', this.disabled.toString());
+    };
+    /** Opens the menu. */
+    MDCSelectFoundation.prototype.openMenu = function () {
+        this.adapter.addClass(cssClasses$5.ACTIVATED);
+        this.adapter.openMenu();
+        this.isMenuOpen = true;
+        this.adapter.setSelectAnchorAttr('aria-expanded', 'true');
+    };
+    /**
+     * @param content Sets the content of the helper text.
+     */
+    MDCSelectFoundation.prototype.setHelperTextContent = function (content) {
+        if (this.helperText) {
+            this.helperText.setContent(content);
+        }
+    };
+    /**
+     * Re-calculates if the notched outline should be notched and if the label
+     * should float.
+     */
+    MDCSelectFoundation.prototype.layout = function () {
+        if (this.adapter.hasLabel()) {
+            var optionHasValue = this.getValue().length > 0;
+            var isFocused = this.adapter.hasClass(cssClasses$5.FOCUSED);
+            var shouldFloatAndNotch = optionHasValue || isFocused;
+            var isRequired = this.adapter.hasClass(cssClasses$5.REQUIRED);
+            this.notchOutline(shouldFloatAndNotch);
+            this.adapter.floatLabel(shouldFloatAndNotch);
+            this.adapter.setLabelRequired(isRequired);
+        }
+    };
+    /**
+     * Synchronizes the list of options with the state of the foundation. Call
+     * this whenever menu options are dynamically updated.
+     */
+    MDCSelectFoundation.prototype.layoutOptions = function () {
+        var menuItemValues = this.adapter.getMenuItemValues();
+        var selectedIndex = menuItemValues.indexOf(this.getValue());
+        this.setSelectedIndex(selectedIndex, /** closeMenu */ false, /** skipNotify */ true);
+    };
+    MDCSelectFoundation.prototype.handleMenuOpened = function () {
+        if (this.adapter.getMenuItemValues().length === 0) {
+            return;
+        }
+        // Menu should open to the last selected element, should open to first menu item otherwise.
+        var selectedIndex = this.getSelectedIndex();
+        var focusItemIndex = selectedIndex >= 0 ? selectedIndex : 0;
+        this.adapter.focusMenuItemAtIndex(focusItemIndex);
+    };
+    MDCSelectFoundation.prototype.handleMenuClosing = function () {
+        this.adapter.setSelectAnchorAttr('aria-expanded', 'false');
+    };
+    MDCSelectFoundation.prototype.handleMenuClosed = function () {
+        this.adapter.removeClass(cssClasses$5.ACTIVATED);
+        this.isMenuOpen = false;
+        // Unfocus the select if menu is closed without a selection
+        if (!this.adapter.isSelectAnchorFocused()) {
+            this.blur();
+        }
+    };
+    /**
+     * Handles value changes, via change event or programmatic updates.
+     */
+    MDCSelectFoundation.prototype.handleChange = function () {
+        this.layout();
+        this.adapter.notifyChange(this.getValue());
+        var isRequired = this.adapter.hasClass(cssClasses$5.REQUIRED);
+        if (isRequired && this.useDefaultValidation) {
+            this.setValid(this.isValid());
+        }
+    };
+    MDCSelectFoundation.prototype.handleMenuItemAction = function (index) {
+        this.setSelectedIndex(index, /** closeMenu */ true);
+    };
+    /**
+     * Handles focus events from select element.
+     */
+    MDCSelectFoundation.prototype.handleFocus = function () {
+        this.adapter.addClass(cssClasses$5.FOCUSED);
+        this.layout();
+        this.adapter.activateBottomLine();
+    };
+    /**
+     * Handles blur events from select element.
+     */
+    MDCSelectFoundation.prototype.handleBlur = function () {
+        if (this.isMenuOpen) {
+            return;
+        }
+        this.blur();
+    };
+    MDCSelectFoundation.prototype.handleClick = function (normalizedX) {
+        if (this.disabled || this.recentlyClicked) {
+            return;
+        }
+        this.setClickDebounceTimeout();
+        if (this.isMenuOpen) {
+            this.adapter.closeMenu();
+            return;
+        }
+        this.adapter.setRippleCenter(normalizedX);
+        this.openMenu();
+    };
+    /**
+     * Handles keydown events on select element. Depending on the type of
+     * character typed, does typeahead matching or opens menu.
+     */
+    MDCSelectFoundation.prototype.handleKeydown = function (event) {
+        if (this.isMenuOpen || !this.adapter.hasClass(cssClasses$5.FOCUSED)) {
+            return;
+        }
+        var isEnter = normalizeKey(event) === KEY.ENTER;
+        var isSpace = normalizeKey(event) === KEY.SPACEBAR;
+        var arrowUp = normalizeKey(event) === KEY.ARROW_UP;
+        var arrowDown = normalizeKey(event) === KEY.ARROW_DOWN;
+        var isModifier = event.ctrlKey || event.metaKey;
+        // Typeahead
+        if (!isModifier &&
+            (!isSpace && event.key && event.key.length === 1 ||
+                isSpace && this.adapter.isTypeaheadInProgress())) {
+            var key = isSpace ? ' ' : event.key;
+            var typeaheadNextIndex = this.adapter.typeaheadMatchItem(key, this.getSelectedIndex());
+            if (typeaheadNextIndex >= 0) {
+                this.setSelectedIndex(typeaheadNextIndex);
+            }
+            event.preventDefault();
+            return;
+        }
+        if (!isEnter && !isSpace && !arrowUp && !arrowDown) {
+            return;
+        }
+        this.openMenu();
+        event.preventDefault();
+    };
+    /**
+     * Opens/closes the notched outline.
+     */
+    MDCSelectFoundation.prototype.notchOutline = function (openNotch) {
+        if (!this.adapter.hasOutline()) {
+            return;
+        }
+        var isFocused = this.adapter.hasClass(cssClasses$5.FOCUSED);
+        if (openNotch) {
+            var labelScale = numbers$3.LABEL_SCALE;
+            var labelWidth = this.adapter.getLabelWidth() * labelScale;
+            this.adapter.notchOutline(labelWidth);
+        }
+        else if (!isFocused) {
+            this.adapter.closeOutline();
+        }
+    };
+    /**
+     * Sets the aria label of the leading icon.
+     */
+    MDCSelectFoundation.prototype.setLeadingIconAriaLabel = function (label) {
+        if (this.leadingIcon) {
+            this.leadingIcon.setAriaLabel(label);
+        }
+    };
+    /**
+     * Sets the text content of the leading icon.
+     */
+    MDCSelectFoundation.prototype.setLeadingIconContent = function (content) {
+        if (this.leadingIcon) {
+            this.leadingIcon.setContent(content);
+        }
+    };
+    MDCSelectFoundation.prototype.getUseDefaultValidation = function () {
+        return this.useDefaultValidation;
+    };
+    MDCSelectFoundation.prototype.setUseDefaultValidation = function (useDefaultValidation) {
+        this.useDefaultValidation = useDefaultValidation;
+    };
+    MDCSelectFoundation.prototype.setValid = function (isValid) {
+        if (!this.useDefaultValidation) {
+            this.customValidity = isValid;
+        }
+        this.adapter.setSelectAnchorAttr('aria-invalid', (!isValid).toString());
+        if (isValid) {
+            this.adapter.removeClass(cssClasses$5.INVALID);
+            this.adapter.removeMenuClass(cssClasses$5.MENU_INVALID);
+        }
+        else {
+            this.adapter.addClass(cssClasses$5.INVALID);
+            this.adapter.addMenuClass(cssClasses$5.MENU_INVALID);
+        }
+        this.syncHelperTextValidity(isValid);
+    };
+    MDCSelectFoundation.prototype.isValid = function () {
+        if (this.useDefaultValidation &&
+            this.adapter.hasClass(cssClasses$5.REQUIRED) &&
+            !this.adapter.hasClass(cssClasses$5.DISABLED)) {
+            // See notes for required attribute under https://www.w3.org/TR/html52/sec-forms.html#the-select-element
+            // TL;DR: Invalid if no index is selected, or if the first index is selected and has an empty value.
+            return this.getSelectedIndex() !== numbers$3.UNSET_INDEX &&
+                (this.getSelectedIndex() !== 0 || Boolean(this.getValue()));
+        }
+        return this.customValidity;
+    };
+    MDCSelectFoundation.prototype.setRequired = function (isRequired) {
+        if (isRequired) {
+            this.adapter.addClass(cssClasses$5.REQUIRED);
+        }
+        else {
+            this.adapter.removeClass(cssClasses$5.REQUIRED);
+        }
+        this.adapter.setSelectAnchorAttr('aria-required', isRequired.toString());
+        this.adapter.setLabelRequired(isRequired);
+    };
+    MDCSelectFoundation.prototype.getRequired = function () {
+        return this.adapter.getSelectAnchorAttr('aria-required') === 'true';
+    };
+    MDCSelectFoundation.prototype.init = function () {
+        var anchorEl = this.adapter.getAnchorElement();
+        if (anchorEl) {
+            this.adapter.setMenuAnchorElement(anchorEl);
+            this.adapter.setMenuAnchorCorner(Corner.BOTTOM_START);
+        }
+        this.adapter.setMenuWrapFocus(false);
+        this.setDisabled(this.adapter.hasClass(cssClasses$5.DISABLED));
+        this.syncHelperTextValidity(!this.adapter.hasClass(cssClasses$5.INVALID));
+        this.layout();
+        this.layoutOptions();
+    };
+    /**
+     * Unfocuses the select component.
+     */
+    MDCSelectFoundation.prototype.blur = function () {
+        this.adapter.removeClass(cssClasses$5.FOCUSED);
+        this.layout();
+        this.adapter.deactivateBottomLine();
+        var isRequired = this.adapter.hasClass(cssClasses$5.REQUIRED);
+        if (isRequired && this.useDefaultValidation) {
+            this.setValid(this.isValid());
+        }
+    };
+    MDCSelectFoundation.prototype.syncHelperTextValidity = function (isValid) {
+        if (!this.helperText) {
+            return;
+        }
+        this.helperText.setValidity(isValid);
+        var helperTextVisible = this.helperText.isVisible();
+        var helperTextId = this.helperText.getId();
+        if (helperTextVisible && helperTextId) {
+            this.adapter.setSelectAnchorAttr(strings$6.ARIA_DESCRIBEDBY, helperTextId);
+        }
+        else {
+            // Needed because screenreaders will read labels pointed to by
+            // `aria-describedby` even if they are `aria-hidden`.
+            this.adapter.removeSelectAnchorAttr(strings$6.ARIA_DESCRIBEDBY);
+        }
+    };
+    MDCSelectFoundation.prototype.setClickDebounceTimeout = function () {
+        var _this = this;
+        clearTimeout(this.clickDebounceTimeout);
+        this.clickDebounceTimeout = setTimeout(function () {
+            _this.recentlyClicked = false;
+        }, numbers$3.CLICK_DEBOUNCE_TIMEOUT_MS);
+        this.recentlyClicked = true;
+    };
+    return MDCSelectFoundation;
+}(MDCFoundation));
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+var MDCSelectFoundation$1 = MDCSelectFoundation;
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+const createValidityObj$1 = (customValidity = {}) => {
+    /*
+     * We need to make ValidityState an object because it is readonly and
+     * we cannot use the spread operator. Also, we don't export
+     * `CustomValidityState` because it is a leaky implementation and the user
+     * already has access to `ValidityState` in lib.dom.ts. Also an interface
+     * {a: Type} can be casted to {readonly a: Type} so passing any object
+     * should be fine.
+     */
+    const objectifiedCustomValidity = {};
+    // eslint-disable-next-line guard-for-in
+    for (const propName in customValidity) {
+        /*
+         * Casting is needed because ValidityState's props are all readonly and
+         * thus cannot be set on `onjectifiedCustomValidity`. In the end, the
+         * interface is the same as ValidityState (but not readonly), but the
+         * function signature casts the output to ValidityState (thus readonly).
+         */
+        objectifiedCustomValidity[propName] =
+            customValidity[propName];
+    }
+    return Object.assign({ badInput: false, customError: false, patternMismatch: false, rangeOverflow: false, rangeUnderflow: false, stepMismatch: false, tooLong: false, tooShort: false, typeMismatch: false, valid: true, valueMissing: false }, objectifiedCustomValidity);
+};
+/**
+ * @fires selected {SelectedDetail}
+ * @fires action {ActionDetail}
+ * @fires opened
+ * @fires closed
+ * @fires change
+ * @fires invalid
+ */
+class SelectBase extends FormElement {
+    constructor() {
+        super(...arguments);
+        this.mdcFoundationClass = MDCSelectFoundation$1;
+        this.disabled = false;
+        this.outlined = false;
+        this.label = '';
+        this.outlineOpen = false;
+        this.outlineWidth = 0;
+        this.value = '';
+        this.name = '';
+        this.selectedText = '';
+        this.icon = '';
+        this.menuOpen = false;
+        this.helper = '';
+        this.validateOnInitialRender = false;
+        this.validationMessage = '';
+        this.required = false;
+        this.naturalMenuWidth = false;
+        this.isUiValid = true;
+        this.fixedMenuPosition = false;
+        // Transiently holds current typeahead prefix from user.
+        this.typeaheadState = initState();
+        this.sortedIndexByFirstChar = new Map();
+        this.menuElement_ = null;
+        this.listeners = [];
+        this.onBodyClickBound = () => undefined;
+        this._menuUpdateComplete = null;
+        this.valueSetDirectly = false;
+        this.validityTransform = null;
+        this._validity = createValidityObj$1();
+    }
+    get items() {
+        // memoize menuElement to prevent unnecessary querySelector calls.
+        if (!this.menuElement_) {
+            this.menuElement_ = this.menuElement;
+        }
+        if (this.menuElement_) {
+            return this.menuElement_.items;
+        }
+        return [];
+    }
+    get selected() {
+        const menuElement = this.menuElement;
+        if (menuElement) {
+            return menuElement.selected;
+        }
+        return null;
+    }
+    get index() {
+        const menuElement = this.menuElement;
+        if (menuElement) {
+            return menuElement.index;
+        }
+        return -1;
+    }
+    get shouldRenderHelperText() {
+        return !!this.helper || !!this.validationMessage;
+    }
+    get validity() {
+        this._checkValidity(this.value);
+        return this._validity;
+    }
+    render() {
+        const classes = {
+            'mdc-select--disabled': this.disabled,
+            'mdc-select--no-label': !this.label,
+            'mdc-select--filled': !this.outlined,
+            'mdc-select--outlined': this.outlined,
+            'mdc-select--with-leading-icon': !!this.icon,
+            'mdc-select--required': this.required,
+            'mdc-select--invalid': !this.isUiValid,
+        };
+        const labelledby = !!this.label ? 'label' : undefined;
+        const describedby = this.shouldRenderHelperText ? 'helper-text' : undefined;
+        return y `
+      <div
+          class="mdc-select ${o(classes)}">
+        <input
+            class="formElement"
+            name="${this.name}"
+            .value="${this.value}"
+            hidden
+            ?disabled="${this.disabled}"
+            ?required=${this.required}>
+        <!-- @ts-ignore -->
+        <div class="mdc-select__anchor"
+            aria-autocomplete="none"
+            role="combobox"
+            aria-expanded=${this.menuOpen}
+            aria-invalid=${!this.isUiValid}
+            aria-haspopup="listbox"
+            aria-labelledby=${l$1(labelledby)}
+            aria-required=${this.required}
+            aria-describedby=${l$1(describedby)}
+            @click=${this.onClick}
+            @focus=${this.onFocus}
+            @blur=${this.onBlur}
+            @keydown=${this.onKeydown}>
+          ${this.renderRipple()}
+          ${this.outlined ? this.renderOutline() : this.renderLabel()}
+          ${this.renderLeadingIcon()}
+          <span class="mdc-select__selected-text-container">
+            <span class="mdc-select__selected-text">${this.selectedText}</span>
+          </span>
+          <span class="mdc-select__dropdown-icon">
+            <svg
+                class="mdc-select__dropdown-icon-graphic"
+                viewBox="7 10 10 5"
+                focusable="false">
+              <polygon
+                  class="mdc-select__dropdown-icon-inactive"
+                  stroke="none"
+                  fill-rule="evenodd"
+                  points="7 10 12 15 17 10">
+              </polygon>
+              <polygon
+                  class="mdc-select__dropdown-icon-active"
+                  stroke="none"
+                  fill-rule="evenodd"
+                  points="7 15 12 10 17 15">
+              </polygon>
+            </svg>
+          </span>
+          ${this.renderLineRipple()}
+        </div>
+        ${this.renderMenu()}
+      </div>
+      ${this.renderHelperText()}`;
+    }
+    renderMenu() {
+        const classes = this.getMenuClasses();
+        return y `
+      <mwc-menu
+        innerRole="listbox"
+        wrapFocus
+        class=" ${o(classes)}"
+        activatable
+        .fullwidth=${this.fixedMenuPosition ? false : !this.naturalMenuWidth}
+        .open=${this.menuOpen}
+        .anchor=${this.anchorElement}
+        .fixed=${this.fixedMenuPosition}
+        @selected=${this.onSelected}
+        @opened=${this.onOpened}
+        @closed=${this.onClosed}
+        @items-updated=${this.onItemsUpdated}
+        @keydown=${this.handleTypeahead}>
+      ${this.renderMenuContent()}
+    </mwc-menu>`;
+    }
+    getMenuClasses() {
+        return {
+            'mdc-select__menu': true,
+            'mdc-menu': true,
+            'mdc-menu-surface': true,
+            'mdc-select__menu--invalid': !this.isUiValid,
+        };
+    }
+    renderMenuContent() {
+        return y `<slot></slot>`;
+    }
+    renderRipple() {
+        if (this.outlined) {
+            return b;
+        }
+        return y `
+      <span class="mdc-select__ripple"></span>
+    `;
+    }
+    renderOutline() {
+        if (!this.outlined) {
+            return b;
+        }
+        return y `
+      <mwc-notched-outline
+          .width=${this.outlineWidth}
+          .open=${this.outlineOpen}
+          class="mdc-notched-outline">
+        ${this.renderLabel()}
+      </mwc-notched-outline>`;
+    }
+    renderLabel() {
+        if (!this.label) {
+            return b;
+        }
+        return y `
+      <span
+          .floatingLabelFoundation=${floatingLabel(this.label)}
+          id="label">${this.label}</span>
+    `;
+    }
+    renderLeadingIcon() {
+        if (!this.icon) {
+            return b;
+        }
+        return y `<mwc-icon class="mdc-select__icon"><div>${this.icon}</div></mwc-icon>`;
+    }
+    renderLineRipple() {
+        if (this.outlined) {
+            return b;
+        }
+        return y `
+      <span .lineRippleFoundation=${lineRipple()}></span>
+    `;
+    }
+    renderHelperText() {
+        if (!this.shouldRenderHelperText) {
+            return b;
+        }
+        const showValidationMessage = this.validationMessage && !this.isUiValid;
+        const classes = {
+            'mdc-select-helper-text--validation-msg': showValidationMessage,
+        };
+        return y `
+        <p
+          class="mdc-select-helper-text ${o(classes)}"
+          id="helper-text">${showValidationMessage ? this.validationMessage : this.helper}</p>`;
+    }
+    createAdapter() {
+        return Object.assign(Object.assign({}, addHasRemoveClass(this.mdcRoot)), { activateBottomLine: () => {
+                if (this.lineRippleElement) {
+                    this.lineRippleElement.lineRippleFoundation.activate();
+                }
+            }, deactivateBottomLine: () => {
+                if (this.lineRippleElement) {
+                    this.lineRippleElement.lineRippleFoundation.deactivate();
+                }
+            }, hasLabel: () => {
+                return !!this.label;
+            }, floatLabel: (shouldFloat) => {
+                if (this.labelElement) {
+                    this.labelElement.floatingLabelFoundation.float(shouldFloat);
+                }
+            }, getLabelWidth: () => {
+                if (this.labelElement) {
+                    return this.labelElement.floatingLabelFoundation.getWidth();
+                }
+                return 0;
+            }, setLabelRequired: (isRequired) => {
+                if (this.labelElement) {
+                    this.labelElement.floatingLabelFoundation.setRequired(isRequired);
+                }
+            }, hasOutline: () => this.outlined, notchOutline: (labelWidth) => {
+                const outlineElement = this.outlineElement;
+                if (outlineElement && !this.outlineOpen) {
+                    this.outlineWidth = labelWidth;
+                    this.outlineOpen = true;
+                }
+            }, closeOutline: () => {
+                if (this.outlineElement) {
+                    this.outlineOpen = false;
+                }
+            }, setRippleCenter: (normalizedX) => {
+                if (this.lineRippleElement) {
+                    const foundation = this.lineRippleElement.lineRippleFoundation;
+                    foundation.setRippleCenter(normalizedX);
+                }
+            }, notifyChange: async (value) => {
+                if (!this.valueSetDirectly && value === this.value) {
+                    return;
+                }
+                this.valueSetDirectly = false;
+                this.value = value;
+                await this.updateComplete;
+                const ev = new Event('change', { bubbles: true });
+                this.dispatchEvent(ev);
+            }, setSelectedText: (value) => this.selectedText = value, isSelectAnchorFocused: () => {
+                const selectAnchorElement = this.anchorElement;
+                if (!selectAnchorElement) {
+                    return false;
+                }
+                const rootNode = selectAnchorElement.getRootNode();
+                return rootNode.activeElement === selectAnchorElement;
+            }, getSelectAnchorAttr: (attr) => {
+                const selectAnchorElement = this.anchorElement;
+                if (!selectAnchorElement) {
+                    return null;
+                }
+                return selectAnchorElement.getAttribute(attr);
+            }, setSelectAnchorAttr: (attr, value) => {
+                const selectAnchorElement = this.anchorElement;
+                if (!selectAnchorElement) {
+                    return;
+                }
+                selectAnchorElement.setAttribute(attr, value);
+            }, removeSelectAnchorAttr: (attr) => {
+                const selectAnchorElement = this.anchorElement;
+                if (!selectAnchorElement) {
+                    return;
+                }
+                selectAnchorElement.removeAttribute(attr);
+            }, openMenu: () => {
+                this.menuOpen = true;
+            }, closeMenu: () => {
+                this.menuOpen = false;
+            }, addMenuClass: () => undefined, removeMenuClass: () => undefined, getAnchorElement: () => this.anchorElement, setMenuAnchorElement: () => {
+                /* Handled by anchor directive */
+            }, setMenuAnchorCorner: () => {
+                const menuElement = this.menuElement;
+                if (menuElement) {
+                    menuElement.corner = 'BOTTOM_START';
+                }
+            }, setMenuWrapFocus: (wrapFocus) => {
+                const menuElement = this.menuElement;
+                if (menuElement) {
+                    menuElement.wrapFocus = wrapFocus;
+                }
+            }, focusMenuItemAtIndex: (index) => {
+                const menuElement = this.menuElement;
+                if (!menuElement) {
+                    return;
+                }
+                const element = menuElement.items[index];
+                if (!element) {
+                    return;
+                }
+                element.focus();
+            }, getMenuItemCount: () => {
+                const menuElement = this.menuElement;
+                if (menuElement) {
+                    return menuElement.items.length;
+                }
+                return 0;
+            }, getMenuItemValues: () => {
+                const menuElement = this.menuElement;
+                if (!menuElement) {
+                    return [];
+                }
+                const items = menuElement.items;
+                return items.map((item) => item.value);
+            }, getMenuItemTextAtIndex: (index) => {
+                const menuElement = this.menuElement;
+                if (!menuElement) {
+                    return '';
+                }
+                const element = menuElement.items[index];
+                if (!element) {
+                    return '';
+                }
+                return element.text;
+            }, getSelectedIndex: () => this.index, setSelectedIndex: () => undefined, isTypeaheadInProgress: () => isTypingInProgress(this.typeaheadState), typeaheadMatchItem: (nextChar, startingIndex) => {
+                if (!this.menuElement) {
+                    return -1;
+                }
+                const opts = {
+                    focusItemAtIndex: (index) => {
+                        this.menuElement.focusItemAtIndex(index);
+                    },
+                    focusedItemIndex: startingIndex ?
+                        startingIndex :
+                        this.menuElement.getFocusedItemIndex(),
+                    nextChar,
+                    sortedIndexByFirstChar: this.sortedIndexByFirstChar,
+                    skipFocus: false,
+                    isItemAtIndexDisabled: (index) => this.items[index].disabled,
+                };
+                const index = matchItem(opts, this.typeaheadState);
+                if (index !== -1) {
+                    this.select(index);
+                }
+                return index;
+            } });
+    }
+    checkValidity() {
+        const isValid = this._checkValidity(this.value);
+        if (!isValid) {
+            const invalidEvent = new Event('invalid', { bubbles: false, cancelable: true });
+            this.dispatchEvent(invalidEvent);
+        }
+        return isValid;
+    }
+    reportValidity() {
+        const isValid = this.checkValidity();
+        this.isUiValid = isValid;
+        return isValid;
+    }
+    _checkValidity(value) {
+        const nativeValidity = this.formElement.validity;
+        let validity = createValidityObj$1(nativeValidity);
+        if (this.validityTransform) {
+            const customValidity = this.validityTransform(value, validity);
+            validity = Object.assign(Object.assign({}, validity), customValidity);
+        }
+        this._validity = validity;
+        return this._validity.valid;
+    }
+    setCustomValidity(message) {
+        this.validationMessage = message;
+        this.formElement.setCustomValidity(message);
+    }
+    // tslint:disable:ban-ts-ignore
+    async getUpdateComplete() {
+        await this._menuUpdateComplete;
+        // @ts-ignore
+        const result = await super.getUpdateComplete();
+        return result;
+    }
+    // tslint:enable:ban-ts-ignore
+    async firstUpdated() {
+        const menuElement = this.menuElement;
+        if (menuElement) {
+            this._menuUpdateComplete = menuElement.updateComplete;
+            await this._menuUpdateComplete;
+        }
+        super.firstUpdated();
+        this.mdcFoundation.isValid = () => true;
+        this.mdcFoundation.setValid = () => undefined;
+        this.mdcFoundation.setDisabled(this.disabled);
+        if (this.validateOnInitialRender) {
+            this.reportValidity();
+        }
+        // Select an option based on init value
+        if (!this.selected) {
+            if (!this.items.length && this.slotElement &&
+                this.slotElement.assignedNodes({ flatten: true }).length) {
+                // Shady DOM initial render fix
+                await new Promise((res) => requestAnimationFrame(res));
+                await this.layout();
+            }
+            const hasEmptyFirstOption = this.items.length && this.items[0].value === '';
+            if (!this.value && hasEmptyFirstOption) {
+                this.select(0);
+                return;
+            }
+            this.selectByValue(this.value);
+        }
+        this.sortedIndexByFirstChar = initSortedIndex(this.items.length, (index) => this.items[index].text);
+    }
+    onItemsUpdated() {
+        this.sortedIndexByFirstChar = initSortedIndex(this.items.length, (index) => this.items[index].text);
+    }
+    select(index) {
+        const menuElement = this.menuElement;
+        if (menuElement) {
+            menuElement.select(index);
+        }
+    }
+    selectByValue(value) {
+        let indexToSelect = -1;
+        for (let i = 0; i < this.items.length; i++) {
+            const item = this.items[i];
+            if (item.value === value) {
+                indexToSelect = i;
+                break;
+            }
+        }
+        this.valueSetDirectly = true;
+        this.select(indexToSelect);
+        this.mdcFoundation.handleChange();
+    }
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        for (const listener of this.listeners) {
+            listener.target.removeEventListener(listener.name, listener.cb);
+        }
+    }
+    focus() {
+        const focusEvt = new CustomEvent('focus');
+        const selectAnchorElement = this.anchorElement;
+        if (selectAnchorElement) {
+            selectAnchorElement.dispatchEvent(focusEvt);
+            selectAnchorElement.focus();
+        }
+    }
+    blur() {
+        const focusEvt = new CustomEvent('blur');
+        const selectAnchorElement = this.anchorElement;
+        if (selectAnchorElement) {
+            selectAnchorElement.dispatchEvent(focusEvt);
+            selectAnchorElement.blur();
+        }
+    }
+    onFocus() {
+        if (this.mdcFoundation) {
+            this.mdcFoundation.handleFocus();
+        }
+    }
+    onBlur() {
+        if (this.mdcFoundation) {
+            this.mdcFoundation.handleBlur();
+        }
+        const menuElement = this.menuElement;
+        if (menuElement && !menuElement.open) {
+            this.reportValidity();
+        }
+    }
+    onClick(evt) {
+        if (this.mdcFoundation) {
+            this.focus();
+            const targetClientRect = evt.target.getBoundingClientRect();
+            let xCoord = 0;
+            if ('touches' in evt) {
+                xCoord = evt.touches[0].clientX;
+            }
+            else {
+                xCoord = evt.clientX;
+            }
+            const normalizedX = xCoord - targetClientRect.left;
+            this.mdcFoundation.handleClick(normalizedX);
+        }
+    }
+    onKeydown(evt) {
+        const arrowUp = normalizeKey(evt) === KEY.ARROW_UP;
+        const arrowDown = normalizeKey(evt) === KEY.ARROW_DOWN;
+        if (arrowDown || arrowUp) {
+            const shouldSelectNextItem = arrowUp && this.index > 0;
+            const shouldSelectPrevItem = arrowDown && this.index < this.items.length - 1;
+            if (shouldSelectNextItem) {
+                this.select(this.index - 1);
+            }
+            else if (shouldSelectPrevItem) {
+                this.select(this.index + 1);
+            }
+            evt.preventDefault();
+            this.mdcFoundation.openMenu();
+            return;
+        }
+        this.mdcFoundation.handleKeydown(evt);
+    }
+    // must capture to run before list foundation captures event
+    handleTypeahead(event) {
+        if (!this.menuElement) {
+            return;
+        }
+        const focusedItemIndex = this.menuElement.getFocusedItemIndex();
+        const target = isNodeElement(event.target) ?
+            event.target :
+            null;
+        const isTargetListItem = target ? target.hasAttribute('mwc-list-item') : false;
+        const opts = {
+            event,
+            focusItemAtIndex: (index) => {
+                this.menuElement.focusItemAtIndex(index);
+            },
+            focusedItemIndex,
+            isTargetListItem,
+            sortedIndexByFirstChar: this.sortedIndexByFirstChar,
+            isItemAtIndexDisabled: (index) => this.items[index].disabled,
+        };
+        handleKeydown(opts, this.typeaheadState);
+    }
+    async onSelected(event) {
+        if (!this.mdcFoundation) {
+            await this.updateComplete;
+        }
+        this.mdcFoundation.handleMenuItemAction(event.detail.index);
+        const item = this.items[event.detail.index];
+        if (item) {
+            this.value = item.value;
+        }
+    }
+    onOpened() {
+        if (this.mdcFoundation) {
+            this.menuOpen = true;
+            this.mdcFoundation.handleMenuOpened();
+        }
+    }
+    onClosed() {
+        if (this.mdcFoundation) {
+            this.menuOpen = false;
+            this.mdcFoundation.handleMenuClosed();
+        }
+    }
+    setFormData(formData) {
+        if (this.name && this.selected !== null) {
+            formData.append(this.name, this.value);
+        }
+    }
+    async layout(updateItems = true) {
+        if (this.mdcFoundation) {
+            this.mdcFoundation.layout();
+        }
+        await this.updateComplete;
+        const menuElement = this.menuElement;
+        if (menuElement) {
+            menuElement.layout(updateItems);
+        }
+        const labelElement = this.labelElement;
+        if (!labelElement) {
+            this.outlineOpen = false;
+            return;
+        }
+        const shouldFloat = !!this.label && !!this.value;
+        labelElement.floatingLabelFoundation.float(shouldFloat);
+        if (!this.outlined) {
+            return;
+        }
+        this.outlineOpen = shouldFloat;
+        await this.updateComplete;
+        /* When the textfield automatically notches due to a value and label
+         * being defined, the textfield may be set to `display: none` by the user.
+         * this means that the notch is of size 0px. We provide this function so
+         * that the user may manually resize the notch to the floated label's
+         * width.
+         */
+        const labelWidth = labelElement.floatingLabelFoundation.getWidth();
+        if (this.outlineOpen) {
+            this.outlineWidth = labelWidth;
+        }
+    }
+    async layoutOptions() {
+        if (!this.mdcFoundation) {
+            return;
+        }
+        this.mdcFoundation.layoutOptions();
+    }
+}
+__decorate([
+    i$2('.mdc-select')
+], SelectBase.prototype, "mdcRoot", void 0);
+__decorate([
+    i$2('.formElement')
+], SelectBase.prototype, "formElement", void 0);
+__decorate([
+    i$2('slot')
+], SelectBase.prototype, "slotElement", void 0);
+__decorate([
+    i$2('select')
+], SelectBase.prototype, "nativeSelectElement", void 0);
+__decorate([
+    i$2('input')
+], SelectBase.prototype, "nativeInputElement", void 0);
+__decorate([
+    i$2('.mdc-line-ripple')
+], SelectBase.prototype, "lineRippleElement", void 0);
+__decorate([
+    i$2('.mdc-floating-label')
+], SelectBase.prototype, "labelElement", void 0);
+__decorate([
+    i$2('mwc-notched-outline')
+], SelectBase.prototype, "outlineElement", void 0);
+__decorate([
+    i$2('.mdc-menu')
+], SelectBase.prototype, "menuElement", void 0);
+__decorate([
+    i$2('.mdc-select__anchor')
+], SelectBase.prototype, "anchorElement", void 0);
+__decorate([
+    e$6({ type: Boolean, attribute: 'disabled', reflect: true }),
+    observer(function (value) {
+        if (this.mdcFoundation) {
+            this.mdcFoundation.setDisabled(value);
+        }
+    })
+], SelectBase.prototype, "disabled", void 0);
+__decorate([
+    e$6({ type: Boolean }),
+    observer(function (_newVal, oldVal) {
+        if (oldVal !== undefined && this.outlined !== oldVal) {
+            this.layout(false);
+        }
+    })
+], SelectBase.prototype, "outlined", void 0);
+__decorate([
+    e$6({ type: String }),
+    observer(function (_newVal, oldVal) {
+        if (oldVal !== undefined && this.label !== oldVal) {
+            this.layout(false);
+        }
+    })
+], SelectBase.prototype, "label", void 0);
+__decorate([
+    t$1()
+], SelectBase.prototype, "outlineOpen", void 0);
+__decorate([
+    t$1()
+], SelectBase.prototype, "outlineWidth", void 0);
+__decorate([
+    e$6({ type: String }),
+    observer(function (value) {
+        if (this.mdcFoundation) {
+            const initialization = this.selected === null && !!value;
+            const valueSetByUser = this.selected && this.selected.value !== value;
+            if (initialization || valueSetByUser) {
+                this.selectByValue(value);
+            }
+            this.reportValidity();
+        }
+    })
+], SelectBase.prototype, "value", void 0);
+__decorate([
+    e$6()
+], SelectBase.prototype, "name", void 0);
+__decorate([
+    t$1()
+], SelectBase.prototype, "selectedText", void 0);
+__decorate([
+    e$6({ type: String })
+], SelectBase.prototype, "icon", void 0);
+__decorate([
+    t$1()
+], SelectBase.prototype, "menuOpen", void 0);
+__decorate([
+    e$6({ type: String })
+], SelectBase.prototype, "helper", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], SelectBase.prototype, "validateOnInitialRender", void 0);
+__decorate([
+    e$6({ type: String })
+], SelectBase.prototype, "validationMessage", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], SelectBase.prototype, "required", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], SelectBase.prototype, "naturalMenuWidth", void 0);
+__decorate([
+    t$1()
+], SelectBase.prototype, "isUiValid", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], SelectBase.prototype, "fixedMenuPosition", void 0);
+__decorate([
+    e$5({ capture: true })
+], SelectBase.prototype, "handleTypeahead", null);
+
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-LIcense-Identifier: Apache-2.0
+ */
+const styles$6 = i$5 `.mdc-floating-label{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-subtitle1-font-size, 1rem);font-weight:400;font-weight:var(--mdc-typography-subtitle1-font-weight, 400);letter-spacing:0.009375em;letter-spacing:var(--mdc-typography-subtitle1-letter-spacing, 0.009375em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle1-text-transform, inherit);position:absolute;left:0;-webkit-transform-origin:left top;transform-origin:left top;line-height:1.15rem;text-align:left;text-overflow:ellipsis;white-space:nowrap;cursor:text;overflow:hidden;will-change:transform;transition:transform 150ms cubic-bezier(0.4, 0, 0.2, 1),color 150ms cubic-bezier(0.4, 0, 0.2, 1)}[dir=rtl] .mdc-floating-label,.mdc-floating-label[dir=rtl]{right:0;left:auto;-webkit-transform-origin:right top;transform-origin:right top;text-align:right}.mdc-floating-label--float-above{cursor:auto}.mdc-floating-label--required::after{margin-left:1px;margin-right:0px;content:"*"}[dir=rtl] .mdc-floating-label--required::after,.mdc-floating-label--required[dir=rtl]::after{margin-left:0;margin-right:1px}.mdc-floating-label--float-above{transform:translateY(-106%) scale(0.75)}.mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-standard 250ms 1}@keyframes mdc-floating-label-shake-float-above-standard{0%{transform:translateX(calc(0 - 0%)) translateY(-106%) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - 0%)) translateY(-106%) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - 0%)) translateY(-106%) scale(0.75)}100%{transform:translateX(calc(0 - 0%)) translateY(-106%) scale(0.75)}}@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}.mdc-line-ripple::before,.mdc-line-ripple::after{position:absolute;bottom:0;left:0;width:100%;border-bottom-style:solid;content:""}.mdc-line-ripple::before{border-bottom-width:1px}.mdc-line-ripple::before{z-index:1}.mdc-line-ripple::after{transform:scaleX(0);border-bottom-width:2px;opacity:0;z-index:2}.mdc-line-ripple::after{transition:transform 180ms cubic-bezier(0.4, 0, 0.2, 1),opacity 180ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-line-ripple--active::after{transform:scaleX(1);opacity:1}.mdc-line-ripple--deactivating::after{opacity:0}.mdc-notched-outline{display:flex;position:absolute;top:0;right:0;left:0;box-sizing:border-box;width:100%;max-width:100%;height:100%;text-align:left;pointer-events:none}[dir=rtl] .mdc-notched-outline,.mdc-notched-outline[dir=rtl]{text-align:right}.mdc-notched-outline__leading,.mdc-notched-outline__notch,.mdc-notched-outline__trailing{box-sizing:border-box;height:100%;border-top:1px solid;border-bottom:1px solid;pointer-events:none}.mdc-notched-outline__leading{border-left:1px solid;border-right:none;width:12px}[dir=rtl] .mdc-notched-outline__leading,.mdc-notched-outline__leading[dir=rtl]{border-left:none;border-right:1px solid}.mdc-notched-outline__trailing{border-left:none;border-right:1px solid;flex-grow:1}[dir=rtl] .mdc-notched-outline__trailing,.mdc-notched-outline__trailing[dir=rtl]{border-left:1px solid;border-right:none}.mdc-notched-outline__notch{flex:0 0 auto;width:auto;max-width:calc(100% - 12px * 2)}.mdc-notched-outline .mdc-floating-label{display:inline-block;position:relative;max-width:100%}.mdc-notched-outline .mdc-floating-label--float-above{text-overflow:clip}.mdc-notched-outline--upgraded .mdc-floating-label--float-above{max-width:calc(100% / 0.75)}.mdc-notched-outline--notched .mdc-notched-outline__notch{padding-left:0;padding-right:8px;border-top:none}[dir=rtl] .mdc-notched-outline--notched .mdc-notched-outline__notch,.mdc-notched-outline--notched .mdc-notched-outline__notch[dir=rtl]{padding-left:8px;padding-right:0}.mdc-notched-outline--no-label .mdc-notched-outline__notch{display:none}.mdc-select{display:inline-flex;position:relative}.mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text{color:rgba(0, 0, 0, 0.87)}.mdc-select.mdc-select--disabled .mdc-select__selected-text{color:rgba(0, 0, 0, 0.38)}.mdc-select:not(.mdc-select--disabled) .mdc-floating-label{color:rgba(0, 0, 0, 0.6)}.mdc-select:not(.mdc-select--disabled).mdc-select--focused .mdc-floating-label{color:rgba(98, 0, 238, 0.87)}.mdc-select.mdc-select--disabled .mdc-floating-label{color:rgba(0, 0, 0, 0.38)}.mdc-select:not(.mdc-select--disabled) .mdc-select__dropdown-icon{fill:rgba(0, 0, 0, 0.54)}.mdc-select:not(.mdc-select--disabled).mdc-select--focused .mdc-select__dropdown-icon{fill:#6200ee;fill:var(--mdc-theme-primary, #6200ee)}.mdc-select.mdc-select--disabled .mdc-select__dropdown-icon{fill:rgba(0, 0, 0, 0.38)}.mdc-select:not(.mdc-select--disabled)+.mdc-select-helper-text{color:rgba(0, 0, 0, 0.6)}.mdc-select.mdc-select--disabled+.mdc-select-helper-text{color:rgba(0, 0, 0, 0.38)}.mdc-select:not(.mdc-select--disabled) .mdc-select__icon{color:rgba(0, 0, 0, 0.54)}.mdc-select.mdc-select--disabled .mdc-select__icon{color:rgba(0, 0, 0, 0.38)}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-select.mdc-select--disabled .mdc-select__selected-text{color:GrayText}.mdc-select.mdc-select--disabled .mdc-select__dropdown-icon{fill:red}.mdc-select.mdc-select--disabled .mdc-floating-label{color:GrayText}.mdc-select.mdc-select--disabled .mdc-line-ripple::before{border-bottom-color:GrayText}.mdc-select.mdc-select--disabled .mdc-notched-outline__leading,.mdc-select.mdc-select--disabled .mdc-notched-outline__notch,.mdc-select.mdc-select--disabled .mdc-notched-outline__trailing{border-color:GrayText}.mdc-select.mdc-select--disabled .mdc-select__icon{color:GrayText}.mdc-select.mdc-select--disabled+.mdc-select-helper-text{color:GrayText}}.mdc-select .mdc-floating-label{top:50%;transform:translateY(-50%);pointer-events:none}.mdc-select .mdc-select__anchor{padding-left:16px;padding-right:0}[dir=rtl] .mdc-select .mdc-select__anchor,.mdc-select .mdc-select__anchor[dir=rtl]{padding-left:0;padding-right:16px}.mdc-select.mdc-select--with-leading-icon .mdc-select__anchor{padding-left:0;padding-right:0}[dir=rtl] .mdc-select.mdc-select--with-leading-icon .mdc-select__anchor,.mdc-select.mdc-select--with-leading-icon .mdc-select__anchor[dir=rtl]{padding-left:0;padding-right:0}.mdc-select .mdc-select__icon{width:24px;height:24px;font-size:24px}.mdc-select .mdc-select__dropdown-icon{width:24px;height:24px}.mdc-select .mdc-select__menu .mdc-deprecated-list-item{padding-left:16px;padding-right:16px}[dir=rtl] .mdc-select .mdc-select__menu .mdc-deprecated-list-item,.mdc-select .mdc-select__menu .mdc-deprecated-list-item[dir=rtl]{padding-left:16px;padding-right:16px}.mdc-select .mdc-select__menu .mdc-deprecated-list-item__graphic{margin-left:0;margin-right:12px}[dir=rtl] .mdc-select .mdc-select__menu .mdc-deprecated-list-item__graphic,.mdc-select .mdc-select__menu .mdc-deprecated-list-item__graphic[dir=rtl]{margin-left:12px;margin-right:0}.mdc-select__dropdown-icon{margin-left:12px;margin-right:12px;display:inline-flex;position:relative;align-self:center;align-items:center;justify-content:center;flex-shrink:0;pointer-events:none}.mdc-select__dropdown-icon .mdc-select__dropdown-icon-active,.mdc-select__dropdown-icon .mdc-select__dropdown-icon-inactive{position:absolute;top:0;left:0}.mdc-select__dropdown-icon .mdc-select__dropdown-icon-graphic{width:41.6666666667%;height:20.8333333333%}.mdc-select__dropdown-icon .mdc-select__dropdown-icon-inactive{opacity:1;transition:opacity 75ms linear 75ms}.mdc-select__dropdown-icon .mdc-select__dropdown-icon-active{opacity:0;transition:opacity 75ms linear}[dir=rtl] .mdc-select__dropdown-icon,.mdc-select__dropdown-icon[dir=rtl]{margin-left:12px;margin-right:12px}.mdc-select--activated .mdc-select__dropdown-icon .mdc-select__dropdown-icon-inactive{opacity:0;transition:opacity 49.5ms linear}.mdc-select--activated .mdc-select__dropdown-icon .mdc-select__dropdown-icon-active{opacity:1;transition:opacity 100.5ms linear 49.5ms}.mdc-select__anchor{width:200px;min-width:0;flex:1 1 auto;position:relative;box-sizing:border-box;overflow:hidden;outline:none;cursor:pointer}.mdc-select__anchor .mdc-floating-label--float-above{transform:translateY(-106%) scale(0.75)}.mdc-select__selected-text-container{display:flex;appearance:none;pointer-events:none;box-sizing:border-box;width:auto;min-width:0;flex-grow:1;height:28px;border:none;outline:none;padding:0;background-color:transparent;color:inherit}.mdc-select__selected-text{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-subtitle1-font-size, 1rem);line-height:1.75rem;line-height:var(--mdc-typography-subtitle1-line-height, 1.75rem);font-weight:400;font-weight:var(--mdc-typography-subtitle1-font-weight, 400);letter-spacing:0.009375em;letter-spacing:var(--mdc-typography-subtitle1-letter-spacing, 0.009375em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle1-text-transform, inherit);text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:block;width:100%;text-align:left}[dir=rtl] .mdc-select__selected-text,.mdc-select__selected-text[dir=rtl]{text-align:right}.mdc-select--invalid:not(.mdc-select--disabled) .mdc-floating-label{color:#b00020;color:var(--mdc-theme-error, #b00020)}.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--focused .mdc-floating-label{color:#b00020;color:var(--mdc-theme-error, #b00020)}.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--invalid+.mdc-select-helper-text--validation-msg{color:#b00020;color:var(--mdc-theme-error, #b00020)}.mdc-select--invalid:not(.mdc-select--disabled) .mdc-select__dropdown-icon{fill:#b00020;fill:var(--mdc-theme-error, #b00020)}.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--focused .mdc-select__dropdown-icon{fill:#b00020;fill:var(--mdc-theme-error, #b00020)}.mdc-select--disabled{cursor:default;pointer-events:none}.mdc-select--with-leading-icon .mdc-select__menu .mdc-deprecated-list-item{padding-left:12px;padding-right:12px}[dir=rtl] .mdc-select--with-leading-icon .mdc-select__menu .mdc-deprecated-list-item,.mdc-select--with-leading-icon .mdc-select__menu .mdc-deprecated-list-item[dir=rtl]{padding-left:12px;padding-right:12px}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-select__menu::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:1px solid transparent;border-radius:inherit;content:"";pointer-events:none}}@media screen and (forced-colors: active)and (forced-colors: active),screen and (-ms-high-contrast: active)and (forced-colors: active){.mdc-select__menu::before{border-color:CanvasText}}.mdc-select__menu .mdc-deprecated-list .mdc-select__icon,.mdc-select__menu .mdc-list .mdc-select__icon{margin-left:0;margin-right:0}[dir=rtl] .mdc-select__menu .mdc-deprecated-list .mdc-select__icon,[dir=rtl] .mdc-select__menu .mdc-list .mdc-select__icon,.mdc-select__menu .mdc-deprecated-list .mdc-select__icon[dir=rtl],.mdc-select__menu .mdc-list .mdc-select__icon[dir=rtl]{margin-left:0;margin-right:0}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected,.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--activated,.mdc-select__menu .mdc-list .mdc-deprecated-list-item--selected,.mdc-select__menu .mdc-list .mdc-deprecated-list-item--activated{color:#000;color:var(--mdc-theme-on-surface, #000)}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected .mdc-deprecated-list-item__graphic,.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--activated .mdc-deprecated-list-item__graphic,.mdc-select__menu .mdc-list .mdc-deprecated-list-item--selected .mdc-deprecated-list-item__graphic,.mdc-select__menu .mdc-list .mdc-deprecated-list-item--activated .mdc-deprecated-list-item__graphic{color:#000;color:var(--mdc-theme-on-surface, #000)}.mdc-select__menu .mdc-list-item__start{display:inline-flex;align-items:center}.mdc-select__option{padding-left:16px;padding-right:16px}[dir=rtl] .mdc-select__option,.mdc-select__option[dir=rtl]{padding-left:16px;padding-right:16px}.mdc-select__one-line-option.mdc-list-item--with-one-line{height:48px}.mdc-select__two-line-option.mdc-list-item--with-two-lines{height:64px}.mdc-select__two-line-option.mdc-list-item--with-two-lines .mdc-list-item__start{margin-top:20px}.mdc-select__two-line-option.mdc-list-item--with-two-lines .mdc-list-item__primary-text{display:block;margin-top:0;line-height:normal;margin-bottom:-20px}.mdc-select__two-line-option.mdc-list-item--with-two-lines .mdc-list-item__primary-text::before{display:inline-block;width:0;height:28px;content:"";vertical-align:0}.mdc-select__two-line-option.mdc-list-item--with-two-lines .mdc-list-item__primary-text::after{display:inline-block;width:0;height:20px;content:"";vertical-align:-20px}.mdc-select__two-line-option.mdc-list-item--with-two-lines.mdc-list-item--with-trailing-meta .mdc-list-item__end{display:block;margin-top:0;line-height:normal}.mdc-select__two-line-option.mdc-list-item--with-two-lines.mdc-list-item--with-trailing-meta .mdc-list-item__end::before{display:inline-block;width:0;height:36px;content:"";vertical-align:0}.mdc-select__option-with-leading-content{padding-left:0;padding-right:12px}.mdc-select__option-with-leading-content.mdc-list-item{padding-left:0;padding-right:auto}[dir=rtl] .mdc-select__option-with-leading-content.mdc-list-item,.mdc-select__option-with-leading-content.mdc-list-item[dir=rtl]{padding-left:auto;padding-right:0}.mdc-select__option-with-leading-content .mdc-list-item__start{margin-left:12px;margin-right:0}[dir=rtl] .mdc-select__option-with-leading-content .mdc-list-item__start,.mdc-select__option-with-leading-content .mdc-list-item__start[dir=rtl]{margin-left:0;margin-right:12px}.mdc-select__option-with-leading-content .mdc-list-item__start{width:36px;height:24px}[dir=rtl] .mdc-select__option-with-leading-content,.mdc-select__option-with-leading-content[dir=rtl]{padding-left:12px;padding-right:0}.mdc-select__option-with-meta.mdc-list-item{padding-left:auto;padding-right:0}[dir=rtl] .mdc-select__option-with-meta.mdc-list-item,.mdc-select__option-with-meta.mdc-list-item[dir=rtl]{padding-left:0;padding-right:auto}.mdc-select__option-with-meta .mdc-list-item__end{margin-left:12px;margin-right:12px}[dir=rtl] .mdc-select__option-with-meta .mdc-list-item__end,.mdc-select__option-with-meta .mdc-list-item__end[dir=rtl]{margin-left:12px;margin-right:12px}.mdc-select--filled .mdc-select__anchor{height:56px;display:flex;align-items:baseline}.mdc-select--filled .mdc-select__anchor::before{display:inline-block;width:0;height:40px;content:"";vertical-align:0}.mdc-select--filled.mdc-select--no-label .mdc-select__anchor .mdc-select__selected-text::before{content:"​"}.mdc-select--filled.mdc-select--no-label .mdc-select__anchor .mdc-select__selected-text-container{height:100%;display:inline-flex;align-items:center}.mdc-select--filled.mdc-select--no-label .mdc-select__anchor::before{display:none}.mdc-select--filled .mdc-select__anchor{border-top-left-radius:4px;border-top-left-radius:var(--mdc-shape-small, 4px);border-top-right-radius:4px;border-top-right-radius:var(--mdc-shape-small, 4px);border-bottom-right-radius:0;border-bottom-left-radius:0}.mdc-select--filled:not(.mdc-select--disabled) .mdc-select__anchor{background-color:whitesmoke}.mdc-select--filled.mdc-select--disabled .mdc-select__anchor{background-color:#fafafa}.mdc-select--filled:not(.mdc-select--disabled) .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.42)}.mdc-select--filled:not(.mdc-select--disabled):hover .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.87)}.mdc-select--filled:not(.mdc-select--disabled) .mdc-line-ripple::after{border-bottom-color:#6200ee;border-bottom-color:var(--mdc-theme-primary, #6200ee)}.mdc-select--filled.mdc-select--disabled .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.06)}.mdc-select--filled .mdc-floating-label{max-width:calc(100% - 64px)}.mdc-select--filled .mdc-floating-label--float-above{max-width:calc(100% / 0.75 - 64px / 0.75)}.mdc-select--filled .mdc-menu-surface--is-open-below{border-top-left-radius:0px;border-top-right-radius:0px}.mdc-select--filled.mdc-select--focused.mdc-line-ripple::after{transform:scale(1, 2);opacity:1}.mdc-select--filled .mdc-floating-label{left:16px;right:initial}[dir=rtl] .mdc-select--filled .mdc-floating-label,.mdc-select--filled .mdc-floating-label[dir=rtl]{left:initial;right:16px}.mdc-select--filled.mdc-select--with-leading-icon .mdc-floating-label{left:48px;right:initial}[dir=rtl] .mdc-select--filled.mdc-select--with-leading-icon .mdc-floating-label,.mdc-select--filled.mdc-select--with-leading-icon .mdc-floating-label[dir=rtl]{left:initial;right:48px}.mdc-select--filled.mdc-select--with-leading-icon .mdc-floating-label{max-width:calc(100% - 96px)}.mdc-select--filled.mdc-select--with-leading-icon .mdc-floating-label--float-above{max-width:calc(100% / 0.75 - 96px / 0.75)}.mdc-select--invalid:not(.mdc-select--disabled) .mdc-line-ripple::before{border-bottom-color:#b00020;border-bottom-color:var(--mdc-theme-error, #b00020)}.mdc-select--invalid:not(.mdc-select--disabled):hover .mdc-line-ripple::before{border-bottom-color:#b00020;border-bottom-color:var(--mdc-theme-error, #b00020)}.mdc-select--invalid:not(.mdc-select--disabled) .mdc-line-ripple::after{border-bottom-color:#b00020;border-bottom-color:var(--mdc-theme-error, #b00020)}.mdc-select--outlined{border:none}.mdc-select--outlined .mdc-select__anchor{height:56px}.mdc-select--outlined .mdc-select__anchor .mdc-floating-label--float-above{transform:translateY(-37.25px) scale(1)}.mdc-select--outlined .mdc-select__anchor .mdc-floating-label--float-above{font-size:.75rem}.mdc-select--outlined .mdc-select__anchor.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-select--outlined .mdc-select__anchor .mdc-notched-outline--upgraded .mdc-floating-label--float-above{transform:translateY(-34.75px) scale(0.75)}.mdc-select--outlined .mdc-select__anchor.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-select--outlined .mdc-select__anchor .mdc-notched-outline--upgraded .mdc-floating-label--float-above{font-size:1rem}.mdc-select--outlined .mdc-select__anchor .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-select-outlined-56px 250ms 1}@keyframes mdc-floating-label-shake-float-above-select-outlined-56px{0%{transform:translateX(calc(0 - 0%)) translateY(-34.75px) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - 0%)) translateY(-34.75px) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - 0%)) translateY(-34.75px) scale(0.75)}100%{transform:translateX(calc(0 - 0%)) translateY(-34.75px) scale(0.75)}}.mdc-select--outlined .mdc-notched-outline .mdc-notched-outline__leading{border-top-left-radius:4px;border-top-left-radius:var(--mdc-shape-small, 4px);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:4px;border-bottom-left-radius:var(--mdc-shape-small, 4px)}[dir=rtl] .mdc-select--outlined .mdc-notched-outline .mdc-notched-outline__leading,.mdc-select--outlined .mdc-notched-outline .mdc-notched-outline__leading[dir=rtl]{border-top-left-radius:0;border-top-right-radius:4px;border-top-right-radius:var(--mdc-shape-small, 4px);border-bottom-right-radius:4px;border-bottom-right-radius:var(--mdc-shape-small, 4px);border-bottom-left-radius:0}@supports(top: max(0%)){.mdc-select--outlined .mdc-notched-outline .mdc-notched-outline__leading{width:max(12px, var(--mdc-shape-small, 4px))}}@supports(top: max(0%)){.mdc-select--outlined .mdc-notched-outline .mdc-notched-outline__notch{max-width:calc(100% - max(12px, var(--mdc-shape-small, 4px)) * 2)}}.mdc-select--outlined .mdc-notched-outline .mdc-notched-outline__trailing{border-top-left-radius:0;border-top-right-radius:4px;border-top-right-radius:var(--mdc-shape-small, 4px);border-bottom-right-radius:4px;border-bottom-right-radius:var(--mdc-shape-small, 4px);border-bottom-left-radius:0}[dir=rtl] .mdc-select--outlined .mdc-notched-outline .mdc-notched-outline__trailing,.mdc-select--outlined .mdc-notched-outline .mdc-notched-outline__trailing[dir=rtl]{border-top-left-radius:4px;border-top-left-radius:var(--mdc-shape-small, 4px);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:4px;border-bottom-left-radius:var(--mdc-shape-small, 4px)}@supports(top: max(0%)){.mdc-select--outlined .mdc-select__anchor{padding-left:max(16px, calc(var(--mdc-shape-small, 4px) + 4px))}}[dir=rtl] .mdc-select--outlined .mdc-select__anchor,.mdc-select--outlined .mdc-select__anchor[dir=rtl]{padding-left:0}@supports(top: max(0%)){[dir=rtl] .mdc-select--outlined .mdc-select__anchor,.mdc-select--outlined .mdc-select__anchor[dir=rtl]{padding-right:max(16px, calc(var(--mdc-shape-small, 4px) + 4px))}}@supports(top: max(0%)){.mdc-select--outlined+.mdc-select-helper-text{margin-left:max(16px, calc(var(--mdc-shape-small, 4px) + 4px))}}[dir=rtl] .mdc-select--outlined+.mdc-select-helper-text,.mdc-select--outlined+.mdc-select-helper-text[dir=rtl]{margin-left:0}@supports(top: max(0%)){[dir=rtl] .mdc-select--outlined+.mdc-select-helper-text,.mdc-select--outlined+.mdc-select-helper-text[dir=rtl]{margin-right:max(16px, calc(var(--mdc-shape-small, 4px) + 4px))}}.mdc-select--outlined:not(.mdc-select--disabled) .mdc-select__anchor{background-color:transparent}.mdc-select--outlined.mdc-select--disabled .mdc-select__anchor{background-color:transparent}.mdc-select--outlined:not(.mdc-select--disabled) .mdc-notched-outline__leading,.mdc-select--outlined:not(.mdc-select--disabled) .mdc-notched-outline__notch,.mdc-select--outlined:not(.mdc-select--disabled) .mdc-notched-outline__trailing{border-color:rgba(0, 0, 0, 0.38)}.mdc-select--outlined:not(.mdc-select--disabled):not(.mdc-select--focused) .mdc-select__anchor:hover .mdc-notched-outline .mdc-notched-outline__leading,.mdc-select--outlined:not(.mdc-select--disabled):not(.mdc-select--focused) .mdc-select__anchor:hover .mdc-notched-outline .mdc-notched-outline__notch,.mdc-select--outlined:not(.mdc-select--disabled):not(.mdc-select--focused) .mdc-select__anchor:hover .mdc-notched-outline .mdc-notched-outline__trailing{border-color:rgba(0, 0, 0, 0.87)}.mdc-select--outlined:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__leading,.mdc-select--outlined:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__notch,.mdc-select--outlined:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__trailing{border-width:2px}.mdc-select--outlined:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__leading,.mdc-select--outlined:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__notch,.mdc-select--outlined:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__trailing{border-color:#6200ee;border-color:var(--mdc-theme-primary, #6200ee)}.mdc-select--outlined.mdc-select--disabled .mdc-notched-outline__leading,.mdc-select--outlined.mdc-select--disabled .mdc-notched-outline__notch,.mdc-select--outlined.mdc-select--disabled .mdc-notched-outline__trailing{border-color:rgba(0, 0, 0, 0.06)}.mdc-select--outlined .mdc-select__anchor :not(.mdc-notched-outline--notched) .mdc-notched-outline__notch{max-width:calc(100% - 60px)}.mdc-select--outlined .mdc-select__anchor{display:flex;align-items:baseline;overflow:visible}.mdc-select--outlined .mdc-select__anchor .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-select-outlined 250ms 1}.mdc-select--outlined .mdc-select__anchor .mdc-floating-label--float-above{transform:translateY(-37.25px) scale(1)}.mdc-select--outlined .mdc-select__anchor .mdc-floating-label--float-above{font-size:.75rem}.mdc-select--outlined .mdc-select__anchor.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-select--outlined .mdc-select__anchor .mdc-notched-outline--upgraded .mdc-floating-label--float-above{transform:translateY(-34.75px) scale(0.75)}.mdc-select--outlined .mdc-select__anchor.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-select--outlined .mdc-select__anchor .mdc-notched-outline--upgraded .mdc-floating-label--float-above{font-size:1rem}.mdc-select--outlined .mdc-select__anchor .mdc-notched-outline--notched .mdc-notched-outline__notch{padding-top:1px}.mdc-select--outlined .mdc-select__anchor .mdc-select__selected-text::before{content:"​"}.mdc-select--outlined .mdc-select__anchor .mdc-select__selected-text-container{height:100%;display:inline-flex;align-items:center}.mdc-select--outlined .mdc-select__anchor::before{display:none}.mdc-select--outlined .mdc-select__selected-text-container{display:flex;border:none;z-index:1;background-color:transparent}.mdc-select--outlined .mdc-select__icon{z-index:2}.mdc-select--outlined .mdc-floating-label{line-height:1.15rem;left:4px;right:initial}[dir=rtl] .mdc-select--outlined .mdc-floating-label,.mdc-select--outlined .mdc-floating-label[dir=rtl]{left:initial;right:4px}.mdc-select--outlined.mdc-select--focused .mdc-notched-outline--notched .mdc-notched-outline__notch{padding-top:2px}.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled) .mdc-notched-outline__leading,.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled) .mdc-notched-outline__notch,.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled) .mdc-notched-outline__trailing{border-color:#b00020;border-color:var(--mdc-theme-error, #b00020)}.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled):not(.mdc-select--focused) .mdc-select__anchor:hover .mdc-notched-outline .mdc-notched-outline__leading,.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled):not(.mdc-select--focused) .mdc-select__anchor:hover .mdc-notched-outline .mdc-notched-outline__notch,.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled):not(.mdc-select--focused) .mdc-select__anchor:hover .mdc-notched-outline .mdc-notched-outline__trailing{border-color:#b00020;border-color:var(--mdc-theme-error, #b00020)}.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__leading,.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__notch,.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__trailing{border-width:2px}.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__leading,.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__notch,.mdc-select--outlined.mdc-select--invalid:not(.mdc-select--disabled).mdc-select--focused .mdc-notched-outline .mdc-notched-outline__trailing{border-color:#b00020;border-color:var(--mdc-theme-error, #b00020)}.mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label{left:36px;right:initial}[dir=rtl] .mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label,.mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label[dir=rtl]{left:initial;right:36px}.mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label--float-above{transform:translateY(-37.25px) translateX(-32px) scale(1)}[dir=rtl] .mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label--float-above,.mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label--float-above[dir=rtl]{transform:translateY(-37.25px) translateX(32px) scale(1)}.mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label--float-above{font-size:.75rem}.mdc-select--outlined.mdc-select--with-leading-icon.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-select--outlined.mdc-select--with-leading-icon .mdc-notched-outline--upgraded .mdc-floating-label--float-above{transform:translateY(-34.75px) translateX(-32px) scale(0.75)}[dir=rtl] .mdc-select--outlined.mdc-select--with-leading-icon.mdc-notched-outline--upgraded .mdc-floating-label--float-above,[dir=rtl] .mdc-select--outlined.mdc-select--with-leading-icon .mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-select--outlined.mdc-select--with-leading-icon.mdc-notched-outline--upgraded .mdc-floating-label--float-above[dir=rtl],.mdc-select--outlined.mdc-select--with-leading-icon .mdc-notched-outline--upgraded .mdc-floating-label--float-above[dir=rtl]{transform:translateY(-34.75px) translateX(32px) scale(0.75)}.mdc-select--outlined.mdc-select--with-leading-icon.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-select--outlined.mdc-select--with-leading-icon .mdc-notched-outline--upgraded .mdc-floating-label--float-above{font-size:1rem}.mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-select-outlined-leading-icon-56px 250ms 1}@keyframes mdc-floating-label-shake-float-above-select-outlined-leading-icon-56px{0%{transform:translateX(calc(0 - 32px)) translateY(-34.75px) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - 32px)) translateY(-34.75px) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - 32px)) translateY(-34.75px) scale(0.75)}100%{transform:translateX(calc(0 - 32px)) translateY(-34.75px) scale(0.75)}}[dir=rtl] .mdc-select--outlined.mdc-select--with-leading-icon .mdc-floating-label--shake,.mdc-select--outlined.mdc-select--with-leading-icon[dir=rtl] .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-select-outlined-leading-icon-56px 250ms 1}@keyframes mdc-floating-label-shake-float-above-select-outlined-leading-icon-56px-rtl{0%{transform:translateX(calc(0 - -32px)) translateY(-34.75px) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - -32px)) translateY(-34.75px) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - -32px)) translateY(-34.75px) scale(0.75)}100%{transform:translateX(calc(0 - -32px)) translateY(-34.75px) scale(0.75)}}.mdc-select--outlined.mdc-select--with-leading-icon .mdc-select__anchor :not(.mdc-notched-outline--notched) .mdc-notched-outline__notch{max-width:calc(100% - 96px)}.mdc-select--outlined .mdc-menu-surface{margin-bottom:8px}.mdc-select--outlined.mdc-select--no-label .mdc-menu-surface,.mdc-select--outlined .mdc-menu-surface--is-open-below{margin-bottom:0}.mdc-select__anchor{--mdc-ripple-fg-size: 0;--mdc-ripple-left: 0;--mdc-ripple-top: 0;--mdc-ripple-fg-scale: 1;--mdc-ripple-fg-translate-end: 0;--mdc-ripple-fg-translate-start: 0;-webkit-tap-highlight-color:rgba(0,0,0,0);will-change:transform,opacity}.mdc-select__anchor .mdc-select__ripple::before,.mdc-select__anchor .mdc-select__ripple::after{position:absolute;border-radius:50%;opacity:0;pointer-events:none;content:""}.mdc-select__anchor .mdc-select__ripple::before{transition:opacity 15ms linear,background-color 15ms linear;z-index:1;z-index:var(--mdc-ripple-z-index, 1)}.mdc-select__anchor .mdc-select__ripple::after{z-index:0;z-index:var(--mdc-ripple-z-index, 0)}.mdc-select__anchor.mdc-ripple-upgraded .mdc-select__ripple::before{transform:scale(var(--mdc-ripple-fg-scale, 1))}.mdc-select__anchor.mdc-ripple-upgraded .mdc-select__ripple::after{top:0;left:0;transform:scale(0);transform-origin:center center}.mdc-select__anchor.mdc-ripple-upgraded--unbounded .mdc-select__ripple::after{top:var(--mdc-ripple-top, 0);left:var(--mdc-ripple-left, 0)}.mdc-select__anchor.mdc-ripple-upgraded--foreground-activation .mdc-select__ripple::after{animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards}.mdc-select__anchor.mdc-ripple-upgraded--foreground-deactivation .mdc-select__ripple::after{animation:mdc-ripple-fg-opacity-out 150ms;transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}.mdc-select__anchor .mdc-select__ripple::before,.mdc-select__anchor .mdc-select__ripple::after{top:calc(50% - 100%);left:calc(50% - 100%);width:200%;height:200%}.mdc-select__anchor.mdc-ripple-upgraded .mdc-select__ripple::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-select__anchor .mdc-select__ripple::before,.mdc-select__anchor .mdc-select__ripple::after{background-color:rgba(0, 0, 0, 0.87);background-color:var(--mdc-ripple-color, rgba(0, 0, 0, 0.87))}.mdc-select__anchor:hover .mdc-select__ripple::before,.mdc-select__anchor.mdc-ripple-surface--hover .mdc-select__ripple::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-select__anchor.mdc-ripple-upgraded--background-focused .mdc-select__ripple::before,.mdc-select__anchor:not(.mdc-ripple-upgraded):focus .mdc-select__ripple::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-select__anchor .mdc-select__ripple{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected .mdc-deprecated-list-item__ripple::before,.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected .mdc-deprecated-list-item__ripple::after{background-color:#000;background-color:var(--mdc-ripple-color, var(--mdc-theme-on-surface, #000))}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected:hover .mdc-deprecated-list-item__ripple::before,.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected.mdc-ripple-surface--hover .mdc-deprecated-list-item__ripple::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected.mdc-ripple-upgraded--background-focused .mdc-deprecated-list-item__ripple::before,.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected:not(.mdc-ripple-upgraded):focus .mdc-deprecated-list-item__ripple::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected:not(.mdc-ripple-upgraded) .mdc-deprecated-list-item__ripple::after{transition:opacity 150ms linear}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected:not(.mdc-ripple-upgraded):active .mdc-deprecated-list-item__ripple::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected .mdc-list-item__ripple::before,.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected .mdc-list-item__ripple::after{background-color:#000;background-color:var(--mdc-ripple-color, var(--mdc-theme-on-surface, #000))}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected:hover .mdc-list-item__ripple::before,.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected.mdc-ripple-surface--hover .mdc-list-item__ripple::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected.mdc-ripple-upgraded--background-focused .mdc-list-item__ripple::before,.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected:not(.mdc-ripple-upgraded):focus .mdc-list-item__ripple::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected:not(.mdc-ripple-upgraded) .mdc-list-item__ripple::after{transition:opacity 150ms linear}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected:not(.mdc-ripple-upgraded):active .mdc-list-item__ripple::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-select__menu .mdc-deprecated-list .mdc-deprecated-list-item--selected.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-select-helper-text{margin:0;margin-left:16px;margin-right:16px;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-caption-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.75rem;font-size:var(--mdc-typography-caption-font-size, 0.75rem);line-height:1.25rem;line-height:var(--mdc-typography-caption-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-caption-font-weight, 400);letter-spacing:0.0333333333em;letter-spacing:var(--mdc-typography-caption-letter-spacing, 0.0333333333em);text-decoration:inherit;text-decoration:var(--mdc-typography-caption-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-caption-text-transform, inherit);display:block;margin-top:0;line-height:normal}[dir=rtl] .mdc-select-helper-text,.mdc-select-helper-text[dir=rtl]{margin-left:16px;margin-right:16px}.mdc-select-helper-text::before{display:inline-block;width:0;height:16px;content:"";vertical-align:0}.mdc-select-helper-text--validation-msg{opacity:0;transition:opacity 180ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-select--invalid+.mdc-select-helper-text--validation-msg,.mdc-select-helper-text--validation-msg-persistent{opacity:1}.mdc-select--with-leading-icon .mdc-select__icon{display:inline-block;box-sizing:border-box;border:none;text-decoration:none;cursor:pointer;user-select:none;flex-shrink:0;align-self:center;background-color:transparent;fill:currentColor}.mdc-select--with-leading-icon .mdc-select__icon{margin-left:12px;margin-right:12px}[dir=rtl] .mdc-select--with-leading-icon .mdc-select__icon,.mdc-select--with-leading-icon .mdc-select__icon[dir=rtl]{margin-left:12px;margin-right:12px}.mdc-select__icon:not([tabindex]),.mdc-select__icon[tabindex="-1"]{cursor:default;pointer-events:none}.material-icons{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}:host{display:inline-block;vertical-align:top;outline:none}.mdc-select{width:100%}[hidden]{display:none}.mdc-select__icon{z-index:2}.mdc-select--with-leading-icon{--mdc-list-item-graphic-margin: calc( 48px - var(--mdc-list-item-graphic-size, 24px) - var(--mdc-list-side-padding, 16px) )}.mdc-select .mdc-select__anchor .mdc-select__selected-text{overflow:hidden}.mdc-select .mdc-select__anchor *{display:inline-flex}.mdc-select .mdc-select__anchor .mdc-floating-label{display:inline-block}mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-select-outlined-idle-border-color, rgba(0, 0, 0, 0.38) );--mdc-notched-outline-notch-offset: 1px}:host(:not([disabled]):hover) .mdc-select:not(.mdc-select--invalid):not(.mdc-select--focused) mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-select-outlined-hover-border-color, rgba(0, 0, 0, 0.87) )}:host(:not([disabled])) .mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text{color:rgba(0, 0, 0, 0.87);color:var(--mdc-select-ink-color, rgba(0, 0, 0, 0.87))}:host(:not([disabled])) .mdc-select:not(.mdc-select--disabled) .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.42);border-bottom-color:var(--mdc-select-idle-line-color, rgba(0, 0, 0, 0.42))}:host(:not([disabled])) .mdc-select:not(.mdc-select--disabled):hover .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.87);border-bottom-color:var(--mdc-select-hover-line-color, rgba(0, 0, 0, 0.87))}:host(:not([disabled])) .mdc-select:not(.mdc-select--outlined):not(.mdc-select--disabled) .mdc-select__anchor{background-color:whitesmoke;background-color:var(--mdc-select-fill-color, whitesmoke)}:host(:not([disabled])) .mdc-select.mdc-select--invalid .mdc-select__dropdown-icon{fill:var(--mdc-select-error-dropdown-icon-color, var(--mdc-select-error-color, var(--mdc-theme-error, #b00020)))}:host(:not([disabled])) .mdc-select.mdc-select--invalid .mdc-floating-label,:host(:not([disabled])) .mdc-select.mdc-select--invalid .mdc-floating-label::after{color:var(--mdc-select-error-color, var(--mdc-theme-error, #b00020))}:host(:not([disabled])) .mdc-select.mdc-select--invalid mwc-notched-outline{--mdc-notched-outline-border-color: var(--mdc-select-error-color, var(--mdc-theme-error, #b00020))}.mdc-select__menu--invalid{--mdc-theme-primary: var(--mdc-select-error-color, var(--mdc-theme-error, #b00020))}:host(:not([disabled])) .mdc-select:not(.mdc-select--invalid):not(.mdc-select--focused) .mdc-floating-label,:host(:not([disabled])) .mdc-select:not(.mdc-select--invalid):not(.mdc-select--focused) .mdc-floating-label::after{color:rgba(0, 0, 0, 0.6);color:var(--mdc-select-label-ink-color, rgba(0, 0, 0, 0.6))}:host(:not([disabled])) .mdc-select:not(.mdc-select--invalid):not(.mdc-select--focused) .mdc-select__dropdown-icon{fill:rgba(0, 0, 0, 0.54);fill:var(--mdc-select-dropdown-icon-color, rgba(0, 0, 0, 0.54))}:host(:not([disabled])) .mdc-select.mdc-select--focused mwc-notched-outline{--mdc-notched-outline-stroke-width: 2px;--mdc-notched-outline-notch-offset: 2px}:host(:not([disabled])) .mdc-select.mdc-select--focused:not(.mdc-select--invalid) mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-select-focused-label-color, var(--mdc-theme-primary, rgba(98, 0, 238, 0.87)) )}:host(:not([disabled])) .mdc-select.mdc-select--focused:not(.mdc-select--invalid) .mdc-select__dropdown-icon{fill:rgba(98,0,238,.87);fill:var(--mdc-select-focused-dropdown-icon-color, var(--mdc-theme-primary, rgba(98, 0, 238, 0.87)))}:host(:not([disabled])) .mdc-select.mdc-select--focused:not(.mdc-select--invalid) .mdc-floating-label{color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}:host(:not([disabled])) .mdc-select.mdc-select--focused:not(.mdc-select--invalid) .mdc-floating-label::after{color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}:host(:not([disabled])) .mdc-select-helper-text:not(.mdc-select-helper-text--validation-msg){color:var(--mdc-select-label-ink-color, rgba(0, 0, 0, 0.6))}:host([disabled]){pointer-events:none}:host([disabled]) .mdc-select:not(.mdc-select--outlined).mdc-select--disabled .mdc-select__anchor{background-color:#fafafa;background-color:var(--mdc-select-disabled-fill-color, #fafafa)}:host([disabled]) .mdc-select.mdc-select--outlined mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-select-outlined-disabled-border-color, rgba(0, 0, 0, 0.06) )}:host([disabled]) .mdc-select .mdc-select__dropdown-icon{fill:rgba(0, 0, 0, 0.38);fill:var(--mdc-select-disabled-dropdown-icon-color, rgba(0, 0, 0, 0.38))}:host([disabled]) .mdc-select:not(.mdc-select--invalid):not(.mdc-select--focused) .mdc-floating-label,:host([disabled]) .mdc-select:not(.mdc-select--invalid):not(.mdc-select--focused) .mdc-floating-label::after{color:rgba(0, 0, 0, 0.38);color:var(--mdc-select-disabled-ink-color, rgba(0, 0, 0, 0.38))}:host([disabled]) .mdc-select-helper-text{color:rgba(0, 0, 0, 0.38);color:var(--mdc-select-disabled-ink-color, rgba(0, 0, 0, 0.38))}:host([disabled]) .mdc-select__selected-text{color:rgba(0, 0, 0, 0.38);color:var(--mdc-select-disabled-ink-color, rgba(0, 0, 0, 0.38))}`;
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+let Select = class Select extends SelectBase {
+};
+Select.styles = [styles$6];
+Select = __decorate([
+    e$7('mwc-select')
+], Select);
+
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses$4 = {
     ACTIVE: 'mdc-tab-indicator--active',
     FADE: 'mdc-tab-indicator--fade',
     NO_TRANSITION: 'mdc-tab-indicator--no-transition',
 };
-var strings$4 = {
+var strings$5 = {
     CONTENT_SELECTOR: '.mdc-tab-indicator__content',
 };
 
@@ -6439,14 +10378,14 @@ var MDCTabIndicatorFoundation = /** @class */ (function (_super) {
     }
     Object.defineProperty(MDCTabIndicatorFoundation, "cssClasses", {
         get: function () {
-            return cssClasses$3;
+            return cssClasses$4;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCTabIndicatorFoundation, "strings", {
         get: function () {
-            return strings$4;
+            return strings$5;
         },
         enumerable: false,
         configurable: true
@@ -6623,10 +10562,10 @@ __decorate([
     i$2('.mdc-tab-indicator__content')
 ], TabIndicatorBase.prototype, "contentElement", void 0);
 __decorate([
-    e$5()
+    e$6()
 ], TabIndicatorBase.prototype, "icon", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], TabIndicatorBase.prototype, "fade", void 0);
 
 /**
@@ -6634,7 +10573,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$4 = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}.mdc-tab-indicator .mdc-tab-indicator__content--underline{border-color:#6200ee;border-color:var(--mdc-theme-primary, #6200ee)}.mdc-tab-indicator .mdc-tab-indicator__content--icon{color:#018786;color:var(--mdc-theme-secondary, #018786)}.mdc-tab-indicator .mdc-tab-indicator__content--underline{border-top-width:2px}.mdc-tab-indicator .mdc-tab-indicator__content--icon{height:34px;font-size:34px}.mdc-tab-indicator{display:flex;position:absolute;top:0;left:0;justify-content:center;width:100%;height:100%;pointer-events:none;z-index:1}.mdc-tab-indicator__content{transform-origin:left;opacity:0}.mdc-tab-indicator__content--underline{align-self:flex-end;box-sizing:border-box;width:100%;border-top-style:solid}.mdc-tab-indicator__content--icon{align-self:center;margin:0 auto}.mdc-tab-indicator--active .mdc-tab-indicator__content{opacity:1}.mdc-tab-indicator .mdc-tab-indicator__content{transition:250ms transform cubic-bezier(0.4, 0, 0.2, 1)}.mdc-tab-indicator--no-transition .mdc-tab-indicator__content{transition:none}.mdc-tab-indicator--fade .mdc-tab-indicator__content{transition:150ms opacity linear}.mdc-tab-indicator--active.mdc-tab-indicator--fade .mdc-tab-indicator__content{transition-delay:100ms}`;
+const styles$5 = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}.mdc-tab-indicator .mdc-tab-indicator__content--underline{border-color:#6200ee;border-color:var(--mdc-theme-primary, #6200ee)}.mdc-tab-indicator .mdc-tab-indicator__content--icon{color:#018786;color:var(--mdc-theme-secondary, #018786)}.mdc-tab-indicator .mdc-tab-indicator__content--underline{border-top-width:2px}.mdc-tab-indicator .mdc-tab-indicator__content--icon{height:34px;font-size:34px}.mdc-tab-indicator{display:flex;position:absolute;top:0;left:0;justify-content:center;width:100%;height:100%;pointer-events:none;z-index:1}.mdc-tab-indicator__content{transform-origin:left;opacity:0}.mdc-tab-indicator__content--underline{align-self:flex-end;box-sizing:border-box;width:100%;border-top-style:solid}.mdc-tab-indicator__content--icon{align-self:center;margin:0 auto}.mdc-tab-indicator--active .mdc-tab-indicator__content{opacity:1}.mdc-tab-indicator .mdc-tab-indicator__content{transition:250ms transform cubic-bezier(0.4, 0, 0.2, 1)}.mdc-tab-indicator--no-transition .mdc-tab-indicator__content{transition:none}.mdc-tab-indicator--fade .mdc-tab-indicator__content{transition:150ms opacity linear}.mdc-tab-indicator--active.mdc-tab-indicator--fade .mdc-tab-indicator__content{transition-delay:100ms}`;
 
 /**
  * @license
@@ -6643,9 +10582,9 @@ const styles$4 = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material
  */
 let TabIndicator = class TabIndicator extends TabIndicatorBase {
 };
-TabIndicator.styles = [styles$4];
+TabIndicator.styles = [styles$5];
 TabIndicator = __decorate([
-    e$6('mwc-tab-indicator')
+    e$7('mwc-tab-indicator')
 ], TabIndicator);
 
 /**
@@ -6670,10 +10609,10 @@ TabIndicator = __decorate([
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var cssClasses$2 = {
+var cssClasses$3 = {
     ACTIVE: 'mdc-tab--active',
 };
-var strings$3 = {
+var strings$4 = {
     ARIA_SELECTED: 'aria-selected',
     CONTENT_SELECTOR: '.mdc-tab__content',
     INTERACTED_EVENT: 'MDCTab:interacted',
@@ -6713,14 +10652,14 @@ var MDCTabFoundation = /** @class */ (function (_super) {
     }
     Object.defineProperty(MDCTabFoundation, "cssClasses", {
         get: function () {
-            return cssClasses$2;
+            return cssClasses$3;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCTabFoundation, "strings", {
         get: function () {
-            return strings$3;
+            return strings$4;
         },
         enumerable: false,
         configurable: true
@@ -6753,7 +10692,7 @@ var MDCTabFoundation = /** @class */ (function (_super) {
         this.adapter.notifyInteracted();
     };
     MDCTabFoundation.prototype.isActive = function () {
-        return this.adapter.hasClass(cssClasses$2.ACTIVE);
+        return this.adapter.hasClass(cssClasses$3.ACTIVE);
     };
     /**
      * Sets whether the tab should focus itself when activated
@@ -6765,9 +10704,9 @@ var MDCTabFoundation = /** @class */ (function (_super) {
      * Activates the Tab
      */
     MDCTabFoundation.prototype.activate = function (previousIndicatorClientRect) {
-        this.adapter.addClass(cssClasses$2.ACTIVE);
-        this.adapter.setAttr(strings$3.ARIA_SELECTED, 'true');
-        this.adapter.setAttr(strings$3.TABINDEX, '0');
+        this.adapter.addClass(cssClasses$3.ACTIVE);
+        this.adapter.setAttr(strings$4.ARIA_SELECTED, 'true');
+        this.adapter.setAttr(strings$4.TABINDEX, '0');
         this.adapter.activateIndicator(previousIndicatorClientRect);
         if (this.focusOnActivate) {
             this.adapter.focus();
@@ -6781,9 +10720,9 @@ var MDCTabFoundation = /** @class */ (function (_super) {
         if (!this.isActive()) {
             return;
         }
-        this.adapter.removeClass(cssClasses$2.ACTIVE);
-        this.adapter.setAttr(strings$3.ARIA_SELECTED, 'false');
-        this.adapter.setAttr(strings$3.TABINDEX, '-1');
+        this.adapter.removeClass(cssClasses$3.ACTIVE);
+        this.adapter.setAttr(strings$4.ARIA_SELECTED, 'false');
+        this.adapter.setAttr(strings$4.TABINDEX, '-1');
         this.adapter.deactivateIndicator();
     };
     /**
@@ -7013,38 +10952,38 @@ __decorate([
     i$2('mwc-tab-indicator')
 ], TabBase.prototype, "tabIndicator", void 0);
 __decorate([
-    e$5()
+    e$6()
 ], TabBase.prototype, "label", void 0);
 __decorate([
-    e$5()
+    e$6()
 ], TabBase.prototype, "icon", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], TabBase.prototype, "hasImageIcon", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], TabBase.prototype, "isFadingIndicator", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], TabBase.prototype, "minWidth", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], TabBase.prototype, "isMinWidthIndicator", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true, attribute: 'active' })
+    e$6({ type: Boolean, reflect: true, attribute: 'active' })
 ], TabBase.prototype, "active", null);
 __decorate([
-    e$5()
+    e$6()
 ], TabBase.prototype, "indicatorIcon", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], TabBase.prototype, "stacked", void 0);
 __decorate([
     observer(async function (value) {
         await this.updateComplete;
         this.mdcFoundation.setFocusOnActivate(value);
     }),
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], TabBase.prototype, "focusOnActivate", void 0);
 __decorate([
     i$2('.mdc-tab__content')
@@ -7056,10 +10995,10 @@ __decorate([
     t$1()
 ], TabBase.prototype, "useStateLayerCustomProperties", void 0);
 __decorate([
-    e$3('mwc-ripple')
+    e$4('mwc-ripple')
 ], TabBase.prototype, "ripple", void 0);
 __decorate([
-    e$4({ passive: true })
+    e$5({ passive: true })
 ], TabBase.prototype, "handleRippleTouchStart", null);
 
 /**
@@ -7067,7 +11006,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$3 = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}.mdc-tab{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-button-font-size, 0.875rem);line-height:2.25rem;line-height:var(--mdc-typography-button-line-height, 2.25rem);font-weight:500;font-weight:var(--mdc-typography-button-font-weight, 500);letter-spacing:0.0892857143em;letter-spacing:var(--mdc-typography-button-letter-spacing, 0.0892857143em);text-decoration:none;text-decoration:var(--mdc-typography-button-text-decoration, none);text-transform:uppercase;text-transform:var(--mdc-typography-button-text-transform, uppercase);position:relative}.mdc-tab .mdc-tab__text-label{color:rgba(0, 0, 0, 0.6)}.mdc-tab .mdc-tab__icon{color:rgba(0, 0, 0, 0.54);fill:currentColor}.mdc-tab.mdc-ripple-upgraded--background-focused.mdc-tab--active .mdc-tab__focus-ring,.mdc-tab:not(.mdc-ripple-upgraded):focus.mdc-tab--active .mdc-tab__focus-ring{pointer-events:none;border:2px solid transparent;border-radius:8px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc( 100% + -12px );width:calc( 100% + -8px );margin-top:-2px;z-index:2}@media screen and (forced-colors: active){.mdc-tab.mdc-ripple-upgraded--background-focused.mdc-tab--active .mdc-tab__focus-ring,.mdc-tab:not(.mdc-ripple-upgraded):focus.mdc-tab--active .mdc-tab__focus-ring{border-color:CanvasText}}.mdc-tab.mdc-ripple-upgraded--background-focused.mdc-tab--active .mdc-tab__focus-ring::after,.mdc-tab:not(.mdc-ripple-upgraded):focus.mdc-tab--active .mdc-tab__focus-ring::after{content:"";border:2px solid transparent;border-radius:10px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}@media screen and (forced-colors: active){.mdc-tab.mdc-ripple-upgraded--background-focused.mdc-tab--active .mdc-tab__focus-ring::after,.mdc-tab:not(.mdc-ripple-upgraded):focus.mdc-tab--active .mdc-tab__focus-ring::after{border-color:CanvasText}}.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__focus-ring,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__focus-ring{pointer-events:none;border:2px solid transparent;border-radius:8px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc( 100% + -8px );width:calc( 100% + -8px );z-index:2}@media screen and (forced-colors: active){.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__focus-ring,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__focus-ring{border-color:CanvasText}}.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__focus-ring::after,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__focus-ring::after{content:"";border:2px solid transparent;border-radius:10px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}@media screen and (forced-colors: active){.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__focus-ring::after,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__focus-ring::after{border-color:CanvasText}}.mdc-tab__content{position:relative}.mdc-tab__icon{width:24px;height:24px;font-size:24px}.mdc-tab--active .mdc-tab__text-label{color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}.mdc-tab--active .mdc-tab__icon{color:#6200ee;color:var(--mdc-theme-primary, #6200ee);fill:currentColor}.mdc-tab{background:none}.mdc-tab{min-width:90px;padding-right:24px;padding-left:24px;display:flex;flex:1 0 auto;justify-content:center;box-sizing:border-box;margin:0;padding-top:0;padding-bottom:0;border:none;outline:none;text-align:center;white-space:nowrap;cursor:pointer;-webkit-appearance:none;z-index:1}.mdc-tab::-moz-focus-inner{padding:0;border:0}.mdc-tab--min-width{flex:0 1 auto}.mdc-tab__content{display:flex;align-items:center;justify-content:center;height:inherit;pointer-events:none}.mdc-tab__text-label{transition:150ms color linear;display:inline-block;line-height:1;z-index:2}.mdc-tab__icon{transition:150ms color linear;z-index:2}.mdc-tab--stacked .mdc-tab__content{flex-direction:column;align-items:center;justify-content:center}.mdc-tab--stacked .mdc-tab__text-label{padding-top:6px;padding-bottom:4px}.mdc-tab--active .mdc-tab__text-label,.mdc-tab--active .mdc-tab__icon{transition-delay:100ms}.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label{padding-left:8px;padding-right:0}[dir=rtl] .mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label,.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label[dir=rtl]{padding-left:0;padding-right:8px}@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}.mdc-tab{--mdc-ripple-fg-size: 0;--mdc-ripple-left: 0;--mdc-ripple-top: 0;--mdc-ripple-fg-scale: 1;--mdc-ripple-fg-translate-end: 0;--mdc-ripple-fg-translate-start: 0;-webkit-tap-highlight-color:rgba(0,0,0,0)}.mdc-tab .mdc-tab__ripple::before,.mdc-tab .mdc-tab__ripple::after{position:absolute;border-radius:50%;opacity:0;pointer-events:none;content:""}.mdc-tab .mdc-tab__ripple::before{transition:opacity 15ms linear,background-color 15ms linear;z-index:1;z-index:var(--mdc-ripple-z-index, 1)}.mdc-tab .mdc-tab__ripple::after{z-index:0;z-index:var(--mdc-ripple-z-index, 0)}.mdc-tab.mdc-ripple-upgraded .mdc-tab__ripple::before{transform:scale(var(--mdc-ripple-fg-scale, 1))}.mdc-tab.mdc-ripple-upgraded .mdc-tab__ripple::after{top:0;left:0;transform:scale(0);transform-origin:center center}.mdc-tab.mdc-ripple-upgraded--unbounded .mdc-tab__ripple::after{top:var(--mdc-ripple-top, 0);left:var(--mdc-ripple-left, 0)}.mdc-tab.mdc-ripple-upgraded--foreground-activation .mdc-tab__ripple::after{animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards}.mdc-tab.mdc-ripple-upgraded--foreground-deactivation .mdc-tab__ripple::after{animation:mdc-ripple-fg-opacity-out 150ms;transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}.mdc-tab .mdc-tab__ripple::before,.mdc-tab .mdc-tab__ripple::after{top:calc(50% - 100%);left:calc(50% - 100%);width:200%;height:200%}.mdc-tab.mdc-ripple-upgraded .mdc-tab__ripple::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-tab .mdc-tab__ripple::before,.mdc-tab .mdc-tab__ripple::after{background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-tab:hover .mdc-tab__ripple::before,.mdc-tab.mdc-ripple-surface--hover .mdc-tab__ripple::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__ripple::before,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__ripple::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-tab:not(.mdc-ripple-upgraded) .mdc-tab__ripple::after{transition:opacity 150ms linear}.mdc-tab:not(.mdc-ripple-upgraded):active .mdc-tab__ripple::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-tab.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-tab__ripple{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;will-change:transform,opacity}:host{outline:none;flex:1 0 auto;display:flex;justify-content:center;-webkit-tap-highlight-color:transparent}.mdc-tab{height:var(--mdc-tab-height, 48px);margin-left:0;margin-right:0;padding-right:var(--mdc-tab-horizontal-padding, 24px);padding-left:var(--mdc-tab-horizontal-padding, 24px)}.mdc-tab--stacked{height:var(--mdc-tab-stacked-height, 72px)}.mdc-tab::-moz-focus-inner{border:0}.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label{padding-left:8px;padding-right:0}[dir=rtl] .mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label,.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label[dir=rtl]{padding-left:0;padding-right:8px}.mdc-tab:not(.mdc-tab--active) .mdc-tab__text-label{color:var(--mdc-tab-text-label-color-default, rgba(0, 0, 0, 0.6))}.mdc-tab:not(.mdc-tab--active) .mdc-tab__icon{color:var(--mdc-tab-color-default, rgba(0, 0, 0, 0.54))}`;
+const styles$4 = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}.mdc-tab{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.875rem;font-size:var(--mdc-typography-button-font-size, 0.875rem);line-height:2.25rem;line-height:var(--mdc-typography-button-line-height, 2.25rem);font-weight:500;font-weight:var(--mdc-typography-button-font-weight, 500);letter-spacing:0.0892857143em;letter-spacing:var(--mdc-typography-button-letter-spacing, 0.0892857143em);text-decoration:none;text-decoration:var(--mdc-typography-button-text-decoration, none);text-transform:uppercase;text-transform:var(--mdc-typography-button-text-transform, uppercase);position:relative}.mdc-tab .mdc-tab__text-label{color:rgba(0, 0, 0, 0.6)}.mdc-tab .mdc-tab__icon{color:rgba(0, 0, 0, 0.54);fill:currentColor}.mdc-tab.mdc-ripple-upgraded--background-focused.mdc-tab--active .mdc-tab__focus-ring,.mdc-tab:not(.mdc-ripple-upgraded):focus.mdc-tab--active .mdc-tab__focus-ring{pointer-events:none;border:2px solid transparent;border-radius:8px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc( 100% + -12px );width:calc( 100% + -8px );margin-top:-2px;z-index:2}@media screen and (forced-colors: active){.mdc-tab.mdc-ripple-upgraded--background-focused.mdc-tab--active .mdc-tab__focus-ring,.mdc-tab:not(.mdc-ripple-upgraded):focus.mdc-tab--active .mdc-tab__focus-ring{border-color:CanvasText}}.mdc-tab.mdc-ripple-upgraded--background-focused.mdc-tab--active .mdc-tab__focus-ring::after,.mdc-tab:not(.mdc-ripple-upgraded):focus.mdc-tab--active .mdc-tab__focus-ring::after{content:"";border:2px solid transparent;border-radius:10px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}@media screen and (forced-colors: active){.mdc-tab.mdc-ripple-upgraded--background-focused.mdc-tab--active .mdc-tab__focus-ring::after,.mdc-tab:not(.mdc-ripple-upgraded):focus.mdc-tab--active .mdc-tab__focus-ring::after{border-color:CanvasText}}.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__focus-ring,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__focus-ring{pointer-events:none;border:2px solid transparent;border-radius:8px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc( 100% + -8px );width:calc( 100% + -8px );z-index:2}@media screen and (forced-colors: active){.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__focus-ring,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__focus-ring{border-color:CanvasText}}.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__focus-ring::after,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__focus-ring::after{content:"";border:2px solid transparent;border-radius:10px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}@media screen and (forced-colors: active){.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__focus-ring::after,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__focus-ring::after{border-color:CanvasText}}.mdc-tab__content{position:relative}.mdc-tab__icon{width:24px;height:24px;font-size:24px}.mdc-tab--active .mdc-tab__text-label{color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}.mdc-tab--active .mdc-tab__icon{color:#6200ee;color:var(--mdc-theme-primary, #6200ee);fill:currentColor}.mdc-tab{background:none}.mdc-tab{min-width:90px;padding-right:24px;padding-left:24px;display:flex;flex:1 0 auto;justify-content:center;box-sizing:border-box;margin:0;padding-top:0;padding-bottom:0;border:none;outline:none;text-align:center;white-space:nowrap;cursor:pointer;-webkit-appearance:none;z-index:1}.mdc-tab::-moz-focus-inner{padding:0;border:0}.mdc-tab--min-width{flex:0 1 auto}.mdc-tab__content{display:flex;align-items:center;justify-content:center;height:inherit;pointer-events:none}.mdc-tab__text-label{transition:150ms color linear;display:inline-block;line-height:1;z-index:2}.mdc-tab__icon{transition:150ms color linear;z-index:2}.mdc-tab--stacked .mdc-tab__content{flex-direction:column;align-items:center;justify-content:center}.mdc-tab--stacked .mdc-tab__text-label{padding-top:6px;padding-bottom:4px}.mdc-tab--active .mdc-tab__text-label,.mdc-tab--active .mdc-tab__icon{transition-delay:100ms}.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label{padding-left:8px;padding-right:0}[dir=rtl] .mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label,.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label[dir=rtl]{padding-left:0;padding-right:8px}@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}.mdc-tab{--mdc-ripple-fg-size: 0;--mdc-ripple-left: 0;--mdc-ripple-top: 0;--mdc-ripple-fg-scale: 1;--mdc-ripple-fg-translate-end: 0;--mdc-ripple-fg-translate-start: 0;-webkit-tap-highlight-color:rgba(0,0,0,0)}.mdc-tab .mdc-tab__ripple::before,.mdc-tab .mdc-tab__ripple::after{position:absolute;border-radius:50%;opacity:0;pointer-events:none;content:""}.mdc-tab .mdc-tab__ripple::before{transition:opacity 15ms linear,background-color 15ms linear;z-index:1;z-index:var(--mdc-ripple-z-index, 1)}.mdc-tab .mdc-tab__ripple::after{z-index:0;z-index:var(--mdc-ripple-z-index, 0)}.mdc-tab.mdc-ripple-upgraded .mdc-tab__ripple::before{transform:scale(var(--mdc-ripple-fg-scale, 1))}.mdc-tab.mdc-ripple-upgraded .mdc-tab__ripple::after{top:0;left:0;transform:scale(0);transform-origin:center center}.mdc-tab.mdc-ripple-upgraded--unbounded .mdc-tab__ripple::after{top:var(--mdc-ripple-top, 0);left:var(--mdc-ripple-left, 0)}.mdc-tab.mdc-ripple-upgraded--foreground-activation .mdc-tab__ripple::after{animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards}.mdc-tab.mdc-ripple-upgraded--foreground-deactivation .mdc-tab__ripple::after{animation:mdc-ripple-fg-opacity-out 150ms;transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}.mdc-tab .mdc-tab__ripple::before,.mdc-tab .mdc-tab__ripple::after{top:calc(50% - 100%);left:calc(50% - 100%);width:200%;height:200%}.mdc-tab.mdc-ripple-upgraded .mdc-tab__ripple::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-tab .mdc-tab__ripple::before,.mdc-tab .mdc-tab__ripple::after{background-color:#6200ee;background-color:var(--mdc-ripple-color, var(--mdc-theme-primary, #6200ee))}.mdc-tab:hover .mdc-tab__ripple::before,.mdc-tab.mdc-ripple-surface--hover .mdc-tab__ripple::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-tab.mdc-ripple-upgraded--background-focused .mdc-tab__ripple::before,.mdc-tab:not(.mdc-ripple-upgraded):focus .mdc-tab__ripple::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-tab:not(.mdc-ripple-upgraded) .mdc-tab__ripple::after{transition:opacity 150ms linear}.mdc-tab:not(.mdc-ripple-upgraded):active .mdc-tab__ripple::after{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-tab.mdc-ripple-upgraded{--mdc-ripple-fg-opacity:var(--mdc-ripple-press-opacity, 0.12)}.mdc-tab__ripple{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;will-change:transform,opacity}:host{outline:none;flex:1 0 auto;display:flex;justify-content:center;-webkit-tap-highlight-color:transparent}.mdc-tab{height:var(--mdc-tab-height, 48px);margin-left:0;margin-right:0;padding-right:var(--mdc-tab-horizontal-padding, 24px);padding-left:var(--mdc-tab-horizontal-padding, 24px)}.mdc-tab--stacked{height:var(--mdc-tab-stacked-height, 72px)}.mdc-tab::-moz-focus-inner{border:0}.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label{padding-left:8px;padding-right:0}[dir=rtl] .mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label,.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon+.mdc-tab__text-label[dir=rtl]{padding-left:0;padding-right:8px}.mdc-tab:not(.mdc-tab--active) .mdc-tab__text-label{color:var(--mdc-tab-text-label-color-default, rgba(0, 0, 0, 0.6))}.mdc-tab:not(.mdc-tab--active) .mdc-tab__icon{color:var(--mdc-tab-color-default, rgba(0, 0, 0, 0.54))}`;
 
 /**
  * @license
@@ -7076,9 +11015,9 @@ const styles$3 = i$5 `.material-icons{font-family:var(--mdc-icon-font, "Material
  */
 let Tab = class Tab extends TabBase {
 };
-Tab.styles = [styles$3];
+Tab.styles = [styles$4];
 Tab = __decorate([
-    e$6('mwc-tab')
+    e$7('mwc-tab')
 ], Tab);
 
 /**
@@ -7103,12 +11042,12 @@ Tab = __decorate([
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var cssClasses$1 = {
+var cssClasses$2 = {
     ANIMATING: 'mdc-tab-scroller--animating',
     SCROLL_AREA_SCROLL: 'mdc-tab-scroller__scroll-area--scroll',
     SCROLL_TEST: 'mdc-tab-scroller__test',
 };
-var strings$2 = {
+var strings$3 = {
     AREA_SELECTOR: '.mdc-tab-scroller__scroll-area',
     CONTENT_SELECTOR: '.mdc-tab-scroller__scroll-content',
 };
@@ -7375,14 +11314,14 @@ var MDCTabScrollerFoundation = /** @class */ (function (_super) {
     }
     Object.defineProperty(MDCTabScrollerFoundation, "cssClasses", {
         get: function () {
-            return cssClasses$1;
+            return cssClasses$2;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCTabScrollerFoundation, "strings", {
         get: function () {
-            return strings$2;
+            return strings$3;
         },
         enumerable: false,
         configurable: true
@@ -7767,7 +11706,7 @@ __decorate([
     i$2('.mdc-tab-scroller__scroll-content')
 ], TabScrollerBase.prototype, "scrollContentElement", void 0);
 __decorate([
-    e$4({ passive: true })
+    e$5({ passive: true })
 ], TabScrollerBase.prototype, "_handleInteraction", null);
 
 /**
@@ -7775,7 +11714,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$2 = i$5 `.mdc-tab-scroller{overflow-y:hidden}.mdc-tab-scroller.mdc-tab-scroller--animating .mdc-tab-scroller__scroll-content{transition:250ms transform cubic-bezier(0.4, 0, 0.2, 1)}.mdc-tab-scroller__test{position:absolute;top:-9999px;width:100px;height:100px;overflow-x:scroll}.mdc-tab-scroller__scroll-area{-webkit-overflow-scrolling:touch;display:flex;overflow-x:hidden}.mdc-tab-scroller__scroll-area::-webkit-scrollbar,.mdc-tab-scroller__test::-webkit-scrollbar{display:none}.mdc-tab-scroller__scroll-area--scroll{overflow-x:scroll}.mdc-tab-scroller__scroll-content{position:relative;display:flex;flex:1 0 auto;transform:none;will-change:transform}.mdc-tab-scroller--align-start .mdc-tab-scroller__scroll-content{justify-content:flex-start}.mdc-tab-scroller--align-end .mdc-tab-scroller__scroll-content{justify-content:flex-end}.mdc-tab-scroller--align-center .mdc-tab-scroller__scroll-content{justify-content:center}.mdc-tab-scroller--animating .mdc-tab-scroller__scroll-area{-webkit-overflow-scrolling:auto}:host{display:flex}.mdc-tab-scroller{flex:1}`;
+const styles$3 = i$5 `.mdc-tab-scroller{overflow-y:hidden}.mdc-tab-scroller.mdc-tab-scroller--animating .mdc-tab-scroller__scroll-content{transition:250ms transform cubic-bezier(0.4, 0, 0.2, 1)}.mdc-tab-scroller__test{position:absolute;top:-9999px;width:100px;height:100px;overflow-x:scroll}.mdc-tab-scroller__scroll-area{-webkit-overflow-scrolling:touch;display:flex;overflow-x:hidden}.mdc-tab-scroller__scroll-area::-webkit-scrollbar,.mdc-tab-scroller__test::-webkit-scrollbar{display:none}.mdc-tab-scroller__scroll-area--scroll{overflow-x:scroll}.mdc-tab-scroller__scroll-content{position:relative;display:flex;flex:1 0 auto;transform:none;will-change:transform}.mdc-tab-scroller--align-start .mdc-tab-scroller__scroll-content{justify-content:flex-start}.mdc-tab-scroller--align-end .mdc-tab-scroller__scroll-content{justify-content:flex-end}.mdc-tab-scroller--align-center .mdc-tab-scroller__scroll-content{justify-content:center}.mdc-tab-scroller--animating .mdc-tab-scroller__scroll-area{-webkit-overflow-scrolling:auto}:host{display:flex}.mdc-tab-scroller{flex:1}`;
 
 /**
  * @license
@@ -7784,9 +11723,9 @@ const styles$2 = i$5 `.mdc-tab-scroller{overflow-y:hidden}.mdc-tab-scroller.mdc-
  */
 let TabScroller = class TabScroller extends TabScrollerBase {
 };
-TabScroller.styles = [styles$2];
+TabScroller.styles = [styles$3];
 TabScroller = __decorate([
-    e$6('mwc-tab-scroller')
+    e$7('mwc-tab-scroller')
 ], TabScroller);
 
 /**
@@ -7811,7 +11750,7 @@ TabScroller = __decorate([
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var strings$1 = {
+var strings$2 = {
     ARROW_LEFT_KEY: 'ArrowLeft',
     ARROW_RIGHT_KEY: 'ArrowRight',
     END_KEY: 'End',
@@ -7822,7 +11761,7 @@ var strings$1 = {
     TAB_SCROLLER_SELECTOR: '.mdc-tab-scroller',
     TAB_SELECTOR: '.mdc-tab',
 };
-var numbers$1 = {
+var numbers$2 = {
     ARROW_LEFT_KEYCODE: 37,
     ARROW_RIGHT_KEYCODE: 39,
     END_KEYCODE: 35,
@@ -7856,20 +11795,20 @@ var numbers$1 = {
  */
 var ACCEPTABLE_KEYS = new Set();
 // IE11 has no support for new Set with iterable so we need to initialize this by hand
-ACCEPTABLE_KEYS.add(strings$1.ARROW_LEFT_KEY);
-ACCEPTABLE_KEYS.add(strings$1.ARROW_RIGHT_KEY);
-ACCEPTABLE_KEYS.add(strings$1.END_KEY);
-ACCEPTABLE_KEYS.add(strings$1.HOME_KEY);
-ACCEPTABLE_KEYS.add(strings$1.ENTER_KEY);
-ACCEPTABLE_KEYS.add(strings$1.SPACE_KEY);
+ACCEPTABLE_KEYS.add(strings$2.ARROW_LEFT_KEY);
+ACCEPTABLE_KEYS.add(strings$2.ARROW_RIGHT_KEY);
+ACCEPTABLE_KEYS.add(strings$2.END_KEY);
+ACCEPTABLE_KEYS.add(strings$2.HOME_KEY);
+ACCEPTABLE_KEYS.add(strings$2.ENTER_KEY);
+ACCEPTABLE_KEYS.add(strings$2.SPACE_KEY);
 var KEYCODE_MAP = new Map();
 // IE11 has no support for new Map with iterable so we need to initialize this by hand
-KEYCODE_MAP.set(numbers$1.ARROW_LEFT_KEYCODE, strings$1.ARROW_LEFT_KEY);
-KEYCODE_MAP.set(numbers$1.ARROW_RIGHT_KEYCODE, strings$1.ARROW_RIGHT_KEY);
-KEYCODE_MAP.set(numbers$1.END_KEYCODE, strings$1.END_KEY);
-KEYCODE_MAP.set(numbers$1.HOME_KEYCODE, strings$1.HOME_KEY);
-KEYCODE_MAP.set(numbers$1.ENTER_KEYCODE, strings$1.ENTER_KEY);
-KEYCODE_MAP.set(numbers$1.SPACE_KEYCODE, strings$1.SPACE_KEY);
+KEYCODE_MAP.set(numbers$2.ARROW_LEFT_KEYCODE, strings$2.ARROW_LEFT_KEY);
+KEYCODE_MAP.set(numbers$2.ARROW_RIGHT_KEYCODE, strings$2.ARROW_RIGHT_KEY);
+KEYCODE_MAP.set(numbers$2.END_KEYCODE, strings$2.END_KEY);
+KEYCODE_MAP.set(numbers$2.HOME_KEYCODE, strings$2.HOME_KEY);
+KEYCODE_MAP.set(numbers$2.ENTER_KEYCODE, strings$2.ENTER_KEY);
+KEYCODE_MAP.set(numbers$2.SPACE_KEYCODE, strings$2.SPACE_KEY);
 var MDCTabBarFoundation = /** @class */ (function (_super) {
     __extends(MDCTabBarFoundation, _super);
     function MDCTabBarFoundation(adapter) {
@@ -7879,14 +11818,14 @@ var MDCTabBarFoundation = /** @class */ (function (_super) {
     }
     Object.defineProperty(MDCTabBarFoundation, "strings", {
         get: function () {
-            return strings$1;
+            return strings$2;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDCTabBarFoundation, "numbers", {
         get: function () {
-            return numbers$1;
+            return numbers$2;
         },
         enumerable: false,
         configurable: true
@@ -8015,9 +11954,9 @@ var MDCTabBarFoundation = /** @class */ (function (_super) {
     MDCTabBarFoundation.prototype.determineTargetFromKey = function (origin, key) {
         var isRTL = this.isRTL();
         var maxIndex = this.adapter.getTabListLength() - 1;
-        var shouldGoToEnd = key === strings$1.END_KEY;
-        var shouldDecrement = key === strings$1.ARROW_LEFT_KEY && !isRTL || key === strings$1.ARROW_RIGHT_KEY && isRTL;
-        var shouldIncrement = key === strings$1.ARROW_RIGHT_KEY && !isRTL || key === strings$1.ARROW_LEFT_KEY && isRTL;
+        var shouldGoToEnd = key === strings$2.END_KEY;
+        var shouldDecrement = key === strings$2.ARROW_LEFT_KEY && !isRTL || key === strings$2.ARROW_RIGHT_KEY && isRTL;
+        var shouldIncrement = key === strings$2.ARROW_RIGHT_KEY && !isRTL || key === strings$2.ARROW_LEFT_KEY && isRTL;
         var index = origin;
         if (shouldGoToEnd) {
             index = maxIndex;
@@ -8050,8 +11989,8 @@ var MDCTabBarFoundation = /** @class */ (function (_super) {
         var nextTabDimensions = this.adapter.getTabDimensionsAtIndex(nextIndex);
         var relativeContentLeft = nextTabDimensions.contentLeft - scrollPosition - barWidth;
         var relativeContentRight = nextTabDimensions.contentRight - scrollPosition;
-        var leftIncrement = relativeContentRight - numbers$1.EXTRA_SCROLL_AMOUNT;
-        var rightIncrement = relativeContentLeft + numbers$1.EXTRA_SCROLL_AMOUNT;
+        var leftIncrement = relativeContentRight - numbers$2.EXTRA_SCROLL_AMOUNT;
+        var rightIncrement = relativeContentLeft + numbers$2.EXTRA_SCROLL_AMOUNT;
         if (nextIndex < index) {
             return Math.min(leftIncrement, 0);
         }
@@ -8069,8 +12008,8 @@ var MDCTabBarFoundation = /** @class */ (function (_super) {
         var nextTabDimensions = this.adapter.getTabDimensionsAtIndex(nextIndex);
         var relativeContentLeft = scrollContentWidth - nextTabDimensions.contentLeft - scrollPosition;
         var relativeContentRight = scrollContentWidth - nextTabDimensions.contentRight - scrollPosition - barWidth;
-        var leftIncrement = relativeContentRight + numbers$1.EXTRA_SCROLL_AMOUNT;
-        var rightIncrement = relativeContentLeft - numbers$1.EXTRA_SCROLL_AMOUNT;
+        var leftIncrement = relativeContentRight + numbers$2.EXTRA_SCROLL_AMOUNT;
+        var rightIncrement = relativeContentLeft - numbers$2.EXTRA_SCROLL_AMOUNT;
         if (nextIndex > index) {
             return Math.max(leftIncrement, 0);
         }
@@ -8154,7 +12093,7 @@ var MDCTabBarFoundation = /** @class */ (function (_super) {
         return KEYCODE_MAP.get(evt.keyCode);
     };
     MDCTabBarFoundation.prototype.isActivationKey = function (key) {
-        return key === strings$1.SPACE_KEY || key === strings$1.ENTER_KEY;
+        return key === strings$2.SPACE_KEY || key === strings$2.ENTER_KEY;
     };
     /**
      * Returns whether a given index is inclusively between the ends
@@ -8349,7 +12288,7 @@ __decorate([
             this.mdcFoundation.activateTab(this.activeIndex);
         }
     }),
-    e$5({ type: Number })
+    e$6({ type: Number })
 ], TabBarBase.prototype, "activeIndex", void 0);
 
 /**
@@ -8357,7 +12296,7 @@ __decorate([
  * Copyright 2021 Google LLC
  * SPDX-LIcense-Identifier: Apache-2.0
  */
-const styles$1 = i$5 `.mdc-tab-bar{width:100%}.mdc-tab{height:48px}.mdc-tab--stacked{height:72px}:host{display:block}.mdc-tab-bar{flex:1}mwc-tab{--mdc-tab-height: 48px;--mdc-tab-stacked-height: 72px}`;
+const styles$2 = i$5 `.mdc-tab-bar{width:100%}.mdc-tab{height:48px}.mdc-tab--stacked{height:72px}:host{display:block}.mdc-tab-bar{flex:1}mwc-tab{--mdc-tab-height: 48px;--mdc-tab-stacked-height: 72px}`;
 
 /**
  * @license
@@ -8366,10 +12305,1303 @@ const styles$1 = i$5 `.mdc-tab-bar{width:100%}.mdc-tab{height:48px}.mdc-tab--sta
  */
 let TabBar = class TabBar extends TabBarBase {
 };
-TabBar.styles = [styles$1];
+TabBar.styles = [styles$2];
 TabBar = __decorate([
-    e$6('mwc-tab-bar')
+    e$7('mwc-tab-bar')
 ], TabBar);
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var strings$1 = {
+    ARIA_CONTROLS: 'aria-controls',
+    ARIA_DESCRIBEDBY: 'aria-describedby',
+    INPUT_SELECTOR: '.mdc-text-field__input',
+    LABEL_SELECTOR: '.mdc-floating-label',
+    LEADING_ICON_SELECTOR: '.mdc-text-field__icon--leading',
+    LINE_RIPPLE_SELECTOR: '.mdc-line-ripple',
+    OUTLINE_SELECTOR: '.mdc-notched-outline',
+    PREFIX_SELECTOR: '.mdc-text-field__affix--prefix',
+    SUFFIX_SELECTOR: '.mdc-text-field__affix--suffix',
+    TRAILING_ICON_SELECTOR: '.mdc-text-field__icon--trailing'
+};
+var cssClasses$1 = {
+    DISABLED: 'mdc-text-field--disabled',
+    FOCUSED: 'mdc-text-field--focused',
+    HELPER_LINE: 'mdc-text-field-helper-line',
+    INVALID: 'mdc-text-field--invalid',
+    LABEL_FLOATING: 'mdc-text-field--label-floating',
+    NO_LABEL: 'mdc-text-field--no-label',
+    OUTLINED: 'mdc-text-field--outlined',
+    ROOT: 'mdc-text-field',
+    TEXTAREA: 'mdc-text-field--textarea',
+    WITH_LEADING_ICON: 'mdc-text-field--with-leading-icon',
+    WITH_TRAILING_ICON: 'mdc-text-field--with-trailing-icon',
+    WITH_INTERNAL_COUNTER: 'mdc-text-field--with-internal-counter',
+};
+var numbers$1 = {
+    LABEL_SCALE: 0.75,
+};
+/**
+ * Whitelist based off of
+ * https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
+ * under the "Validation-related attributes" section.
+ */
+var VALIDATION_ATTR_WHITELIST = [
+    'pattern',
+    'min',
+    'max',
+    'required',
+    'step',
+    'minlength',
+    'maxlength',
+];
+/**
+ * Label should always float for these types as they show some UI even if value
+ * is empty.
+ */
+var ALWAYS_FLOAT_TYPES = [
+    'color',
+    'date',
+    'datetime-local',
+    'month',
+    'range',
+    'time',
+    'week',
+];
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var POINTERDOWN_EVENTS = ['mousedown', 'touchstart'];
+var INTERACTION_EVENTS = ['click', 'keydown'];
+var MDCTextFieldFoundation = /** @class */ (function (_super) {
+    __extends(MDCTextFieldFoundation, _super);
+    /**
+     * @param adapter
+     * @param foundationMap Map from subcomponent names to their subfoundations.
+     */
+    function MDCTextFieldFoundation(adapter, foundationMap) {
+        if (foundationMap === void 0) { foundationMap = {}; }
+        var _this = _super.call(this, __assign(__assign({}, MDCTextFieldFoundation.defaultAdapter), adapter)) || this;
+        _this.isFocused = false;
+        _this.receivedUserInput = false;
+        _this.valid = true;
+        _this.useNativeValidation = true;
+        _this.validateOnValueChange = true;
+        _this.helperText = foundationMap.helperText;
+        _this.characterCounter = foundationMap.characterCounter;
+        _this.leadingIcon = foundationMap.leadingIcon;
+        _this.trailingIcon = foundationMap.trailingIcon;
+        _this.inputFocusHandler = function () {
+            _this.activateFocus();
+        };
+        _this.inputBlurHandler = function () {
+            _this.deactivateFocus();
+        };
+        _this.inputInputHandler = function () {
+            _this.handleInput();
+        };
+        _this.setPointerXOffset = function (evt) {
+            _this.setTransformOrigin(evt);
+        };
+        _this.textFieldInteractionHandler = function () {
+            _this.handleTextFieldInteraction();
+        };
+        _this.validationAttributeChangeHandler = function (attributesList) {
+            _this.handleValidationAttributeChange(attributesList);
+        };
+        return _this;
+    }
+    Object.defineProperty(MDCTextFieldFoundation, "cssClasses", {
+        get: function () {
+            return cssClasses$1;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation, "strings", {
+        get: function () {
+            return strings$1;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation, "numbers", {
+        get: function () {
+            return numbers$1;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation.prototype, "shouldAlwaysFloat", {
+        get: function () {
+            var type = this.getNativeInput().type;
+            return ALWAYS_FLOAT_TYPES.indexOf(type) >= 0;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation.prototype, "shouldFloat", {
+        get: function () {
+            return this.shouldAlwaysFloat || this.isFocused || !!this.getValue() ||
+                this.isBadInput();
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation.prototype, "shouldShake", {
+        get: function () {
+            return !this.isFocused && !this.isValid() && !!this.getValue();
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCTextFieldAdapter} for typing information on parameters and
+         * return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                hasClass: function () { return true; },
+                setInputAttr: function () { return undefined; },
+                removeInputAttr: function () { return undefined; },
+                registerTextFieldInteractionHandler: function () { return undefined; },
+                deregisterTextFieldInteractionHandler: function () { return undefined; },
+                registerInputInteractionHandler: function () { return undefined; },
+                deregisterInputInteractionHandler: function () { return undefined; },
+                registerValidationAttributeChangeHandler: function () {
+                    return new MutationObserver(function () { return undefined; });
+                },
+                deregisterValidationAttributeChangeHandler: function () { return undefined; },
+                getNativeInput: function () { return null; },
+                isFocused: function () { return false; },
+                activateLineRipple: function () { return undefined; },
+                deactivateLineRipple: function () { return undefined; },
+                setLineRippleTransformOrigin: function () { return undefined; },
+                shakeLabel: function () { return undefined; },
+                floatLabel: function () { return undefined; },
+                setLabelRequired: function () { return undefined; },
+                hasLabel: function () { return false; },
+                getLabelWidth: function () { return 0; },
+                hasOutline: function () { return false; },
+                notchOutline: function () { return undefined; },
+                closeOutline: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCTextFieldFoundation.prototype.init = function () {
+        var e_1, _a, e_2, _b;
+        if (this.adapter.hasLabel() && this.getNativeInput().required) {
+            this.adapter.setLabelRequired(true);
+        }
+        if (this.adapter.isFocused()) {
+            this.inputFocusHandler();
+        }
+        else if (this.adapter.hasLabel() && this.shouldFloat) {
+            this.notchOutline(true);
+            this.adapter.floatLabel(true);
+            this.styleFloating(true);
+        }
+        this.adapter.registerInputInteractionHandler('focus', this.inputFocusHandler);
+        this.adapter.registerInputInteractionHandler('blur', this.inputBlurHandler);
+        this.adapter.registerInputInteractionHandler('input', this.inputInputHandler);
+        try {
+            for (var POINTERDOWN_EVENTS_1 = __values(POINTERDOWN_EVENTS), POINTERDOWN_EVENTS_1_1 = POINTERDOWN_EVENTS_1.next(); !POINTERDOWN_EVENTS_1_1.done; POINTERDOWN_EVENTS_1_1 = POINTERDOWN_EVENTS_1.next()) {
+                var evtType = POINTERDOWN_EVENTS_1_1.value;
+                this.adapter.registerInputInteractionHandler(evtType, this.setPointerXOffset);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (POINTERDOWN_EVENTS_1_1 && !POINTERDOWN_EVENTS_1_1.done && (_a = POINTERDOWN_EVENTS_1.return)) _a.call(POINTERDOWN_EVENTS_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        try {
+            for (var INTERACTION_EVENTS_1 = __values(INTERACTION_EVENTS), INTERACTION_EVENTS_1_1 = INTERACTION_EVENTS_1.next(); !INTERACTION_EVENTS_1_1.done; INTERACTION_EVENTS_1_1 = INTERACTION_EVENTS_1.next()) {
+                var evtType = INTERACTION_EVENTS_1_1.value;
+                this.adapter.registerTextFieldInteractionHandler(evtType, this.textFieldInteractionHandler);
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (INTERACTION_EVENTS_1_1 && !INTERACTION_EVENTS_1_1.done && (_b = INTERACTION_EVENTS_1.return)) _b.call(INTERACTION_EVENTS_1);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        this.validationObserver =
+            this.adapter.registerValidationAttributeChangeHandler(this.validationAttributeChangeHandler);
+        this.setcharacterCounter(this.getValue().length);
+    };
+    MDCTextFieldFoundation.prototype.destroy = function () {
+        var e_3, _a, e_4, _b;
+        this.adapter.deregisterInputInteractionHandler('focus', this.inputFocusHandler);
+        this.adapter.deregisterInputInteractionHandler('blur', this.inputBlurHandler);
+        this.adapter.deregisterInputInteractionHandler('input', this.inputInputHandler);
+        try {
+            for (var POINTERDOWN_EVENTS_2 = __values(POINTERDOWN_EVENTS), POINTERDOWN_EVENTS_2_1 = POINTERDOWN_EVENTS_2.next(); !POINTERDOWN_EVENTS_2_1.done; POINTERDOWN_EVENTS_2_1 = POINTERDOWN_EVENTS_2.next()) {
+                var evtType = POINTERDOWN_EVENTS_2_1.value;
+                this.adapter.deregisterInputInteractionHandler(evtType, this.setPointerXOffset);
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (POINTERDOWN_EVENTS_2_1 && !POINTERDOWN_EVENTS_2_1.done && (_a = POINTERDOWN_EVENTS_2.return)) _a.call(POINTERDOWN_EVENTS_2);
+            }
+            finally { if (e_3) throw e_3.error; }
+        }
+        try {
+            for (var INTERACTION_EVENTS_2 = __values(INTERACTION_EVENTS), INTERACTION_EVENTS_2_1 = INTERACTION_EVENTS_2.next(); !INTERACTION_EVENTS_2_1.done; INTERACTION_EVENTS_2_1 = INTERACTION_EVENTS_2.next()) {
+                var evtType = INTERACTION_EVENTS_2_1.value;
+                this.adapter.deregisterTextFieldInteractionHandler(evtType, this.textFieldInteractionHandler);
+            }
+        }
+        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+        finally {
+            try {
+                if (INTERACTION_EVENTS_2_1 && !INTERACTION_EVENTS_2_1.done && (_b = INTERACTION_EVENTS_2.return)) _b.call(INTERACTION_EVENTS_2);
+            }
+            finally { if (e_4) throw e_4.error; }
+        }
+        this.adapter.deregisterValidationAttributeChangeHandler(this.validationObserver);
+    };
+    /**
+     * Handles user interactions with the Text Field.
+     */
+    MDCTextFieldFoundation.prototype.handleTextFieldInteraction = function () {
+        var nativeInput = this.adapter.getNativeInput();
+        if (nativeInput && nativeInput.disabled) {
+            return;
+        }
+        this.receivedUserInput = true;
+    };
+    /**
+     * Handles validation attribute changes
+     */
+    MDCTextFieldFoundation.prototype.handleValidationAttributeChange = function (attributesList) {
+        var _this = this;
+        attributesList.some(function (attributeName) {
+            if (VALIDATION_ATTR_WHITELIST.indexOf(attributeName) > -1) {
+                _this.styleValidity(true);
+                _this.adapter.setLabelRequired(_this.getNativeInput().required);
+                return true;
+            }
+            return false;
+        });
+        if (attributesList.indexOf('maxlength') > -1) {
+            this.setcharacterCounter(this.getValue().length);
+        }
+    };
+    /**
+     * Opens/closes the notched outline.
+     */
+    MDCTextFieldFoundation.prototype.notchOutline = function (openNotch) {
+        if (!this.adapter.hasOutline() || !this.adapter.hasLabel()) {
+            return;
+        }
+        if (openNotch) {
+            var labelWidth = this.adapter.getLabelWidth() * numbers$1.LABEL_SCALE;
+            this.adapter.notchOutline(labelWidth);
+        }
+        else {
+            this.adapter.closeOutline();
+        }
+    };
+    /**
+     * Activates the text field focus state.
+     */
+    MDCTextFieldFoundation.prototype.activateFocus = function () {
+        this.isFocused = true;
+        this.styleFocused(this.isFocused);
+        this.adapter.activateLineRipple();
+        if (this.adapter.hasLabel()) {
+            this.notchOutline(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
+            this.styleFloating(this.shouldFloat);
+            this.adapter.shakeLabel(this.shouldShake);
+        }
+        if (this.helperText &&
+            (this.helperText.isPersistent() || !this.helperText.isValidation() ||
+                !this.valid)) {
+            this.helperText.showToScreenReader();
+        }
+    };
+    /**
+     * Sets the line ripple's transform origin, so that the line ripple activate
+     * animation will animate out from the user's click location.
+     */
+    MDCTextFieldFoundation.prototype.setTransformOrigin = function (evt) {
+        if (this.isDisabled() || this.adapter.hasOutline()) {
+            return;
+        }
+        var touches = evt.touches;
+        var targetEvent = touches ? touches[0] : evt;
+        var targetClientRect = targetEvent.target.getBoundingClientRect();
+        var normalizedX = targetEvent.clientX - targetClientRect.left;
+        this.adapter.setLineRippleTransformOrigin(normalizedX);
+    };
+    /**
+     * Handles input change of text input and text area.
+     */
+    MDCTextFieldFoundation.prototype.handleInput = function () {
+        this.autoCompleteFocus();
+        this.setcharacterCounter(this.getValue().length);
+    };
+    /**
+     * Activates the Text Field's focus state in cases when the input value
+     * changes without user input (e.g. programmatically).
+     */
+    MDCTextFieldFoundation.prototype.autoCompleteFocus = function () {
+        if (!this.receivedUserInput) {
+            this.activateFocus();
+        }
+    };
+    /**
+     * Deactivates the Text Field's focus state.
+     */
+    MDCTextFieldFoundation.prototype.deactivateFocus = function () {
+        this.isFocused = false;
+        this.adapter.deactivateLineRipple();
+        var isValid = this.isValid();
+        this.styleValidity(isValid);
+        this.styleFocused(this.isFocused);
+        if (this.adapter.hasLabel()) {
+            this.notchOutline(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
+            this.styleFloating(this.shouldFloat);
+            this.adapter.shakeLabel(this.shouldShake);
+        }
+        if (!this.shouldFloat) {
+            this.receivedUserInput = false;
+        }
+    };
+    MDCTextFieldFoundation.prototype.getValue = function () {
+        return this.getNativeInput().value;
+    };
+    /**
+     * @param value The value to set on the input Element.
+     */
+    MDCTextFieldFoundation.prototype.setValue = function (value) {
+        // Prevent Safari from moving the caret to the end of the input when the
+        // value has not changed.
+        if (this.getValue() !== value) {
+            this.getNativeInput().value = value;
+        }
+        this.setcharacterCounter(value.length);
+        if (this.validateOnValueChange) {
+            var isValid = this.isValid();
+            this.styleValidity(isValid);
+        }
+        if (this.adapter.hasLabel()) {
+            this.notchOutline(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
+            this.styleFloating(this.shouldFloat);
+            if (this.validateOnValueChange) {
+                this.adapter.shakeLabel(this.shouldShake);
+            }
+        }
+    };
+    /**
+     * @return The custom validity state, if set; otherwise, the result of a
+     *     native validity check.
+     */
+    MDCTextFieldFoundation.prototype.isValid = function () {
+        return this.useNativeValidation ? this.isNativeInputValid() : this.valid;
+    };
+    /**
+     * @param isValid Sets the custom validity state of the Text Field.
+     */
+    MDCTextFieldFoundation.prototype.setValid = function (isValid) {
+        this.valid = isValid;
+        this.styleValidity(isValid);
+        var shouldShake = !isValid && !this.isFocused && !!this.getValue();
+        if (this.adapter.hasLabel()) {
+            this.adapter.shakeLabel(shouldShake);
+        }
+    };
+    /**
+     * @param shouldValidate Whether or not validity should be updated on
+     *     value change.
+     */
+    MDCTextFieldFoundation.prototype.setValidateOnValueChange = function (shouldValidate) {
+        this.validateOnValueChange = shouldValidate;
+    };
+    /**
+     * @return Whether or not validity should be updated on value change. `true`
+     *     by default.
+     */
+    MDCTextFieldFoundation.prototype.getValidateOnValueChange = function () {
+        return this.validateOnValueChange;
+    };
+    /**
+     * Enables or disables the use of native validation. Use this for custom
+     * validation.
+     * @param useNativeValidation Set this to false to ignore native input
+     *     validation.
+     */
+    MDCTextFieldFoundation.prototype.setUseNativeValidation = function (useNativeValidation) {
+        this.useNativeValidation = useNativeValidation;
+    };
+    MDCTextFieldFoundation.prototype.isDisabled = function () {
+        return this.getNativeInput().disabled;
+    };
+    /**
+     * @param disabled Sets the text-field disabled or enabled.
+     */
+    MDCTextFieldFoundation.prototype.setDisabled = function (disabled) {
+        this.getNativeInput().disabled = disabled;
+        this.styleDisabled(disabled);
+    };
+    /**
+     * @param content Sets the content of the helper text.
+     */
+    MDCTextFieldFoundation.prototype.setHelperTextContent = function (content) {
+        if (this.helperText) {
+            this.helperText.setContent(content);
+        }
+    };
+    /**
+     * Sets the aria label of the leading icon.
+     */
+    MDCTextFieldFoundation.prototype.setLeadingIconAriaLabel = function (label) {
+        if (this.leadingIcon) {
+            this.leadingIcon.setAriaLabel(label);
+        }
+    };
+    /**
+     * Sets the text content of the leading icon.
+     */
+    MDCTextFieldFoundation.prototype.setLeadingIconContent = function (content) {
+        if (this.leadingIcon) {
+            this.leadingIcon.setContent(content);
+        }
+    };
+    /**
+     * Sets the aria label of the trailing icon.
+     */
+    MDCTextFieldFoundation.prototype.setTrailingIconAriaLabel = function (label) {
+        if (this.trailingIcon) {
+            this.trailingIcon.setAriaLabel(label);
+        }
+    };
+    /**
+     * Sets the text content of the trailing icon.
+     */
+    MDCTextFieldFoundation.prototype.setTrailingIconContent = function (content) {
+        if (this.trailingIcon) {
+            this.trailingIcon.setContent(content);
+        }
+    };
+    /**
+     * Sets character counter values that shows characters used and the total
+     * character limit.
+     */
+    MDCTextFieldFoundation.prototype.setcharacterCounter = function (currentLength) {
+        if (!this.characterCounter) {
+            return;
+        }
+        var maxLength = this.getNativeInput().maxLength;
+        if (maxLength === -1) {
+            throw new Error('MDCTextFieldFoundation: Expected maxlength html property on text input or textarea.');
+        }
+        this.characterCounter.setCounterValue(currentLength, maxLength);
+    };
+    /**
+     * @return True if the Text Field input fails in converting the user-supplied
+     *     value.
+     */
+    MDCTextFieldFoundation.prototype.isBadInput = function () {
+        // The badInput property is not supported in IE 11 💩.
+        return this.getNativeInput().validity.badInput || false;
+    };
+    /**
+     * @return The result of native validity checking (ValidityState.valid).
+     */
+    MDCTextFieldFoundation.prototype.isNativeInputValid = function () {
+        return this.getNativeInput().validity.valid;
+    };
+    /**
+     * Styles the component based on the validity state.
+     */
+    MDCTextFieldFoundation.prototype.styleValidity = function (isValid) {
+        var INVALID = MDCTextFieldFoundation.cssClasses.INVALID;
+        if (isValid) {
+            this.adapter.removeClass(INVALID);
+        }
+        else {
+            this.adapter.addClass(INVALID);
+        }
+        if (this.helperText) {
+            this.helperText.setValidity(isValid);
+            // We dynamically set or unset aria-describedby for validation helper text
+            // only, based on whether the field is valid
+            var helperTextValidation = this.helperText.isValidation();
+            if (!helperTextValidation) {
+                return;
+            }
+            var helperTextVisible = this.helperText.isVisible();
+            var helperTextId = this.helperText.getId();
+            if (helperTextVisible && helperTextId) {
+                this.adapter.setInputAttr(strings$1.ARIA_DESCRIBEDBY, helperTextId);
+            }
+            else {
+                this.adapter.removeInputAttr(strings$1.ARIA_DESCRIBEDBY);
+            }
+        }
+    };
+    /**
+     * Styles the component based on the focused state.
+     */
+    MDCTextFieldFoundation.prototype.styleFocused = function (isFocused) {
+        var FOCUSED = MDCTextFieldFoundation.cssClasses.FOCUSED;
+        if (isFocused) {
+            this.adapter.addClass(FOCUSED);
+        }
+        else {
+            this.adapter.removeClass(FOCUSED);
+        }
+    };
+    /**
+     * Styles the component based on the disabled state.
+     */
+    MDCTextFieldFoundation.prototype.styleDisabled = function (isDisabled) {
+        var _a = MDCTextFieldFoundation.cssClasses, DISABLED = _a.DISABLED, INVALID = _a.INVALID;
+        if (isDisabled) {
+            this.adapter.addClass(DISABLED);
+            this.adapter.removeClass(INVALID);
+        }
+        else {
+            this.adapter.removeClass(DISABLED);
+        }
+        if (this.leadingIcon) {
+            this.leadingIcon.setDisabled(isDisabled);
+        }
+        if (this.trailingIcon) {
+            this.trailingIcon.setDisabled(isDisabled);
+        }
+    };
+    /**
+     * Styles the component based on the label floating state.
+     */
+    MDCTextFieldFoundation.prototype.styleFloating = function (isFloating) {
+        var LABEL_FLOATING = MDCTextFieldFoundation.cssClasses.LABEL_FLOATING;
+        if (isFloating) {
+            this.adapter.addClass(LABEL_FLOATING);
+        }
+        else {
+            this.adapter.removeClass(LABEL_FLOATING);
+        }
+    };
+    /**
+     * @return The native text input element from the host environment, or an
+     *     object with the same shape for unit tests.
+     */
+    MDCTextFieldFoundation.prototype.getNativeInput = function () {
+        // this.adapter may be undefined in foundation unit tests. This happens when
+        // testdouble is creating a mock object and invokes the
+        // shouldShake/shouldFloat getters (which in turn call getValue(), which
+        // calls this method) before init() has been called from the MDCTextField
+        // constructor. To work around that issue, we return a dummy object.
+        var nativeInput = this.adapter ? this.adapter.getNativeInput() : null;
+        return nativeInput || {
+            disabled: false,
+            maxLength: -1,
+            required: false,
+            type: 'input',
+            validity: {
+                badInput: false,
+                valid: true,
+            },
+            value: '',
+        };
+    };
+    return MDCTextFieldFoundation;
+}(MDCFoundation));
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+var MDCTextFieldFoundation$1 = MDCTextFieldFoundation;
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */const e=o=>void 0===o.strings,f={},s=(o,l=f)=>o._$AH=l;
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */const l=e$1(class extends i$1{constructor(r){if(super(r),r.type!==t.PROPERTY&&r.type!==t.ATTRIBUTE&&r.type!==t.BOOLEAN_ATTRIBUTE)throw Error("The `live` directive is not allowed on child or event bindings");if(!e(r))throw Error("`live` bindings can only contain a single expression")}render(r){return r}update(i,[t$1]){if(t$1===x||t$1===b)return t$1;const o=i.element,l=i.name;if(i.type===t.PROPERTY){if(t$1===o[l])return x}else if(i.type===t.BOOLEAN_ATTRIBUTE){if(!!t$1===o.hasAttribute(l))return x}else if(i.type===t.ATTRIBUTE&&o.getAttribute(l)===t$1+"")return x;return s(i),t$1}});
+
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
+const createValidityObj = (customValidity = {}) => {
+    /*
+     * We need to make ValidityState an object because it is readonly and
+     * we cannot use the spread operator. Also, we don't export
+     * `CustomValidityState` because it is a leaky implementation and the user
+     * already has access to `ValidityState` in lib.dom.ts. Also an interface
+     * {a: Type} can be casted to {readonly a: Type} so passing any object
+     * should be fine.
+     */
+    const objectifiedCustomValidity = {};
+    // eslint-disable-next-line guard-for-in
+    for (const propName in customValidity) {
+        /*
+         * Casting is needed because ValidityState's props are all readonly and
+         * thus cannot be set on `onjectifiedCustomValidity`. In the end, the
+         * interface is the same as ValidityState (but not readonly), but the
+         * function signature casts the output to ValidityState (thus readonly).
+         */
+        objectifiedCustomValidity[propName] =
+            customValidity[propName];
+    }
+    return Object.assign({ badInput: false, customError: false, patternMismatch: false, rangeOverflow: false, rangeUnderflow: false, stepMismatch: false, tooLong: false, tooShort: false, typeMismatch: false, valid: true, valueMissing: false }, objectifiedCustomValidity);
+};
+/** @soyCompatible */
+class TextFieldBase extends FormElement {
+    constructor() {
+        super(...arguments);
+        this.mdcFoundationClass = MDCTextFieldFoundation$1;
+        this.value = '';
+        this.type = 'text';
+        this.placeholder = '';
+        this.label = '';
+        this.icon = '';
+        this.iconTrailing = '';
+        this.disabled = false;
+        this.required = false;
+        this.minLength = -1;
+        this.maxLength = -1;
+        this.outlined = false;
+        this.helper = '';
+        this.validateOnInitialRender = false;
+        this.validationMessage = '';
+        this.autoValidate = false;
+        this.pattern = '';
+        this.min = '';
+        this.max = '';
+        /**
+         * step can be a number or the keyword "any".
+         *
+         * Use `String` typing to pass down the value as a string and let the native
+         * input cast internally as needed.
+         */
+        this.step = null;
+        this.size = null;
+        this.helperPersistent = false;
+        this.charCounter = false;
+        this.endAligned = false;
+        this.prefix = '';
+        this.suffix = '';
+        this.name = '';
+        this.readOnly = false;
+        this.autocapitalize = '';
+        this.outlineOpen = false;
+        this.outlineWidth = 0;
+        this.isUiValid = true;
+        this.focused = false;
+        this._validity = createValidityObj();
+        this.validityTransform = null;
+    }
+    get validity() {
+        this._checkValidity(this.value);
+        return this._validity;
+    }
+    get willValidate() {
+        return this.formElement.willValidate;
+    }
+    get selectionStart() {
+        return this.formElement.selectionStart;
+    }
+    get selectionEnd() {
+        return this.formElement.selectionEnd;
+    }
+    focus() {
+        const focusEvt = new CustomEvent('focus');
+        this.formElement.dispatchEvent(focusEvt);
+        this.formElement.focus();
+    }
+    blur() {
+        const blurEvt = new CustomEvent('blur');
+        this.formElement.dispatchEvent(blurEvt);
+        this.formElement.blur();
+    }
+    select() {
+        this.formElement.select();
+    }
+    setSelectionRange(selectionStart, selectionEnd, selectionDirection) {
+        this.formElement.setSelectionRange(selectionStart, selectionEnd, selectionDirection);
+    }
+    update(changedProperties) {
+        if (changedProperties.has('autoValidate') && this.mdcFoundation) {
+            this.mdcFoundation.setValidateOnValueChange(this.autoValidate);
+        }
+        if (changedProperties.has('value') && typeof this.value !== 'string') {
+            this.value = `${this.value}`;
+        }
+        super.update(changedProperties);
+    }
+    setFormData(formData) {
+        if (this.name) {
+            formData.append(this.name, this.value);
+        }
+    }
+    /** @soyTemplate */
+    render() {
+        const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
+        const shouldRenderHelperText = !!this.helper || !!this.validationMessage || shouldRenderCharCounter;
+        /** @classMap */
+        const classes = {
+            'mdc-text-field--disabled': this.disabled,
+            'mdc-text-field--no-label': !this.label,
+            'mdc-text-field--filled': !this.outlined,
+            'mdc-text-field--outlined': this.outlined,
+            'mdc-text-field--with-leading-icon': this.icon,
+            'mdc-text-field--with-trailing-icon': this.iconTrailing,
+            'mdc-text-field--end-aligned': this.endAligned,
+        };
+        return y `
+      <label class="mdc-text-field ${o(classes)}">
+        ${this.renderRipple()}
+        ${this.outlined ? this.renderOutline() : this.renderLabel()}
+        ${this.renderLeadingIcon()}
+        ${this.renderPrefix()}
+        ${this.renderInput(shouldRenderHelperText)}
+        ${this.renderSuffix()}
+        ${this.renderTrailingIcon()}
+        ${this.renderLineRipple()}
+      </label>
+      ${this.renderHelperText(shouldRenderHelperText, shouldRenderCharCounter)}
+    `;
+    }
+    updated(changedProperties) {
+        if (changedProperties.has('value') &&
+            changedProperties.get('value') !== undefined) {
+            this.mdcFoundation.setValue(this.value);
+            if (this.autoValidate) {
+                this.reportValidity();
+            }
+        }
+    }
+    /** @soyTemplate */
+    renderRipple() {
+        return this.outlined ? '' : y `
+      <span class="mdc-text-field__ripple"></span>
+    `;
+    }
+    /** @soyTemplate */
+    renderOutline() {
+        return !this.outlined ? '' : y `
+      <mwc-notched-outline
+          .width=${this.outlineWidth}
+          .open=${this.outlineOpen}
+          class="mdc-notched-outline">
+        ${this.renderLabel()}
+      </mwc-notched-outline>`;
+    }
+    /** @soyTemplate */
+    renderLabel() {
+        return !this.label ?
+            '' :
+            y `
+      <span
+          .floatingLabelFoundation=${floatingLabel(this.label)}
+          id="label">${this.label}</span>
+    `;
+    }
+    /** @soyTemplate */
+    renderLeadingIcon() {
+        return this.icon ? this.renderIcon(this.icon) : '';
+    }
+    /** @soyTemplate */
+    renderTrailingIcon() {
+        return this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : '';
+    }
+    /** @soyTemplate */
+    renderIcon(icon, isTrailingIcon = false) {
+        /** @classMap */
+        const classes = {
+            'mdc-text-field__icon--leading': !isTrailingIcon,
+            'mdc-text-field__icon--trailing': isTrailingIcon
+        };
+        return y `<i class="material-icons mdc-text-field__icon ${o(classes)}">${icon}</i>`;
+    }
+    /** @soyTemplate */
+    renderPrefix() {
+        return this.prefix ? this.renderAffix(this.prefix) : '';
+    }
+    /** @soyTemplate */
+    renderSuffix() {
+        return this.suffix ? this.renderAffix(this.suffix, true) : '';
+    }
+    /** @soyTemplate */
+    renderAffix(content, isSuffix = false) {
+        /** @classMap */
+        const classes = {
+            'mdc-text-field__affix--prefix': !isSuffix,
+            'mdc-text-field__affix--suffix': isSuffix
+        };
+        return y `<span class="mdc-text-field__affix ${o(classes)}">
+        ${content}</span>`;
+    }
+    /** @soyTemplate */
+    renderInput(shouldRenderHelperText) {
+        const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
+        const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+        const autocapitalizeOrUndef = this.autocapitalize ?
+            this.autocapitalize :
+            undefined;
+        const showValidationMessage = this.validationMessage && !this.isUiValid;
+        const ariaLabelledbyOrUndef = !!this.label ? 'label' : undefined;
+        const ariaControlsOrUndef = shouldRenderHelperText ? 'helper-text' : undefined;
+        const ariaDescribedbyOrUndef = this.focused || this.helperPersistent || showValidationMessage ?
+            'helper-text' :
+            undefined;
+        // TODO: live() directive needs casting for lit-analyzer
+        // https://github.com/runem/lit-analyzer/pull/91/files
+        // TODO: lit-analyzer labels min/max as (number|string) instead of string
+        return y `
+      <input
+          aria-labelledby=${l$1(ariaLabelledbyOrUndef)}
+          aria-controls="${l$1(ariaControlsOrUndef)}"
+          aria-describedby="${l$1(ariaDescribedbyOrUndef)}"
+          class="mdc-text-field__input"
+          type="${this.type}"
+          .value="${l(this.value)}"
+          ?disabled="${this.disabled}"
+          placeholder="${this.placeholder}"
+          ?required="${this.required}"
+          ?readonly="${this.readOnly}"
+          minlength="${l$1(minOrUndef)}"
+          maxlength="${l$1(maxOrUndef)}"
+          pattern="${l$1(this.pattern ? this.pattern : undefined)}"
+          min="${l$1(this.min === '' ? undefined : this.min)}"
+          max="${l$1(this.max === '' ? undefined : this.max)}"
+          step="${l$1(this.step === null ? undefined : this.step)}"
+          size="${l$1(this.size === null ? undefined : this.size)}"
+          name="${l$1(this.name === '' ? undefined : this.name)}"
+          inputmode="${l$1(this.inputMode)}"
+          autocapitalize="${l$1(autocapitalizeOrUndef)}"
+          @input="${this.handleInputChange}"
+          @focus="${this.onInputFocus}"
+          @blur="${this.onInputBlur}">`;
+    }
+    /** @soyTemplate */
+    renderLineRipple() {
+        return this.outlined ?
+            '' :
+            y `
+      <span .lineRippleFoundation=${lineRipple()}></span>
+    `;
+    }
+    /** @soyTemplate */
+    renderHelperText(shouldRenderHelperText, shouldRenderCharCounter) {
+        const showValidationMessage = this.validationMessage && !this.isUiValid;
+        /** @classMap */
+        const classes = {
+            'mdc-text-field-helper-text--persistent': this.helperPersistent,
+            'mdc-text-field-helper-text--validation-msg': showValidationMessage,
+        };
+        const ariaHiddenOrUndef = this.focused || this.helperPersistent || showValidationMessage ?
+            undefined :
+            'true';
+        const helperText = showValidationMessage ? this.validationMessage : this.helper;
+        return !shouldRenderHelperText ? '' : y `
+      <div class="mdc-text-field-helper-line">
+        <div id="helper-text"
+             aria-hidden="${l$1(ariaHiddenOrUndef)}"
+             class="mdc-text-field-helper-text ${o(classes)}"
+             >${helperText}</div>
+        ${this.renderCharCounter(shouldRenderCharCounter)}
+      </div>`;
+    }
+    /** @soyTemplate */
+    renderCharCounter(shouldRenderCharCounter) {
+        const length = Math.min(this.value.length, this.maxLength);
+        return !shouldRenderCharCounter ? '' : y `
+      <span class="mdc-text-field-character-counter"
+            >${length} / ${this.maxLength}</span>`;
+    }
+    onInputFocus() {
+        this.focused = true;
+    }
+    onInputBlur() {
+        this.focused = false;
+        this.reportValidity();
+    }
+    checkValidity() {
+        const isValid = this._checkValidity(this.value);
+        if (!isValid) {
+            const invalidEvent = new Event('invalid', { bubbles: false, cancelable: true });
+            this.dispatchEvent(invalidEvent);
+        }
+        return isValid;
+    }
+    reportValidity() {
+        const isValid = this.checkValidity();
+        this.mdcFoundation.setValid(isValid);
+        this.isUiValid = isValid;
+        return isValid;
+    }
+    _checkValidity(value) {
+        const nativeValidity = this.formElement.validity;
+        let validity = createValidityObj(nativeValidity);
+        if (this.validityTransform) {
+            const customValidity = this.validityTransform(value, validity);
+            validity = Object.assign(Object.assign({}, validity), customValidity);
+            this.mdcFoundation.setUseNativeValidation(false);
+        }
+        else {
+            this.mdcFoundation.setUseNativeValidation(true);
+        }
+        this._validity = validity;
+        return this._validity.valid;
+    }
+    setCustomValidity(message) {
+        this.validationMessage = message;
+        this.formElement.setCustomValidity(message);
+    }
+    handleInputChange() {
+        this.value = this.formElement.value;
+    }
+    createAdapter() {
+        return Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, this.getRootAdapterMethods()), this.getInputAdapterMethods()), this.getLabelAdapterMethods()), this.getLineRippleAdapterMethods()), this.getOutlineAdapterMethods());
+    }
+    getRootAdapterMethods() {
+        return Object.assign({ registerTextFieldInteractionHandler: (evtType, handler) => this.addEventListener(evtType, handler), deregisterTextFieldInteractionHandler: (evtType, handler) => this.removeEventListener(evtType, handler), registerValidationAttributeChangeHandler: (handler) => {
+                const getAttributesList = (mutationsList) => {
+                    return mutationsList.map((mutation) => mutation.attributeName)
+                        .filter((attributeName) => attributeName);
+                };
+                const observer = new MutationObserver((mutationsList) => {
+                    handler(getAttributesList(mutationsList));
+                });
+                const config = { attributes: true };
+                observer.observe(this.formElement, config);
+                return observer;
+            }, deregisterValidationAttributeChangeHandler: (observer) => observer.disconnect() }, addHasRemoveClass(this.mdcRoot));
+    }
+    getInputAdapterMethods() {
+        return {
+            getNativeInput: () => this.formElement,
+            // since HelperTextFoundation is not used, aria-describedby a11y logic
+            // is implemented in render method instead of these adapter methods
+            setInputAttr: () => undefined,
+            removeInputAttr: () => undefined,
+            isFocused: () => this.shadowRoot ?
+                this.shadowRoot.activeElement === this.formElement :
+                false,
+            registerInputInteractionHandler: (evtType, handler) => this.formElement.addEventListener(evtType, handler, { passive: evtType in passiveEvents }),
+            deregisterInputInteractionHandler: (evtType, handler) => this.formElement.removeEventListener(evtType, handler),
+        };
+    }
+    getLabelAdapterMethods() {
+        return {
+            floatLabel: (shouldFloat) => this.labelElement &&
+                this.labelElement.floatingLabelFoundation.float(shouldFloat),
+            getLabelWidth: () => {
+                return this.labelElement ?
+                    this.labelElement.floatingLabelFoundation.getWidth() :
+                    0;
+            },
+            hasLabel: () => Boolean(this.labelElement),
+            shakeLabel: (shouldShake) => this.labelElement &&
+                this.labelElement.floatingLabelFoundation.shake(shouldShake),
+            setLabelRequired: (isRequired) => {
+                if (this.labelElement) {
+                    this.labelElement.floatingLabelFoundation.setRequired(isRequired);
+                }
+            },
+        };
+    }
+    getLineRippleAdapterMethods() {
+        return {
+            activateLineRipple: () => {
+                if (this.lineRippleElement) {
+                    this.lineRippleElement.lineRippleFoundation.activate();
+                }
+            },
+            deactivateLineRipple: () => {
+                if (this.lineRippleElement) {
+                    this.lineRippleElement.lineRippleFoundation.deactivate();
+                }
+            },
+            setLineRippleTransformOrigin: (normalizedX) => {
+                if (this.lineRippleElement) {
+                    this.lineRippleElement.lineRippleFoundation.setRippleCenter(normalizedX);
+                }
+            },
+        };
+    }
+    // tslint:disable:ban-ts-ignore
+    async getUpdateComplete() {
+        var _a;
+        // @ts-ignore
+        const result = await super.getUpdateComplete();
+        await ((_a = this.outlineElement) === null || _a === void 0 ? void 0 : _a.updateComplete);
+        return result;
+    }
+    // tslint:enable:ban-ts-ignore
+    firstUpdated() {
+        var _a;
+        super.firstUpdated();
+        this.mdcFoundation.setValidateOnValueChange(this.autoValidate);
+        if (this.validateOnInitialRender) {
+            this.reportValidity();
+        }
+        // wait for the outline element to render to update the notch width
+        (_a = this.outlineElement) === null || _a === void 0 ? void 0 : _a.updateComplete.then(() => {
+            var _a;
+            // `foundation.notchOutline()` assumes the label isn't floating and
+            // multiplies by a constant, but the label is already is floating at this
+            // stage, therefore directly set the outline width to the label width
+            this.outlineWidth =
+                ((_a = this.labelElement) === null || _a === void 0 ? void 0 : _a.floatingLabelFoundation.getWidth()) || 0;
+        });
+    }
+    getOutlineAdapterMethods() {
+        return {
+            closeOutline: () => this.outlineElement && (this.outlineOpen = false),
+            hasOutline: () => Boolean(this.outlineElement),
+            notchOutline: (labelWidth) => {
+                const outlineElement = this.outlineElement;
+                if (outlineElement && !this.outlineOpen) {
+                    this.outlineWidth = labelWidth;
+                    this.outlineOpen = true;
+                }
+            }
+        };
+    }
+    async layout() {
+        await this.updateComplete;
+        const labelElement = this.labelElement;
+        if (!labelElement) {
+            this.outlineOpen = false;
+            return;
+        }
+        const shouldFloat = !!this.label && !!this.value;
+        labelElement.floatingLabelFoundation.float(shouldFloat);
+        if (!this.outlined) {
+            return;
+        }
+        this.outlineOpen = shouldFloat;
+        await this.updateComplete;
+        /* When the textfield automatically notches due to a value and label
+         * being defined, the textfield may be set to `display: none` by the user.
+         * this means that the notch is of size 0px. We provide this function so
+         * that the user may manually resize the notch to the floated label's
+         * width.
+         */
+        const labelWidth = labelElement.floatingLabelFoundation.getWidth();
+        if (this.outlineOpen) {
+            this.outlineWidth = labelWidth;
+            await this.updateComplete;
+        }
+    }
+}
+__decorate([
+    i$2('.mdc-text-field')
+], TextFieldBase.prototype, "mdcRoot", void 0);
+__decorate([
+    i$2('input')
+], TextFieldBase.prototype, "formElement", void 0);
+__decorate([
+    i$2('.mdc-floating-label')
+], TextFieldBase.prototype, "labelElement", void 0);
+__decorate([
+    i$2('.mdc-line-ripple')
+], TextFieldBase.prototype, "lineRippleElement", void 0);
+__decorate([
+    i$2('mwc-notched-outline')
+], TextFieldBase.prototype, "outlineElement", void 0);
+__decorate([
+    i$2('.mdc-notched-outline__notch')
+], TextFieldBase.prototype, "notchElement", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "value", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "type", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "placeholder", void 0);
+__decorate([
+    e$6({ type: String }),
+    observer(function (_newVal, oldVal) {
+        if (oldVal !== undefined && this.label !== oldVal) {
+            this.layout();
+        }
+    })
+], TextFieldBase.prototype, "label", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "icon", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "iconTrailing", void 0);
+__decorate([
+    e$6({ type: Boolean, reflect: true })
+], TextFieldBase.prototype, "disabled", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], TextFieldBase.prototype, "required", void 0);
+__decorate([
+    e$6({ type: Number })
+], TextFieldBase.prototype, "minLength", void 0);
+__decorate([
+    e$6({ type: Number })
+], TextFieldBase.prototype, "maxLength", void 0);
+__decorate([
+    e$6({ type: Boolean, reflect: true }),
+    observer(function (_newVal, oldVal) {
+        if (oldVal !== undefined && this.outlined !== oldVal) {
+            this.layout();
+        }
+    })
+], TextFieldBase.prototype, "outlined", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "helper", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], TextFieldBase.prototype, "validateOnInitialRender", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "validationMessage", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], TextFieldBase.prototype, "autoValidate", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "pattern", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "min", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "max", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "step", void 0);
+__decorate([
+    e$6({ type: Number })
+], TextFieldBase.prototype, "size", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], TextFieldBase.prototype, "helperPersistent", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], TextFieldBase.prototype, "charCounter", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], TextFieldBase.prototype, "endAligned", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "prefix", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "suffix", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "name", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "inputMode", void 0);
+__decorate([
+    e$6({ type: Boolean })
+], TextFieldBase.prototype, "readOnly", void 0);
+__decorate([
+    e$6({ type: String })
+], TextFieldBase.prototype, "autocapitalize", void 0);
+__decorate([
+    t$1()
+], TextFieldBase.prototype, "outlineOpen", void 0);
+__decorate([
+    t$1()
+], TextFieldBase.prototype, "outlineWidth", void 0);
+__decorate([
+    t$1()
+], TextFieldBase.prototype, "isUiValid", void 0);
+__decorate([
+    t$1()
+], TextFieldBase.prototype, "focused", void 0);
+__decorate([
+    e$5({ passive: true })
+], TextFieldBase.prototype, "handleInputChange", null);
+
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-LIcense-Identifier: Apache-2.0
+ */
+const styles$1 = i$5 `.mdc-floating-label{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-subtitle1-font-size, 1rem);font-weight:400;font-weight:var(--mdc-typography-subtitle1-font-weight, 400);letter-spacing:0.009375em;letter-spacing:var(--mdc-typography-subtitle1-letter-spacing, 0.009375em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle1-text-transform, inherit);position:absolute;left:0;-webkit-transform-origin:left top;transform-origin:left top;line-height:1.15rem;text-align:left;text-overflow:ellipsis;white-space:nowrap;cursor:text;overflow:hidden;will-change:transform;transition:transform 150ms cubic-bezier(0.4, 0, 0.2, 1),color 150ms cubic-bezier(0.4, 0, 0.2, 1)}[dir=rtl] .mdc-floating-label,.mdc-floating-label[dir=rtl]{right:0;left:auto;-webkit-transform-origin:right top;transform-origin:right top;text-align:right}.mdc-floating-label--float-above{cursor:auto}.mdc-floating-label--required::after{margin-left:1px;margin-right:0px;content:"*"}[dir=rtl] .mdc-floating-label--required::after,.mdc-floating-label--required[dir=rtl]::after{margin-left:0;margin-right:1px}.mdc-floating-label--float-above{transform:translateY(-106%) scale(0.75)}.mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-standard 250ms 1}@keyframes mdc-floating-label-shake-float-above-standard{0%{transform:translateX(calc(0 - 0%)) translateY(-106%) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - 0%)) translateY(-106%) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - 0%)) translateY(-106%) scale(0.75)}100%{transform:translateX(calc(0 - 0%)) translateY(-106%) scale(0.75)}}.mdc-line-ripple::before,.mdc-line-ripple::after{position:absolute;bottom:0;left:0;width:100%;border-bottom-style:solid;content:""}.mdc-line-ripple::before{border-bottom-width:1px}.mdc-line-ripple::before{z-index:1}.mdc-line-ripple::after{transform:scaleX(0);border-bottom-width:2px;opacity:0;z-index:2}.mdc-line-ripple::after{transition:transform 180ms cubic-bezier(0.4, 0, 0.2, 1),opacity 180ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-line-ripple--active::after{transform:scaleX(1);opacity:1}.mdc-line-ripple--deactivating::after{opacity:0}.mdc-notched-outline{display:flex;position:absolute;top:0;right:0;left:0;box-sizing:border-box;width:100%;max-width:100%;height:100%;text-align:left;pointer-events:none}[dir=rtl] .mdc-notched-outline,.mdc-notched-outline[dir=rtl]{text-align:right}.mdc-notched-outline__leading,.mdc-notched-outline__notch,.mdc-notched-outline__trailing{box-sizing:border-box;height:100%;border-top:1px solid;border-bottom:1px solid;pointer-events:none}.mdc-notched-outline__leading{border-left:1px solid;border-right:none;width:12px}[dir=rtl] .mdc-notched-outline__leading,.mdc-notched-outline__leading[dir=rtl]{border-left:none;border-right:1px solid}.mdc-notched-outline__trailing{border-left:none;border-right:1px solid;flex-grow:1}[dir=rtl] .mdc-notched-outline__trailing,.mdc-notched-outline__trailing[dir=rtl]{border-left:1px solid;border-right:none}.mdc-notched-outline__notch{flex:0 0 auto;width:auto;max-width:calc(100% - 12px * 2)}.mdc-notched-outline .mdc-floating-label{display:inline-block;position:relative;max-width:100%}.mdc-notched-outline .mdc-floating-label--float-above{text-overflow:clip}.mdc-notched-outline--upgraded .mdc-floating-label--float-above{max-width:calc(100% / 0.75)}.mdc-notched-outline--notched .mdc-notched-outline__notch{padding-left:0;padding-right:8px;border-top:none}[dir=rtl] .mdc-notched-outline--notched .mdc-notched-outline__notch,.mdc-notched-outline--notched .mdc-notched-outline__notch[dir=rtl]{padding-left:8px;padding-right:0}.mdc-notched-outline--no-label .mdc-notched-outline__notch{display:none}@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}.mdc-text-field--filled{--mdc-ripple-fg-size: 0;--mdc-ripple-left: 0;--mdc-ripple-top: 0;--mdc-ripple-fg-scale: 1;--mdc-ripple-fg-translate-end: 0;--mdc-ripple-fg-translate-start: 0;-webkit-tap-highlight-color:rgba(0,0,0,0);will-change:transform,opacity}.mdc-text-field--filled .mdc-text-field__ripple::before,.mdc-text-field--filled .mdc-text-field__ripple::after{position:absolute;border-radius:50%;opacity:0;pointer-events:none;content:""}.mdc-text-field--filled .mdc-text-field__ripple::before{transition:opacity 15ms linear,background-color 15ms linear;z-index:1;z-index:var(--mdc-ripple-z-index, 1)}.mdc-text-field--filled .mdc-text-field__ripple::after{z-index:0;z-index:var(--mdc-ripple-z-index, 0)}.mdc-text-field--filled.mdc-ripple-upgraded .mdc-text-field__ripple::before{transform:scale(var(--mdc-ripple-fg-scale, 1))}.mdc-text-field--filled.mdc-ripple-upgraded .mdc-text-field__ripple::after{top:0;left:0;transform:scale(0);transform-origin:center center}.mdc-text-field--filled.mdc-ripple-upgraded--unbounded .mdc-text-field__ripple::after{top:var(--mdc-ripple-top, 0);left:var(--mdc-ripple-left, 0)}.mdc-text-field--filled.mdc-ripple-upgraded--foreground-activation .mdc-text-field__ripple::after{animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards}.mdc-text-field--filled.mdc-ripple-upgraded--foreground-deactivation .mdc-text-field__ripple::after{animation:mdc-ripple-fg-opacity-out 150ms;transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}.mdc-text-field--filled .mdc-text-field__ripple::before,.mdc-text-field--filled .mdc-text-field__ripple::after{top:calc(50% - 100%);left:calc(50% - 100%);width:200%;height:200%}.mdc-text-field--filled.mdc-ripple-upgraded .mdc-text-field__ripple::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-text-field__ripple{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}.mdc-text-field{border-top-left-radius:4px;border-top-left-radius:var(--mdc-shape-small, 4px);border-top-right-radius:4px;border-top-right-radius:var(--mdc-shape-small, 4px);border-bottom-right-radius:0;border-bottom-left-radius:0;display:inline-flex;align-items:baseline;padding:0 16px;position:relative;box-sizing:border-box;overflow:hidden;will-change:opacity,transform,color}.mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label{color:rgba(0, 0, 0, 0.6)}.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input{color:rgba(0, 0, 0, 0.87)}@media all{.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input::placeholder{color:rgba(0, 0, 0, 0.54)}}@media all{.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input:-ms-input-placeholder{color:rgba(0, 0, 0, 0.54)}}.mdc-text-field .mdc-text-field__input{caret-color:#6200ee;caret-color:var(--mdc-theme-primary, #6200ee)}.mdc-text-field:not(.mdc-text-field--disabled)+.mdc-text-field-helper-line .mdc-text-field-helper-text{color:rgba(0, 0, 0, 0.6)}.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field-character-counter,.mdc-text-field:not(.mdc-text-field--disabled)+.mdc-text-field-helper-line .mdc-text-field-character-counter{color:rgba(0, 0, 0, 0.6)}.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading{color:rgba(0, 0, 0, 0.54)}.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--trailing{color:rgba(0, 0, 0, 0.54)}.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__affix--prefix{color:rgba(0, 0, 0, 0.6)}.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__affix--suffix{color:rgba(0, 0, 0, 0.6)}.mdc-text-field .mdc-floating-label{top:50%;transform:translateY(-50%);pointer-events:none}.mdc-text-field__input{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-subtitle1-font-size, 1rem);font-weight:400;font-weight:var(--mdc-typography-subtitle1-font-weight, 400);letter-spacing:0.009375em;letter-spacing:var(--mdc-typography-subtitle1-letter-spacing, 0.009375em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle1-text-transform, inherit);height:28px;transition:opacity 150ms 0ms cubic-bezier(0.4, 0, 0.2, 1);width:100%;min-width:0;border:none;border-radius:0;background:none;appearance:none;padding:0}.mdc-text-field__input::-ms-clear{display:none}.mdc-text-field__input::-webkit-calendar-picker-indicator{display:none}.mdc-text-field__input:focus{outline:none}.mdc-text-field__input:invalid{box-shadow:none}@media all{.mdc-text-field__input::placeholder{transition:opacity 67ms 0ms cubic-bezier(0.4, 0, 0.2, 1);opacity:0}}@media all{.mdc-text-field__input:-ms-input-placeholder{transition:opacity 67ms 0ms cubic-bezier(0.4, 0, 0.2, 1);opacity:0}}@media all{.mdc-text-field--no-label .mdc-text-field__input::placeholder,.mdc-text-field--focused .mdc-text-field__input::placeholder{transition-delay:40ms;transition-duration:110ms;opacity:1}}@media all{.mdc-text-field--no-label .mdc-text-field__input:-ms-input-placeholder,.mdc-text-field--focused .mdc-text-field__input:-ms-input-placeholder{transition-delay:40ms;transition-duration:110ms;opacity:1}}.mdc-text-field__affix{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:1rem;font-size:var(--mdc-typography-subtitle1-font-size, 1rem);font-weight:400;font-weight:var(--mdc-typography-subtitle1-font-weight, 400);letter-spacing:0.009375em;letter-spacing:var(--mdc-typography-subtitle1-letter-spacing, 0.009375em);text-decoration:inherit;text-decoration:var(--mdc-typography-subtitle1-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-subtitle1-text-transform, inherit);height:28px;transition:opacity 150ms 0ms cubic-bezier(0.4, 0, 0.2, 1);opacity:0;white-space:nowrap}.mdc-text-field--label-floating .mdc-text-field__affix,.mdc-text-field--no-label .mdc-text-field__affix{opacity:1}@supports(-webkit-hyphens: none){.mdc-text-field--outlined .mdc-text-field__affix{align-items:center;align-self:center;display:inline-flex;height:100%}}.mdc-text-field__affix--prefix{padding-left:0;padding-right:2px}[dir=rtl] .mdc-text-field__affix--prefix,.mdc-text-field__affix--prefix[dir=rtl]{padding-left:2px;padding-right:0}.mdc-text-field--end-aligned .mdc-text-field__affix--prefix{padding-left:0;padding-right:12px}[dir=rtl] .mdc-text-field--end-aligned .mdc-text-field__affix--prefix,.mdc-text-field--end-aligned .mdc-text-field__affix--prefix[dir=rtl]{padding-left:12px;padding-right:0}.mdc-text-field__affix--suffix{padding-left:12px;padding-right:0}[dir=rtl] .mdc-text-field__affix--suffix,.mdc-text-field__affix--suffix[dir=rtl]{padding-left:0;padding-right:12px}.mdc-text-field--end-aligned .mdc-text-field__affix--suffix{padding-left:2px;padding-right:0}[dir=rtl] .mdc-text-field--end-aligned .mdc-text-field__affix--suffix,.mdc-text-field--end-aligned .mdc-text-field__affix--suffix[dir=rtl]{padding-left:0;padding-right:2px}.mdc-text-field--filled{height:56px}.mdc-text-field--filled .mdc-text-field__ripple::before,.mdc-text-field--filled .mdc-text-field__ripple::after{background-color:rgba(0, 0, 0, 0.87);background-color:var(--mdc-ripple-color, rgba(0, 0, 0, 0.87))}.mdc-text-field--filled:hover .mdc-text-field__ripple::before,.mdc-text-field--filled.mdc-ripple-surface--hover .mdc-text-field__ripple::before{opacity:0.04;opacity:var(--mdc-ripple-hover-opacity, 0.04)}.mdc-text-field--filled.mdc-ripple-upgraded--background-focused .mdc-text-field__ripple::before,.mdc-text-field--filled:not(.mdc-ripple-upgraded):focus .mdc-text-field__ripple::before{transition-duration:75ms;opacity:0.12;opacity:var(--mdc-ripple-focus-opacity, 0.12)}.mdc-text-field--filled::before{display:inline-block;width:0;height:40px;content:"";vertical-align:0}.mdc-text-field--filled:not(.mdc-text-field--disabled){background-color:whitesmoke}.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.42)}.mdc-text-field--filled:not(.mdc-text-field--disabled):hover .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.87)}.mdc-text-field--filled .mdc-line-ripple::after{border-bottom-color:#6200ee;border-bottom-color:var(--mdc-theme-primary, #6200ee)}.mdc-text-field--filled .mdc-floating-label{left:16px;right:initial}[dir=rtl] .mdc-text-field--filled .mdc-floating-label,.mdc-text-field--filled .mdc-floating-label[dir=rtl]{left:initial;right:16px}.mdc-text-field--filled .mdc-floating-label--float-above{transform:translateY(-106%) scale(0.75)}.mdc-text-field--filled.mdc-text-field--no-label .mdc-text-field__input{height:100%}.mdc-text-field--filled.mdc-text-field--no-label .mdc-floating-label{display:none}.mdc-text-field--filled.mdc-text-field--no-label::before{display:none}@supports(-webkit-hyphens: none){.mdc-text-field--filled.mdc-text-field--no-label .mdc-text-field__affix{align-items:center;align-self:center;display:inline-flex;height:100%}}.mdc-text-field--outlined{height:56px;overflow:visible}.mdc-text-field--outlined .mdc-floating-label--float-above{transform:translateY(-37.25px) scale(1)}.mdc-text-field--outlined .mdc-floating-label--float-above{font-size:.75rem}.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above{transform:translateY(-34.75px) scale(0.75)}.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above{font-size:1rem}.mdc-text-field--outlined .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-text-field-outlined 250ms 1}@keyframes mdc-floating-label-shake-float-above-text-field-outlined{0%{transform:translateX(calc(0 - 0%)) translateY(-34.75px) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - 0%)) translateY(-34.75px) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - 0%)) translateY(-34.75px) scale(0.75)}100%{transform:translateX(calc(0 - 0%)) translateY(-34.75px) scale(0.75)}}.mdc-text-field--outlined .mdc-text-field__input{height:100%}.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing{border-color:rgba(0, 0, 0, 0.38)}.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__notch,.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__trailing{border-color:rgba(0, 0, 0, 0.87)}.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing{border-color:#6200ee;border-color:var(--mdc-theme-primary, #6200ee)}.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading{border-top-left-radius:4px;border-top-left-radius:var(--mdc-shape-small, 4px);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:4px;border-bottom-left-radius:var(--mdc-shape-small, 4px)}[dir=rtl] .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading,.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading[dir=rtl]{border-top-left-radius:0;border-top-right-radius:4px;border-top-right-radius:var(--mdc-shape-small, 4px);border-bottom-right-radius:4px;border-bottom-right-radius:var(--mdc-shape-small, 4px);border-bottom-left-radius:0}@supports(top: max(0%)){.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading{width:max(12px, var(--mdc-shape-small, 4px))}}@supports(top: max(0%)){.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__notch{max-width:calc(100% - max(12px, var(--mdc-shape-small, 4px)) * 2)}}.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing{border-top-left-radius:0;border-top-right-radius:4px;border-top-right-radius:var(--mdc-shape-small, 4px);border-bottom-right-radius:4px;border-bottom-right-radius:var(--mdc-shape-small, 4px);border-bottom-left-radius:0}[dir=rtl] .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing,.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing[dir=rtl]{border-top-left-radius:4px;border-top-left-radius:var(--mdc-shape-small, 4px);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:4px;border-bottom-left-radius:var(--mdc-shape-small, 4px)}@supports(top: max(0%)){.mdc-text-field--outlined{padding-left:max(16px, calc(var(--mdc-shape-small, 4px) + 4px))}}@supports(top: max(0%)){.mdc-text-field--outlined{padding-right:max(16px, var(--mdc-shape-small, 4px))}}@supports(top: max(0%)){.mdc-text-field--outlined+.mdc-text-field-helper-line{padding-left:max(16px, calc(var(--mdc-shape-small, 4px) + 4px))}}@supports(top: max(0%)){.mdc-text-field--outlined+.mdc-text-field-helper-line{padding-right:max(16px, var(--mdc-shape-small, 4px))}}.mdc-text-field--outlined.mdc-text-field--with-leading-icon{padding-left:0}@supports(top: max(0%)){.mdc-text-field--outlined.mdc-text-field--with-leading-icon{padding-right:max(16px, var(--mdc-shape-small, 4px))}}[dir=rtl] .mdc-text-field--outlined.mdc-text-field--with-leading-icon,.mdc-text-field--outlined.mdc-text-field--with-leading-icon[dir=rtl]{padding-right:0}@supports(top: max(0%)){[dir=rtl] .mdc-text-field--outlined.mdc-text-field--with-leading-icon,.mdc-text-field--outlined.mdc-text-field--with-leading-icon[dir=rtl]{padding-left:max(16px, var(--mdc-shape-small, 4px))}}.mdc-text-field--outlined.mdc-text-field--with-trailing-icon{padding-right:0}@supports(top: max(0%)){.mdc-text-field--outlined.mdc-text-field--with-trailing-icon{padding-left:max(16px, calc(var(--mdc-shape-small, 4px) + 4px))}}[dir=rtl] .mdc-text-field--outlined.mdc-text-field--with-trailing-icon,.mdc-text-field--outlined.mdc-text-field--with-trailing-icon[dir=rtl]{padding-left:0}@supports(top: max(0%)){[dir=rtl] .mdc-text-field--outlined.mdc-text-field--with-trailing-icon,.mdc-text-field--outlined.mdc-text-field--with-trailing-icon[dir=rtl]{padding-right:max(16px, calc(var(--mdc-shape-small, 4px) + 4px))}}.mdc-text-field--outlined.mdc-text-field--with-leading-icon.mdc-text-field--with-trailing-icon{padding-left:0;padding-right:0}.mdc-text-field--outlined .mdc-notched-outline--notched .mdc-notched-outline__notch{padding-top:1px}.mdc-text-field--outlined .mdc-text-field__ripple::before,.mdc-text-field--outlined .mdc-text-field__ripple::after{background-color:transparent;background-color:var(--mdc-ripple-color, transparent)}.mdc-text-field--outlined .mdc-floating-label{left:4px;right:initial}[dir=rtl] .mdc-text-field--outlined .mdc-floating-label,.mdc-text-field--outlined .mdc-floating-label[dir=rtl]{left:initial;right:4px}.mdc-text-field--outlined .mdc-text-field__input{display:flex;border:none !important;background-color:transparent}.mdc-text-field--outlined .mdc-notched-outline{z-index:1}.mdc-text-field--textarea{flex-direction:column;align-items:center;width:auto;height:auto;padding:0;transition:none}.mdc-text-field--textarea .mdc-floating-label{top:19px}.mdc-text-field--textarea .mdc-floating-label:not(.mdc-floating-label--float-above){transform:none}.mdc-text-field--textarea .mdc-text-field__input{flex-grow:1;height:auto;min-height:1.5rem;overflow-x:hidden;overflow-y:auto;box-sizing:border-box;resize:none;padding:0 16px;line-height:1.5rem}.mdc-text-field--textarea.mdc-text-field--filled::before{display:none}.mdc-text-field--textarea.mdc-text-field--filled .mdc-floating-label--float-above{transform:translateY(-10.25px) scale(0.75)}.mdc-text-field--textarea.mdc-text-field--filled .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-textarea-filled 250ms 1}@keyframes mdc-floating-label-shake-float-above-textarea-filled{0%{transform:translateX(calc(0 - 0%)) translateY(-10.25px) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - 0%)) translateY(-10.25px) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - 0%)) translateY(-10.25px) scale(0.75)}100%{transform:translateX(calc(0 - 0%)) translateY(-10.25px) scale(0.75)}}.mdc-text-field--textarea.mdc-text-field--filled .mdc-text-field__input{margin-top:23px;margin-bottom:9px}.mdc-text-field--textarea.mdc-text-field--filled.mdc-text-field--no-label .mdc-text-field__input{margin-top:16px;margin-bottom:16px}.mdc-text-field--textarea.mdc-text-field--outlined .mdc-notched-outline--notched .mdc-notched-outline__notch{padding-top:0}.mdc-text-field--textarea.mdc-text-field--outlined .mdc-floating-label--float-above{transform:translateY(-27.25px) scale(1)}.mdc-text-field--textarea.mdc-text-field--outlined .mdc-floating-label--float-above{font-size:.75rem}.mdc-text-field--textarea.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-text-field--textarea.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above{transform:translateY(-24.75px) scale(0.75)}.mdc-text-field--textarea.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-text-field--textarea.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above{font-size:1rem}.mdc-text-field--textarea.mdc-text-field--outlined .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-textarea-outlined 250ms 1}@keyframes mdc-floating-label-shake-float-above-textarea-outlined{0%{transform:translateX(calc(0 - 0%)) translateY(-24.75px) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - 0%)) translateY(-24.75px) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - 0%)) translateY(-24.75px) scale(0.75)}100%{transform:translateX(calc(0 - 0%)) translateY(-24.75px) scale(0.75)}}.mdc-text-field--textarea.mdc-text-field--outlined .mdc-text-field__input{margin-top:16px;margin-bottom:16px}.mdc-text-field--textarea.mdc-text-field--outlined .mdc-floating-label{top:18px}.mdc-text-field--textarea.mdc-text-field--with-internal-counter .mdc-text-field__input{margin-bottom:2px}.mdc-text-field--textarea.mdc-text-field--with-internal-counter .mdc-text-field-character-counter{align-self:flex-end;padding:0 16px}.mdc-text-field--textarea.mdc-text-field--with-internal-counter .mdc-text-field-character-counter::after{display:inline-block;width:0;height:16px;content:"";vertical-align:-16px}.mdc-text-field--textarea.mdc-text-field--with-internal-counter .mdc-text-field-character-counter::before{display:none}.mdc-text-field__resizer{align-self:stretch;display:inline-flex;flex-direction:column;flex-grow:1;max-height:100%;max-width:100%;min-height:56px;min-width:fit-content;min-width:-moz-available;min-width:-webkit-fill-available;overflow:hidden;resize:both}.mdc-text-field--filled .mdc-text-field__resizer{transform:translateY(-1px)}.mdc-text-field--filled .mdc-text-field__resizer .mdc-text-field__input,.mdc-text-field--filled .mdc-text-field__resizer .mdc-text-field-character-counter{transform:translateY(1px)}.mdc-text-field--outlined .mdc-text-field__resizer{transform:translateX(-1px) translateY(-1px)}[dir=rtl] .mdc-text-field--outlined .mdc-text-field__resizer,.mdc-text-field--outlined .mdc-text-field__resizer[dir=rtl]{transform:translateX(1px) translateY(-1px)}.mdc-text-field--outlined .mdc-text-field__resizer .mdc-text-field__input,.mdc-text-field--outlined .mdc-text-field__resizer .mdc-text-field-character-counter{transform:translateX(1px) translateY(1px)}[dir=rtl] .mdc-text-field--outlined .mdc-text-field__resizer .mdc-text-field__input,[dir=rtl] .mdc-text-field--outlined .mdc-text-field__resizer .mdc-text-field-character-counter,.mdc-text-field--outlined .mdc-text-field__resizer .mdc-text-field__input[dir=rtl],.mdc-text-field--outlined .mdc-text-field__resizer .mdc-text-field-character-counter[dir=rtl]{transform:translateX(-1px) translateY(1px)}.mdc-text-field--with-leading-icon{padding-left:0;padding-right:16px}[dir=rtl] .mdc-text-field--with-leading-icon,.mdc-text-field--with-leading-icon[dir=rtl]{padding-left:16px;padding-right:0}.mdc-text-field--with-leading-icon.mdc-text-field--filled .mdc-floating-label{max-width:calc(100% - 48px);left:48px;right:initial}[dir=rtl] .mdc-text-field--with-leading-icon.mdc-text-field--filled .mdc-floating-label,.mdc-text-field--with-leading-icon.mdc-text-field--filled .mdc-floating-label[dir=rtl]{left:initial;right:48px}.mdc-text-field--with-leading-icon.mdc-text-field--filled .mdc-floating-label--float-above{max-width:calc(100% / 0.75 - 64px / 0.75)}.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label{left:36px;right:initial}[dir=rtl] .mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label,.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label[dir=rtl]{left:initial;right:36px}.mdc-text-field--with-leading-icon.mdc-text-field--outlined :not(.mdc-notched-outline--notched) .mdc-notched-outline__notch{max-width:calc(100% - 60px)}.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label--float-above{transform:translateY(-37.25px) translateX(-32px) scale(1)}[dir=rtl] .mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label--float-above,.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label--float-above[dir=rtl]{transform:translateY(-37.25px) translateX(32px) scale(1)}.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label--float-above{font-size:.75rem}.mdc-text-field--with-leading-icon.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above{transform:translateY(-34.75px) translateX(-32px) scale(0.75)}[dir=rtl] .mdc-text-field--with-leading-icon.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above,[dir=rtl] .mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-text-field--with-leading-icon.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above[dir=rtl],.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above[dir=rtl]{transform:translateY(-34.75px) translateX(32px) scale(0.75)}.mdc-text-field--with-leading-icon.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above,.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above{font-size:1rem}.mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-text-field-outlined-leading-icon 250ms 1}@keyframes mdc-floating-label-shake-float-above-text-field-outlined-leading-icon{0%{transform:translateX(calc(0 - 32px)) translateY(-34.75px) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - 32px)) translateY(-34.75px) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - 32px)) translateY(-34.75px) scale(0.75)}100%{transform:translateX(calc(0 - 32px)) translateY(-34.75px) scale(0.75)}}[dir=rtl] .mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label--shake,.mdc-text-field--with-leading-icon.mdc-text-field--outlined[dir=rtl] .mdc-floating-label--shake{animation:mdc-floating-label-shake-float-above-text-field-outlined-leading-icon 250ms 1}@keyframes mdc-floating-label-shake-float-above-text-field-outlined-leading-icon-rtl{0%{transform:translateX(calc(0 - -32px)) translateY(-34.75px) scale(0.75)}33%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(calc(4% - -32px)) translateY(-34.75px) scale(0.75)}66%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(calc(-4% - -32px)) translateY(-34.75px) scale(0.75)}100%{transform:translateX(calc(0 - -32px)) translateY(-34.75px) scale(0.75)}}.mdc-text-field--with-trailing-icon{padding-left:16px;padding-right:0}[dir=rtl] .mdc-text-field--with-trailing-icon,.mdc-text-field--with-trailing-icon[dir=rtl]{padding-left:0;padding-right:16px}.mdc-text-field--with-trailing-icon.mdc-text-field--filled .mdc-floating-label{max-width:calc(100% - 64px)}.mdc-text-field--with-trailing-icon.mdc-text-field--filled .mdc-floating-label--float-above{max-width:calc(100% / 0.75 - 64px / 0.75)}.mdc-text-field--with-trailing-icon.mdc-text-field--outlined :not(.mdc-notched-outline--notched) .mdc-notched-outline__notch{max-width:calc(100% - 60px)}.mdc-text-field--with-leading-icon.mdc-text-field--with-trailing-icon{padding-left:0;padding-right:0}.mdc-text-field--with-leading-icon.mdc-text-field--with-trailing-icon.mdc-text-field--filled .mdc-floating-label{max-width:calc(100% - 96px)}.mdc-text-field--with-leading-icon.mdc-text-field--with-trailing-icon.mdc-text-field--filled .mdc-floating-label--float-above{max-width:calc(100% / 0.75 - 96px / 0.75)}.mdc-text-field-helper-line{display:flex;justify-content:space-between;box-sizing:border-box}.mdc-text-field+.mdc-text-field-helper-line{padding-right:16px;padding-left:16px}.mdc-form-field>.mdc-text-field+label{align-self:flex-start}.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label{color:rgba(98, 0, 238, 0.87)}.mdc-text-field--focused .mdc-notched-outline__leading,.mdc-text-field--focused .mdc-notched-outline__notch,.mdc-text-field--focused .mdc-notched-outline__trailing{border-width:2px}.mdc-text-field--focused+.mdc-text-field-helper-line .mdc-text-field-helper-text:not(.mdc-text-field-helper-text--validation-msg){opacity:1}.mdc-text-field--focused.mdc-text-field--outlined .mdc-notched-outline--notched .mdc-notched-outline__notch{padding-top:2px}.mdc-text-field--focused.mdc-text-field--outlined.mdc-text-field--textarea .mdc-notched-outline--notched .mdc-notched-outline__notch{padding-top:0}.mdc-text-field--invalid:not(.mdc-text-field--disabled):hover .mdc-line-ripple::before{border-bottom-color:#b00020;border-bottom-color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::after{border-bottom-color:#b00020;border-bottom-color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label{color:#b00020;color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid:not(.mdc-text-field--disabled).mdc-text-field--invalid+.mdc-text-field-helper-line .mdc-text-field-helper-text--validation-msg{color:#b00020;color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid .mdc-text-field__input{caret-color:#b00020;caret-color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-text-field__icon--trailing{color:#b00020;color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::before{border-bottom-color:#b00020;border-bottom-color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing{border-color:#b00020;border-color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,.mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__notch,.mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__trailing{border-color:#b00020;border-color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,.mdc-text-field--invalid:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,.mdc-text-field--invalid:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing{border-color:#b00020;border-color:var(--mdc-theme-error, #b00020)}.mdc-text-field--invalid+.mdc-text-field-helper-line .mdc-text-field-helper-text--validation-msg{opacity:1}.mdc-text-field--disabled{pointer-events:none}.mdc-text-field--disabled .mdc-text-field__input{color:rgba(0, 0, 0, 0.38)}@media all{.mdc-text-field--disabled .mdc-text-field__input::placeholder{color:rgba(0, 0, 0, 0.38)}}@media all{.mdc-text-field--disabled .mdc-text-field__input:-ms-input-placeholder{color:rgba(0, 0, 0, 0.38)}}.mdc-text-field--disabled .mdc-floating-label{color:rgba(0, 0, 0, 0.38)}.mdc-text-field--disabled+.mdc-text-field-helper-line .mdc-text-field-helper-text{color:rgba(0, 0, 0, 0.38)}.mdc-text-field--disabled .mdc-text-field-character-counter,.mdc-text-field--disabled+.mdc-text-field-helper-line .mdc-text-field-character-counter{color:rgba(0, 0, 0, 0.38)}.mdc-text-field--disabled .mdc-text-field__icon--leading{color:rgba(0, 0, 0, 0.3)}.mdc-text-field--disabled .mdc-text-field__icon--trailing{color:rgba(0, 0, 0, 0.3)}.mdc-text-field--disabled .mdc-text-field__affix--prefix{color:rgba(0, 0, 0, 0.38)}.mdc-text-field--disabled .mdc-text-field__affix--suffix{color:rgba(0, 0, 0, 0.38)}.mdc-text-field--disabled .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.06)}.mdc-text-field--disabled .mdc-notched-outline__leading,.mdc-text-field--disabled .mdc-notched-outline__notch,.mdc-text-field--disabled .mdc-notched-outline__trailing{border-color:rgba(0, 0, 0, 0.06)}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-text-field__input::placeholder{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-text-field__input:-ms-input-placeholder{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-floating-label{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled+.mdc-text-field-helper-line .mdc-text-field-helper-text{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-text-field-character-counter,.mdc-text-field--disabled+.mdc-text-field-helper-line .mdc-text-field-character-counter{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-text-field__icon--leading{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-text-field__icon--trailing{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-text-field__affix--prefix{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-text-field__affix--suffix{color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-line-ripple::before{border-bottom-color:GrayText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-text-field--disabled .mdc-notched-outline__leading,.mdc-text-field--disabled .mdc-notched-outline__notch,.mdc-text-field--disabled .mdc-notched-outline__trailing{border-color:GrayText}}@media screen and (forced-colors: active){.mdc-text-field--disabled .mdc-text-field__input{background-color:Window}.mdc-text-field--disabled .mdc-floating-label{z-index:1}}.mdc-text-field--disabled .mdc-floating-label{cursor:default}.mdc-text-field--disabled.mdc-text-field--filled{background-color:#fafafa}.mdc-text-field--disabled.mdc-text-field--filled .mdc-text-field__ripple{display:none}.mdc-text-field--disabled .mdc-text-field__input{pointer-events:auto}.mdc-text-field--end-aligned .mdc-text-field__input{text-align:right}[dir=rtl] .mdc-text-field--end-aligned .mdc-text-field__input,.mdc-text-field--end-aligned .mdc-text-field__input[dir=rtl]{text-align:left}[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__input,[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__affix,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__input,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__affix{direction:ltr}[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__affix--prefix,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__affix--prefix{padding-left:0;padding-right:2px}[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__affix--suffix,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__affix--suffix{padding-left:12px;padding-right:0}[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__icon--leading,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__icon--leading{order:1}[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__affix--suffix,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__affix--suffix{order:2}[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__input,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__input{order:3}[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__affix--prefix,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__affix--prefix{order:4}[dir=rtl] .mdc-text-field--ltr-text .mdc-text-field__icon--trailing,.mdc-text-field--ltr-text[dir=rtl] .mdc-text-field__icon--trailing{order:5}[dir=rtl] .mdc-text-field--ltr-text.mdc-text-field--end-aligned .mdc-text-field__input,.mdc-text-field--ltr-text.mdc-text-field--end-aligned[dir=rtl] .mdc-text-field__input{text-align:right}[dir=rtl] .mdc-text-field--ltr-text.mdc-text-field--end-aligned .mdc-text-field__affix--prefix,.mdc-text-field--ltr-text.mdc-text-field--end-aligned[dir=rtl] .mdc-text-field__affix--prefix{padding-right:12px}[dir=rtl] .mdc-text-field--ltr-text.mdc-text-field--end-aligned .mdc-text-field__affix--suffix,.mdc-text-field--ltr-text.mdc-text-field--end-aligned[dir=rtl] .mdc-text-field__affix--suffix{padding-left:2px}.mdc-text-field-helper-text{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-caption-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.75rem;font-size:var(--mdc-typography-caption-font-size, 0.75rem);line-height:1.25rem;line-height:var(--mdc-typography-caption-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-caption-font-weight, 400);letter-spacing:0.0333333333em;letter-spacing:var(--mdc-typography-caption-letter-spacing, 0.0333333333em);text-decoration:inherit;text-decoration:var(--mdc-typography-caption-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-caption-text-transform, inherit);display:block;margin-top:0;line-height:normal;margin:0;opacity:0;will-change:opacity;transition:opacity 150ms 0ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-text-field-helper-text::before{display:inline-block;width:0;height:16px;content:"";vertical-align:0}.mdc-text-field-helper-text--persistent{transition:none;opacity:1;will-change:initial}.mdc-text-field-character-counter{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Roboto, sans-serif;font-family:var(--mdc-typography-caption-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));font-size:0.75rem;font-size:var(--mdc-typography-caption-font-size, 0.75rem);line-height:1.25rem;line-height:var(--mdc-typography-caption-line-height, 1.25rem);font-weight:400;font-weight:var(--mdc-typography-caption-font-weight, 400);letter-spacing:0.0333333333em;letter-spacing:var(--mdc-typography-caption-letter-spacing, 0.0333333333em);text-decoration:inherit;text-decoration:var(--mdc-typography-caption-text-decoration, inherit);text-transform:inherit;text-transform:var(--mdc-typography-caption-text-transform, inherit);display:block;margin-top:0;line-height:normal;margin-left:auto;margin-right:0;padding-left:16px;padding-right:0;white-space:nowrap}.mdc-text-field-character-counter::before{display:inline-block;width:0;height:16px;content:"";vertical-align:0}[dir=rtl] .mdc-text-field-character-counter,.mdc-text-field-character-counter[dir=rtl]{margin-left:0;margin-right:auto}[dir=rtl] .mdc-text-field-character-counter,.mdc-text-field-character-counter[dir=rtl]{padding-left:0;padding-right:16px}.mdc-text-field__icon{align-self:center;cursor:pointer}.mdc-text-field__icon:not([tabindex]),.mdc-text-field__icon[tabindex="-1"]{cursor:default;pointer-events:none}.mdc-text-field__icon svg{display:block}.mdc-text-field__icon--leading{margin-left:16px;margin-right:8px}[dir=rtl] .mdc-text-field__icon--leading,.mdc-text-field__icon--leading[dir=rtl]{margin-left:8px;margin-right:16px}.mdc-text-field__icon--trailing{padding:12px;margin-left:0px;margin-right:0px}[dir=rtl] .mdc-text-field__icon--trailing,.mdc-text-field__icon--trailing[dir=rtl]{margin-left:0px;margin-right:0px}.material-icons{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}:host{display:inline-flex;flex-direction:column;outline:none}.mdc-text-field{width:100%}.mdc-text-field:not(.mdc-text-field--disabled) .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.42);border-bottom-color:var(--mdc-text-field-idle-line-color, rgba(0, 0, 0, 0.42))}.mdc-text-field:not(.mdc-text-field--disabled):hover .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.87);border-bottom-color:var(--mdc-text-field-hover-line-color, rgba(0, 0, 0, 0.87))}.mdc-text-field.mdc-text-field--disabled .mdc-line-ripple::before{border-bottom-color:rgba(0, 0, 0, 0.06);border-bottom-color:var(--mdc-text-field-disabled-line-color, rgba(0, 0, 0, 0.06))}.mdc-text-field.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::before{border-bottom-color:#b00020;border-bottom-color:var(--mdc-theme-error, #b00020)}.mdc-text-field__input{direction:inherit}mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-text-field-outlined-idle-border-color, rgba(0, 0, 0, 0.38) )}:host(:not([disabled]):hover) :not(.mdc-text-field--invalid):not(.mdc-text-field--focused) mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-text-field-outlined-hover-border-color, rgba(0, 0, 0, 0.87) )}:host(:not([disabled])) .mdc-text-field:not(.mdc-text-field--outlined){background-color:var(--mdc-text-field-fill-color, whitesmoke)}:host(:not([disabled])) .mdc-text-field.mdc-text-field--invalid mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-text-field-error-color, var(--mdc-theme-error, #b00020) )}:host(:not([disabled])) .mdc-text-field.mdc-text-field--invalid+.mdc-text-field-helper-line .mdc-text-field-character-counter,:host(:not([disabled])) .mdc-text-field.mdc-text-field--invalid .mdc-text-field__icon{color:var(--mdc-text-field-error-color, var(--mdc-theme-error, #b00020))}:host(:not([disabled])) .mdc-text-field:not(.mdc-text-field--invalid):not(.mdc-text-field--focused) .mdc-floating-label,:host(:not([disabled])) .mdc-text-field:not(.mdc-text-field--invalid):not(.mdc-text-field--focused) .mdc-floating-label::after{color:var(--mdc-text-field-label-ink-color, rgba(0, 0, 0, 0.6))}:host(:not([disabled])) .mdc-text-field.mdc-text-field--focused mwc-notched-outline{--mdc-notched-outline-stroke-width: 2px}:host(:not([disabled])) .mdc-text-field.mdc-text-field--focused:not(.mdc-text-field--invalid) mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-text-field-focused-label-color, var(--mdc-theme-primary, rgba(98, 0, 238, 0.87)) )}:host(:not([disabled])) .mdc-text-field.mdc-text-field--focused:not(.mdc-text-field--invalid) .mdc-floating-label{color:#6200ee;color:var(--mdc-theme-primary, #6200ee)}:host(:not([disabled])) .mdc-text-field .mdc-text-field__input{color:var(--mdc-text-field-ink-color, rgba(0, 0, 0, 0.87))}:host(:not([disabled])) .mdc-text-field .mdc-text-field__input::placeholder{color:var(--mdc-text-field-label-ink-color, rgba(0, 0, 0, 0.6))}:host(:not([disabled])) .mdc-text-field-helper-line .mdc-text-field-helper-text:not(.mdc-text-field-helper-text--validation-msg),:host(:not([disabled])) .mdc-text-field-helper-line:not(.mdc-text-field--invalid) .mdc-text-field-character-counter{color:var(--mdc-text-field-label-ink-color, rgba(0, 0, 0, 0.6))}:host([disabled]) .mdc-text-field:not(.mdc-text-field--outlined){background-color:var(--mdc-text-field-disabled-fill-color, #fafafa)}:host([disabled]) .mdc-text-field.mdc-text-field--outlined mwc-notched-outline{--mdc-notched-outline-border-color: var( --mdc-text-field-outlined-disabled-border-color, rgba(0, 0, 0, 0.06) )}:host([disabled]) .mdc-text-field:not(.mdc-text-field--invalid):not(.mdc-text-field--focused) .mdc-floating-label,:host([disabled]) .mdc-text-field:not(.mdc-text-field--invalid):not(.mdc-text-field--focused) .mdc-floating-label::after{color:var(--mdc-text-field-disabled-ink-color, rgba(0, 0, 0, 0.38))}:host([disabled]) .mdc-text-field .mdc-text-field__input,:host([disabled]) .mdc-text-field .mdc-text-field__input::placeholder{color:var(--mdc-text-field-disabled-ink-color, rgba(0, 0, 0, 0.38))}:host([disabled]) .mdc-text-field-helper-line .mdc-text-field-helper-text,:host([disabled]) .mdc-text-field-helper-line .mdc-text-field-character-counter{color:var(--mdc-text-field-disabled-ink-color, rgba(0, 0, 0, 0.38))}`;
+
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/** @soyCompatible */
+let TextField = class TextField extends TextFieldBase {
+};
+TextField.styles = [styles$1];
+TextField = __decorate([
+    e$7('mwc-textfield')
+], TextField);
 
 /**
  * @license
@@ -8762,10 +13994,10 @@ __decorate([
     i$2('slot[name="actionItems"]')
 ], TopAppBarBaseBase.prototype, "_actionItemsSlot", void 0);
 __decorate([
-    e$5({ type: Boolean })
+    e$6({ type: Boolean })
 ], TopAppBarBaseBase.prototype, "centerTitle", void 0);
 __decorate([
-    e$5({ type: Object })
+    e$6({ type: Object })
 ], TopAppBarBaseBase.prototype, "scrollTarget", null);
 
 /**
@@ -8808,10 +14040,10 @@ class TopAppBarBase extends TopAppBarBaseBase {
     }
 }
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], TopAppBarBase.prototype, "prominent", void 0);
 __decorate([
-    e$5({ type: Boolean, reflect: true })
+    e$6({ type: Boolean, reflect: true })
 ], TopAppBarBase.prototype, "dense", void 0);
 
 /**
@@ -8899,7 +14131,7 @@ let TopAppBarFixed = class TopAppBarFixed extends TopAppBarFixedBase {
 };
 TopAppBarFixed.styles = [styles];
 TopAppBarFixed = __decorate([
-    e$6('mwc-top-app-bar-fixed')
+    e$7('mwc-top-app-bar-fixed')
 ], TopAppBarFixed);
 
 // Do not modify this file by hand!
@@ -9124,7 +14356,7 @@ function cyrb64(str) {
     /* eslint-enable no-bitwise */
 }
 
-var _OpenSCD_loadedPlugins, _OpenSCD_plugins, _OpenSCD_actions;
+var _OpenSCD_loadedPlugins, _OpenSCD_loadedPluginTagNames, _OpenSCD_plugins, _OpenSCD_actions;
 const pluginTags = new Map();
 /** @returns a valid customElement tagName containing the URI hash. */
 function pluginTag(uri) {
@@ -9169,7 +14401,7 @@ function renderMenuItem(control) {
     </mwc-list-item>
   `;
 }
-let OpenSCD = class OpenSCD extends s$1 {
+let OpenSCD = class OpenSCD extends s$2 {
     constructor() {
         super();
         this.history = [];
@@ -9178,7 +14410,17 @@ let OpenSCD = class OpenSCD extends s$1 {
         this.docs = {};
         /** The name of the [[`doc`]] currently being edited */
         this.docName = '';
-        _OpenSCD_loadedPlugins.set(this, new Map());
+        /** The file endings of editable files */
+        this.editable = [
+            'cid',
+            'icd',
+            'iid',
+            'scd',
+            'sed',
+            'ssd',
+        ];
+        _OpenSCD_loadedPlugins.set(this, { menu: [], editor: [] });
+        _OpenSCD_loadedPluginTagNames.set(this, []);
         _OpenSCD_plugins.set(this, { menu: [], editor: [] });
         this.editorIndex = 0;
         this.controls = {
@@ -9236,29 +14478,50 @@ let OpenSCD = class OpenSCD extends s$1 {
     get canRedo() {
         return this.editCount < this.history.length;
     }
+    isEditable(docName) {
+        return !!this.editable.find(ext => docName.toLowerCase().endsWith(`.${ext}`));
+    }
+    get editableDocs() {
+        return Object.keys(this.docs).filter(name => this.isEditable(name));
+    }
     get loadedPlugins() {
         return __classPrivateFieldGet(this, _OpenSCD_loadedPlugins, "f");
+    }
+    addLoadedPlugin(tagName, kind, plugin) {
+        __classPrivateFieldGet(this, _OpenSCD_loadedPlugins, "f")[kind].push(plugin);
+        __classPrivateFieldGet(this, _OpenSCD_loadedPluginTagNames, "f").push(tagName);
     }
     get plugins() {
         return __classPrivateFieldGet(this, _OpenSCD_plugins, "f");
     }
     set plugins(plugins) {
-        Object.values(plugins).forEach(kind => kind.forEach(plugin => {
+        Object.entries(plugins).forEach(([pluginType, kind]) => kind.forEach(plugin => {
             const tagName = pluginTag(plugin.src);
-            if (this.loadedPlugins.has(tagName))
+            if (__classPrivateFieldGet(this, _OpenSCD_loadedPluginTagNames, "f").includes(tagName)) {
                 return;
-            __classPrivateFieldGet(this, _OpenSCD_loadedPlugins, "f").set(tagName, plugin);
-            if (customElements.get(tagName))
+            }
+            if (customElements.get(tagName)) {
+                this.addLoadedPlugin(tagName, pluginType, plugin);
+                this.requestUpdate('loadedPlugins');
                 return;
+            }
             const url = new URL(plugin.src, window.location.href).toString();
-            import(url).then(mod => customElements.define(tagName, mod.default));
+            import(url).then(mod => {
+                this.addLoadedPlugin(tagName, pluginType, plugin);
+                // Because this is async, we need to check (again) if the element is already defined.
+                if (!customElements.get(tagName)) {
+                    customElements.define(tagName, mod.default);
+                }
+                this.requestUpdate('loadedPlugins');
+            });
         }));
         __classPrivateFieldSet(this, _OpenSCD_plugins, { menu: [], editor: [], ...plugins }, "f");
-        this.requestUpdate();
     }
     handleOpenDoc({ detail: { docName, doc } }) {
-        this.docName = docName;
-        this.docs[this.docName] = doc;
+        this.docs[docName] = doc;
+        if (this.isEditable(docName))
+            this.docName = docName;
+        this.requestUpdate();
     }
     handleEditEvent(event) {
         const edit = event.detail;
@@ -9301,7 +14564,7 @@ let OpenSCD = class OpenSCD extends s$1 {
     }
     get menu() {
         var _a;
-        return ((_a = this.plugins.menu) === null || _a === void 0 ? void 0 : _a.map((plugin) => plugin.active
+        return ((_a = this.loadedPlugins.menu) === null || _a === void 0 ? void 0 : _a.map((plugin) => plugin.active
             ? {
                 icon: plugin.icon,
                 getName: () => {
@@ -9319,7 +14582,7 @@ let OpenSCD = class OpenSCD extends s$1 {
     }
     get editors() {
         var _a;
-        return (_a = this.plugins.editor) === null || _a === void 0 ? void 0 : _a.map((plugin) => plugin.active
+        return (_a = this.loadedPlugins.editor) === null || _a === void 0 ? void 0 : _a.map((plugin) => plugin.active
             ? {
                 icon: plugin.icon,
                 getName: () => {
@@ -9386,7 +14649,41 @@ let OpenSCD = class OpenSCD extends s$1 {
         </mwc-list>
         <mwc-top-app-bar-fixed slot="appContent">
           ${renderActionItem(this.controls.menu, 'navigationIcon')}
-          <div slot="title" id="title">${this.docName}</div>
+          <div
+            slot="title"
+            id="title"
+            style="position: relative; --mdc-icon-button-size: 32px"
+          >
+            ${this.editableDocs.length > 1
+            ? y `<mwc-icon-button
+                  icon="arrow_drop_down"
+                  id="fileMenuButton"
+                  @click=${() => this.fileMenuUI.show()}
+                ></mwc-icon-button>`
+            : b}
+            ${this.docName}
+            ${this.docName
+            ? y `<mwc-icon-button
+                  icon="edit"
+                  @click=${() => this.editFileUI.show()}
+                ></mwc-icon-button>`
+            : b}
+            <mwc-menu
+              fixed
+              id="fileMenu"
+              corner="BOTTOM_END"
+              @selected=${({ detail: { index } }) => {
+            const item = this.fileMenuUI.selected;
+            if (!item)
+                return;
+            this.docName = this.editableDocs[index];
+            item.selected = false;
+            this.fileMenuUI.layout();
+        }}
+            >
+              ${this.editableDocs.map(name => y `<mwc-list-item>${name}</mwc-list-item>`)}
+            </mwc-menu>
+          </div>
           ${__classPrivateFieldGet(this, _OpenSCD_actions, "f").map(op => renderActionItem(op))}
           <mwc-tab-bar
             activeIndex=${this.editors.filter(p => !p.isDisabled()).length
@@ -9408,6 +14705,77 @@ let OpenSCD = class OpenSCD extends s$1 {
             : b}
         </mwc-top-app-bar-fixed>
       </mwc-drawer>
+      <mwc-dialog
+        id="editFile"
+        heading="${this.docName}"
+        @closed=${({ detail }) => {
+            if (!detail)
+                return;
+            if (detail.action === 'remove') {
+                delete this.docs[this.docName];
+                this.docName = this.editableDocs[0] || '';
+            }
+        }}
+      >
+        <mwc-textfield
+          id="fileName"
+          label="${msg('Filename')}"
+          value="${this.docName.replace(/\.[^.]+$/, '')}"
+          dialogInitialFocus
+          .validityTransform=${(value) => {
+            const name = `${value}.${this.fileExtensionUI.value}`;
+            if (name in this.docs && name !== this.docName)
+                return {
+                    valid: false,
+                };
+            return {};
+        }}
+        ></mwc-textfield>
+        <mwc-select
+          label="${msg('Extension')}"
+          fixedMenuPosition
+          id="fileExtension"
+          @selected=${() => this.fileNameUI.reportValidity()}
+        >
+          ${this.editable.map(ext => y `<mwc-list-item
+                ?selected=${this.docName.endsWith(`.${ext}`)}
+                value="${ext}"
+                >${ext}</mwc-list-item
+              >`)}
+        </mwc-select>
+        <mwc-button
+          slot="secondaryAction"
+          icon="delete"
+          style="--mdc-theme-primary: var(--oscd-error)"
+          dialogAction="remove"
+        >
+          ${msg('Close file')}
+        </mwc-button>
+        <mwc-button slot="secondaryAction" dialogAction="close">
+          ${msg('Cancel')}
+        </mwc-button>
+        <mwc-button
+          slot="primaryAction"
+          icon="edit"
+          @click=${() => {
+            const valid = this.fileNameUI.checkValidity();
+            if (!valid) {
+                this.fileNameUI.reportValidity();
+                return;
+            }
+            const newDocName = `${this.fileNameUI.value}.${this.fileExtensionUI.value}`;
+            if (this.docs[newDocName])
+                return;
+            this.docs[newDocName] = this.doc;
+            delete this.docs[this.docName];
+            this.docName = newDocName;
+            this.editFileUI.close();
+        }}
+          trailingIcon
+        >
+          ${msg('Rename')}
+        </mwc-button>
+      </mwc-dialog>
       <mwc-dialog id="log" heading="${this.controls.log.getName()}">
         <mwc-list wrapFocus>${this.renderHistory()}</mwc-list>
         <mwc-button
@@ -9429,16 +14797,32 @@ let OpenSCD = class OpenSCD extends s$1 {
         >
       </mwc-dialog>
       <aside>
-        ${this.plugins.menu.map(plugin => n `<${o$1(pluginTag(plugin.src))} docName="${this.docName}" .doc=${this.doc} locale="${this.locale}" .docs=${this.docs} .editCount=${this.editCount}></${o$1(pluginTag(plugin.src))}>`)}
+        ${this.loadedPlugins.menu.map(plugin => n `<${o$1(pluginTag(plugin.src))} docName="${this.docName}" .doc=${this.doc} locale="${this.locale}" .docs=${this.docs} .editCount=${this.editCount}></${o$1(pluginTag(plugin.src))}>`)}
       </aside>`;
     }
     firstUpdated() {
         const background = getComputedStyle(this.menuUI).getPropertyValue('--oscd-base2');
         document.body.style.background = background;
     }
+    updated() {
+        if (this.fileMenuButtonUI)
+            this.fileMenuUI.anchor = this.fileMenuButtonUI;
+    }
 };
-_OpenSCD_loadedPlugins = new WeakMap(), _OpenSCD_plugins = new WeakMap(), _OpenSCD_actions = new WeakMap();
+_OpenSCD_loadedPlugins = new WeakMap(), _OpenSCD_loadedPluginTagNames = new WeakMap(), _OpenSCD_plugins = new WeakMap(), _OpenSCD_actions = new WeakMap();
 OpenSCD.styles = i$5 `
+    .fileext {
+      opacity: 0.81;
+    }
+
+    .filename {
+      caret-color: var(--oscd-secondary);
+    }
+
+    .filename:focus {
+      outline: none;
+    }
+
     aside {
       position: absolute;
       top: 0;
@@ -9515,6 +14899,19 @@ OpenSCD.styles = i$5 `
 
       --mdc-dialog-heading-ink-color: var(--oscd-base00);
 
+      --mdc-text-field-fill-color: var(--oscd-base2);
+      --mdc-text-field-ink-color: var(--oscd-base02);
+      --mdc-text-field-label-ink-color: var(--oscd-base01);
+      --mdc-text-field-idle-line-color: var(--oscd-base00);
+      --mdc-text-field-hover-line-color: var(--oscd-base02);
+
+      --mdc-select-fill-color: var(--oscd-base2);
+      --mdc-select-ink-color: var(--oscd-base02);
+      --mdc-select-label-ink-color: var(--oscd-base01);
+      --mdc-select-idle-line-color: var(--oscd-base00);
+      --mdc-select-hover-line-color: var(--oscd-base02);
+      --mdc-select-dropdown-icon-color: var(--oscd-base01);
+
       --mdc-typography-font-family: var(--oscd-text-font);
       --mdc-icon-font: var(--oscd-icon-font);
     }
@@ -9550,22 +14947,43 @@ __decorate([
     t$1()
 ], OpenSCD.prototype, "docs", void 0);
 __decorate([
-    e$5({ type: String, reflect: true })
+    e$6({ type: String, reflect: true })
 ], OpenSCD.prototype, "docName", void 0);
+__decorate([
+    e$6({ type: Array, reflect: true })
+], OpenSCD.prototype, "editable", void 0);
+__decorate([
+    t$1()
+], OpenSCD.prototype, "editableDocs", null);
 __decorate([
     t$1()
 ], OpenSCD.prototype, "loadedPlugins", null);
 __decorate([
-    e$5({ type: Object })
+    e$6({ type: Object })
 ], OpenSCD.prototype, "plugins", null);
 __decorate([
     i$2('#log')
 ], OpenSCD.prototype, "logUI", void 0);
 __decorate([
+    i$2('#editFile')
+], OpenSCD.prototype, "editFileUI", void 0);
+__decorate([
     i$2('#menu')
 ], OpenSCD.prototype, "menuUI", void 0);
 __decorate([
-    e$5({ type: String, reflect: true })
+    i$2('#fileName')
+], OpenSCD.prototype, "fileNameUI", void 0);
+__decorate([
+    i$2('#fileExtension')
+], OpenSCD.prototype, "fileExtensionUI", void 0);
+__decorate([
+    i$2('#fileMenu')
+], OpenSCD.prototype, "fileMenuUI", void 0);
+__decorate([
+    i$2('#fileMenuButton')
+], OpenSCD.prototype, "fileMenuButtonUI", void 0);
+__decorate([
+    e$6({ type: String, reflect: true })
 ], OpenSCD.prototype, "locale", null);
 __decorate([
     t$1()
@@ -9580,7 +14998,7 @@ __decorate([
     t$1()
 ], OpenSCD.prototype, "editors", null);
 OpenSCD = __decorate([
-    e$6('open-scd'),
+    e$7('open-scd'),
     localized()
 ], OpenSCD);
 
