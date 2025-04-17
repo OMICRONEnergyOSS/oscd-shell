@@ -14367,7 +14367,7 @@ function pluginTag(uri) {
 const { getLocale, setLocale } = configureLocalization({
     sourceLocale,
     targetLocales,
-    loadLocale: locale => import(new URL(`locales/${locale}.js`, import.meta.url).href),
+    loadLocale: locale => import(new URL(`./locales/${locale}.js`, import.meta.url).href),
 });
 function describe({ undo, redo }) {
     let result = msg('Something unexpected happened!');
