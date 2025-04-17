@@ -77,7 +77,7 @@ const { getLocale, setLocale } = configureLocalization({
 });
 
 function describe({ undo, redo }: LogEntry) {
-  let result = msg('Something unexpected happened!');
+  let result = msg('Something shockingly unexpected happened!');
   if (isComplex(redo)) result = msg(str`≥ ${redo.length} nodes changed`);
   if (isInsert(redo))
     if (isInsert(undo))
