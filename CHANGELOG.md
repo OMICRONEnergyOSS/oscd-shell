@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/OMICRONEnergyOSS/open-scd-core/compare/open-scd-core-v0.0.3...open-scd-core-v0.0.4) (2025-04-22)
+
+
+### Bug Fixes
+
+* **package:** localize as part of bundle script ([653a506](https://github.com/OMICRONEnergyOSS/open-scd-core/commit/653a50667163e9a9381d26ccb10e927f0758ec73))
+
 ## [0.0.3](https://github.com/OMICRONEnergyOSS/open-scd-core/compare/open-scd-core-v0.0.2...open-scd-core-v0.0.3) (2025-04-22)
 
 
