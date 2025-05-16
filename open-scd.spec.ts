@@ -15,7 +15,7 @@ function isOscdPlugin(tag: string): boolean {
 
 const doc = new DOMParser().parseFromString(
   `<testdoc></testdoc>`,
-  'application/xml'
+  'application/xml',
 );
 
 const testMenuPlugin = {
@@ -56,7 +56,7 @@ describe('with editor plugins loaded', () => {
 
     await waitUntil(() => {
       const pluginTab = editor?.shadowRoot?.querySelector(
-        `mwc-tab[label="${testEditorPlugin.name}"]`
+        `mwc-tab[label="${testEditorPlugin.name}"]`,
       );
       return !!pluginTab;
     }, 'Custom Plugin did not load');
@@ -99,7 +99,7 @@ describe('with editor plugins loaded', () => {
       newEditEvent({
         element: doc.querySelector('testdoc')!,
         attributes: { name: 'someName' },
-      })
+      }),
     );
     await editor.updateComplete;
 
@@ -119,9 +119,9 @@ describe('with menu plugins loaded', () => {
         util.querySelectorWithTextContent(
           editor.menuUI,
           'mwc-list-item > span',
-          testMenuPlugin.name
+          testMenuPlugin.name,
         ),
-      'Custom Plugin did not load'
+      'Custom Plugin did not load',
     );
   });
 
@@ -162,7 +162,7 @@ describe('with menu plugins loaded', () => {
       newEditEvent({
         element: doc.querySelector('testdoc')!,
         attributes: { name: 'someName' },
-      })
+      }),
     );
     await editor.updateComplete;
 
@@ -183,16 +183,16 @@ describe('Custom plugins', () => {
         util.querySelectorWithTextContent(
           editor.menuUI,
           'mwc-list-item > span',
-          testMenuPlugin.name
+          testMenuPlugin.name,
         ),
-      'Custom Plugin did not load'
+      'Custom Plugin did not load',
     );
   });
 
   it('executes the plugin upon menu item click', async () => {
     const sclDoc = new DOMParser().parseFromString(
       util.sclDocString,
-      'application/xml'
+      'application/xml',
     );
     editor.dispatchEvent(newOpenEvent(sclDoc, 'test.scd'));
     await editor.updateComplete;
@@ -201,15 +201,15 @@ describe('Custom plugins', () => {
     await editor.updateComplete;
     expect(sclDoc.querySelector('Substation')).to.not.exist;
 
-    editor.menuUI.open = true;
+    editor.menuUI.opened = true;
     await editor.menuUI.updateComplete;
     const pluginMenuItem = util
       .querySelectorWithTextContent(
         editor.menuUI,
         'mwc-list-item > span',
-        'Test Undo Menu Plugin'
+        'Test Undo Menu Plugin',
       )
-      ?.closest('mwc-list-item');
+      ?.closest('mwc-list-item') as HTMLLIElement;
     expect(pluginMenuItem).to.exist;
     expect(pluginMenuItem).to.have.property('disabled', false);
     pluginMenuItem?.click();
@@ -230,7 +230,7 @@ describe('Custom plugins', () => {
 
     customElements.define(
       customEditorPluginTagName,
-      class extends HTMLElement {}
+      class extends HTMLElement {},
     );
 
     const customElementDefineSpy = Sinon.spy(window.customElements, 'define');
@@ -276,23 +276,23 @@ describe('localization', () => {
         util.querySelectorWithTextContent(
           editor.menuUI,
           'mwc-list-item > span',
-          testMenuPlugin.name
+          testMenuPlugin.name,
         ),
-      'Custom menu plugin did not load'
+      'Custom menu plugin did not load',
     );
     await waitUntil(() => {
       const pluginTab = editor?.shadowRoot?.querySelector(
-        `mwc-tab[label="${testEditorPlugin.name}"]`
+        `mwc-tab[label="${testEditorPlugin.name}"]`,
       );
       return !!pluginTab;
     }, 'Custom editor plugin did not load');
 
     menuItemStrings = Array.from(
-      editor.menuUI.querySelectorAll('mwc-list-item > span')
+      editor.menuUI.querySelectorAll('mwc-list-item > span'),
     ).map((span: Element) => span.textContent?.trim() || '');
 
     editorTabStrings = Array.from(
-      editor?.shadowRoot?.querySelectorAll('mwc-tab') || []
+      editor?.shadowRoot?.querySelectorAll('mwc-tab') || [],
     ).map((tab: Element) => tab.getAttribute('label')?.trim() || '');
 
     logDialogStrings = {
@@ -325,7 +325,7 @@ describe('localization', () => {
 
   it('the menu items appear in german', () => {
     const untranslatedStrings = Array.from(
-      editor.menuUI.querySelectorAll('mwc-list-item > span')
+      editor.menuUI.querySelectorAll('mwc-list-item > span'),
     )
       .map((span: Element) => span.textContent?.trim() || '')
       .filter((text: string) => menuItemStrings.includes(text));
@@ -335,7 +335,7 @@ describe('localization', () => {
 
   it('the editor plugin appears in german', () => {
     const untranslatedStrings = Array.from(
-      editor.shadowRoot?.querySelectorAll('mwc-tab') || []
+      editor.shadowRoot?.querySelectorAll('mwc-tab') || [],
     )
       .map((span: Element) => span.textContent?.trim() || '')
       .filter((text: string) => editorTabStrings.includes(text));

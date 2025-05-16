@@ -16,6 +16,9 @@ import {
   webUrl,
 } from 'fast-check';
 
+import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
+import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
+
 import {
   Edit,
   Insert,
@@ -38,7 +41,7 @@ export namespace util {
 
   export function descendants(parent: Element | XMLDocument): Node[] {
     return (Array.from(parent.childNodes) as Node[]).concat(
-      ...Array.from(parent.children).map(child => descendants(child))
+      ...Array.from(parent.children).map(child => descendants(child)),
     );
   }
 
@@ -73,19 +76,19 @@ export namespace util {
   export type TestDoc = { doc: XMLDocument; nodes: Node[] };
   export const testDocs = tuple(
     constantFrom(...testDocStrings),
-    constantFrom(...testDocStrings)
+    constantFrom(...testDocStrings),
   )
     .map(strs =>
-      strs.map(str => new DOMParser().parseFromString(str, 'application/xml'))
+      strs.map(str => new DOMParser().parseFromString(str, 'application/xml')),
     )
     .map(docs =>
-      docs.map(doc => ({ doc, nodes: descendants(doc).concat([doc]) }))
+      docs.map(doc => ({ doc, nodes: descendants(doc).concat([doc]) })),
     ) as Arbitrary<[TestDoc, TestDoc]>;
 
   export function remove(nodes: Node[]): Arbitrary<Remove> {
     const node = oneof(
       { arbitrary: constantFrom(...nodes), weight: nodes.length },
-      testDocs.chain(docs => constantFrom(...docs.map(d => d.doc)))
+      testDocs.chain(docs => constantFrom(...docs.map(d => d.doc))),
     );
     return record({ node });
   }
@@ -104,7 +107,7 @@ export namespace util {
     );
     const attributes = dictionary(
       oneof(stringArbitrary(), constant('colliding-attribute-name')),
-      oneof(stringArbitrary(), constant(null))
+      oneof(stringArbitrary(), constant(null)),
     );
     return record({ element, attributes });
   }
@@ -115,7 +118,7 @@ export namespace util {
     );
     const attributes = dictionary(
       stringArbitrary(),
-      oneof(stringArbitrary(), constant(null))
+      oneof(stringArbitrary(), constant(null)),
     );
     // object() instead of nested dictionary() necessary for performance reasons
     const attributesNS = objectArbitrary({
@@ -126,15 +129,15 @@ export namespace util {
       aNS =>
         Object.fromEntries(
           Object.entries(aNS).filter(
-            ([_, attrs]) => attrs && !(typeof attrs === 'string')
-          )
-        ) as Partial<Record<string, Partial<Record<string, Value>>>>
+            ([_, attrs]) => attrs && !(typeof attrs === 'string'),
+          ),
+        ) as Partial<Record<string, Partial<Record<string, Value>>>>,
     );
     return record({ element, attributes, attributesNS });
   }
 
   export function simpleEdit(
-    nodes: Node[]
+    nodes: Node[],
   ): Arbitrary<Insert | Update | Remove> {
     return oneof(remove(nodes), insert(nodes), update(nodes), updateNS(nodes));
   }
@@ -146,7 +149,7 @@ export namespace util {
   export function edit(nodes: Node[]): Arbitrary<Edit> {
     return oneof(
       { arbitrary: simpleEdit(nodes), weight: 2 },
-      complexEdit(nodes)
+      complexEdit(nodes),
     );
   }
 
@@ -158,7 +161,7 @@ export namespace util {
   };
   export function undoRedoTestCases(
     testDoc1: TestDoc,
-    testDoc2: TestDoc
+    testDoc2: TestDoc,
   ): Arbitrary<UndoRedoTestCase> {
     const nodes = testDoc1.nodes.concat(testDoc2.nodes);
     return record({
@@ -190,7 +193,7 @@ export namespace util {
       isParentOf(parent, reference) &&
       !node.contains(parent) &&
       ![Node.DOCUMENT_NODE, Node.DOCUMENT_TYPE_NODE].some(
-        nodeType => node.nodeType === nodeType
+        nodeType => node.nodeType === nodeType,
       ) &&
       !(
         parent instanceof Document &&
@@ -202,7 +205,7 @@ export namespace util {
   export function querySelectorWithTextContent(
     scope: Element,
     selector: string,
-    text: string
+    text: string,
   ) {
     const elements = Array.from(scope.querySelectorAll(selector));
     return elements.find(e => (e.textContent || '').trim() === text);
@@ -231,7 +234,7 @@ describe('open-scd', () => {
     editor = <OpenSCD>await fixture(html`<open-scd></open-scd>`);
     sclDoc = new DOMParser().parseFromString(
       util.sclDocString,
-      'application/xml'
+      'application/xml',
     );
   });
 
@@ -270,9 +273,10 @@ describe('open-scd', () => {
         ?.click();
       const dialog = editor.editFileUI;
       await dialog.updateComplete;
-      const textfield = dialog.querySelector('mwc-textfield')!;
+      const textfield =
+        dialog.querySelector<OscdFilledTextField>('mwc-textfield')!;
       textfield.value = 'newName';
-      const select = dialog.querySelector('mwc-select')!;
+      const select = dialog.querySelector('mwc-select')! as OscdFilledSelect;
       select.value = 'cid';
       await textfield.updateComplete;
       await select.updateComplete;
@@ -326,15 +330,19 @@ describe('open-scd', () => {
       const existingDocNameWithExtension = editor.docName;
 
       editor.shadowRoot
-        ?.querySelector<HTMLButtonElement>('mwc-icon-button[icon=edit]')
+        ?.querySelector<HTMLButtonElement>('oscd-icon-button[icon=edit]')
         ?.click();
       const dialog = editor.editFileUI;
       await dialog.updateComplete;
-      const textfield = dialog.querySelector('mwc-textfield')!;
+      const textfield = dialog.querySelector<OscdFilledTextField>(
+        'oscd-filled-text-field',
+      )!;
       textfield.value = anotherDocNameWithoutExtension!;
       await textfield.updateComplete;
       dialog
-        .querySelector<HTMLButtonElement>('mwc-button[slot="primaryAction"]')
+        .querySelector<HTMLButtonElement>(
+          'oscd-text-button[slot="primaryAction"]',
+        )
         ?.click();
       await editor.updateComplete;
       expect(editor).to.have.property('docName', existingDocNameWithExtension);
@@ -348,7 +356,7 @@ describe('open-scd', () => {
     editor.dispatchEvent(newEditEvent({ parent, node, reference }));
     expect(sclDoc.documentElement.querySelector('test')).to.have.property(
       'nextSibling',
-      reference
+      reference,
     );
   });
 
@@ -372,7 +380,7 @@ describe('open-scd', () => {
             namespaceURI: 'http://example.org/myns',
           },
         },
-      })
+      }),
     );
     expect(element).to.have.attribute('name', 'A2');
     expect(element).to.not.have.attribute('desc');
@@ -404,7 +412,7 @@ describe('open-scd', () => {
             attr2: 'value3',
           },
         },
-      })
+      }),
     );
     expect(element).to.have.attribute('name', 'A2');
     expect(element).to.not.have.attribute('desc');
@@ -426,15 +434,15 @@ describe('open-scd', () => {
       newEditEvent([
         { parent, node: node1, reference },
         { parent, node: node2, reference },
-      ])
+      ]),
     );
     expect(sclDoc.documentElement.querySelector('test1')).to.have.property(
       'nextSibling',
-      node2
+      node2,
     );
     expect(sclDoc.documentElement.querySelector('test2')).to.have.property(
       'nextSibling',
-      reference
+      reference,
     );
   });
 
@@ -444,7 +452,7 @@ describe('open-scd', () => {
 
     (
       editor.querySelector(
-        'mwc-icon-button[slot="navigationIcon"]'
+        'mwc-icon-button[slot="navigationIcon"]',
       ) as HTMLButtonElement
     )?.click();
     await editor.updateComplete;
@@ -452,9 +460,9 @@ describe('open-scd', () => {
       .querySelectorWithTextContent(
         editor.menuUI,
         'mwc-list-item > span',
-        'Undo'
+        'Undo',
       )
-      ?.closest('mwc-list-item');
+      ?.closest('mwc-list-item') as HTMLButtonElement;
     expect(undoButton).to.exist;
     expect(undoButton).to.have.property('disabled', false);
     undoButton?.click();
@@ -473,9 +481,9 @@ describe('open-scd', () => {
       .querySelectorWithTextContent(
         editor.menuUI,
         'mwc-list-item > span',
-        'Redo'
+        'Redo',
       )
-      ?.closest('mwc-list-item');
+      ?.closest('mwc-list-item') as HTMLButtonElement;
     expect(redoButton).to.exist;
     expect(redoButton).to.have.property('disabled', false);
     redoButton?.click();
@@ -532,7 +540,7 @@ describe('open-scd', () => {
 
       expect(editor.logUI).to.have.attribute('open');
       const closeButton = editor.logUI?.querySelector(
-        'mwc-button[dialogAction="close"]'
+        'mwc-button[dialogAction="close"]',
       ) as HTMLButtonElement;
       expect(closeButton).to.exist;
       closeButton?.click();
@@ -578,7 +586,7 @@ describe('open-scd', () => {
       await editor.updateComplete;
 
       expect(
-        editor.logUI?.querySelectorAll('mwc-list > abbr')
+        editor.logUI?.querySelectorAll('mwc-list > abbr'),
       ).to.have.lengthOf(historyItemsCount! + 1);
     });
 
@@ -587,7 +595,7 @@ describe('open-scd', () => {
       editor.dispatchEvent(newEditEvent({ node }));
       await editor.updateComplete;
       const undoButton = editor.logUI?.querySelector(
-        'mwc-button[icon="undo"]'
+        'mwc-button[icon="undo"]',
       ) as HTMLButtonElement;
       expect(undoButton).to.exist;
       expect(undoButton).to.have.property('disabled', false);
@@ -604,7 +612,7 @@ describe('open-scd', () => {
       await editor.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.exist;
       const redoButton = editor.logUI?.querySelector(
-        'mwc-button[icon="redo"]'
+        'mwc-button[icon="redo"]',
       ) as HTMLButtonElement;
       expect(redoButton).to.exist;
       expect(redoButton).to.have.property('disabled', false);
@@ -630,8 +638,8 @@ describe('open-scd', () => {
                 edit.node.nextSibling === edit.reference
               );
             return true;
-          }
-        )
+          },
+        ),
       ));
 
     it('updates default namespace attributes on Update edit events', () =>
@@ -643,13 +651,13 @@ describe('open-scd', () => {
             return Object.entries(edit.attributes)
               .filter(
                 ([name, value]) =>
-                  util.xmlAttributeName.test(name) && !isNamespaced(value!)
+                  util.xmlAttributeName.test(name) && !isNamespaced(value!),
               )
               .every(
-                ([name, value]) => edit.element.getAttribute(name) === value
+                ([name, value]) => edit.element.getAttribute(name) === value,
               );
-          }
-        )
+          },
+        ),
       ));
 
     it('updates namespaced attributes on Update edit events', () =>
@@ -663,18 +671,18 @@ describe('open-scd', () => {
                 ([name, value]) =>
                   util.xmlAttributeName.test(name) &&
                   isNamespaced(value!) &&
-                  value.namespaceURI
+                  value.namespaceURI,
               )
               .map(entry => entry as [string, NamespacedAttributeValue])
               .every(
                 ([name, { value, namespaceURI }]) =>
                   edit.element.getAttributeNS(
                     <string>namespaceURI,
-                    name.includes(':') ? <string>name.split(':', 2)[1] : name
-                  ) === value
+                    name.includes(':') ? <string>name.split(':', 2)[1] : name,
+                  ) === value,
               );
-          }
-        )
+          },
+        ),
       ));
 
     it('updates default- and foreign-namespace attributes on UpdateNS events', () =>
@@ -688,7 +696,7 @@ describe('open-scd', () => {
                 .filter(([name]) => util.xmlAttributeName.test(name))
                 .map(entry => entry as [string, Value])
                 .every(
-                  ([name, value]) => edit.element.getAttribute(name) === value
+                  ([name, value]) => edit.element.getAttribute(name) === value,
                 ) &&
               Object.entries(edit.attributesNS)
                 .map(entry => entry as [string, Record<string, Value>])
@@ -702,13 +710,13 @@ describe('open-scd', () => {
                           ns,
                           name.includes(':')
                             ? <string>name.split(':', 2)[1]
-                            : name
-                        ) === value
-                    )
+                            : name,
+                        ) === value,
+                    ),
                 )
             );
-          }
-        )
+          },
+        ),
       )).timeout(20000);
 
     it('removes elements on Remove edit events', () =>
@@ -718,8 +726,8 @@ describe('open-scd', () => {
           ({ node }) => {
             editor.dispatchEvent(newEditEvent({ node }));
             return !node.parentNode;
-          }
-        )
+          },
+        ),
       ));
 
     it('undoes up to n edits on undo(n) call', () =>
@@ -728,21 +736,21 @@ describe('open-scd', () => {
           util.testDocs.chain(docs => util.undoRedoTestCases(...docs)),
           ({ doc1, doc2, edits }: util.UndoRedoTestCase) => {
             const [oldDoc1, oldDoc2] = [doc1, doc2].map(doc =>
-              doc.cloneNode(true)
+              doc.cloneNode(true),
             );
             edits.forEach((a: Edit) => {
               editor.dispatchEvent(newEditEvent(a));
             });
             if (edits.length) editor.undo(edits.length);
             expect(doc1).to.satisfy((doc: XMLDocument) =>
-              doc.isEqualNode(oldDoc1)
+              doc.isEqualNode(oldDoc1),
             );
             expect(doc2).to.satisfy((doc: XMLDocument) =>
-              doc.isEqualNode(oldDoc2)
+              doc.isEqualNode(oldDoc2),
             );
             return true;
-          }
-        )
+          },
+        ),
       )).timeout(20000);
 
     it('redoes up to n edits on redo(n) call', () =>
@@ -754,18 +762,18 @@ describe('open-scd', () => {
               editor.dispatchEvent(newEditEvent(a));
             });
             const [oldDoc1, oldDoc2] = [doc1, doc2].map(doc =>
-              new XMLSerializer().serializeToString(doc)
+              new XMLSerializer().serializeToString(doc),
             );
             if (edits.length) {
               editor.undo(edits.length + 1);
               editor.redo(edits.length + 1);
             }
             const [newDoc1, newDoc2] = [doc1, doc2].map(doc =>
-              new XMLSerializer().serializeToString(doc)
+              new XMLSerializer().serializeToString(doc),
             );
             return oldDoc1 === newDoc1 && oldDoc2 === newDoc2;
-          }
-        )
+          },
+        ),
       )).timeout(20000);
   });
 });

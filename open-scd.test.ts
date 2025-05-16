@@ -1,7 +1,7 @@
 import { visualDiff } from '@web/test-runner-visual-regression';
 
-import type { IconButton } from '@material/mwc-icon-button';
-import type { ListItem } from '@material/mwc-list/mwc-list-item.js';
+import type { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/icon-button.js';
+import type { OscdListItem } from '@omicronenergy/oscd-ui/list/list-item.js';
 
 import './open-scd.js';
 import { expect, waitUntil } from '@open-wc/testing';
@@ -13,7 +13,9 @@ import { allLocales } from './locales.js';
 const factor = window.process && process.env.CI ? 4 : 2;
 
 function timeout(ms: number) {
-  return new Promise(res => setTimeout(res, ms * factor));
+  return new Promise(res => {
+    setTimeout(res, ms * factor);
+  });
 }
 
 function isMenuFullyOpen(editor: OpenSCD) {
@@ -27,7 +29,7 @@ mocha.timeout(2000 * factor);
 
 const doc = new DOMParser().parseFromString(
   `<testdoc></testdoc>`,
-  'application/xml'
+  'application/xml',
 );
 
 let editor: OpenSCD;
@@ -61,7 +63,7 @@ allLocales.forEach(lang =>
       await editor.updateComplete;
       await waitUntil(
         () => editor.locale === lang,
-        `setting locale to ${lang} failed`
+        `setting locale to ${lang} failed`,
       );
     });
 
@@ -74,7 +76,7 @@ allLocales.forEach(lang =>
     it(`displays a menu on button click`, async () => {
       await editor.updateComplete;
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="menu"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="menu"]')
         ?.click();
 
       await editor.menuUI?.updateComplete;
@@ -97,10 +99,10 @@ allLocales.forEach(lang =>
     it(`shows a log screen`, async () => {
       await editor.updateComplete;
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="menu"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="menu"]')
         ?.click();
       editor.shadowRoot
-        ?.querySelector<ListItem>('mwc-list-item:last-child')
+        ?.querySelector<OscdListItem>('mwc-list-item:last-child')
         ?.click();
 
       await editor.updateComplete;
@@ -127,7 +129,7 @@ allLocales.forEach(lang =>
               namespaceURI: 'http://example.org/myns',
             },
           },
-        })
+        }),
       );
 
       editor.dispatchEvent(newEditEvent({ node }));
@@ -136,12 +138,12 @@ allLocales.forEach(lang =>
           { parent, node, reference },
           { parent, node, reference: null },
           { invalid: 'edit' } as unknown as Edit,
-        ])
+        ]),
       );
 
       await editor.updateComplete;
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="history"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="history"]')
         ?.click();
 
       await editor.updateComplete;
@@ -149,19 +151,19 @@ allLocales.forEach(lang =>
       await visualDiff(editor, `log-entries-${lang}`);
 
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="undo"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="undo"]')
         ?.click();
       await editor.updateComplete;
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="undo"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="undo"]')
         ?.click();
       await editor.updateComplete;
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="undo"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="undo"]')
         ?.click();
       await editor.updateComplete;
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="undo"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="undo"]')
         ?.click();
       await editor.updateComplete;
       editor.dispatchEvent(
@@ -170,7 +172,7 @@ allLocales.forEach(lang =>
           ctrlKey: true,
           bubbles: true,
           composed: true,
-        })
+        }),
       );
       editor.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -178,7 +180,7 @@ allLocales.forEach(lang =>
           ctrlKey: false,
           bubbles: true,
           composed: true,
-        })
+        }),
       );
       editor.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -186,7 +188,7 @@ allLocales.forEach(lang =>
           ctrlKey: true,
           bubbles: true,
           composed: true,
-        })
+        }),
       );
       await editor.updateComplete;
 
@@ -194,11 +196,11 @@ allLocales.forEach(lang =>
       await visualDiff(editor, `log-entries-undone-${lang}`);
 
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="redo"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="redo"]')
         ?.click();
       await editor.updateComplete;
       editor.shadowRoot
-        ?.querySelector<IconButton>('mwc-icon-button[icon="redo"]')
+        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="redo"]')
         ?.click();
       await editor.updateComplete;
 
@@ -249,7 +251,7 @@ allLocales.forEach(lang =>
 
       it('displays menu plugins in the menu', async () => {
         editor.shadowRoot
-          ?.querySelector<IconButton>('mwc-icon-button[icon="menu"]')
+          ?.querySelector<OscdIconButton>('mwc-icon-button[icon="menu"]')
           ?.click();
 
         await editor.updateComplete;
@@ -259,15 +261,15 @@ allLocales.forEach(lang =>
 
       it('triggers menu plugins on menu entry click', async () => {
         editor.shadowRoot
-          ?.querySelector<IconButton>('mwc-icon-button[icon="menu"]')
+          ?.querySelector<OscdIconButton>('mwc-icon-button[icon="menu"]')
           ?.click();
         await editor.updateComplete;
         await timeout(200);
         editor.menuUI
-          ?.querySelector<IconButton>('mwc-list-item:nth-of-type(2)')
+          ?.querySelector<OscdIconButton>('mwc-list-item:nth-of-type(2)')
           ?.click();
         editor.menuUI
-          ?.querySelector<IconButton>('mwc-list-item:nth-of-type(3)')
+          ?.querySelector<OscdIconButton>('mwc-list-item:nth-of-type(3)')
           ?.click();
 
         await editor.updateComplete;
@@ -331,7 +333,7 @@ allLocales.forEach(lang =>
 
       it('changes active editor plugin on tab click', async () => {
         editor.shadowRoot
-          ?.querySelector<IconButton>('mwc-tab:nth-of-type(2)')
+          ?.querySelector<OscdIconButton>('mwc-tab:nth-of-type(2)')
           ?.click();
 
         await editor.updateComplete;
@@ -339,5 +341,5 @@ allLocales.forEach(lang =>
         await visualDiff(editor, `editor-plugins-selected-${lang}`);
       });
     });
-  })
+  }),
 );

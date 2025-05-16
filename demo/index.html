@@ -1,35 +1,108 @@
-<!DOCTYPE html>
-<title>OpenSCD Core Demo</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block">
-<open-scd plugins='{"menu": [{"name": "Add plugins...", "translations": {"de": "Erweitern..."}, "icon": "extension", "active": true, "src": "/demo/AddPlugins.js"}, {"name": "Open File", "translations": {"de": "Datei öffnen"}, "icon": "folder_open", "active": true, "src": "https://openenergytools.github.io/oscd-open/oscd-open.js"}, {"name": "Save File", "translations": {"de": "Datei öffnen"}, "icon": "save", "active": true, "src": "https://openenergytools.github.io/oscd-save/oscd-save.js"}]}'></open-scd>
+<!doctype html>
+<title>OpenSCD Core MD</title>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+  rel="stylesheet"
+/>
+
+<open-scd></open-scd>
 
 <script type="module">
-import '../dist/open-scd.js';
+  import '../dist/open-scd.js';
 
-const editor = document.querySelector('open-scd');
-const params = (new URL(document.location)).searchParams;
-for (const [name, value] of params) {
-editor.setAttribute(name, value);
-}
+  const plugins = {
+    menu: [
+      {
+        name: 'Add plugins...',
+        translations: { de: 'Erweitern...' },
+        icon: 'extension',
+        active: true,
+        src: '/demo/AddPlugins.js',
+      },
+      {
+        name: 'Open File',
+        translations: { de: 'Datei öffnen' },
+        icon: 'folder_open',
+        active: true,
+        src: 'https://openenergytools.github.io/oscd-open/oscd-open.js',
+      },
+      {
+        name: 'Save File',
+        translations: { de: 'Datei öffnen' },
+        icon: 'save',
+        active: true,
+        src: 'https://openenergytools.github.io/oscd-save/oscd-save.js',
+      },
+    ],
+    editor: [
+      {
+        name: 'Start',
+        translations: {
+          de: 'Start',
+        },
+        icon: 'start',
+        active: true,
+        src: 'https://openenergytools.github.io/scl-editor-landing/scl-editor-landing.js',
+      },
+
+      {
+        name: 'Substation',
+        icon: 'margin',
+        active: true,
+        requireDoc: true,
+        src: 'https://openenergytools.github.io/scl-substation-editor/scl-substation-editor.js',
+      },
+      {
+        name: 'Design SLD',
+        translations: {
+          de: 'Designer',
+        },
+        icon: 'add_box',
+        active: true,
+        requireDoc: true,
+        src: 'https://openenergytools.github.io/oscd-designer/oscd-designer.js',
+      },
+    ],
+  };
+
+  const editor = document.querySelector('open-scd');
+  const params = new URL(document.location).searchParams;
+  for (const [name, value] of params) {
+    editor.setAttribute(name, value);
+  }
+  editor.plugins = plugins;
 </script>
 
 <script>
-const _customElementsDefine = window.customElements.define;
-window.customElements.define = (name, cl, conf) => {
-  if (!customElements.get(name)) {
-    _customElementsDefine.call(window.customElements, name, cl, conf);
-  }
-};
+  const _customElementsDefine = window.customElements.define;
+  window.customElements.define = (name, cl, conf) => {
+    if (!customElements.get(name)) {
+      try {
+        _customElementsDefine.call(window.customElements, name, cl, conf);
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+  };
 </script>
 
 <style>
-* {
-  margin: 0px;
-  padding: 0px;
-}
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+  }
 
-body {
-  background: white;
-}
+  * {
+    margin: 0px;
+    padding: 0px;
+  }
 </style>

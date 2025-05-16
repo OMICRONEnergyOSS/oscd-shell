@@ -44,7 +44,7 @@ export function isInsert(edit: Edit): edit is Insert {
 }
 
 export function isNamespaced(
-  value: AttributeValue
+  value: AttributeValue,
 ): value is NamespacedAttributeValue {
   return value !== null && typeof value !== 'string';
 }
@@ -129,7 +129,7 @@ function handleUpdate({ element, attributes }: Update): Update {
         oldAttribute = {
           value: element.getAttributeNS(
             value.namespaceURI,
-            localAttributeName(name)
+            localAttributeName(name),
           ),
           namespaceURI: value.namespaceURI,
         };
@@ -149,7 +149,7 @@ function handleUpdate({ element, attributes }: Update): Update {
         if (value.value === null)
           element.removeAttributeNS(
             value.namespaceURI,
-            localAttributeName(attribute)
+            localAttributeName(attribute),
           );
         else element.setAttributeNS(value.namespaceURI, attribute, value.value);
       } else if (value === null) element.removeAttribute(attribute);

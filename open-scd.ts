@@ -1,28 +1,35 @@
+import { configureLocalization, localized, msg, str } from '@lit/localize';
 import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
-import { configureLocalization, localized, msg, str } from '@lit/localize';
+import type {
+  CloseMenuEvent,
+  OscdMenu,
+} from '@omicronenergy/oscd-ui/menu/menu.js';
 
-import '@material/mwc-button';
-import '@material/mwc-dialog';
-import '@material/mwc-drawer';
-import '@material/mwc-icon';
-import '@material/mwc-icon-button';
-import '@material/mwc-list';
-import '@material/mwc-menu';
-import '@material/mwc-select';
-import '@material/mwc-tab-bar';
-import '@material/mwc-textfield';
-import '@material/mwc-top-app-bar-fixed';
-import type { ActionDetail, SingleSelectedEvent } from '@material/mwc-list';
-import type { Dialog } from '@material/mwc-dialog';
-import type { Drawer } from '@material/mwc-drawer';
-import type { IconButton } from '@material/mwc-icon-button';
-import type { ListItemBase } from '@material/mwc-list/mwc-list-item-base.js';
-import type { Menu } from '@material/mwc-menu';
-import type { Select } from '@material/mwc-select';
-import type { TextField } from '@material/mwc-textfield';
+import '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
+import '@omicronenergy/oscd-ui/drawer/oscd-navigation-drawer.js';
+import '@omicronenergy/oscd-ui/drawer/oscd-navigation-drawer-header.js';
+import '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
+import '@omicronenergy/oscd-ui/button/oscd-text-button.js';
+import '@omicronenergy/oscd-ui/icon/oscd-icon.js';
+import '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
+import '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
+import '@omicronenergy/oscd-ui/select/oscd-select-option.js';
+import '@omicronenergy/oscd-ui/iconbutton/icon-button.js';
+import '@omicronenergy/oscd-ui/list/list.js';
+import '@omicronenergy/oscd-ui/list/list-item.js';
+import '@omicronenergy/oscd-ui/divider/divider.js';
+import '@omicronenergy/oscd-ui/menu/menu.js';
+import '@omicronenergy/oscd-ui/menu/menu-item.js';
+import '@omicronenergy/oscd-ui/tabs/tabs.js';
+import '@omicronenergy/oscd-ui/tabs/secondary-tab.js';
+import type { OscdDialog } from '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
+import type { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/icon-button.js';
+import type { OscdList } from '@omicronenergy/oscd-ui/list/list.js';
+import type { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/drawer/oscd-navigation-drawer.js';
+import type { OscdTabs } from '@omicronenergy/oscd-ui/tabs/tabs.js';
 
 import { allLocales, sourceLocale, targetLocales } from './locales.js';
 
@@ -42,7 +49,7 @@ export type LogEntry = { undo: Edit; redo: Edit };
 
 export type Plugin = {
   name: string;
-  translations?: Record<typeof targetLocales[number], string>;
+  translations?: Record<(typeof targetLocales)[number], string>;
   src: string;
   icon: string;
   requireDoc?: boolean;
@@ -67,7 +74,7 @@ type Control = {
 
 type RenderedPlugin = Control & { tagName: string };
 
-type LocaleTag = typeof allLocales[number];
+type LocaleTag = (typeof allLocales)[number];
 
 const { getLocale, setLocale } = configureLocalization({
   sourceLocale,
@@ -84,7 +91,7 @@ function describe({ undo, redo }: LogEntry) {
       result = msg(str`${redo.node.nodeName} moved to ${redo.parent.nodeName}`);
     else
       result = msg(
-        str`${redo.node.nodeName} inserted into ${redo.parent.nodeName}`
+        str`${redo.node.nodeName} inserted into ${redo.parent.nodeName}`,
       );
   if (isRemove(redo)) result = msg(str`${redo.node.nodeName} removed`);
   if (isUpdate(redo)) result = msg(str`${redo.element.tagName} updated`);
@@ -93,23 +100,27 @@ function describe({ undo, redo }: LogEntry) {
 
 function renderActionItem(
   control: Control,
-  slot = 'actionItems'
+  slot = 'actionItems',
 ): TemplateResult {
-  return html`<mwc-icon-button
+  return html`<oscd-icon-button
     slot="${slot}"
-    icon="${control.icon}"
-    label="${control.getName()}"
+    aria-label="${control.getName()}"
     ?disabled=${control.isDisabled()}
     @click=${control.action}
-  ></mwc-icon-button>`;
+    ><oscd-icon>${control.icon}</oscd-icon></oscd-icon-button
+  >`;
 }
 
 function renderMenuItem(control: Control): TemplateResult {
   return html`
-    <mwc-list-item graphic="icon" .disabled=${control.isDisabled()}
-      ><mwc-icon slot="graphic">${control.icon}</mwc-icon>
+    <oscd-list-item
+      type="button"
+      .disabled=${control.isDisabled()}
+      @click=${control.action}
+    >
+      <oscd-icon slot="start">${control.icon}</oscd-icon>
       <span>${control.getName()}</span>
-    </mwc-list-item>
+    </oscd-list-item>
   `;
 }
 
@@ -162,7 +173,7 @@ export class OpenSCD extends LitElement {
 
   isEditable(docName: string): boolean {
     return !!this.editable.find(ext =>
-      docName.toLowerCase().endsWith(`.${ext}`)
+      docName.toLowerCase().endsWith(`.${ext}`),
     );
   }
 
@@ -214,7 +225,7 @@ export class OpenSCD extends LitElement {
           }
           this.requestUpdate('loadedPlugins');
         });
-      })
+      }),
     );
     this.#plugins = { menu: [], editor: [], ...plugins };
   }
@@ -249,25 +260,25 @@ export class OpenSCD extends LitElement {
   }
 
   @query('#log')
-  logUI!: Dialog;
+  logUI!: OscdDialog;
 
   @query('#editFile')
-  editFileUI!: Dialog;
+  editFileUI!: OscdDialog;
 
   @query('#menu')
-  menuUI!: Drawer;
+  menuUI!: OscdNavigationDrawer;
 
   @query('#fileName')
-  fileNameUI!: TextField;
+  fileNameUI!: HTMLInputElement;
 
   @query('#fileExtension')
-  fileExtensionUI!: Select;
+  fileExtensionUI!: HTMLInputElement;
 
   @query('#fileMenu')
-  fileMenuUI!: Menu;
+  fileMenuUI!: OscdMenu;
 
   @query('#fileMenuButton')
-  fileMenuButtonUI?: IconButton;
+  fileMenuButtonUI?: OscdIconButton;
 
   @property({ type: String, reflect: true })
   get locale() {
@@ -316,9 +327,10 @@ export class OpenSCD extends LitElement {
       icon: 'menu',
       getName: () => msg('Menu'),
       action: async () => {
-        this.menuUI.open = !this.menuUI.open;
+        this.menuUI.opened = !this.menuUI.opened;
         await this.menuUI.updateComplete;
-        if (this.menuUI.open) this.menuUI.querySelector('mwc-list')!.focus();
+        if (this.menuUI.opened)
+          this.menuUI.querySelector<OscdList>('oscd-list')!.focus();
       },
       isDisabled: () => false,
     },
@@ -335,7 +347,7 @@ export class OpenSCD extends LitElement {
               icon: plugin.icon,
               getName: () =>
                 plugin.translations?.[
-                  this.locale as typeof targetLocales[number]
+                  this.locale as (typeof targetLocales)[number]
                 ] || plugin.name,
               isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
               tagName: pluginTag(plugin.src),
@@ -344,7 +356,7 @@ export class OpenSCD extends LitElement {
                   HTMLElement & { run: () => Promise<void> }
                 >(pluginTag(plugin.src))!.run?.(),
             }
-          : undefined
+          : undefined,
       )
       .filter(p => p !== undefined)).concat(this.#actions);
   }
@@ -358,12 +370,12 @@ export class OpenSCD extends LitElement {
               icon: plugin.icon,
               getName: () =>
                 plugin.translations?.[
-                  this.locale as typeof targetLocales[number]
+                  this.locale as (typeof targetLocales)[number]
                 ] || plugin.name,
               isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
               tagName: pluginTag(plugin.src),
             }
-          : undefined
+          : undefined,
       )
       .filter(p => p !== undefined);
   }
@@ -394,213 +406,217 @@ export class OpenSCD extends LitElement {
 
   private renderLogEntry(entry: LogEntry) {
     return html` <abbr title="${describe(entry)}">
-      <mwc-list-item
-        graphic="icon"
-        ?activated=${this.history[this.last] === entry}
-      >
+      <oscd-list-item ?activated=${this.history[this.last] === entry}>
         <span>${describe(entry)}</span>
-        <mwc-icon slot="graphic">history</mwc-icon>
-      </mwc-list-item></abbr
+        <oscd-icon slot="start">history</oscd-icon>
+      </oscd-list-item></abbr
     >`;
   }
 
   private renderHistory(): TemplateResult[] | TemplateResult {
     if (this.history.length > 0)
       return this.history.slice().reverse().map(this.renderLogEntry, this);
-    return html`<mwc-list-item disabled graphic="icon">
+    return html`<oscd-list-item>
       <span>${msg('Your editing history will be displayed here.')}</span>
-      <mwc-icon slot="graphic">info</mwc-icon>
-    </mwc-list-item>`;
+      <oscd-icon slot="start">info</oscd-icon>
+    </oscd-list-item>`;
   }
 
   render() {
-    return html`<mwc-drawer
+    return html`<oscd-app-bar slot="appContent">
+        ${renderActionItem(this.controls.menu, 'actionStart')}
+        <div
+          slot="title"
+          id="title"
+          style="position: relative; --mdc-icon-button-size: 32px"
+        >
+          ${this.editableDocs.length > 1
+            ? html`<oscd-icon-button
+                id="fileMenuButton"
+                @click=${() => this.fileMenuUI.show()}
+                ><oscd-icon>arrow_drop_down</oscd-icon></oscd-icon-button
+              >`
+            : nothing}
+          ${this.docName}
+          ${this.docName
+            ? html`<oscd-icon-button @click=${() => this.editFileUI.show()}
+                ><oscd-icon>edit</oscd-icon></oscd-icon-button
+              >`
+            : nothing}
+          <oscd-menu
+            fixed
+            id="fileMenu"
+            anchor="fileMenuButton"
+            corner="BOTTOM_END"
+            @close-menu=${({ detail: { initiator } }: CloseMenuEvent) => {
+              if (!initiator) return;
+              this.docName = this.editableDocs[parseInt(initiator.id, 10)];
+            }}
+          >
+            ${this.editableDocs.map(
+              (name, index) =>
+                html`<oscd-menu-item
+                  ?selected=${this.docName === name}
+                  id=${index}
+                  >${name}</oscd-menu-item
+                >`,
+            )}
+          </oscd-menu>
+        </div>
+
+        <div slot="actionEnd">
+          ${this.#actions.map(op => renderActionItem(op))}
+        </div>
+
+        <oscd-tabs
+          activeTabIndex=${this.editors.filter(p => !p.isDisabled()).length
+            ? 0
+            : -1}
+          @change=${(event: Event) => {
+            const tabs = event.currentTarget as OscdTabs;
+            this.editorIndex = tabs.activeTabIndex;
+          }}
+        >
+          ${this.editors.map(editor =>
+            editor.isDisabled()
+              ? nothing
+              : html`<oscd-secondary-tab>
+                  <oscd-icon slot="icon">${editor.icon}</oscd-icon>
+                  ${editor.getName()}
+                </oscd-secondary-tab>`,
+          )}
+        </oscd-tabs>
+      </oscd-app-bar>
+
+      <oscd-navigation-drawer
         class="mdc-theme--surface"
         hasheader
         type="modal"
         id="menu"
       >
-        <span
-          slot="title"
-          style="color: var(--mdc-theme-text-primary-on-background)"
-          >${msg('Menu')}</span
-        >
-        ${this.docName
-          ? html`<span
-              slot="subtitle"
-              style="color: var(--mdc-theme-text-secondary-on-background)"
-              >${this.docName}</span
-            >`
-          : ''}
-        <mwc-list
-          wrapFocus
-          @action=${(e: CustomEvent<ActionDetail>) =>
-            this.menu[e.detail.index]!.action()}
-        >
-          <li divider padded role="separator"></li>
+        <oscd-navigation-drawer-header>
+          <span slot="headline">${msg('Menu')}</span>
+          ${this.docName
+            ? html`<span slot="supporting-text">${this.docName}</span>`
+            : ''}
+        </oscd-navigation-drawer-header>
+        <oscd-list>
+          <oscd-divider></oscd-divider>
           ${this.menu.map(renderMenuItem)}
-        </mwc-list>
-        <mwc-top-app-bar-fixed slot="appContent">
-          ${renderActionItem(this.controls.menu, 'navigationIcon')}
-          <div
-            slot="title"
-            id="title"
-            style="position: relative; --mdc-icon-button-size: 32px"
-          >
-            ${this.editableDocs.length > 1
-              ? html`<mwc-icon-button
-                  icon="arrow_drop_down"
-                  id="fileMenuButton"
-                  @click=${() => this.fileMenuUI.show()}
-                ></mwc-icon-button>`
-              : nothing}
-            ${this.docName}
-            ${this.docName
-              ? html`<mwc-icon-button
-                  icon="edit"
-                  @click=${() => this.editFileUI.show()}
-                ></mwc-icon-button>`
-              : nothing}
-            <mwc-menu
-              fixed
-              id="fileMenu"
-              corner="BOTTOM_END"
-              @selected=${({ detail: { index } }: SingleSelectedEvent) => {
-                const item = this.fileMenuUI.selected as ListItemBase | null;
-                if (!item) return;
-                this.docName = this.editableDocs[index];
-                item.selected = false;
-                this.fileMenuUI.layout();
-              }}
-            >
-              ${this.editableDocs.map(
-                name => html`<mwc-list-item>${name}</mwc-list-item>`
-              )}
-            </mwc-menu>
-          </div>
-          ${this.#actions.map(op => renderActionItem(op))}
-          <mwc-tab-bar
-            activeIndex=${this.editors.filter(p => !p.isDisabled()).length
-              ? 0
-              : -1}
-            @MDCTabBar:activated=${({
-              detail: { index },
-            }: {
-              detail: { index: number };
-            }) => {
-              this.editorIndex = index;
-            }}
-          >
-            ${this.editors.map(editor =>
-              editor.isDisabled()
-                ? nothing
-                : html`<mwc-tab
-                    label="${editor.getName()}"
-                    icon="${editor.icon}"
-                  ></mwc-tab>`
-            )}
-          </mwc-tab-bar>
-          ${this.editor
-            ? staticHtml`<${unsafeStatic(this.editor)} docName="${
-                this.docName || nothing
-              }" .doc=${this.doc} locale="${this.locale}" .docs=${
-                this.docs
-              } .editCount=${this.editCount}></${unsafeStatic(this.editor)}>`
-            : nothing}
-        </mwc-top-app-bar-fixed>
-      </mwc-drawer>
-      <mwc-dialog
+        </oscd-list>
+      </oscd-navigation-drawer>
+
+      ${this.editor
+        ? staticHtml`<${unsafeStatic(this.editor)} docName="${
+            this.docName || nothing
+          }" .doc=${this.doc} locale="${this.locale}" .docs=${
+            this.docs
+          } .editCount=${this.editCount}></${unsafeStatic(this.editor)}>`
+        : nothing}
+
+      <oscd-dialog
         id="editFile"
-        heading="${this.docName}"
-        @closed=${({ detail }: { detail: { action: string } | null }) => {
-          if (!detail) return;
-          if (detail.action === 'remove') {
+        @closed=${(event: CustomEvent) => {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          const dialog = event.target as OscdDialog;
+          if (!dialog) return;
+          if (dialog.returnValue === 'remove') {
             delete this.docs[this.docName];
             this.docName = this.editableDocs[0] || '';
           }
         }}
       >
-        <mwc-textfield
-          id="fileName"
-          label="${msg('Filename')}"
-          value="${this.docName.replace(/\.[^.]+$/, '')}"
-          dialogInitialFocus
-          .validityTransform=${(value: string) => {
-            const name = `${value}.${this.fileExtensionUI.value}`;
-            if (name in this.docs && name !== this.docName)
-              return {
-                valid: false,
-              };
-            return {};
-          }}
-        ></mwc-textfield>
-        <mwc-select
-          label="${msg('Extension')}"
-          fixedMenuPosition
-          id="fileExtension"
-          @selected=${() => this.fileNameUI.reportValidity()}
-        >
-          ${this.editable.map(
-            ext =>
-              html`<mwc-list-item
-                ?selected=${this.docName.endsWith(`.${ext}`)}
-                value="${ext}"
-                >${ext}</mwc-list-item
-              >`
-          )}
-        </mwc-select>
-        <mwc-button
-          slot="secondaryAction"
-          icon="delete"
-          style="--mdc-theme-primary: var(--oscd-error)"
-          dialogAction="remove"
-        >
-          ${msg('Close file')}
-        </mwc-button>
-        <mwc-button slot="secondaryAction" dialogAction="close">
-          ${msg('Cancel')}
-        </mwc-button>
-        <mwc-button
-          slot="primaryAction"
-          icon="edit"
-          @click=${() => {
-            const valid = this.fileNameUI.checkValidity();
-            if (!valid) {
-              this.fileNameUI.reportValidity();
-              return;
-            }
-            const newDocName = `${this.fileNameUI.value}.${this.fileExtensionUI.value}`;
-            if (this.docs[newDocName]) return;
-            this.docs[newDocName] = this.doc;
-            delete this.docs[this.docName];
-            this.docName = newDocName;
-            this.editFileUI.close();
-          }}
-          trailingIcon
-        >
-          ${msg('Rename')}
-        </mwc-button>
-      </mwc-dialog>
-      <mwc-dialog id="log" heading="${this.controls.log.getName()}">
-        <mwc-list wrapFocus>${this.renderHistory()}</mwc-list>
-        <mwc-button
-          icon="undo"
-          label="${msg('Undo')}"
-          ?disabled=${!this.canUndo}
-          @click=${this.undo}
-          slot="secondaryAction"
-        ></mwc-button>
-        <mwc-button
-          icon="redo"
-          label="${msg('Redo')}"
-          ?disabled=${!this.canRedo}
-          @click=${this.redo}
-          slot="secondaryAction"
-        ></mwc-button>
-        <mwc-button slot="primaryAction" dialogaction="close"
-          >${msg('Close')}</mwc-button
-        >
-      </mwc-dialog>
+        <div slot="headline"><oscd-icon>file</oscd-icon>${this.docName}</div>
+        <form slot="content" id="edit-file-form" method="dialog">
+          <oscd-filled-text-field
+            id="fileName"
+            label="${msg('Filename')}"
+            value="${this.docName.replace(/\.[^.]+$/, '')}"
+            @input=${(event: Event) => {
+              const input = event.target as HTMLInputElement;
+              const { value } = input;
+              const name = `${value}.${this.fileExtensionUI.value}`;
+              if (name in this.docs && name !== this.docName) {
+                input.setCustomValidity('File already exists');
+              } else {
+                input.setCustomValidity('');
+              }
+              input.reportValidity();
+            }}
+          ></oscd-filled-text-field>
+          <oscd-select
+            label="${msg('Extension')}"
+            fixedMenuPosition
+            id="fileExtension"
+            @selected=${() => this.fileNameUI.reportValidity()}
+          >
+            ${this.editable.map(
+              ext =>
+                html`<oscd-select-option
+                  ?selected=${this.docName.endsWith(`.${ext}`)}
+                  value="${ext}"
+                  >${ext}</oscd-select-option
+                >`,
+            )}
+          </oscd-select>
+        </form>
+        <div slot="actions">
+          <oscd-text-button
+            form="edit-file-form"
+            class="edit-dialog-remove-button"
+            value="remove"
+          >
+            <oscd-icon slot="icon">delete</oscd-icon>
+            ${msg('Close file').toUpperCase()}
+          </oscd-text-button>
+          <oscd-text-button form="edit-file-form" value="close">
+            ${msg('Cancel').toUpperCase()}
+          </oscd-text-button>
+          <oscd-text-button
+            @click=${() => {
+              const valid = this.fileNameUI.checkValidity();
+              if (!valid) {
+                this.fileNameUI.reportValidity();
+                return;
+              }
+              const newDocName = `${this.fileNameUI.value}.${this.fileExtensionUI.value}`;
+              if (this.docs[newDocName]) return;
+              this.docs[newDocName] = this.doc;
+              delete this.docs[this.docName];
+              this.docName = newDocName;
+              this.editFileUI.close();
+            }}
+            trailing-icon
+          >
+            <oscd-icon slot="icon">edit</oscd-icon>
+            ${msg('Rename').toUpperCase()}
+          </oscd-text-button>
+        </div>
+      </oscd-dialog>
+      <oscd-dialog id="log" heading="">
+        <div slot="headline">
+          <oscd-icon>history</oscd-icon>${this.controls.log.getName()}
+        </div>
+        <form slot="content" id="log-dialog-form" method="dialog">
+          <oscd-list>${this.renderHistory()}</oscd-list>
+        </form>
+        <div slot="actions">
+          <oscd-text-button ?disabled=${!this.canUndo} @click=${this.undo}
+            >${msg('Undo')}<oscd-icon slot="icon"
+              >undo</oscd-icon
+            ></oscd-text-button
+          >
+          <oscd-text-button ?disabled=${!this.canRedo} @click=${this.redo}
+            >${msg('Redo')}<oscd-icon slot="icon"
+              >redo</oscd-icon
+            ></oscd-text-button
+          >
+          <oscd-text-button form="log-dialog-form" value="close"
+            >${msg('Close')}</oscd-text-button
+          >
+        </div>
+      </oscd-dialog>
       <aside>
         ${this.loadedPlugins.menu.map(
           plugin =>
@@ -609,21 +625,17 @@ export class OpenSCD extends LitElement {
             }" .doc=${this.doc} locale="${this.locale}" .docs=${
               this.docs
             } .editCount=${this.editCount}></${unsafeStatic(
-              pluginTag(plugin.src)
-            )}>`
+              pluginTag(plugin.src),
+            )}>`,
         )}
       </aside>`;
   }
 
   firstUpdated() {
     const background = getComputedStyle(this.menuUI).getPropertyValue(
-      '--oscd-base2'
+      '--oscd-base2',
     );
     document.body.style.background = background;
-  }
-
-  updated() {
-    if (this.fileMenuButtonUI) this.fileMenuUI.anchor = this.fileMenuButtonUI;
   }
 
   static styles = css`
@@ -669,10 +681,6 @@ export class OpenSCD extends LitElement {
 
         --mdc-theme-text-disabled-on-light: rgba(255, 255, 255, 0.38);
       }
-
-      mwc-top-app-bar-fixed {
-        --mdc-theme-text-disabled-on-light: rgba(255, 255, 255, 0.38);
-      } /* hack to fix disabled icon buttons rendering black */
     }
 
     @media (prefers-color-scheme: dark) {
@@ -695,13 +703,39 @@ export class OpenSCD extends LitElement {
 
       --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
       --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+      --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
+
+      --oscd-warning: var(--oscd-theme-warning, #b58900);
+      --md-sys-color-primary: var(--oscd-primary);
+      --md-sys-color-secondary: var(--oscd-secondary);
+      --md-sys-color-secondary-container: var(--oscd-base2);
+      --md-sys-color-on-primary: var(--oscd-base3);
+      --md-sys-color-on-secondary: var(--oscd-base3);
+      --md-sys-color-on-surface: var(--oscd-base00);
+      --md-sys-color-on-surface-variant: var(--oscd-base3);
+      --md-sys-color-surface: var(--oscd-base3);
+      --md-sys-color-surface-bright: var(--oscd-base2);
+      --md-sys-color-surface-container: var(--oscd-base3);
+      --md-sys-color-surface-container-high: var(--oscd-base3);
+      --md-sys-color-surface-container-highest: var(--oscd-base3);
+      --md-sys-color-outline-variant: var(--oscd-base0);
+      --md-sys-color-scrim: #000000;
+      --md-sys-color-error: var(--oscd-error);
+      --md-sys-color-on-error: var(--oscd-base3);
+
+      --md-menu-item-selected-label-text-color: var(--oscd-base01);
+      --md-icon-button-disabled-icon-color: var(--oscd-base3);
+
+      /* MDC Theme Colors 
+       * Needed for supporting any pluggins still using the depricated MWC Components
+       */
 
       --mdc-theme-primary: var(--oscd-primary);
       --mdc-theme-secondary: var(--oscd-secondary);
       --mdc-theme-background: var(--oscd-base3);
       --mdc-theme-surface: var(--oscd-base3);
       --mdc-theme-on-primary: var(--oscd-base2);
-      --mdc-theme-on-secondary: var(--oscd-base2);
+      --mdc-theme-on-secondary: var(--oscd-base02);
       --mdc-theme-on-background: var(--oscd-base00);
       --mdc-theme-on-surface: var(--oscd-base00);
       --mdc-theme-text-primary-on-background: var(--oscd-base01);
@@ -732,13 +766,38 @@ export class OpenSCD extends LitElement {
       --mdc-icon-font: var(--oscd-icon-font);
     }
 
-    mwc-drawer {
-      background-color: var(--mdc-theme-on-primary);
+    oscd-navigation-drawer-header {
+      --md-list-item-supporting-text-color: var(--md-sys-color-on-surface);
     }
 
-    mwc-tab {
-      background-color: var(--oscd-primary);
-      --mdc-theme-primary: var(--mdc-theme-on-primary);
+    oscd-secondary-tab {
+      --md-sys-color-on-surface: var(--md-sys-color-on-surface-variant);
+      --md-secondary-tab-active-indicator-color: var(--oscd-base2);
+    }
+
+    oscd-tabs {
+      display: flex;
+      flex-grow: 1;
+      --md-secondary-tab-container-color: var(--oscd-primary);
+      --md-secondary-tab-active-label-text-color: var(
+        --md-sys-color-on-surface-variant
+      );
+    }
+
+    .edit-dialog-remove-button {
+      --md-text-button-icon-color: var(--oscd-error);
+      --md-text-button-label-text-color: var(--oscd-error);
+
+      --md-text-button-focus-label-text-color: var(--oscd-error);
+      --md-text-button-focus-icon-color: var(--oscd-error);
+
+      --md-text-button-hover-label-text-color: var(--oscd-error);
+      --md-text-button-hover-state-layer-color: var(--oscd-error);
+      --md-text-button-hover-icon-color: var(--oscd-error);
+
+      --md-text-button-pressed-label-text-color: var(--oscd-error);
+      --md-text-button-pressed-state-layer-color: var(--oscd-error);
+      --md-text-button-pressed-icon-color: var(--oscd-error);
     }
   `;
 }
