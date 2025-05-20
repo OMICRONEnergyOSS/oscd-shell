@@ -81,19 +81,6 @@
   editor.plugins = plugins;
 </script>
 
-<script>
-  const _customElementsDefine = window.customElements.define;
-  window.customElements.define = (name, cl, conf) => {
-    if (!customElements.get(name)) {
-      try {
-        _customElementsDefine.call(window.customElements, name, cl, conf);
-      } catch (e) {
-        console.warn(e);
-      }
-    }
-  };
-</script>
-
 <style>
   html,
   body {

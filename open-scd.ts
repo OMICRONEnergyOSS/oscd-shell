@@ -1,35 +1,32 @@
+import '@webcomponents/scoped-custom-element-registry';
+
 import { configureLocalization, localized, msg, str } from '@lit/localize';
 import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
+import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 
-import type {
-  CloseMenuEvent,
+import {
+  type CloseMenuEvent,
   OscdMenu,
-} from '@omicronenergy/oscd-ui/menu/menu.js';
+} from '@omicronenergy/oscd-ui/menu/oscd-menu.js';
 
-import '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
-import '@omicronenergy/oscd-ui/drawer/oscd-navigation-drawer.js';
-import '@omicronenergy/oscd-ui/drawer/oscd-navigation-drawer-header.js';
-import '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
-import '@omicronenergy/oscd-ui/button/oscd-text-button.js';
-import '@omicronenergy/oscd-ui/icon/oscd-icon.js';
-import '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
-import '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
-import '@omicronenergy/oscd-ui/select/oscd-select-option.js';
-import '@omicronenergy/oscd-ui/iconbutton/icon-button.js';
-import '@omicronenergy/oscd-ui/list/list.js';
-import '@omicronenergy/oscd-ui/list/list-item.js';
-import '@omicronenergy/oscd-ui/divider/divider.js';
-import '@omicronenergy/oscd-ui/menu/menu.js';
-import '@omicronenergy/oscd-ui/menu/menu-item.js';
-import '@omicronenergy/oscd-ui/tabs/tabs.js';
-import '@omicronenergy/oscd-ui/tabs/secondary-tab.js';
-import type { OscdDialog } from '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
-import type { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/icon-button.js';
-import type { OscdList } from '@omicronenergy/oscd-ui/list/list.js';
-import type { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/drawer/oscd-navigation-drawer.js';
-import type { OscdTabs } from '@omicronenergy/oscd-ui/tabs/tabs.js';
+import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
+import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
+import { OscdDivider } from '@omicronenergy/oscd-ui/divider/oscd-divider.js';
+import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
+import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
+import { OscdIcon } from '@omicronenergy/oscd-ui/icon/oscd-icon.js';
+import { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-icon-button.js';
+import { OscdList } from '@omicronenergy/oscd-ui/list/oscd-list.js';
+import { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
+import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/oscd-menu-item.js';
+import { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer.js';
+import { OscdNavigationDrawerHeader } from '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer-header.js';
+import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/oscd-secondary-tab.js';
+import { OscdSelectOption } from '@omicronenergy/oscd-ui/select/oscd-select-option.js';
+import { OscdTabs } from '@omicronenergy/oscd-ui/tabs/oscd-tabs.js';
+import { OscdTextButton } from '@omicronenergy/oscd-ui/button/oscd-text-button.js';
 
 import { allLocales, sourceLocale, targetLocales } from './locales.js';
 
@@ -44,6 +41,17 @@ import {
   isUpdate,
   OpenEvent,
 } from './foundation.js';
+
+const _customElementsDefine = window.customElements.define;
+window.customElements.define = (name, cl, conf) => {
+  if (!customElements.get(name)) {
+    try {
+      _customElementsDefine.call(window.customElements, name, cl, conf);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+};
 
 export type LogEntry = { undo: Edit; redo: Edit };
 
@@ -126,7 +134,29 @@ function renderMenuItem(control: Control): TemplateResult {
 
 @customElement('open-scd')
 @localized()
-export class OpenSCD extends LitElement {
+export class OpenSCD extends ScopedElementsMixin(LitElement) {
+  static get scopedElements() {
+    return {
+      'oscd-app-bar': OscdAppBar,
+      'oscd-dialog': OscdDialog,
+      'oscd-icon': OscdIcon,
+      'oscd-filled-text-field': OscdFilledTextField,
+      'oscd-filled-select': OscdFilledSelect,
+      'oscd-select-option': OscdSelectOption,
+      'oscd-icon-button': OscdIconButton,
+      'oscd-list': OscdList,
+      'oscd-list-item': OscdListItem,
+      'oscd-divider': OscdDivider,
+      'oscd-menu-item': OscdMenuItem,
+      'oscd-navigation-drawer': OscdNavigationDrawer,
+      'oscd-navigation-drawer-header': OscdNavigationDrawerHeader,
+      'oscd-secondary-tab': OscdSecondaryTab,
+      'oscd-tabs': OscdTabs,
+      'oscd-text-button': OscdTextButton,
+      'oscd-menu': OscdMenu,
+    };
+  }
+
   @state()
   /** The `XMLDocument` currently being edited */
   get doc(): XMLDocument {
@@ -182,20 +212,6 @@ export class OpenSCD extends LitElement {
     return Object.keys(this.docs).filter(name => this.isEditable(name));
   }
 
-  #loadedPlugins: PluginSet = { menu: [], editor: [] };
-
-  #loadedPluginTagNames: string[] = [];
-
-  @state()
-  get loadedPlugins(): PluginSet {
-    return this.#loadedPlugins;
-  }
-
-  addLoadedPlugin(tagName: string, kind: keyof PluginSet, plugin: Plugin) {
-    this.#loadedPlugins[kind].push(plugin);
-    this.#loadedPluginTagNames.push(tagName);
-  }
-
   #plugins: PluginSet = { menu: [], editor: [] };
 
   @property({ type: Object })
@@ -205,29 +221,61 @@ export class OpenSCD extends LitElement {
 
   set plugins(plugins: Partial<PluginSet>) {
     Object.entries(plugins).forEach(([pluginType, kind]) =>
-      kind.forEach(plugin => {
+      kind.forEach((plugin, index) => {
         const tagName = pluginTag(plugin.src);
         if (this.#loadedPluginTagNames.includes(tagName)) {
           return;
         }
 
         if (customElements.get(tagName)) {
-          this.addLoadedPlugin(tagName, pluginType as keyof PluginSet, plugin);
+          this.addLoadedPlugin(
+            tagName,
+            pluginType as keyof PluginSet,
+            plugin,
+            index,
+          );
           this.requestUpdate('loadedPlugins');
           return;
         }
         const url = new URL(plugin.src, window.location.href).toString();
         import(url).then(mod => {
-          this.addLoadedPlugin(tagName, pluginType as keyof PluginSet, plugin);
+          this.addLoadedPlugin(
+            tagName,
+            pluginType as keyof PluginSet,
+            plugin,
+            index,
+          );
           // Because this is async, we need to check (again) if the element is already defined.
-          if (!customElements.get(tagName)) {
-            customElements.define(tagName, mod.default);
+          if (!this.registry?.get(tagName)) {
+            this.registry?.define(tagName, mod.default);
           }
           this.requestUpdate('loadedPlugins');
         });
       }),
     );
     this.#plugins = { menu: [], editor: [], ...plugins };
+  }
+
+  #loadedPlugins: PluginSet = {
+    menu: new Array(this.plugins.menu.length).fill(null),
+    editor: new Array(this.plugins.editor.length).fill(null),
+  };
+
+  #loadedPluginTagNames: string[] = [];
+
+  @state()
+  get loadedPlugins(): PluginSet {
+    return this.#loadedPlugins;
+  }
+
+  addLoadedPlugin(
+    tagName: string,
+    kind: keyof PluginSet,
+    plugin: Plugin,
+    index: number,
+  ) {
+    this.#loadedPlugins[kind][index] = plugin;
+    this.#loadedPluginTagNames.push(tagName);
   }
 
   handleOpenDoc({ detail: { docName, doc } }: OpenEvent) {

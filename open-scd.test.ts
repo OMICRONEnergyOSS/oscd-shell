@@ -1,7 +1,7 @@
 import { visualDiff } from '@web/test-runner-visual-regression';
 
-import type { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/icon-button.js';
-import type { OscdListItem } from '@omicronenergy/oscd-ui/list/list-item.js';
+import type { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-icon-button.js';
+import type { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
 
 import './open-scd.js';
 import { expect, waitUntil } from '@open-wc/testing';
