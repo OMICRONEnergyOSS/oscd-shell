@@ -19,10 +19,10 @@ const filteredLogs = [
 ];
 
 const browsers = [
-     playwrightLauncher({ product: 'chromium' }),
-     playwrightLauncher({ product: 'firefox' }),
-     playwrightLauncher({ product: 'webkit' }),
-   ];
+  playwrightLauncher({ product: 'chromium' }),
+  playwrightLauncher({ product: 'firefox' }),
+  playwrightLauncher({ product: 'webkit' }),
+];
 
 function defaultGetImageDiff({ baselineImage, image, options }) {
   let error = '';
@@ -47,7 +47,14 @@ function defaultGetImageDiff({ baselineImage, image, options }) {
 
   const diff = new PNG({ width, height });
 
-  const numDiffPixels = pixelmatch(basePng.data, png.data, diff.data, width, height, options);
+  const numDiffPixels = pixelmatch(
+    basePng.data,
+    png.data,
+    diff.data,
+    width,
+    height,
+    options,
+  );
   const diffPercentage = (numDiffPixels / (width * height)) * 100;
 
   return {
@@ -61,16 +68,24 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   plugins: [
     visualRegressionPlugin({
       update: process.argv.includes('--update-visual-baseline'),
-      getImageDiff: (options) => {
-        const result =  defaultGetImageDiff(options);
-        if (result.diffPercentage < thresholdPercentage)
+      getImageDiff: options => {
+        const result = defaultGetImageDiff(options);
+        if (result.diffPercentage < thresholdPercentage) {
           result.diffPercentage = 0;
+        }
         return result;
-      }
+      },
     }),
   ],
 
   files: 'dist/**/*.spec.js',
+
+  coverageConfig: {
+    exclude: [
+      '**/node_modules/**',
+      '**/__wds-outside-root__/**', // Exclude external modules like oscd-ui
+    ],
+  },
 
   groups: [
     {
@@ -80,8 +95,9 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" >
   </head>
   <body>
     <style class="deanimator">

@@ -6,11 +6,6 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 
-import {
-  type CloseMenuEvent,
-  OscdMenu,
-} from '@omicronenergy/oscd-ui/menu/oscd-menu.js';
-
 import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
 import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
 import { OscdDivider } from '@omicronenergy/oscd-ui/divider/oscd-divider.js';
@@ -20,6 +15,7 @@ import { OscdIcon } from '@omicronenergy/oscd-ui/icon/oscd-icon.js';
 import { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-icon-button.js';
 import { OscdList } from '@omicronenergy/oscd-ui/list/oscd-list.js';
 import { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
+import { OscdMenu } from '@omicronenergy/oscd-ui/menu/oscd-menu.js';
 import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/oscd-menu-item.js';
 import { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer.js';
 import { OscdNavigationDrawerHeader } from '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer-header.js';
@@ -45,11 +41,7 @@ import {
 const _customElementsDefine = window.customElements.define;
 window.customElements.define = (name, cl, conf) => {
   if (!customElements.get(name)) {
-    try {
-      _customElementsDefine.call(window.customElements, name, cl, conf);
-    } catch (e) {
-      console.warn(e);
-    }
+    _customElementsDefine.call(window.customElements, name, cl, conf);
   }
 };
 
@@ -69,7 +61,9 @@ const pluginTags = new Map<string, string>();
 
 /** @returns a valid customElement tagName containing the URI hash. */
 function pluginTag(uri: string): string {
-  if (!pluginTags.has(uri)) pluginTags.set(uri, `oscd-p${cyrb64(uri)}`);
+  if (!pluginTags.has(uri)) {
+    pluginTags.set(uri, `oscd-p${cyrb64(uri)}`);
+  }
   return pluginTags.get(uri)!;
 }
 
@@ -93,16 +87,24 @@ const { getLocale, setLocale } = configureLocalization({
 
 function describe({ undo, redo }: LogEntry) {
   let result = msg('Something unexpected happened!');
-  if (isComplex(redo)) result = msg(str`≥ ${redo.length} nodes changed`);
-  if (isInsert(redo))
-    if (isInsert(undo))
+  if (isComplex(redo)) {
+    result = msg(str`≥ ${redo.length} nodes changed`);
+  }
+  if (isInsert(redo)) {
+    if (isInsert(undo)) {
       result = msg(str`${redo.node.nodeName} moved to ${redo.parent.nodeName}`);
-    else
+    } else {
       result = msg(
         str`${redo.node.nodeName} inserted into ${redo.parent.nodeName}`,
       );
-  if (isRemove(redo)) result = msg(str`${redo.node.nodeName} removed`);
-  if (isUpdate(redo)) result = msg(str`${redo.element.tagName} updated`);
+    }
+  }
+  if (isRemove(redo)) {
+    result = msg(str`${redo.node.nodeName} removed`);
+  }
+  if (isUpdate(redo)) {
+    result = msg(str`${redo.element.tagName} updated`);
+  }
   return result;
 }
 
@@ -227,7 +229,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
           return;
         }
 
-        if (customElements.get(tagName)) {
+        if (this.registry!.get(tagName)) {
           this.addLoadedPlugin(
             tagName,
             pluginType as keyof PluginSet,
@@ -246,8 +248,8 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
             index,
           );
           // Because this is async, we need to check (again) if the element is already defined.
-          if (!this.registry?.get(tagName)) {
-            this.registry?.define(tagName, mod.default);
+          if (!this.registry!.get(tagName)) {
+            this.registry!.define(tagName, mod.default);
           }
           this.requestUpdate('loadedPlugins');
         });
@@ -280,7 +282,9 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
 
   handleOpenDoc({ detail: { docName, doc } }: OpenEvent) {
     this.docs[docName] = doc;
-    if (this.isEditable(docName)) this.docName = docName;
+    if (this.isEditable(docName)) {
+      this.docName = docName;
+    }
     this.requestUpdate();
   }
 
@@ -293,18 +297,26 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
 
   /** Undo the last `n` [[Edit]]s committed */
   undo(n = 1) {
-    if (!this.canUndo || n < 1) return;
+    if (!this.canUndo || n < 1) {
+      return;
+    }
     handleEdit(this.history[this.last!].undo);
     this.editCount -= 1;
-    if (n > 1) this.undo(n - 1);
+    if (n > 1) {
+      this.undo(n - 1);
+    }
   }
 
   /** Redo the last `n` [[Edit]]s that have been undone */
   redo(n = 1) {
-    if (!this.canRedo || n < 1) return;
+    if (!this.canRedo || n < 1) {
+      return;
+    }
     handleEdit(this.history[this.editCount].redo);
     this.editCount += 1;
-    if (n > 1) this.redo(n - 1);
+    if (n > 1) {
+      this.redo(n - 1);
+    }
   }
 
   @query('#log')
@@ -377,8 +389,9 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       action: async () => {
         this.menuUI.opened = !this.menuUI.opened;
         await this.menuUI.updateComplete;
-        if (this.menuUI.opened)
+        if (this.menuUI.opened) {
           this.menuUI.querySelector<OscdList>('oscd-list')!.focus();
+        }
       },
       isDisabled: () => false,
     },
@@ -437,8 +450,12 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   };
 
   private handleKeyPress(e: KeyboardEvent): void {
-    if (!e.ctrlKey) return;
-    if (!Object.prototype.hasOwnProperty.call(this.hotkeys, e.key)) return;
+    if (!e.ctrlKey) {
+      return;
+    }
+    if (!Object.prototype.hasOwnProperty.call(this.hotkeys, e.key)) {
+      return;
+    }
     this.hotkeys[e.key]!();
     e.preventDefault();
   }
@@ -462,8 +479,9 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   }
 
   private renderHistory(): TemplateResult[] | TemplateResult {
-    if (this.history.length > 0)
+    if (this.history.length > 0) {
       return this.history.slice().reverse().map(this.renderLogEntry, this);
+    }
     return html`<oscd-list-item>
       <span>${msg('Your editing history will be displayed here.')}</span>
       <oscd-icon slot="start">info</oscd-icon>
@@ -473,11 +491,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   render() {
     return html`<oscd-app-bar slot="appContent">
         ${renderActionItem(this.controls.menu, 'actionStart')}
-        <div
-          slot="title"
-          id="title"
-          style="position: relative; --mdc-icon-button-size: 32px"
-        >
+        <div slot="title" id="title">
           ${this.editableDocs.length > 1
             ? html`<oscd-icon-button
                 id="fileMenuButton"
@@ -496,14 +510,14 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
             id="fileMenu"
             anchor="fileMenuButton"
             corner="BOTTOM_END"
-            @close-menu=${({ detail: { initiator } }: CloseMenuEvent) => {
-              if (!initiator) return;
-              this.docName = this.editableDocs[parseInt(initiator.id, 10)];
-            }}
           >
             ${this.editableDocs.map(
               (name, index) =>
                 html`<oscd-menu-item
+                  @click=${() => {
+                    this.docName = name;
+                  }}
+                  ?disabled=${!this.isEditable(name)}
                   ?selected=${this.docName === name}
                   id=${index}
                   >${name}</oscd-menu-item
@@ -536,12 +550,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
         </oscd-tabs>
       </oscd-app-bar>
 
-      <oscd-navigation-drawer
-        class="mdc-theme--surface"
-        hasheader
-        type="modal"
-        id="menu"
-      >
+      <oscd-navigation-drawer hasheader type="modal" id="menu">
         <oscd-navigation-drawer-header>
           <span slot="headline">${msg('Menu')}</span>
           ${this.docName
@@ -565,17 +574,16 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       <oscd-dialog
         id="editFile"
         @closed=${(event: CustomEvent) => {
-          event.preventDefault();
-          event.stopImmediatePropagation();
           const dialog = event.target as OscdDialog;
-          if (!dialog) return;
           if (dialog.returnValue === 'remove') {
             delete this.docs[this.docName];
             this.docName = this.editableDocs[0] || '';
           }
         }}
       >
-        <div slot="headline"><oscd-icon>file</oscd-icon>${this.docName}</div>
+        <div slot="headline">
+          <oscd-icon>description</oscd-icon>${this.docName}
+        </div>
         <form slot="content" id="edit-file-form" method="dialog">
           <oscd-filled-text-field
             id="fileName"
@@ -586,14 +594,14 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
               const { value } = input;
               const name = `${value}.${this.fileExtensionUI.value}`;
               if (name in this.docs && name !== this.docName) {
-                input.setCustomValidity('File already exists');
+                input.setCustomValidity('File already exists!');
               } else {
                 input.setCustomValidity('');
               }
               input.reportValidity();
             }}
           ></oscd-filled-text-field>
-          <oscd-select
+          <oscd-filled-select
             label="${msg('Extension')}"
             fixedMenuPosition
             id="fileExtension"
@@ -607,7 +615,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
                   >${ext}</oscd-select-option
                 >`,
             )}
-          </oscd-select>
+          </oscd-filled-select>
         </form>
         <div slot="actions">
           <oscd-text-button
@@ -616,10 +624,10 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
             value="remove"
           >
             <oscd-icon slot="icon">delete</oscd-icon>
-            ${msg('Close file').toUpperCase()}
+            ${msg('Close file')}
           </oscd-text-button>
           <oscd-text-button form="edit-file-form" value="close">
-            ${msg('Cancel').toUpperCase()}
+            ${msg('Cancel')}
           </oscd-text-button>
           <oscd-text-button
             @click=${() => {
@@ -629,7 +637,9 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
                 return;
               }
               const newDocName = `${this.fileNameUI.value}.${this.fileExtensionUI.value}`;
-              if (this.docs[newDocName]) return;
+              if (this.docs[newDocName]) {
+                return;
+              }
               this.docs[newDocName] = this.doc;
               delete this.docs[this.docName];
               this.docName = newDocName;
@@ -638,7 +648,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
             trailing-icon
           >
             <oscd-icon slot="icon">edit</oscd-icon>
-            ${msg('Rename').toUpperCase()}
+            ${msg('Rename')}
           </oscd-text-button>
         </div>
       </oscd-dialog>
@@ -650,12 +660,18 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
           <oscd-list>${this.renderHistory()}</oscd-list>
         </form>
         <div slot="actions">
-          <oscd-text-button ?disabled=${!this.canUndo} @click=${this.undo}
+          <oscd-text-button
+            ?disabled=${!this.canUndo}
+            @click=${this.undo}
+            value="undo"
             >${msg('Undo')}<oscd-icon slot="icon"
               >undo</oscd-icon
             ></oscd-text-button
           >
-          <oscd-text-button ?disabled=${!this.canRedo} @click=${this.redo}
+          <oscd-text-button
+            ?disabled=${!this.canRedo}
+            @click=${this.redo}
+            value="redo"
             >${msg('Redo')}<oscd-icon slot="icon"
               >redo</oscd-icon
             ></oscd-text-button
@@ -755,23 +771,27 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
 
       --oscd-warning: var(--oscd-theme-warning, #b58900);
       --md-sys-color-primary: var(--oscd-primary);
-      --md-sys-color-secondary: var(--oscd-secondary);
-      --md-sys-color-secondary-container: var(--oscd-base2);
       --md-sys-color-on-primary: var(--oscd-base3);
+
+      --md-sys-color-secondary: var(--oscd-secondary);
       --md-sys-color-on-secondary: var(--oscd-base3);
-      --md-sys-color-on-surface: var(--oscd-base00);
-      --md-sys-color-on-surface-variant: var(--oscd-base3);
+      --md-sys-color-secondary-container: var(--oscd-base2);
+
       --md-sys-color-surface: var(--oscd-base3);
+      --md-sys-color-on-surface: var(--oscd-base00);
+      --md-sys-color-surface-variant: var(--oscd-base3);
+      --md-sys-color-on-surface-variant: var(--oscd-base00);
       --md-sys-color-surface-bright: var(--oscd-base2);
       --md-sys-color-surface-container: var(--oscd-base3);
       --md-sys-color-surface-container-high: var(--oscd-base3);
       --md-sys-color-surface-container-highest: var(--oscd-base3);
-      --md-sys-color-outline-variant: var(--oscd-base0);
+
+      --md-sys-color-outline-variant: var(--oscd-primary);
       --md-sys-color-scrim: #000000;
       --md-sys-color-error: var(--oscd-error);
       --md-sys-color-on-error: var(--oscd-base3);
 
-      --md-menu-item-selected-label-text-color: var(--oscd-base01);
+      /* --md-menu-item-selected-label-text-color: var(--oscd-base01); */
       --md-icon-button-disabled-icon-color: var(--oscd-base3);
 
       /* MDC Theme Colors 
@@ -819,17 +839,16 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     }
 
     oscd-secondary-tab {
-      --md-sys-color-on-surface: var(--md-sys-color-on-surface-variant);
+      --md-sys-color-on-surface: var(--md-sys-color-on-primary);
+      --md-sys-color-on-surface-variant: var(--md-sys-color-on-primary);
       --md-secondary-tab-active-indicator-color: var(--oscd-base2);
     }
 
-    oscd-tabs {
+    oscd-tabs,
+    oscd-tabs oscd-icon-button * {
       display: flex;
       flex-grow: 1;
       --md-secondary-tab-container-color: var(--oscd-primary);
-      --md-secondary-tab-active-label-text-color: var(
-        --md-sys-color-on-surface-variant
-      );
     }
 
     .edit-dialog-remove-button {

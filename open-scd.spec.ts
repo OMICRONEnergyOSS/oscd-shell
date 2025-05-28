@@ -2,7 +2,13 @@ import { expect, waitUntil } from '@open-wc/testing';
 
 import './open-scd.js';
 
+import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
 import Sinon from 'sinon';
+
+import {
+  getFirstTextNodeContent,
+  querySelectorContainingText,
+} from './utils/testing.js';
 
 import type { OpenSCD } from './open-scd.js';
 
@@ -55,8 +61,10 @@ describe('with editor plugins loaded', () => {
     await editor.updateComplete;
 
     await waitUntil(() => {
-      const pluginTab = editor?.shadowRoot?.querySelector(
-        `mwc-tab[label="${testEditorPlugin.name}"]`,
+      const pluginTab = querySelectorContainingText(
+        editor.shadowRoot!.querySelector('oscd-tabs')!,
+        'oscd-secondary-tab',
+        testEditorPlugin.name,
       );
       return !!pluginTab;
     }, 'Custom Plugin did not load');
@@ -116,9 +124,9 @@ describe('with menu plugins loaded', () => {
     await editor.updateComplete;
     await waitUntil(
       () =>
-        util.querySelectorWithTextContent(
+        querySelectorContainingText(
           editor.menuUI,
-          'mwc-list-item > span',
+          'oscd-list-item > span',
           testMenuPlugin.name,
         ),
       'Custom Plugin did not load',
@@ -180,9 +188,9 @@ describe('Custom plugins', () => {
 
     await waitUntil(
       () =>
-        util.querySelectorWithTextContent(
+        querySelectorContainingText(
           editor.menuUI,
-          'mwc-list-item > span',
+          'oscd-list-item > span',
           testMenuPlugin.name,
         ),
       'Custom Plugin did not load',
@@ -203,13 +211,11 @@ describe('Custom plugins', () => {
 
     editor.menuUI.opened = true;
     await editor.menuUI.updateComplete;
-    const pluginMenuItem = util
-      .querySelectorWithTextContent(
-        editor.menuUI,
-        'mwc-list-item > span',
-        'Test Undo Menu Plugin',
-      )
-      ?.closest('mwc-list-item') as HTMLLIElement;
+    const pluginMenuItem = querySelectorContainingText(
+      editor.menuUI,
+      'oscd-list-item > span',
+      'Test Undo Menu Plugin',
+    )?.closest('oscd-list-item') as OscdListItem;
     expect(pluginMenuItem).to.exist;
     expect(pluginMenuItem).to.have.property('disabled', false);
     pluginMenuItem?.click();
@@ -273,43 +279,52 @@ describe('localization', () => {
     await editor.updateComplete;
     await waitUntil(
       () =>
-        util.querySelectorWithTextContent(
+        querySelectorContainingText(
           editor.menuUI,
-          'mwc-list-item > span',
+          'oscd-list-item > span',
           testMenuPlugin.name,
         ),
-      'Custom menu plugin did not load',
+      `Custom menu plugin (${testMenuPlugin.name}) did not load`,
     );
-    await waitUntil(() => {
-      const pluginTab = editor?.shadowRoot?.querySelector(
-        `mwc-tab[label="${testEditorPlugin.name}"]`,
-      );
-      return !!pluginTab;
-    }, 'Custom editor plugin did not load');
+    await waitUntil(
+      () =>
+        querySelectorContainingText(
+          editor.shadowRoot!.querySelector('oscd-tabs')!,
+          'oscd-secondary-tab',
+          testEditorPlugin.name,
+        ),
+      `Custom editor plugin (${testEditorPlugin.name}) did not load`,
+    );
 
     menuItemStrings = Array.from(
-      editor.menuUI.querySelectorAll('mwc-list-item > span'),
+      editor.menuUI.querySelectorAll('oscd-list-item > span'),
     ).map((span: Element) => span.textContent?.trim() || '');
 
     editorTabStrings = Array.from(
-      editor?.shadowRoot?.querySelectorAll('mwc-tab') || [],
-    ).map((tab: Element) => tab.getAttribute('label')?.trim() || '');
+      editor?.shadowRoot?.querySelectorAll('oscd-secondary-tab') || [],
+    ).map(
+      (tab: Element) =>
+        Array.from(tab.childNodes)
+          .filter(node => node.nodeType === Node.TEXT_NODE)
+          .map(node => node.textContent?.trim() ?? '')[0] || '',
+    );
 
     logDialogStrings = {
       title: editor.logUI.shadowRoot?.querySelector('h2')?.textContent || '',
       message:
-        editor.logUI.querySelector('mwc-list-item > span')?.textContent || '',
+        editor.logUI.querySelector('oscd-list-item > span')?.textContent || '',
       undo:
-        editor.logUI
-          .querySelector('mwc-button[icon="undo"]')
-          ?.getAttribute('label') || '',
+        getFirstTextNodeContent(
+          editor.logUI.querySelector('oscd-text-button[icon="undo"]'),
+        ) || '',
       redo:
-        editor.logUI
-          .querySelector('mwc-button[icon="redo"]')
-          ?.getAttribute('label') || '',
+        getFirstTextNodeContent(
+          editor.logUI.querySelector('oscd-text-button[icon="redo"]'),
+        ) || '',
       close:
-        editor.logUI.querySelector('mwc-button[dialogAction="close"]')
-          ?.textContent || '',
+        getFirstTextNodeContent(
+          editor.logUI.querySelector('oscd-text-button[icon="close"]'),
+        ) || '',
     };
 
     // we only change the locale after waiting for the plugins to load and getting their default strings
@@ -325,7 +340,7 @@ describe('localization', () => {
 
   it('the menu items appear in german', () => {
     const untranslatedStrings = Array.from(
-      editor.menuUI.querySelectorAll('mwc-list-item > span'),
+      editor.menuUI.querySelectorAll('oscd-list-item > span'),
     )
       .map((span: Element) => span.textContent?.trim() || '')
       .filter((text: string) => menuItemStrings.includes(text));
@@ -335,7 +350,7 @@ describe('localization', () => {
 
   it('the editor plugin appears in german', () => {
     const untranslatedStrings = Array.from(
-      editor.shadowRoot?.querySelectorAll('mwc-tab') || [],
+      editor.shadowRoot?.querySelectorAll('oscd-secondary-tab') || [],
     )
       .map((span: Element) => span.textContent?.trim() || '')
       .filter((text: string) => editorTabStrings.includes(text));
@@ -347,17 +362,17 @@ describe('localization', () => {
     const localizedStrings = {
       title: editor.logUI.shadowRoot?.querySelector('h2')?.textContent || '',
       message:
-        editor.logUI.querySelector('mwc-list-item > span')?.textContent || '',
+        editor.logUI.querySelector('oscd-list-item > span')?.textContent || '',
       undo:
         editor.logUI
-          .querySelector('mwc-button[icon="undo"]')
+          .querySelector('oscd-text-button[value="undo"]')
           ?.getAttribute('label') || '',
       redo:
         editor.logUI
-          .querySelector('mwc-button[icon="redo"]')
+          .querySelector('oscd-text-button[value="redo"]')
           ?.getAttribute('label') || '',
       close:
-        editor.logUI.querySelector('mwc-button[dialogAction="close"]')
+        editor.logUI.querySelector('oscd-text-button[value="close"]')
           ?.textContent || '',
     };
 

@@ -1,14 +1,20 @@
+import { expect, waitUntil } from '@open-wc/testing';
 import { visualDiff } from '@web/test-runner-visual-regression';
 
+import './open-scd.js';
+
+import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
 import type { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-icon-button.js';
 import type { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
-
-import './open-scd.js';
-import { expect, waitUntil } from '@open-wc/testing';
-import type { OpenSCD } from './open-scd.js';
+import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
 
 import { Edit, newEditEvent, newOpenEvent } from './foundation.js';
+import {
+  findButtonByIcon,
+  simulateKeypressOnElement,
+} from './utils/testing.js';
 import { allLocales } from './locales.js';
+import type { OpenSCD } from './open-scd.js';
 
 const factor = window.process && process.env.CI ? 4 : 2;
 
@@ -20,9 +26,9 @@ function timeout(ms: number) {
 
 function isMenuFullyOpen(editor: OpenSCD) {
   const rect = editor.menuUI?.shadowRoot
-    ?.querySelector('aside.mdc-drawer--open')
+    ?.querySelector('.md3-navigation-drawer-modal--opened')
     ?.getBoundingClientRect();
-  return rect && rect.x === 0 && rect.width <= 256;
+  return rect && rect.width <= 360;
 }
 
 mocha.timeout(2000 * factor);
@@ -33,9 +39,59 @@ const doc = new DOMParser().parseFromString(
 );
 
 let editor: OpenSCD;
-beforeEach(() => {
+let appBar!: OscdAppBar;
+let menuButton!: OscdIconButton;
+
+async function openMenuDrawer() {
+  if (!appBar || !menuButton) {
+    throw new Error('App bar or menu button not found');
+  }
+  menuButton.click();
+  await editor.menuUI?.updateComplete;
+  await waitUntil(() => isMenuFullyOpen(editor), 'menu did not appear', {
+    timeout: 2000,
+  });
+  await timeout(200);
+}
+
+async function editorTabCount(count: number) {
+  if (!editor.shadowRoot) {
+    throw new Error('Editor shadow root not found');
+  }
+  await waitUntil(
+    () =>
+      editor.shadowRoot!.querySelectorAll('oscd-secondary-tab').length >= count,
+    `waiting for ${count} editor tabs timmed out`,
+  );
+}
+
+async function menuPluginCount(count: number) {
+  if (!editor.shadowRoot) {
+    throw new Error('Editor shadow root not found');
+  }
+  await waitUntil(() => {
+    const allElements = editor.shadowRoot!.querySelectorAll('aside > *');
+    const menuPlugins = Array.from(allElements).filter(el =>
+      el.tagName.toLowerCase().startsWith('oscd-'),
+    );
+    return menuPlugins.length >= count;
+  }, `waiting for ${count} menu plugins timmed out`);
+}
+
+beforeEach(async () => {
   editor = document.createElement('open-scd');
   document.body.prepend(editor);
+  await editor.updateComplete;
+  appBar = editor.shadowRoot?.querySelector('oscd-app-bar') as OscdAppBar;
+  menuButton =
+    appBar &&
+    (findButtonByIcon(appBar, 'oscd-icon-button', 'menu') as OscdIconButton);
+  if (!appBar) {
+    throw new Error('App bar not found');
+  }
+  if (!menuButton) {
+    throw new Error('Menu button not found');
+  }
 });
 
 afterEach(() => {
@@ -75,15 +131,7 @@ allLocales.forEach(lang =>
 
     it(`displays a menu on button click`, async () => {
       await editor.updateComplete;
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="menu"]')
-        ?.click();
-
-      await editor.menuUI?.updateComplete;
-      await waitUntil(() => isMenuFullyOpen(editor), 'menu did not appear', {
-        timeout: 2000,
-      });
-      await timeout(200);
+      await openMenuDrawer();
       await visualDiff(editor, `menu-drawer-${lang}`);
     });
 
@@ -98,15 +146,13 @@ allLocales.forEach(lang =>
 
     it(`shows a log screen`, async () => {
       await editor.updateComplete;
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="menu"]')
-        ?.click();
-      editor.shadowRoot
-        ?.querySelector<OscdListItem>('mwc-list-item:last-child')
+      await openMenuDrawer();
+      editor.menuUI
+        ?.querySelector<OscdListItem>('oscd-list-item:last-child')
         ?.click();
 
       await editor.updateComplete;
-      await timeout(200);
+      await timeout(300);
       await visualDiff(editor, `log-screen-${lang}`);
     });
 
@@ -141,67 +187,51 @@ allLocales.forEach(lang =>
         ]),
       );
 
-      await editor.updateComplete;
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="history"]')
-        ?.click();
+      const undoButton = findButtonByIcon(appBar, 'oscd-icon-button', 'undo');
+      const redoButton = findButtonByIcon(appBar, 'oscd-icon-button', 'redo');
+      const historyButton = findButtonByIcon(
+        appBar,
+        'oscd-icon-button',
+        'history',
+      );
+
+      expect(undoButton).to.exist;
+      expect(redoButton).to.exist;
+      expect(historyButton).to.exist;
+
+      historyButton!.click();
 
       await editor.updateComplete;
-      await timeout(200);
+      await timeout(300);
       await visualDiff(editor, `log-entries-${lang}`);
 
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="undo"]')
-        ?.click();
+      undoButton!.click();
       await editor.updateComplete;
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="undo"]')
-        ?.click();
+
+      undoButton!.click();
       await editor.updateComplete;
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="undo"]')
-        ?.click();
+
+      undoButton!.click();
       await editor.updateComplete;
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="undo"]')
-        ?.click();
+
+      undoButton!.click();
       await editor.updateComplete;
-      editor.dispatchEvent(
-        new KeyboardEvent('keydown', {
-          key: 'z',
-          ctrlKey: true,
-          bubbles: true,
-          composed: true,
-        }),
-      );
-      editor.dispatchEvent(
-        new KeyboardEvent('keydown', {
-          key: 'y',
-          ctrlKey: false,
-          bubbles: true,
-          composed: true,
-        }),
-      );
-      editor.dispatchEvent(
-        new KeyboardEvent('keydown', {
-          key: 'X',
-          ctrlKey: true,
-          bubbles: true,
-          composed: true,
-        }),
-      );
+
+      simulateKeypressOnElement('z', true);
+
+      simulateKeypressOnElement('y', false);
+
+      simulateKeypressOnElement('X', true);
+
       await editor.updateComplete;
 
       await timeout(20);
       await visualDiff(editor, `log-entries-undone-${lang}`);
 
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="redo"]')
-        ?.click();
+      redoButton!.click();
       await editor.updateComplete;
-      editor.shadowRoot
-        ?.querySelector<OscdIconButton>('mwc-icon-button[icon="redo"]')
-        ?.click();
+
+      redoButton!.click();
       await editor.updateComplete;
 
       await timeout(20);
@@ -247,29 +277,21 @@ allLocales.forEach(lang =>
           ],
         };
         await editor.updateComplete;
+        await menuPluginCount(4);
       });
 
       it('displays menu plugins in the menu', async () => {
-        editor.shadowRoot
-          ?.querySelector<OscdIconButton>('mwc-icon-button[icon="menu"]')
-          ?.click();
-
-        await editor.updateComplete;
-        await timeout(200);
+        await openMenuDrawer();
         await visualDiff(editor, `menu-plugins-${lang}`);
       });
 
       it('triggers menu plugins on menu entry click', async () => {
-        editor.shadowRoot
-          ?.querySelector<OscdIconButton>('mwc-icon-button[icon="menu"]')
-          ?.click();
-        await editor.updateComplete;
-        await timeout(200);
+        await openMenuDrawer();
         editor.menuUI
-          ?.querySelector<OscdIconButton>('mwc-list-item:nth-of-type(2)')
+          ?.querySelector<OscdIconButton>('oscd-list-item:nth-of-type(2)')
           ?.click();
         editor.menuUI
-          ?.querySelector<OscdIconButton>('mwc-list-item:nth-of-type(3)')
+          ?.querySelector<OscdIconButton>('oscd-list-item:nth-of-type(3)')
           ?.click();
 
         await editor.updateComplete;
@@ -319,6 +341,7 @@ allLocales.forEach(lang =>
           ],
         };
         await editor.updateComplete;
+        await editorTabCount(2);
       });
 
       it('displays editor plugins', async () => {
@@ -333,7 +356,7 @@ allLocales.forEach(lang =>
 
       it('changes active editor plugin on tab click', async () => {
         editor.shadowRoot
-          ?.querySelector<OscdIconButton>('mwc-tab:nth-of-type(2)')
+          ?.querySelector<OscdSecondaryTab>('oscd-secondary-tab:nth-of-type(2)')
           ?.click();
 
         await editor.updateComplete;

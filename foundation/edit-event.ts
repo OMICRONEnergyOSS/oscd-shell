@@ -89,8 +89,9 @@ function uniqueNSPrefix(element: Element, ns: string): string {
   const nsOrNull = new Set([null, ns]);
   const differentNamespace = (prefix: string) =>
     !nsOrNull.has(element.lookupNamespaceURI(prefix));
-  while (differentNamespace(`ens${i}`) || attributes.find(hasSamePrefix))
+  while (differentNamespace(`ens${i}`) || attributes.find(hasSamePrefix)) {
     i += 1;
+  }
   return `ens${i}`;
 }
 
@@ -106,12 +107,13 @@ function handleInsert({
   try {
     const { parentNode, nextSibling } = node;
     parent.insertBefore(node, reference);
-    if (parentNode)
+    if (parentNode) {
       return {
         node,
         parent: parentNode,
         reference: nextSibling,
       };
+    }
     return { node };
   } catch (e) {
     // do nothing if insert doesn't work on these nodes
@@ -125,7 +127,7 @@ function handleUpdate({ element, attributes }: Update): Update {
     .reverse()
     .forEach(([name, value]) => {
       let oldAttribute: AttributeValue;
-      if (isNamespaced(value!))
+      if (isNamespaced(value!)) {
         oldAttribute = {
           value: element.getAttributeNS(
             value.namespaceURI,
@@ -133,27 +135,33 @@ function handleUpdate({ element, attributes }: Update): Update {
           ),
           namespaceURI: value.namespaceURI,
         };
-      else
+      } else {
         oldAttribute = element.getAttributeNode(name)?.namespaceURI
           ? {
               value: element.getAttribute(name),
               namespaceURI: element.getAttributeNode(name)!.namespaceURI!,
             }
           : element.getAttribute(name);
+      }
       oldAttributes[name] = oldAttribute;
     });
   for (const entry of Object.entries(attributes)) {
     try {
       const [attribute, value] = entry as [string, AttributeValue];
       if (isNamespaced(value)) {
-        if (value.value === null)
+        if (value.value === null) {
           element.removeAttributeNS(
             value.namespaceURI,
             localAttributeName(attribute),
           );
-        else element.setAttributeNS(value.namespaceURI, attribute, value.value);
-      } else if (value === null) element.removeAttribute(attribute);
-      else element.setAttribute(attribute, value);
+        } else {
+          element.setAttributeNS(value.namespaceURI, attribute, value.value);
+        }
+      } else if (value === null) {
+        element.removeAttribute(attribute);
+      } else {
+        element.setAttribute(attribute, value);
+      }
     } catch (e) {
       // do nothing if update doesn't work on this attribute
       delete oldAttributes[entry[0]];
@@ -180,8 +188,11 @@ function handleUpdateNS({
   for (const entry of Object.entries(attributes)) {
     try {
       const [name, value] = entry as [string, Value];
-      if (value === null) element.removeAttribute(name);
-      else element.setAttribute(name, value);
+      if (value === null) {
+        element.removeAttribute(name);
+      } else {
+        element.setAttribute(name, value);
+      }
     } catch (e) {
       // do nothing if update doesn't work on this attribute
       delete oldAttributes[entry[0]];
@@ -202,12 +213,15 @@ function handleUpdateNS({
     for (const entry of Object.entries(attrs)) {
       try {
         const [name, value] = entry as [string, Value];
-        if (value === null) element.removeAttributeNS(ns, name);
-        else {
+        if (value === null) {
+          element.removeAttributeNS(ns, name);
+        } else {
           let qualifiedName = name;
           if (!qualifiedName.includes(':')) {
             let prefix = element.lookupPrefix(ns);
-            if (!prefix) prefix = uniqueNSPrefix(element, ns);
+            if (!prefix) {
+              prefix = uniqueNSPrefix(element, ns);
+            }
             qualifiedName = `${prefix}:${name}`;
           }
           element.setAttributeNS(ns, qualifiedName, value);
@@ -229,20 +243,31 @@ function handleUpdateNS({
 function handleRemove({ node }: Remove): Insert | [] {
   const { parentNode: parent, nextSibling: reference } = node;
   node.parentNode?.removeChild(node);
-  if (parent)
+  if (parent) {
     return {
       node,
       parent,
       reference,
     };
+  }
   return [];
 }
 
 export function handleEdit(edit: Edit): Edit {
-  if (isInsert(edit)) return handleInsert(edit);
-  if (isUpdate(edit)) return handleUpdate(edit);
-  if (isUpdateNS(edit)) return handleUpdateNS(edit);
-  if (isRemove(edit)) return handleRemove(edit);
-  if (isComplex(edit)) return edit.map(handleEdit).reverse();
+  if (isInsert(edit)) {
+    return handleInsert(edit);
+  }
+  if (isUpdate(edit)) {
+    return handleUpdate(edit);
+  }
+  if (isUpdateNS(edit)) {
+    return handleUpdateNS(edit);
+  }
+  if (isRemove(edit)) {
+    return handleRemove(edit);
+  }
+  if (isComplex(edit)) {
+    return edit.map(handleEdit).reverse();
+  }
   return [];
 }

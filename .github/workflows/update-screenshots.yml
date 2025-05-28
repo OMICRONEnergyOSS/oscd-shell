@@ -19,7 +19,7 @@ jobs:
         continue-on-error: true
 
       - name: Update screenshots
-        if: ${{ failure() && steps.tests.outcome == 'failure' }}
+        if: ${{ steps.tests.outcome == 'failure' }}
         run: |
           npm run test:update
           git config --global user.name "github-actions[bot]"

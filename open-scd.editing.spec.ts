@@ -18,6 +18,10 @@ import {
 
 import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
 import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
+import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
+
+import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
+import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
 
 import {
   Edit,
@@ -29,6 +33,12 @@ import {
   Remove,
   Update,
 } from './foundation.js';
+import {
+  findButtonByIcon,
+  querySelectorContainingText,
+  simulateKeypressOnElement,
+  waitForDialogState,
+} from './utils/testing.js';
 
 import type { OpenSCD } from './open-scd.js';
 
@@ -47,7 +57,7 @@ export namespace util {
 
   export const sclDocString = `<?xml version="1.0" encoding="UTF-8"?>
   <SCL version="2007" revision="B" xmlns="http://www.iec.ch/61850/2003/SCL" xmlns:ens1="http://example.org/somePreexistingExtensionNamespace">
-  <Substation name="A1" desc="test substation"></Substation>
+  <Substation ens1:foo="a" name="A1" desc="test substation"></Substation>
 </SCL>`;
   export const testDocStrings = [
     sclDocString,
@@ -201,23 +211,6 @@ export namespace util {
       )
     );
   }
-
-  export function querySelectorWithTextContent(
-    scope: Element,
-    selector: string,
-    text: string,
-  ) {
-    const elements = Array.from(scope.querySelectorAll(selector));
-    return elements.find(e => (e.textContent || '').trim() === text);
-  }
-
-  export function simulateKeypressOnElement(key: string, ctrlKey: boolean) {
-    const event = new KeyboardEvent('keydown', {
-      key,
-      ctrlKey,
-    });
-    document.dispatchEvent(event);
-  }
 }
 
 function newTestDoc() {
@@ -236,6 +229,7 @@ describe('open-scd', () => {
       util.sclDocString,
       'application/xml',
     );
+    editor.logUI.quick = true; // enable quick mode for faster tests
   });
 
   it('loads a non-SCL document on OpenDocEvent', async () => {
@@ -268,57 +262,72 @@ describe('open-scd', () => {
     });
 
     it('allows the user to change the current doc name', async () => {
-      editor.shadowRoot
-        ?.querySelector<HTMLButtonElement>('mwc-icon-button[icon=edit]')
-        ?.click();
+      findButtonByIcon(editor.shadowRoot!, 'oscd-icon-button', 'edit')?.click();
       const dialog = editor.editFileUI;
       await dialog.updateComplete;
-      const textfield =
-        dialog.querySelector<OscdFilledTextField>('mwc-textfield')!;
+      const textfield = dialog.querySelector<OscdFilledTextField>(
+        'oscd-filled-text-field',
+      )!;
       textfield.value = 'newName';
-      const select = dialog.querySelector('mwc-select')! as OscdFilledSelect;
+      const select = dialog.querySelector(
+        'oscd-filled-select',
+      )! as OscdFilledSelect;
       select.value = 'cid';
       await textfield.updateComplete;
       await select.updateComplete;
-      dialog
-        .querySelector<HTMLButtonElement>('mwc-button[slot="primaryAction"]')
-        ?.click();
+      findButtonByIcon(dialog, 'oscd-text-button', 'edit')?.click();
       await editor.updateComplete;
       expect(editor).to.have.property('docName', 'newName.cid');
       expect(editor).to.have.property('doc', sclDoc);
     });
 
     it('allows the user to close the current doc', async () => {
-      editor.shadowRoot
-        ?.querySelector<HTMLButtonElement>('mwc-icon-button[icon=edit]')
-        ?.click();
+      const currentDocName = editor.docName;
+      const editButton = findButtonByIcon(
+        editor.shadowRoot!,
+        'oscd-icon-button',
+        'edit',
+      );
+      expect(editButton).to.exist;
+      editButton?.click();
+
       const dialog = editor.editFileUI;
       await dialog.updateComplete;
-      dialog
-        .querySelector<HTMLButtonElement>('mwc-button[icon="delete"]')
-        ?.click();
+      const deleteButton = findButtonByIcon(
+        dialog,
+        'oscd-text-button',
+        'delete',
+      );
+      expect(deleteButton).to.exist;
+      deleteButton?.click();
+
+      await new Promise<void>(resolve => {
+        dialog.addEventListener('closed', () => resolve(), { once: true });
+      });
+
       await editor.updateComplete;
-      expect(editor).to.have.property('docName');
-      expect(editor).to.have.property('doc');
+      expect(editor.docName).to.not.equal(currentDocName);
+      expect(editor.doc).to.be.undefined;
     });
   });
 
   describe('with several documents loaded', () => {
     beforeEach(async () => {
-      for (let i = 0; i < 5; i += 1)
+      for (let i = 0; i < 5; i += 1) {
         editor.dispatchEvent(newOpenEvent(newTestDoc(), `test${i}.scd`));
+      }
       await editor.updateComplete;
     });
 
     it('allows the user to switch documents', async () => {
       editor.fileMenuButtonUI?.click();
       await editor.fileMenuUI.updateComplete;
-      (editor.fileMenuUI.firstElementChild as HTMLButtonElement).click();
+      (editor.fileMenuUI.firstElementChild as OscdMenuItem).click();
       await editor.updateComplete;
       const oldDocName = editor.docName;
       editor.fileMenuButtonUI?.click();
       await editor.fileMenuUI.updateComplete;
-      (editor.fileMenuUI.lastElementChild as HTMLButtonElement).click();
+      (editor.fileMenuUI.lastElementChild as OscdMenuItem).click();
       await editor.updateComplete;
       expect(editor).to.not.have.property('docName', oldDocName);
     });
@@ -328,22 +337,21 @@ describe('open-scd', () => {
         ?.find(docName => docName !== editor.docName)
         ?.split('.')[0];
       const existingDocNameWithExtension = editor.docName;
-
-      editor.shadowRoot
-        ?.querySelector<HTMLButtonElement>('oscd-icon-button[icon=edit]')
-        ?.click();
+      findButtonByIcon(
+        editor.shadowRoot!,
+        'oscd-app-bar oscd-icon-button',
+        'edit',
+      )?.click();
       const dialog = editor.editFileUI;
       await dialog.updateComplete;
-      const textfield = dialog.querySelector<OscdFilledTextField>(
-        'oscd-filled-text-field',
-      )!;
-      textfield.value = anotherDocNameWithoutExtension!;
+      const textfield = dialog.querySelector<OscdFilledTextField>('#fileName')!;
       await textfield.updateComplete;
-      dialog
-        .querySelector<HTMLButtonElement>(
-          'oscd-text-button[slot="primaryAction"]',
-        )
-        ?.click();
+      textfield.value = anotherDocNameWithoutExtension!;
+      textfield.dispatchEvent(
+        new Event('input', { bubbles: true, composed: true }),
+      );
+      await textfield.updateComplete;
+      findButtonByIcon(dialog, 'oscd-text-button', 'edit')?.click();
       await editor.updateComplete;
       expect(editor).to.have.property('docName', existingDocNameWithExtension);
     });
@@ -375,17 +383,18 @@ describe('open-scd', () => {
           name: 'A2',
           desc: null,
           ['__proto__']: 'a string', // covers a rare edge case branch
-          'myns:attr': {
+          'ens1:attr': {
             value: 'namespaced value',
             namespaceURI: 'http://example.org/myns',
           },
+          'ens1:foo': 'namespaced value set with a string not an object',
         },
       }),
     );
     expect(element).to.have.attribute('name', 'A2');
     expect(element).to.not.have.attribute('desc');
     expect(element).to.have.attribute('__proto__', 'a string');
-    expect(element).to.have.attribute('myns:attr', 'namespaced value');
+    expect(element).to.have.attribute('ens1:attr', 'namespaced value');
   });
 
   it("updates an element's attributes on UpdateNS", () => {
@@ -450,19 +459,20 @@ describe('open-scd', () => {
     const node = sclDoc.querySelector('Substation')!;
     editor.dispatchEvent(newEditEvent({ node }));
 
-    (
-      editor.querySelector(
-        'mwc-icon-button[slot="navigationIcon"]',
-      ) as HTMLButtonElement
-    )?.click();
+    const navMenuButton = findButtonByIcon(
+      editor.shadowRoot!,
+      'oscd-icon-button',
+      'menu',
+    );
+    expect(navMenuButton).to.exist;
+    navMenuButton?.click();
+
     await editor.updateComplete;
-    const undoButton = util
-      .querySelectorWithTextContent(
-        editor.menuUI,
-        'mwc-list-item > span',
-        'Undo',
-      )
-      ?.closest('mwc-list-item') as HTMLButtonElement;
+    const undoButton = querySelectorContainingText(
+      editor.menuUI,
+      'oscd-list-item > span',
+      'Undo',
+    )?.closest('oscd-list-item') as OscdListItem;
     expect(undoButton).to.exist;
     expect(undoButton).to.have.property('disabled', false);
     undoButton?.click();
@@ -477,13 +487,11 @@ describe('open-scd', () => {
     editor.undo();
     await editor.updateComplete;
     expect(sclDoc.querySelector('Substation')).to.exist;
-    const redoButton = util
-      .querySelectorWithTextContent(
-        editor.menuUI,
-        'mwc-list-item > span',
-        'Redo',
-      )
-      ?.closest('mwc-list-item') as HTMLButtonElement;
+    const redoButton = querySelectorContainingText(
+      editor.menuUI,
+      'oscd-list-item > span',
+      'Redo',
+    )?.closest('oscd-list-item') as OscdListItem;
     expect(redoButton).to.exist;
     expect(redoButton).to.have.property('disabled', false);
     redoButton?.click();
@@ -494,9 +502,9 @@ describe('open-scd', () => {
 
   describe('use the keyboard shortcuts', () => {
     it('displays the menu with Ctrl+m', async () => {
-      util.simulateKeypressOnElement('m', true);
+      simulateKeypressOnElement('m', true);
       await editor.updateComplete;
-      expect(editor.menuUI).to.have.attribute('open');
+      expect(editor.menuUI).to.have.property('opened');
     });
 
     it('undoes the last edit with Ctrl+z', async () => {
@@ -505,7 +513,7 @@ describe('open-scd', () => {
       await editor.updateComplete;
 
       expect(sclDoc.querySelector('Substation')).to.not.exist;
-      util.simulateKeypressOnElement('z', true);
+      simulateKeypressOnElement('z', true);
       await editor.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.exist;
     });
@@ -517,7 +525,7 @@ describe('open-scd', () => {
       editor.undo();
       await editor.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.exist;
-      util.simulateKeypressOnElement('y', true);
+      simulateKeypressOnElement('y', true);
       await editor.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.not.exist;
     });
@@ -529,43 +537,45 @@ describe('open-scd', () => {
       editor.undo();
       await editor.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.exist;
-      util.simulateKeypressOnElement('Z', true);
+      simulateKeypressOnElement('Z', true);
       await editor.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.not.exist;
     });
 
     it('displays the logs dialog on Ctrl+l', async () => {
-      util.simulateKeypressOnElement('l', true);
+      simulateKeypressOnElement('l', true);
       await editor.updateComplete;
-
+      await waitForDialogState(editor.logUI, 'open');
       expect(editor.logUI).to.have.attribute('open');
       const closeButton = editor.logUI?.querySelector(
-        'mwc-button[dialogAction="close"]',
-      ) as HTMLButtonElement;
+        'oscd-text-button[value="close"]',
+      ) as OscdTextButton;
       expect(closeButton).to.exist;
       closeButton?.click();
       await editor.updateComplete;
+      await waitForDialogState(editor.logUI, 'closed');
       expect(editor.logUI).to.not.have.attribute('open');
     });
 
     it('closes the dialog on Ctrl+l', async () => {
-      editor.logUI.show();
-      await editor.updateComplete;
+      await editor.logUI.show();
+      await waitForDialogState(editor.logUI, 'open');
       expect(editor.logUI).to.have.attribute('open');
-      util.simulateKeypressOnElement('l', true);
+      simulateKeypressOnElement('l', true);
+      await waitForDialogState(editor.logUI, 'closed');
       await editor.updateComplete;
       expect(editor.logUI).to.not.have.attribute('open');
     });
 
     it('does not trigger anything if the Ctrl button was not pressed', async () => {
-      util.simulateKeypressOnElement('m', false);
+      simulateKeypressOnElement('m', false);
       await editor.updateComplete;
       expect(editor.menuUI).to.not.have.attribute('open');
       expect(editor.logUI).to.not.have.attribute('open');
     });
 
     it('does not trigger anything if the Ctrl button was pressed but the key was not one of the shortcuts', async () => {
-      util.simulateKeypressOnElement('a', true);
+      simulateKeypressOnElement('a', true);
       await editor.updateComplete;
       expect(editor.menuUI).to.not.have.attribute('open');
       expect(editor.logUI).to.not.have.attribute('open');
@@ -580,13 +590,13 @@ describe('open-scd', () => {
 
     it('displays the edit history', async () => {
       const historyItemsCount =
-        editor.logUI?.querySelectorAll('mwc-list > abbr').length;
+        editor.logUI?.querySelectorAll('oscd-list > abbr').length;
       const node = sclDoc.querySelector('Substation')!;
       editor.dispatchEvent(newEditEvent({ node }));
       await editor.updateComplete;
 
       expect(
-        editor.logUI?.querySelectorAll('mwc-list > abbr'),
+        editor.logUI?.querySelectorAll('oscd-list > abbr'),
       ).to.have.lengthOf(historyItemsCount! + 1);
     });
 
@@ -595,7 +605,7 @@ describe('open-scd', () => {
       editor.dispatchEvent(newEditEvent({ node }));
       await editor.updateComplete;
       const undoButton = editor.logUI?.querySelector(
-        'mwc-button[icon="undo"]',
+        'oscd-text-button[value="undo"]',
       ) as HTMLButtonElement;
       expect(undoButton).to.exist;
       expect(undoButton).to.have.property('disabled', false);
@@ -612,7 +622,7 @@ describe('open-scd', () => {
       await editor.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.exist;
       const redoButton = editor.logUI?.querySelector(
-        'mwc-button[icon="redo"]',
+        'oscd-text-button[value="redo"]',
       ) as HTMLButtonElement;
       expect(redoButton).to.exist;
       expect(redoButton).to.have.property('disabled', false);
@@ -632,11 +642,12 @@ describe('open-scd', () => {
           }),
           edit => {
             editor.dispatchEvent(newEditEvent(edit));
-            if (util.isValidInsert(edit))
+            if (util.isValidInsert(edit)) {
               return (
                 edit.node.parentElement === edit.parent &&
                 edit.node.nextSibling === edit.reference
               );
+            }
             return true;
           },
         ),
@@ -741,7 +752,9 @@ describe('open-scd', () => {
             edits.forEach((a: Edit) => {
               editor.dispatchEvent(newEditEvent(a));
             });
-            if (edits.length) editor.undo(edits.length);
+            if (edits.length) {
+              editor.undo(edits.length);
+            }
             expect(doc1).to.satisfy((doc: XMLDocument) =>
               doc.isEqualNode(oldDoc1),
             );
