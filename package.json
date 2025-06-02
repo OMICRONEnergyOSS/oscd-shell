@@ -1,10 +1,11 @@
 {
-  "name": "@omicronenergy/open-scd-core",
+  "name": "@omicronenergy/oscd-shell",
   "version": "0.0.4",
-  "description": "The core component of OpenSCD",
+  "description": "The shell component of OpenSCD, where plugins are loaded and the application is initialized.",
+  "displayName": "OpenSCD Shell",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OMICRONEnergyOSS/open-scd-core.git"
+    "url": "git+https://github.com/OMICRONEnergyOSS/oscd-shell.git"
   },
   "keywords": [
     "scl",
@@ -18,16 +19,16 @@
   "author": "OMICRON Electronics GmbH",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/OMICRONEnergyOSS/open-scd-core/issues"
+    "url": "https://github.com/OMICRONEnergyOSS/oscd-shell/issues"
   },
-  "homepage": "https://github.com/OMICRONEnergyOSS/open-scd-core#readme",
+  "homepage": "https://github.com/OMICRONEnergyOSS/oscd-shell#readme",
   "packageManager": "npm@11.3.0",
   "type": "module",
   "browser": "./dist/foundation.js",
   "main": "./dist/foundation.js",
   "exports": {
     ".": "./dist/foundation.js",
-    "./open-scd.js": "./dist/open-scd.js"
+    "./oscd-shell.js": "./dist/oscd-shell.js"
   },
   "scripts": {
     "start": "npm run build && concurrently -k -r \"tsc -b --watch --preserveWatchOutput\" \"wds\"",
@@ -53,7 +54,7 @@
   "dependencies": {
     "@lit/localize": "^0.12.2",
     "@open-wc/scoped-elements": "^3.0.5",
-    "@omicronenergy/oscd-ui": "^0.0.3",
+    "@omicronenergy/oscd-ui": "^0.0.4",
     "@webcomponents/scoped-custom-element-registry": "^0.0.10",
     "lit": "^3.3.0"
   },

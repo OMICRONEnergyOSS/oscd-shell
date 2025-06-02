@@ -9,10 +9,10 @@ import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
 import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
 import { OscdDivider } from '@omicronenergy/oscd-ui/divider/oscd-divider.js';
+import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-filled-icon-button.js';
 import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
 import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
 import { OscdIcon } from '@omicronenergy/oscd-ui/icon/oscd-icon.js';
-import { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-icon-button.js';
 import { OscdList } from '@omicronenergy/oscd-ui/list/oscd-list.js';
 import { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
 import { OscdMenu } from '@omicronenergy/oscd-ui/menu/oscd-menu.js';
@@ -112,12 +112,12 @@ function renderActionItem(
   control: Control,
   slot = 'actionItems',
 ): TemplateResult {
-  return html`<oscd-icon-button
+  return html`<oscd-filled-icon-button
     slot="${slot}"
     aria-label="${control.getName()}"
     ?disabled=${control.isDisabled()}
     @click=${control.action}
-    ><oscd-icon>${control.icon}</oscd-icon></oscd-icon-button
+    ><oscd-icon>${control.icon}</oscd-icon></oscd-filled-icon-button
   >`;
 }
 
@@ -134,7 +134,7 @@ function renderMenuItem(control: Control): TemplateResult {
   `;
 }
 
-@customElement('open-scd')
+@customElement('oscd-shell')
 @localized()
 export class OpenSCD extends ScopedElementsMixin(LitElement) {
   static get scopedElements() {
@@ -145,7 +145,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       'oscd-filled-text-field': OscdFilledTextField,
       'oscd-filled-select': OscdFilledSelect,
       'oscd-select-option': OscdSelectOption,
-      'oscd-icon-button': OscdIconButton,
+      'oscd-filled-icon-button': OscdFilledIconButton,
       'oscd-list': OscdList,
       'oscd-list-item': OscdListItem,
       'oscd-divider': OscdDivider,
@@ -338,7 +338,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   fileMenuUI!: OscdMenu;
 
   @query('#fileMenuButton')
-  fileMenuButtonUI?: OscdIconButton;
+  fileMenuButtonUI?: OscdFilledIconButton;
 
   @property({ type: String, reflect: true })
   get locale() {
@@ -368,19 +368,32 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     undo: {
       icon: 'undo',
       getName: () => msg('Undo'),
-      action: () => this.undo(),
+      action: () => {
+        this.undo();
+        this.menuUI.opened = false;
+      },
       isDisabled: () => !this.canUndo,
     },
     redo: {
       icon: 'redo',
       getName: () => msg('Redo'),
-      action: () => this.redo(),
+      action: () => {
+        this.redo();
+        this.menuUI.opened = false;
+      },
       isDisabled: () => !this.canRedo,
     },
     log: {
       icon: 'history',
       getName: () => msg('Editing history'),
-      action: () => (this.logUI.open ? this.logUI.close() : this.logUI.show()),
+      action: () => {
+        if (this.logUI.open) {
+          this.logUI.close();
+        } else {
+          this.logUI.show();
+        }
+        // this.menuUI.opened = false;
+      },
       isDisabled: () => false,
     },
     menu: {
@@ -412,10 +425,12 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
                 ] || plugin.name,
               isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
               tagName: pluginTag(plugin.src),
-              action: () =>
+              action: () => {
                 this.shadowRoot!.querySelector<
                   HTMLElement & { run: () => Promise<void> }
-                >(pluginTag(plugin.src))!.run?.(),
+                >(pluginTag(plugin.src))!.run?.();
+                this.menuUI.opened = false;
+              },
             }
           : undefined,
       )
@@ -493,16 +508,17 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
         ${renderActionItem(this.controls.menu, 'actionStart')}
         <div slot="title" id="title">
           ${this.editableDocs.length > 1
-            ? html`<oscd-icon-button
+            ? html`<oscd-filled-icon-button
                 id="fileMenuButton"
                 @click=${() => this.fileMenuUI.show()}
-                ><oscd-icon>arrow_drop_down</oscd-icon></oscd-icon-button
+                ><oscd-icon>arrow_drop_down</oscd-icon></oscd-filled-icon-button
               >`
             : nothing}
           ${this.docName}
           ${this.docName
-            ? html`<oscd-icon-button @click=${() => this.editFileUI.show()}
-                ><oscd-icon>edit</oscd-icon></oscd-icon-button
+            ? html`<oscd-filled-icon-button
+                @click=${() => this.editFileUI.show()}
+                ><oscd-icon>edit</oscd-icon></oscd-filled-icon-button
               >`
             : nothing}
           <oscd-menu
@@ -637,9 +653,6 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
                 return;
               }
               const newDocName = `${this.fileNameUI.value}.${this.fileExtensionUI.value}`;
-              if (this.docs[newDocName]) {
-                return;
-              }
               this.docs[newDocName] = this.doc;
               delete this.docs[this.docName];
               this.docName = newDocName;
@@ -797,7 +810,6 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       /* MDC Theme Colors 
        * Needed for supporting any pluggins still using the depricated MWC Components
        */
-
       --mdc-theme-primary: var(--oscd-primary);
       --mdc-theme-secondary: var(--oscd-secondary);
       --mdc-theme-background: var(--oscd-base3);
@@ -837,18 +849,19 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     oscd-navigation-drawer-header {
       --md-list-item-supporting-text-color: var(--md-sys-color-on-surface);
     }
+    oscd-app-bar oscd-filled-icon-button {
+      --md-filled-icon-button-disabled-container-opacity: 0;
+    }
 
+    oscd-tabs {
+      display: flex;
+      flex-grow: 1;
+      --md-secondary-tab-container-color: var(--oscd-primary);
+    }
     oscd-secondary-tab {
       --md-sys-color-on-surface: var(--md-sys-color-on-primary);
       --md-sys-color-on-surface-variant: var(--md-sys-color-on-primary);
       --md-secondary-tab-active-indicator-color: var(--oscd-base2);
-    }
-
-    oscd-tabs,
-    oscd-tabs oscd-icon-button * {
-      display: flex;
-      flex-grow: 1;
-      --md-secondary-tab-container-color: var(--oscd-primary);
     }
 
     .edit-dialog-remove-button {
@@ -866,11 +879,15 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       --md-text-button-pressed-state-layer-color: var(--oscd-error);
       --md-text-button-pressed-icon-color: var(--oscd-error);
     }
+
+    #title {
+      position: relative;
+    }
   `;
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'open-scd': OpenSCD;
+    'oscd-shell': OpenSCD;
   }
 }

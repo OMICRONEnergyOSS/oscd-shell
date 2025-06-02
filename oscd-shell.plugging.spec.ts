@@ -2,8 +2,8 @@ import { expect, fixture } from '@open-wc/testing';
 
 import { html } from 'lit';
 
-import './open-scd.js';
-import type { OpenSCD, Plugin } from './open-scd.js';
+import './oscd-shell.js';
+import type { OpenSCD, Plugin } from './oscd-shell.js';
 
 const sampleMenuPlugins: Plugin[] = [
   {
@@ -34,7 +34,7 @@ describe('Plugging Element', () => {
   let editor: OpenSCD;
 
   beforeEach(async () => {
-    editor = <OpenSCD>await fixture(html`<open-scd></open-scd>`);
+    editor = <OpenSCD>await fixture(html`<oscd-shell></oscd-shell>`);
   });
 
   it('loads menu plugins', () => {

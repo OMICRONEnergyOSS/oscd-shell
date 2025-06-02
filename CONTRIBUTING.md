@@ -4,66 +4,62 @@ Thanks for taking the time to contribute to the OpenSCD project!
 
 ## Non-Code Contributions
 
-You don't need to be a software developer to contribute to this effort!  Apart
+You don't need to be a software developer to contribute to this effort! Apart
 from contributions in the form of code we are also very thankful for
-- [bug reports](
-  https://github.com/omicronenergy/open-scd-core/issues?q=is%3Aopen) alerting
-  us of errors in the `open-scd` component or its `foundation` library
+
+- [bug reports](https://github.com/OMICRONEnergyOSS/oscd-shell/issues?q=is%3Aopen) alerting
+  us of errors in the `oscd-shell` component or its `foundation` library
   functions,
-- [ideas for enhancements](
-  https://github.com/omicronenergy/open-scd-core/discussions/categories/ideas)
-to `open-scd` or its `foundation` library,
-- [contributions to discussions](
-  https://github.com/omicronenergy/open-scd-core/discussions) we're having
+- [ideas for enhancements](https://github.com/OMICRONEnergyOSS/oscd-shell/discussions/categories/ideas)
+  to `oscd-shell` or its `foundation` library,
+- [contributions to discussions](https://github.com/OMICRONEnergyOSS/oscd-shell/discussions) we're having
   about which direction the project should take, and
-- [improvements to our wiki](https://github.com/omicronenergy/open-scd/wiki)
+- [improvements to our wiki](https://github.com/OMICRONEnergyOSS/oscd-shell/wiki)
   which contains knowledge about how to use both OpenSCD and SCL in general.
 
 ## Code Contributions
 
 > The following is a set of guidelines for contributing to [OpenSCD
-> Core](https://github.com/omicronenergy/open-scd-core#readme), not a list of
+> Core](https://github.com/OMICRONEnergyOSS/oscd-shell#readme), not a list of
 > strict rules. Use your best judgment and feel free to propose changes to this
 > document in a pull request.
 
 ### Code Structure
 
-The OpenSCD Core project's [NPM package declaration file](
-https://github.com/omicronenergy/open-scd-core/blob/main/package.json) lists
+The OpenSCD Core project's [NPM package declaration file](https://github.com/OMICRONEnergyOSS/oscd-shell/blob/main/package.json) lists
 two entry points that can be referred to by package users:
 
 ```json
   "exports": {
     ".": "dist/foundation.js",
-    "/open-scd.js": "dist/open-scd.js"
+    "/oscd-shell.js": "dist/oscd-shell.js"
   },
 ```
 
 `foundation.ts` defines a host of types, utility functions, and constants which
 we hope will be useful for writing plugins that edit SCL files.
 
-`open-scd.ts` defines a custom element `<open-scd>`, a [web component](
-https://developer.mozilla.org/en-US/docs/Web/Web_Components)
+`oscd-shell.ts` defines a custom element `<oscd-shell>`, a [web component](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
 implemented as a [LitElement](https://lit.dev/docs) extended with our own
 [Mixins](https://lit.dev/docs/composition/mixins).
 
 ### Commit Messages
 
-* Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
   format for commit messages.
 
   > A commit should contain only one single change, so you should always be
   > able to find a fitting type.
-* Use the present tense ("feat: add feature" not "feat: added feature")
-* Use the imperative mood ("fix: move cursor to..." not "fix: moves cursor
+
+- Use the present tense ("feat: add feature" not "feat: added feature")
+- Use the imperative mood ("fix: move cursor to..." not "fix: moves cursor
   to...")
-* Limit the first line to 72 characters or less
-* Reference issues and pull requests liberally after the first line
+- Limit the first line to 72 characters or less
+- Reference issues and pull requests liberally after the first line
 
 ### Contributing Workflow and Branching Strategy
 
-We like to receive code contributions through the [Forking Workflow](
-https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow),
+We like to receive code contributions through the [Forking Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow),
 which means every contributor maintains their own independent fork and sends
 pull requests directly from their own copy of the repo. This enables
 contributors to work as independently as possible, with the only point of
@@ -93,8 +89,7 @@ you use your editor's or IED's eslint and prettier plugins for continuous
 formatting and linting while writing the code in order to avoid any surprises.
 
 Apart from the rules the linter and formatter enforce, we adopt the following
-guidelines taken from the terse but broad [Deno Style Guide](
-https://deno.land/manual/contributing/style_guide) with some minor adjustments:
+guidelines taken from the terse but broad [Deno Style Guide](https://deno.land/manual/contributing/style_guide) with some minor adjustments:
 
 #### TODO Comments
 
@@ -359,7 +354,7 @@ Bad:
 
 ```ts
 export const foo = (): string => {
-  return "bar";
+  return 'bar';
 };
 ```
 
@@ -367,7 +362,7 @@ Good:
 
 ```ts
 export function foo(): string {
-  return "bar";
+  return 'bar';
 }
 ```
 

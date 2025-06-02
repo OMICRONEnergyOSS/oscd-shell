@@ -139,7 +139,7 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
       padding: 0px;
     }
 
-    open-scd {
+    oscd-shell {
       display: block;
       height: 600px;
     }

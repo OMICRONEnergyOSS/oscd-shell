@@ -40,9 +40,9 @@ import {
   waitForDialogState,
 } from './utils/testing.js';
 
-import type { OpenSCD } from './open-scd.js';
+import type { OpenSCD } from './oscd-shell.js';
 
-import './open-scd.js';
+import './oscd-shell.js';
 import { UpdateNS, Value } from './foundation/edit-event.js';
 
 export namespace util {
@@ -219,12 +219,12 @@ function newTestDoc() {
   return new DOMParser().parseFromString(docString, 'application/xml');
 }
 
-describe('open-scd', () => {
+describe('oscd-shell', () => {
   let editor: OpenSCD;
   let sclDoc: XMLDocument;
 
   beforeEach(async () => {
-    editor = <OpenSCD>await fixture(html`<open-scd></open-scd>`);
+    editor = <OpenSCD>await fixture(html`<oscd-shell></oscd-shell>`);
     sclDoc = new DOMParser().parseFromString(
       util.sclDocString,
       'application/xml',
@@ -262,7 +262,11 @@ describe('open-scd', () => {
     });
 
     it('allows the user to change the current doc name', async () => {
-      findButtonByIcon(editor.shadowRoot!, 'oscd-icon-button', 'edit')?.click();
+      findButtonByIcon(
+        editor.shadowRoot!,
+        'oscd-filled-icon-button',
+        'edit',
+      )?.click();
       const dialog = editor.editFileUI;
       await dialog.updateComplete;
       const textfield = dialog.querySelector<OscdFilledTextField>(
@@ -285,7 +289,7 @@ describe('open-scd', () => {
       const currentDocName = editor.docName;
       const editButton = findButtonByIcon(
         editor.shadowRoot!,
-        'oscd-icon-button',
+        'oscd-filled-icon-button',
         'edit',
       );
       expect(editButton).to.exist;
@@ -339,20 +343,33 @@ describe('open-scd', () => {
       const existingDocNameWithExtension = editor.docName;
       findButtonByIcon(
         editor.shadowRoot!,
-        'oscd-app-bar oscd-icon-button',
+        'oscd-app-bar oscd-filled-icon-button',
         'edit',
       )?.click();
       const dialog = editor.editFileUI;
       await dialog.updateComplete;
       const textfield = dialog.querySelector<OscdFilledTextField>('#fileName')!;
-      await textfield.updateComplete;
       textfield.value = anotherDocNameWithoutExtension!;
       textfield.dispatchEvent(
         new Event('input', { bubbles: true, composed: true }),
       );
       await textfield.updateComplete;
-      findButtonByIcon(dialog, 'oscd-text-button', 'edit')?.click();
+      const renameButton = findButtonByIcon(dialog, 'oscd-text-button', 'edit');
+      expect(renameButton).to.exist;
+      renameButton!.click();
       await editor.updateComplete;
+      expect(editor.editFileUI.open).to.be.true;
+
+      const [filename] = existingDocNameWithExtension.split('.');
+      textfield.value = filename;
+      textfield.dispatchEvent(
+        new Event('input', { bubbles: true, composed: true }),
+      );
+      await editor.updateComplete;
+      renameButton!.click();
+      await editor.updateComplete;
+      await waitForDialogState(editor.editFileUI, 'closed');
+      expect(editor.editFileUI.open).not.to.be.true;
       expect(editor).to.have.property('docName', existingDocNameWithExtension);
     });
   });
@@ -384,6 +401,10 @@ describe('open-scd', () => {
           desc: null,
           ['__proto__']: 'a string', // covers a rare edge case branch
           'ens1:attr': {
+            value: 'namespaced value',
+            namespaceURI: 'http://example.org/myns',
+          },
+          attr2: {
             value: 'namespaced value',
             namespaceURI: 'http://example.org/myns',
           },
@@ -461,7 +482,7 @@ describe('open-scd', () => {
 
     const navMenuButton = findButtonByIcon(
       editor.shadowRoot!,
-      'oscd-icon-button',
+      'oscd-filled-icon-button',
       'menu',
     );
     expect(navMenuButton).to.exist;

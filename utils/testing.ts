@@ -1,3 +1,7 @@
+import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { waitUntil } from '@open-wc/testing';
+
 export function getFirstTextNodeContent(
   element: Element | null,
 ): string | undefined {
@@ -31,39 +35,20 @@ export function simulateKeypressOnElement(key: string, ctrlKey: boolean) {
 }
 
 export async function waitForDialogState(
-  dialog: HTMLElement,
+  dialog: Element,
   state: 'open' | 'closed',
 ) {
-  if (state === 'open') {
-    if (dialog.hasAttribute('open')) {
-      return;
-    }
-    await new Promise<void>(resolve => {
-      const observer = new MutationObserver(() => {
-        if (dialog.hasAttribute('open')) {
-          observer.disconnect();
-          resolve();
-        }
-      });
-      observer.observe(dialog, {
-        attributes: true,
-        attributeFilter: ['open'],
-      });
-    });
-  } else {
-    if (!dialog.hasAttribute('open')) {
-      return;
-    }
-    await new Promise<void>(resolve => {
-      dialog.addEventListener('closed', () => resolve(), { once: true });
-    });
-  }
+  await waitUntil(
+    () => (dialog as OscdDialog)?.open === (state === 'open'),
+    `Dialog did not ${state} within the expected time`,
+  );
+  return dialog;
 }
 
 /**
  * Finds a control, typically a button (but in theory could be some other component) by selector + enclosed icon name (inside an oscd-icon).
  * @param root The root element to search within.
- * @param buttonSelector The selector (e.g. 'oscd-icon-button').
+ * @param buttonSelector The selector (e.g. 'oscd-filled-icon-button').
  * @param iconName The icon name to match (text content of enclosed oscd-icon).
  * @returns The matching button element or null.
  */

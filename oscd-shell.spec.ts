@@ -1,19 +1,21 @@
 import { expect, waitUntil } from '@open-wc/testing';
 
-import './open-scd.js';
+import './oscd-shell.js';
 
 import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
+import { OscdTabs } from '@omicronenergy/oscd-ui/tabs/OscdTabs.js';
 import Sinon from 'sinon';
 
+import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
+
+import type { OpenSCD } from './oscd-shell.js';
+
+import { cyrb64, newEditEvent, newOpenEvent } from './foundation.js';
 import {
   getFirstTextNodeContent,
   querySelectorContainingText,
 } from './utils/testing.js';
-
-import type { OpenSCD } from './open-scd.js';
-
-import { cyrb64, newEditEvent, newOpenEvent } from './foundation.js';
-import { util } from './open-scd.editing.spec.js';
+import { util } from './oscd-shell.editing.spec.js';
 
 function isOscdPlugin(tag: string): boolean {
   return tag.toLocaleLowerCase().startsWith('oscd-p');
@@ -41,10 +43,18 @@ const testEditorPlugin = {
   active: true,
   requireDoc: false,
 };
+const testEditorPlugin2 = {
+  name: 'Test Editor Plugin 2',
+  translations: { de: 'Test Editor Erweiterung 2' },
+  src: 'data:text/javascript;charset=utf-8,export%20default%20class%20TestEditorPlugin2%20extends%20HTMLElement%20%7B%0D%0A%20%20constructor%20%28%29%20%7B%20super%28%29%3B%20this.innerHTML%20%3D%20%60%3Cp%3ETest%20Editor%20Plugin2%3C%2Fp%3E%60%3B%20%7D%0D%0A%7D',
+  icon: 'edit',
+  active: true,
+  requireDoc: false,
+};
 
 let editor: OpenSCD;
 beforeEach(() => {
-  editor = document.createElement('open-scd');
+  editor = document.createElement('oscd-shell');
   document.body.prepend(editor);
 });
 
@@ -56,18 +66,49 @@ describe('with editor plugins loaded', () => {
   beforeEach(async () => {
     editor.plugins = {
       menu: [],
-      editor: [testEditorPlugin],
+      editor: [testEditorPlugin, testEditorPlugin2],
     };
     await editor.updateComplete;
 
-    await waitUntil(() => {
-      const pluginTab = querySelectorContainingText(
-        editor.shadowRoot!.querySelector('oscd-tabs')!,
-        'oscd-secondary-tab',
-        testEditorPlugin.name,
-      );
-      return !!pluginTab;
-    }, 'Custom Plugin did not load');
+    await waitUntil(
+      () =>
+        editor.shadowRoot!.querySelectorAll('oscd-secondary-tab').length === 2,
+      'Custom Plugin did not load',
+    );
+  });
+
+  it('changes editor plugin when clicking on the editor tab', async () => {
+    const editorTabBar = editor.shadowRoot?.querySelector(
+      'oscd-tabs',
+    ) as OscdTabs;
+    expect(editorTabBar).to.exist;
+    expect(editorTabBar.activeTabIndex).to.equal(0);
+    expect(editorTabBar.querySelectorAll('oscd-secondary-tab').length).to.equal(
+      2,
+    );
+    const tabs =
+      editorTabBar.querySelectorAll<OscdSecondaryTab>('oscd-secondary-tab');
+    expect(getFirstTextNodeContent(tabs[0])).to.equal(testEditorPlugin.name);
+    expect(getFirstTextNodeContent(tabs[1])).to.equal(testEditorPlugin2.name);
+
+    const lastTab = editorTabBar.querySelectorAll(
+      'oscd-secondary-tab:last-child',
+    )[0] as OscdSecondaryTab;
+    expect(lastTab).to.exist;
+    lastTab!.click();
+
+    await editor.updateComplete;
+    await waitUntil(
+      () => editor.shadowRoot!.querySelector(editor!.editor),
+      'second editor plugin did not load',
+    );
+    const secondEditorPluginContent = editor.shadowRoot!.querySelector(
+      editor!.editor,
+    );
+    expect(
+      secondEditorPluginContent?.querySelector('p')?.textContent?.trim(),
+    ).to.equal('Test Editor Plugin2');
+    expect(editorTabBar.activeTabIndex).to.equal(1);
   });
 
   it('passes attribute locale', () => {
@@ -183,6 +224,7 @@ describe('Custom plugins', () => {
   beforeEach(async () => {
     editor.plugins = {
       menu: [testMenuPlugin],
+      editor: [testEditorPlugin],
     };
     await editor.updateComplete;
 

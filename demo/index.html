@@ -1,5 +1,5 @@
 <!doctype html>
-<title>OpenSCD Core MD</title>
+<title>OpenSCD Shell Demo</title>
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap"
@@ -13,10 +13,10 @@
   rel="stylesheet"
 />
 
-<open-scd></open-scd>
+<oscd-shell></oscd-shell>
 
 <script type="module">
-  import '../dist/open-scd.js';
+  import '../dist/oscd-shell.js';
 
   const plugins = {
     menu: [
@@ -73,7 +73,7 @@
     ],
   };
 
-  const editor = document.querySelector('open-scd');
+  const editor = document.querySelector('oscd-shell');
   const params = new URL(document.location).searchParams;
   for (const [name, value] of params) {
     editor.setAttribute(name, value);

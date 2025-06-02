@@ -1,10 +1,10 @@
 import { expect, waitUntil } from '@open-wc/testing';
 import { visualDiff } from '@web/test-runner-visual-regression';
 
-import './open-scd.js';
+import './oscd-shell.js';
 
 import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
-import type { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-icon-button.js';
+import type { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-filled-icon-button.js';
 import type { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
 import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
 
@@ -14,7 +14,7 @@ import {
   simulateKeypressOnElement,
 } from './utils/testing.js';
 import { allLocales } from './locales.js';
-import type { OpenSCD } from './open-scd.js';
+import type { OpenSCD } from './oscd-shell.js';
 
 const factor = window.process && process.env.CI ? 4 : 2;
 
@@ -40,7 +40,7 @@ const doc = new DOMParser().parseFromString(
 
 let editor: OpenSCD;
 let appBar!: OscdAppBar;
-let menuButton!: OscdIconButton;
+let menuButton!: OscdFilledIconButton;
 
 async function openMenuDrawer() {
   if (!appBar || !menuButton) {
@@ -79,13 +79,17 @@ async function menuPluginCount(count: number) {
 }
 
 beforeEach(async () => {
-  editor = document.createElement('open-scd');
+  editor = document.createElement('oscd-shell');
   document.body.prepend(editor);
   await editor.updateComplete;
   appBar = editor.shadowRoot?.querySelector('oscd-app-bar') as OscdAppBar;
   menuButton =
     appBar &&
-    (findButtonByIcon(appBar, 'oscd-icon-button', 'menu') as OscdIconButton);
+    (findButtonByIcon(
+      appBar,
+      'oscd-filled-icon-button',
+      'menu',
+    ) as OscdFilledIconButton);
   if (!appBar) {
     throw new Error('App bar not found');
   }
@@ -187,11 +191,19 @@ allLocales.forEach(lang =>
         ]),
       );
 
-      const undoButton = findButtonByIcon(appBar, 'oscd-icon-button', 'undo');
-      const redoButton = findButtonByIcon(appBar, 'oscd-icon-button', 'redo');
+      const undoButton = findButtonByIcon(
+        appBar,
+        'oscd-filled-icon-button',
+        'undo',
+      );
+      const redoButton = findButtonByIcon(
+        appBar,
+        'oscd-filled-icon-button',
+        'redo',
+      );
       const historyButton = findButtonByIcon(
         appBar,
-        'oscd-icon-button',
+        'oscd-filled-icon-button',
         'history',
       );
 
@@ -288,10 +300,10 @@ allLocales.forEach(lang =>
       it('triggers menu plugins on menu entry click', async () => {
         await openMenuDrawer();
         editor.menuUI
-          ?.querySelector<OscdIconButton>('oscd-list-item:nth-of-type(2)')
+          ?.querySelector<OscdFilledIconButton>('oscd-list-item:nth-of-type(2)')
           ?.click();
         editor.menuUI
-          ?.querySelector<OscdIconButton>('oscd-list-item:nth-of-type(3)')
+          ?.querySelector<OscdFilledIconButton>('oscd-list-item:nth-of-type(3)')
           ?.click();
 
         await editor.updateComplete;
