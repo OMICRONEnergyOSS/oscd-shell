@@ -503,6 +503,18 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     </oscd-list-item>`;
   }
 
+  updated(changedProps: Map<string, unknown>) {
+    super.updated?.(changedProps);
+
+    this.updateComplete.then(() => {
+      // Ensure the active tab is set after tabs are rendered
+      const oscdTabs = this.shadowRoot?.querySelector('oscd-tabs');
+      if (oscdTabs && oscdTabs.activeTabIndex !== this.editorIndex) {
+        oscdTabs.activeTabIndex = this.editorIndex;
+      }
+    });
+  }
+
   render() {
     return html`<oscd-app-bar slot="appContent">
         ${renderActionItem(this.controls.menu, 'actionStart')}
@@ -547,9 +559,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
         </div>
 
         <oscd-tabs
-          activeTabIndex=${this.editors.filter(p => !p.isDisabled()).length
-            ? 0
-            : -1}
+          .activeTabIndex=${this.editorIndex}
           @change=${(event: Event) => {
             const tabs = event.currentTarget as OscdTabs;
             this.editorIndex = tabs.activeTabIndex;
@@ -849,8 +859,11 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     oscd-navigation-drawer-header {
       --md-list-item-supporting-text-color: var(--md-sys-color-on-surface);
     }
-    oscd-app-bar oscd-filled-icon-button {
+    oscd-app-bar * {
       --md-filled-icon-button-disabled-container-opacity: 0;
+      --md-filled-icon-button-disabled-icon-color: var(
+        --md-sys-color-on-primary
+      );
     }
 
     oscd-tabs {

@@ -363,6 +363,8 @@ allLocales.forEach(lang =>
       it('displays more tabs with a doc loaded', async () => {
         editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
         await editor.updateComplete;
+        await editorTabCount(3);
+        await timeout(500);
         await visualDiff(editor, `editor-plugins-with-doc-${lang}`);
       });
 
