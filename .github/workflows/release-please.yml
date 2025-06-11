@@ -39,13 +39,13 @@ jobs:
 
       - name: Compress build output
         run: |
-          (cd ./dist && zip -r ../open-scd-core.zip .)
-          tar -C ./dist -czvf open-scd-core.tar.gz ./
+          (cd ./dist && zip -r ../oscd-shell.zip .)
+          tar -C ./dist -czvf oscd-shell.tar.gz ./
 
       - name: Upload Compressed files
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ needs.release-please.outputs.tag_name }} open-scd-core.zip open-scd-core.tar.gz
+        run: gh release upload ${{ needs.release-please.outputs.tag_name }} oscd-shell.zip oscd-shell.tar.gz
 
   npm-publish:
     needs: release-please
