@@ -14,5 +14,5 @@ jobs:
         run: npm run-script test:unit
 
       - name: Run visual regression tests on PR
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         run: npm run-script test:visual
