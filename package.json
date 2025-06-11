@@ -41,11 +41,11 @@
     "test:update": "npm run build && wtr --group visual --update-visual-baseline",
     "analyze": "cem analyze --litelement",
     "deploy": "npm run bundle && npm run doc && gh-pages --dist 'dist'",
-    "build": "npm run extract && npm run localize && npm run compile",
+    "build": "rimraf dist && rimraf .tsbuildinfo && npm run extract && npm run localize && npm run compile",
     "compile": "tsc -b",
     "bundle": "rimraf dist && npm run localize && rollup -c rollup.config.js",
     "doc": "npm run analyze -- --exclude dist && typedoc --out dist/doc foundation.ts",
-    "prepare": "npm run lint && npm run build && npm run doc",
+    "prepare": "husky",
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
     "extract": "lit-localize extract",
@@ -59,6 +59,8 @@
     "lit": "^3.3.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@custom-elements-manifest/analyzer": "^0.10.4",
     "@lit/localize-tools": "^0.8.0",
     "@open-wc/building-rollup": "3.0.2",
@@ -188,9 +190,6 @@
     }
   },
   "lint-staged": {
-    "*.ts": [
-      "eslint --fix",
-      "prettier --write"
-    ]
+    "*.ts": "npm run format"
   }
 }

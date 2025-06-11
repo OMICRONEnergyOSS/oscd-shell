@@ -1,18 +1,20 @@
-# OpenSCD Core
+[![Tests](https://github.com/OMICRONEnergyOSS/oscd-shell/actions/workflows/test.yml/badge.svg)](https://github.com/OMICRONEnergyOSS/oscd-shell/actions/workflows/test.yml) ![NPM Version](https://img.shields.io/npm/v/@omicronenergy/oscd-shell)
+
+# OpenSCD Shell
 
 ## \<oscd-shell>
 
 ## Installation
 
 ```sh
-npm i oscd-shell
+npm i @omicronenergy/oscd-shell
 ```
 
 ## Usage
 
 ```html
 <script type="module">
-  import 'oscd-shell/oscd-shell.js';
+  import '@omicronenergy/oscd-shell/oscd-shell.js';
 </script>
 
 <oscd-shell></oscd-shell>
@@ -58,7 +60,7 @@ amount of files in the project.
 ## Local Demo with `web-dev-server`
 
 ```sh
-npm start
+npm run start
 ```
 
 To run a local development server that serves the basic demo located in `demo/index.html`
