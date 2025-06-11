@@ -1,11 +1,11 @@
 import { Arbitrary } from 'fast-check';
 import { Edit, Insert, Remove, Update } from './foundation.js';
-import './open-scd.js';
+import './oscd-shell.js';
 import { UpdateNS } from './foundation/edit-event.js';
 export declare namespace util {
     const xmlAttributeName: RegExp;
     function descendants(parent: Element | XMLDocument): Node[];
-    const sclDocString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  <SCL version=\"2007\" revision=\"B\" xmlns=\"http://www.iec.ch/61850/2003/SCL\" xmlns:ens1=\"http://example.org/somePreexistingExtensionNamespace\">\n  <Substation name=\"A1\" desc=\"test substation\"></Substation>\n</SCL>";
+    const sclDocString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  <SCL version=\"2007\" revision=\"B\" xmlns=\"http://www.iec.ch/61850/2003/SCL\" xmlns:ens1=\"http://example.org/somePreexistingExtensionNamespace\">\n  <Substation ens1:foo=\"a\" name=\"A1\" desc=\"test substation\"></Substation>\n</SCL>";
     const testDocStrings: string[];
     type TestDoc = {
         doc: XMLDocument;
@@ -29,6 +29,4 @@ export declare namespace util {
     function isParentNode(node: Node): node is ParentNode;
     function isParentOf(parent: Node, node: Node | null): boolean;
     function isValidInsert({ parent, node, reference }: Insert): boolean;
-    function querySelectorWithTextContent(scope: Element, selector: string, text: string): Element | undefined;
-    function simulateKeypressOnElement(key: string, ctrlKey: boolean): void;
 }

@@ -50,6 +50,16 @@ class Deferred {
  * Copyright 2014 Travis Webb
  * SPDX-License-Identifier: MIT
  */
+// This module is derived from the file:
+// https://github.com/tjwebb/fnv-plus/blob/1e2ce68a07cb7dd4c3c85364f3d8d96c95919474/index.js#L309
+//
+// Changes:
+// - Only the _hash64_1a_fast function is included.
+// - Removed loop unrolling.
+// - Converted to TypeScript ES module.
+// - var -> let/const
+//
+// TODO(aomarks) Upstream improvements to https://github.com/tjwebb/fnv-plus/.
 for (let i = 0; i < 256; i++) {
     ((i >> 4) & 15).toString(16) + (i & 15).toString(16);
 }
@@ -65,6 +75,7 @@ let loading = new Deferred();
 loading.resolve();
 
 // Do not modify this file by hand!
+// Re-generate this file by running lit-localize
 /* eslint-disable no-irregular-whitespace */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const templates = {

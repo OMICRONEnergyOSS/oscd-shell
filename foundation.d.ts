@@ -1,6 +1,6 @@
 import { LitElement } from 'lit';
 /** Constructor type for defining `LitElement` mixins. */
-export declare type LitElementConstructor = new (...args: any[]) => LitElement;
+export type LitElementConstructor = new (...args: any[]) => LitElement;
 export { newOpenEvent } from './foundation/open-event.js';
 export type { OpenEvent, OpenDetail } from './foundation/open-event.js';
 export { handleEdit, isComplex, isInsert, isNamespaced, isRemove, isUpdate, newEditEvent, } from './foundation/edit-event.js';

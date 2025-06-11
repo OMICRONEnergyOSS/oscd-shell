@@ -30,8 +30,9 @@ function uniqueNSPrefix(element, ns) {
     const hasSamePrefix = (attribute) => attribute.prefix === `ens${i}` && attribute.namespaceURI !== ns;
     const nsOrNull = new Set([null, ns]);
     const differentNamespace = (prefix) => !nsOrNull.has(element.lookupNamespaceURI(prefix));
-    while (differentNamespace(`ens${i}`) || attributes.find(hasSamePrefix))
+    while (differentNamespace(`ens${i}`) || attributes.find(hasSamePrefix)) {
         i += 1;
+    }
     return `ens${i}`;
 }
 function localAttributeName(attribute) {
@@ -41,12 +42,13 @@ function handleInsert({ parent, node, reference, }) {
     try {
         const { parentNode, nextSibling } = node;
         parent.insertBefore(node, reference);
-        if (parentNode)
+        if (parentNode) {
             return {
                 node,
                 parent: parentNode,
                 reference: nextSibling,
             };
+        }
         return { node };
     }
     catch (e) {
@@ -61,33 +63,39 @@ function handleUpdate({ element, attributes }) {
         .forEach(([name, value]) => {
         var _a;
         let oldAttribute;
-        if (isNamespaced(value))
+        if (isNamespaced(value)) {
             oldAttribute = {
                 value: element.getAttributeNS(value.namespaceURI, localAttributeName(name)),
                 namespaceURI: value.namespaceURI,
             };
-        else
+        }
+        else {
             oldAttribute = ((_a = element.getAttributeNode(name)) === null || _a === void 0 ? void 0 : _a.namespaceURI)
                 ? {
                     value: element.getAttribute(name),
                     namespaceURI: element.getAttributeNode(name).namespaceURI,
                 }
                 : element.getAttribute(name);
+        }
         oldAttributes[name] = oldAttribute;
     });
     for (const entry of Object.entries(attributes)) {
         try {
             const [attribute, value] = entry;
             if (isNamespaced(value)) {
-                if (value.value === null)
+                if (value.value === null) {
                     element.removeAttributeNS(value.namespaceURI, localAttributeName(attribute));
-                else
+                }
+                else {
                     element.setAttributeNS(value.namespaceURI, attribute, value.value);
+                }
             }
-            else if (value === null)
+            else if (value === null) {
                 element.removeAttribute(attribute);
-            else
+            }
+            else {
                 element.setAttribute(attribute, value);
+            }
         }
         catch (e) {
             // do nothing if update doesn't work on this attribute
@@ -110,10 +118,12 @@ function handleUpdateNS({ element, attributes, attributesNS, }) {
     for (const entry of Object.entries(attributes)) {
         try {
             const [name, value] = entry;
-            if (value === null)
+            if (value === null) {
                 element.removeAttribute(name);
-            else
+            }
+            else {
                 element.setAttribute(name, value);
+            }
         }
         catch (e) {
             // do nothing if update doesn't work on this attribute
@@ -135,14 +145,16 @@ function handleUpdateNS({ element, attributes, attributesNS, }) {
         for (const entry of Object.entries(attrs)) {
             try {
                 const [name, value] = entry;
-                if (value === null)
+                if (value === null) {
                     element.removeAttributeNS(ns, name);
+                }
                 else {
                     let qualifiedName = name;
                     if (!qualifiedName.includes(':')) {
                         let prefix = element.lookupPrefix(ns);
-                        if (!prefix)
+                        if (!prefix) {
                             prefix = uniqueNSPrefix(element, ns);
+                        }
                         qualifiedName = `${prefix}:${name}`;
                     }
                     element.setAttributeNS(ns, qualifiedName, value);
@@ -165,25 +177,31 @@ function handleRemove({ node }) {
     var _a;
     const { parentNode: parent, nextSibling: reference } = node;
     (_a = node.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(node);
-    if (parent)
+    if (parent) {
         return {
             node,
             parent,
             reference,
         };
+    }
     return [];
 }
 function handleEdit(edit) {
-    if (isInsert(edit))
+    if (isInsert(edit)) {
         return handleInsert(edit);
-    if (isUpdate(edit))
+    }
+    if (isUpdate(edit)) {
         return handleUpdate(edit);
-    if (isUpdateNS(edit))
+    }
+    if (isUpdateNS(edit)) {
         return handleUpdateNS(edit);
-    if (isRemove(edit))
+    }
+    if (isRemove(edit)) {
         return handleRemove(edit);
-    if (isComplex(edit))
+    }
+    if (isComplex(edit)) {
         return edit.map(handleEdit).reverse();
+    }
     return [];
 }
 
