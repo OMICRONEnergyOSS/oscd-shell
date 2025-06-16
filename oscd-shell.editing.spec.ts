@@ -24,6 +24,13 @@ import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
 import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
 
 import {
+  findButtonByIcon,
+  querySelectorContainingText,
+  simulateKeypressOnElement,
+  waitForDialogState,
+} from '@omicronenergy/oscd-test-utils';
+
+import {
   Edit,
   Insert,
   isNamespaced,
@@ -33,12 +40,6 @@ import {
   Remove,
   Update,
 } from './foundation.js';
-import {
-  findButtonByIcon,
-  querySelectorContainingText,
-  simulateKeypressOnElement,
-  waitForDialogState,
-} from './utils/testing.js';
 
 import type { OpenSCD } from './oscd-shell.js';
 

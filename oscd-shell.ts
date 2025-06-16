@@ -504,11 +504,11 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   }
 
   updated(changedProps: Map<string, unknown>) {
-    super.updated?.(changedProps);
+    super.updated(changedProps);
 
     this.updateComplete.then(() => {
       // Ensure the active tab is set after tabs are rendered
-      const oscdTabs = this.shadowRoot?.querySelector('oscd-tabs');
+      const oscdTabs = this.shadowRoot!.querySelector('oscd-tabs');
       if (oscdTabs && oscdTabs.activeTabIndex !== this.editorIndex) {
         oscdTabs.activeTabIndex = this.editorIndex;
       }

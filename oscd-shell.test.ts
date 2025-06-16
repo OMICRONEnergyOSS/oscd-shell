@@ -8,11 +8,12 @@ import type { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/osc
 import type { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
 import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
 
-import { Edit, newEditEvent, newOpenEvent } from './foundation.js';
 import {
   findButtonByIcon,
   simulateKeypressOnElement,
-} from './utils/testing.js';
+} from '@omicronenergy/oscd-test-utils';
+import { Edit, newEditEvent, newOpenEvent } from './foundation.js';
+
 import { allLocales } from './locales.js';
 import type { OpenSCD } from './oscd-shell.js';
 

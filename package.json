@@ -53,8 +53,9 @@
   },
   "dependencies": {
     "@lit/localize": "^0.12.2",
-    "@open-wc/scoped-elements": "^3.0.5",
+    "@omicronenergy/oscd-test-utils": "^0.0.4",
     "@omicronenergy/oscd-ui": "^0.0.4",
+    "@open-wc/scoped-elements": "^3.0.5",
     "@webcomponents/scoped-custom-element-registry": "^0.0.10",
     "lit": "^3.3.0"
   },
@@ -79,11 +80,12 @@
     "es-dev-server": "^2.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.4.1",
     "eslint-plugin-tsdoc": "^0.4.0",
     "fast-check": "^4.1.1",
     "gh-pages": "^6.3.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.0.0",
+    "lint-staged": "^16.1.0",
     "prettier": "^3.3.2",
     "rollup": "^3.21.0",
     "sinon": "^20.0.0",
@@ -117,13 +119,6 @@
     ],
     "rules": {
       "no-unused-vars": "off",
-      "sort-imports": [
-        "error",
-        {
-          "ignoreCase": true,
-          "allowSeparatedGroups": true
-        }
-      ],
       "class-methods-use-this": [
         "error",
         {

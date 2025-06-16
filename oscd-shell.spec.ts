@@ -1,4 +1,8 @@
 import { expect, waitUntil } from '@open-wc/testing';
+import {
+  getFirstTextNodeContent,
+  querySelectorContainingText,
+} from '@omicronenergy/oscd-test-utils';
 
 import './oscd-shell.js';
 
@@ -11,10 +15,6 @@ import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.j
 import type { OpenSCD } from './oscd-shell.js';
 
 import { cyrb64, newEditEvent, newOpenEvent } from './foundation.js';
-import {
-  getFirstTextNodeContent,
-  querySelectorContainingText,
-} from './utils/testing.js';
 import { util } from './oscd-shell.editing.spec.js';
 
 function isOscdPlugin(tag: string): boolean {
