@@ -4,6 +4,8 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
+    container: docker://mcr.microsoft.com/playwright:v1.53.0-noble
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -12,7 +14,11 @@ jobs:
 
       - name: Run unit tests
         run: npm run-script test:unit
+        env:
+          HOME: /root
 
       - name: Run visual regression tests on PR
         if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         run: npm run-script test:visual
+        env:
+          HOME: /root

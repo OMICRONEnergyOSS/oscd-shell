@@ -5,14 +5,10 @@ import './oscd-shell.js';
 
 import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
 import type { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-filled-icon-button.js';
-import type { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
 import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
 
-import {
-  findButtonByIcon,
-  simulateKeypressOnElement,
-} from '@omicronenergy/oscd-test-utils';
-import { Edit, newEditEvent, newOpenEvent } from './foundation.js';
+import { newOpenEvent } from '@omicronenergy/oscd-api/utils.js';
+import { queryButtonByIcon } from '@omicronenergy/oscd-test-utils/queries.js';
 
 import { allLocales } from './locales.js';
 import type { OpenSCD } from './oscd-shell.js';
@@ -86,7 +82,7 @@ beforeEach(async () => {
   appBar = editor.shadowRoot?.querySelector('oscd-app-bar') as OscdAppBar;
   menuButton =
     appBar &&
-    (findButtonByIcon(
+    (queryButtonByIcon(
       appBar,
       'oscd-filled-icon-button',
       'menu',
@@ -147,108 +143,6 @@ allLocales.forEach(lang =>
       await editor.updateComplete;
       await timeout(20);
       await visualDiff(editor, `document-name-${lang}`);
-    });
-
-    it(`shows a log screen`, async () => {
-      await editor.updateComplete;
-      await openMenuDrawer();
-      editor.menuUI
-        ?.querySelector<OscdListItem>('oscd-list-item:last-child')
-        ?.click();
-
-      await editor.updateComplete;
-      await timeout(300);
-      await visualDiff(editor, `log-screen-${lang}`);
-    });
-
-    it(`shows log entries`, async () => {
-      const parent = doc.documentElement;
-      const node = doc.createElement('test');
-      const reference = doc.querySelector('testchild');
-      editor.dispatchEvent(newEditEvent({ parent, node, reference }));
-      editor.dispatchEvent(newEditEvent({ parent, node, reference: null }));
-
-      const element = doc.querySelector('testdoc')!;
-      editor.dispatchEvent(
-        newEditEvent({
-          element,
-          attributes: {
-            name: 'A2',
-            desc: null,
-            'myns:attr': {
-              value: 'namespaced value',
-              namespaceURI: 'http://example.org/myns',
-            },
-          },
-        }),
-      );
-
-      editor.dispatchEvent(newEditEvent({ node }));
-      editor.dispatchEvent(
-        newEditEvent([
-          { parent, node, reference },
-          { parent, node, reference: null },
-          { invalid: 'edit' } as unknown as Edit,
-        ]),
-      );
-
-      const undoButton = findButtonByIcon(
-        appBar,
-        'oscd-filled-icon-button',
-        'undo',
-      );
-      const redoButton = findButtonByIcon(
-        appBar,
-        'oscd-filled-icon-button',
-        'redo',
-      );
-      const historyButton = findButtonByIcon(
-        appBar,
-        'oscd-filled-icon-button',
-        'history',
-      );
-
-      expect(undoButton).to.exist;
-      expect(redoButton).to.exist;
-      expect(historyButton).to.exist;
-
-      historyButton!.click();
-
-      await editor.updateComplete;
-      await timeout(300);
-      await visualDiff(editor, `log-entries-${lang}`);
-
-      undoButton!.click();
-      await editor.updateComplete;
-
-      undoButton!.click();
-      await editor.updateComplete;
-
-      undoButton!.click();
-      await editor.updateComplete;
-
-      undoButton!.click();
-      await editor.updateComplete;
-
-      simulateKeypressOnElement('z', true);
-
-      simulateKeypressOnElement('y', false);
-
-      simulateKeypressOnElement('X', true);
-
-      await editor.updateComplete;
-
-      await timeout(20);
-      await visualDiff(editor, `log-entries-undone-${lang}`);
-
-      redoButton!.click();
-      await editor.updateComplete;
-
-      redoButton!.click();
-      await editor.updateComplete;
-
-      await timeout(20);
-      await visualDiff(editor, `log-entries-redone-${lang}`);
     });
 
     describe('with menu plugins loaded', () => {

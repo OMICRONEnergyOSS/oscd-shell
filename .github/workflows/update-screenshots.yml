@@ -5,6 +5,7 @@ on: [push, workflow_dispatch]
 jobs:
   update-screenshots:
     runs-on: ubuntu-latest
+    container: docker://mcr.microsoft.com/playwright:v1.53.0-noble
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,6 +21,8 @@ jobs:
 
       - name: Update screenshots
         if: ${{ steps.tests.outcome == 'failure' }}
+        env:
+          HOME: /root
         run: |
           npm run test:update
           git config --global user.name "github-actions[bot]"
