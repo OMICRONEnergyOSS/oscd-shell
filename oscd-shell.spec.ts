@@ -2,7 +2,9 @@ import { expect, waitUntil } from '@open-wc/testing';
 import {
   getFirstTextNodeContent,
   querySelectorContainingText,
-} from '@omicronenergy/oscd-test-utils';
+} from '@omicronenergy/oscd-test-utils/queries.js';
+
+import { sclDocString } from '@omicronenergy/oscd-test-utils/scl-sample-docs.js';
 
 import './oscd-shell.js';
 
@@ -12,10 +14,10 @@ import Sinon from 'sinon';
 
 import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
 
+import { newEditEventV2, newOpenEvent } from '@omicronenergy/oscd-api/utils.js';
 import type { OpenSCD } from './oscd-shell.js';
 
-import { cyrb64, newEditEvent, newOpenEvent } from './foundation.js';
-import { util } from './oscd-shell.editing.spec.js';
+import { cyrb64 } from './foundation.js';
 
 function isOscdPlugin(tag: string): boolean {
   return tag.toLocaleLowerCase().startsWith('oscd-p');
@@ -145,9 +147,10 @@ describe('with editor plugins loaded', () => {
     await editor.updateComplete;
 
     editor.dispatchEvent(
-      newEditEvent({
+      newEditEventV2({
         element: doc.querySelector('testdoc')!,
         attributes: { name: 'someName' },
+        attributesNS: {},
       }),
     );
     await editor.updateComplete;
@@ -208,9 +211,10 @@ describe('with menu plugins loaded', () => {
     await editor.updateComplete;
 
     editor.dispatchEvent(
-      newEditEvent({
+      newEditEventV2({
         element: doc.querySelector('testdoc')!,
         attributes: { name: 'someName' },
+        attributesNS: {},
       }),
     );
     await editor.updateComplete;
@@ -241,13 +245,13 @@ describe('Custom plugins', () => {
 
   it('executes the plugin upon menu item click', async () => {
     const sclDoc = new DOMParser().parseFromString(
-      util.sclDocString,
+      sclDocString,
       'application/xml',
     );
     editor.dispatchEvent(newOpenEvent(sclDoc, 'test.scd'));
     await editor.updateComplete;
     const node = editor.doc.querySelector('Substation')!;
-    editor.dispatchEvent(newEditEvent({ node }));
+    editor.dispatchEvent(newEditEventV2({ node }));
     await editor.updateComplete;
     expect(sclDoc.querySelector('Substation')).to.not.exist;
 
@@ -305,14 +309,6 @@ describe('localization', () => {
   let menuItemStrings: string[] = [];
   let editorTabStrings: string[] = [];
 
-  let logDialogStrings = {
-    title: '',
-    message: '',
-    undo: '',
-    redo: '',
-    close: '',
-  };
-
   beforeEach(async () => {
     editor.plugins = {
       menu: [testMenuPlugin],
@@ -351,24 +347,6 @@ describe('localization', () => {
           .map(node => node.textContent?.trim() ?? '')[0] || '',
     );
 
-    logDialogStrings = {
-      title: editor.logUI.shadowRoot?.querySelector('h2')?.textContent || '',
-      message:
-        editor.logUI.querySelector('oscd-list-item > span')?.textContent || '',
-      undo:
-        getFirstTextNodeContent(
-          editor.logUI.querySelector('oscd-text-button[icon="undo"]'),
-        ) || '',
-      redo:
-        getFirstTextNodeContent(
-          editor.logUI.querySelector('oscd-text-button[icon="redo"]'),
-        ) || '',
-      close:
-        getFirstTextNodeContent(
-          editor.logUI.querySelector('oscd-text-button[icon="close"]'),
-        ) || '',
-    };
-
     // we only change the locale after waiting for the plugins to load and getting their default strings
     editor.locale = 'de';
     await waitUntil(() => editor.locale === 'de', 'Locale failed to change');
@@ -398,27 +376,6 @@ describe('localization', () => {
       .filter((text: string) => editorTabStrings.includes(text));
 
     expect(untranslatedStrings).to.be.empty;
-  });
-
-  it('the log dialog appears in german', () => {
-    const localizedStrings = {
-      title: editor.logUI.shadowRoot?.querySelector('h2')?.textContent || '',
-      message:
-        editor.logUI.querySelector('oscd-list-item > span')?.textContent || '',
-      undo:
-        editor.logUI
-          .querySelector('oscd-text-button[value="undo"]')
-          ?.getAttribute('label') || '',
-      redo:
-        editor.logUI
-          .querySelector('oscd-text-button[value="redo"]')
-          ?.getAttribute('label') || '',
-      close:
-        editor.logUI.querySelector('oscd-text-button[value="close"]')
-          ?.textContent || '',
-    };
-
-    expect(localizedStrings).not.to.deep.equal(logDialogStrings);
   });
 
   it('it remains in english after attempting to load a non-existing locale', async () => {

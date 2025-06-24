@@ -1,42 +1,44 @@
 import '@webcomponents/scoped-custom-element-registry';
 
-import { configureLocalization, localized, msg, str } from '@lit/localize';
+import { configureLocalization, localized, msg } from '@lit/localize';
 import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 
-import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
-import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
-import { OscdDivider } from '@omicronenergy/oscd-ui/divider/oscd-divider.js';
-import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-filled-icon-button.js';
-import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
-import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
-import { OscdIcon } from '@omicronenergy/oscd-ui/icon/oscd-icon.js';
-import { OscdList } from '@omicronenergy/oscd-ui/list/oscd-list.js';
-import { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
-import { OscdMenu } from '@omicronenergy/oscd-ui/menu/oscd-menu.js';
-import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/oscd-menu-item.js';
-import { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer.js';
-import { OscdNavigationDrawerHeader } from '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer-header.js';
-import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/oscd-secondary-tab.js';
-import { OscdSelectOption } from '@omicronenergy/oscd-ui/select/oscd-select-option.js';
-import { OscdTabs } from '@omicronenergy/oscd-ui/tabs/oscd-tabs.js';
-import { OscdTextButton } from '@omicronenergy/oscd-ui/button/oscd-text-button.js';
+import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
+import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/OscdDialog.js';
+import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
+import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
+import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/OscdFilledSelect.js';
+import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/OscdFilledTextField.js';
+import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
+import { OscdList } from '@omicronenergy/oscd-ui/list/OscdList.js';
+import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
+import { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
+import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
+import { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawer.js';
+import { OscdNavigationDrawerHeader } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawerHeader.js';
+import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
+import { OscdSelectOption } from '@omicronenergy/oscd-ui/select/OscdSelectOption.js';
+import { OscdTabs } from '@omicronenergy/oscd-ui/tabs/OscdTabs.js';
+import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
+
+import { XMLEditor } from '@omicronenergy/oscd-editor';
+
+import {
+  EditDetailV2,
+  EditEvent,
+  EditEventV2,
+  EditV2,
+  OpenEvent,
+} from '@omicronenergy/oscd-api';
+
+import { convertEdit, isEdit } from '@omicronenergy/oscd-api/utils.js';
 
 import { allLocales, sourceLocale, targetLocales } from './locales.js';
 
-import {
-  cyrb64,
-  Edit,
-  EditEvent,
-  handleEdit,
-  isComplex,
-  isInsert,
-  isRemove,
-  isUpdate,
-  OpenEvent,
-} from './foundation.js';
+import { cyrb64 } from './foundation/cyrb64.js';
 
 const _customElementsDefine = window.customElements.define;
 window.customElements.define = (name, cl, conf) => {
@@ -44,8 +46,6 @@ window.customElements.define = (name, cl, conf) => {
     _customElementsDefine.call(window.customElements, name, cl, conf);
   }
 };
-
-export type LogEntry = { undo: Edit; redo: Edit };
 
 export type Plugin = {
   name: string;
@@ -84,29 +84,6 @@ const { getLocale, setLocale } = configureLocalization({
   loadLocale: locale =>
     import(new URL(`./locales/${locale}.js`, import.meta.url).href),
 });
-
-function describe({ undo, redo }: LogEntry) {
-  let result = msg('Something unexpected happened!');
-  if (isComplex(redo)) {
-    result = msg(str`≥ ${redo.length} nodes changed`);
-  }
-  if (isInsert(redo)) {
-    if (isInsert(undo)) {
-      result = msg(str`${redo.node.nodeName} moved to ${redo.parent.nodeName}`);
-    } else {
-      result = msg(
-        str`${redo.node.nodeName} inserted into ${redo.parent.nodeName}`,
-      );
-    }
-  }
-  if (isRemove(redo)) {
-    result = msg(str`${redo.node.nodeName} removed`);
-  }
-  if (isUpdate(redo)) {
-    result = msg(str`${redo.element.tagName} updated`);
-  }
-  return result;
-}
 
 function renderActionItem(
   control: Control,
@@ -166,24 +143,21 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   }
 
   @state()
-  history: LogEntry[] = [];
-
-  @state()
-  editCount: number = 0;
+  xmlEditor: XMLEditor = new XMLEditor();
 
   @state()
   get last(): number {
-    return this.editCount - 1;
+    return this.xmlEditor.past.length - 1;
   }
 
   @state()
   get canUndo(): boolean {
-    return this.last >= 0;
+    return this.xmlEditor.past.length >= 0;
   }
 
   @state()
   get canRedo(): boolean {
-    return this.editCount < this.history.length;
+    return this.xmlEditor.future.length >= 0;
   }
 
   /** The set of `XMLDocument`s currently loaded */
@@ -288,11 +262,13 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     this.requestUpdate();
   }
 
-  handleEditEvent(event: EditEvent) {
-    const edit = event.detail;
-    this.history.splice(this.editCount);
-    this.history.push({ undo: handleEdit(edit), redo: edit });
-    this.editCount += 1;
+  handleEditEvent(event: EditEvent | EditEventV2) {
+    const edit: EditV2 = isEdit(event.detail)
+      ? convertEdit(event.detail)
+      : (event.detail as EditDetailV2).edit;
+
+    this.xmlEditor.commit(edit);
+    this.requestUpdate();
   }
 
   /** Undo the last `n` [[Edit]]s committed */
@@ -300,11 +276,11 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     if (!this.canUndo || n < 1) {
       return;
     }
-    handleEdit(this.history[this.last!].undo);
-    this.editCount -= 1;
+    this.xmlEditor.undo();
     if (n > 1) {
       this.undo(n - 1);
     }
+    this.requestUpdate();
   }
 
   /** Redo the last `n` [[Edit]]s that have been undone */
@@ -312,15 +288,12 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     if (!this.canRedo || n < 1) {
       return;
     }
-    handleEdit(this.history[this.editCount].redo);
-    this.editCount += 1;
+    this.xmlEditor.redo();
     if (n > 1) {
       this.redo(n - 1);
     }
+    this.requestUpdate();
   }
-
-  @query('#log')
-  logUI!: OscdDialog;
 
   @query('#editFile')
   editFileUI!: OscdDialog;
@@ -361,10 +334,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     return this.editors[this.editorIndex]?.tagName ?? '';
   }
 
-  private controls: Record<
-    'undo' | 'redo' | 'log' | 'menu',
-    Required<Control>
-  > = {
+  private controls: Record<'undo' | 'redo' | 'menu', Required<Control>> = {
     undo: {
       icon: 'undo',
       getName: () => msg('Undo'),
@@ -383,19 +353,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       },
       isDisabled: () => !this.canRedo,
     },
-    log: {
-      icon: 'history',
-      getName: () => msg('Editing history'),
-      action: () => {
-        if (this.logUI.open) {
-          this.logUI.close();
-        } else {
-          this.logUI.show();
-        }
-        // this.menuUI.opened = false;
-      },
-      isDisabled: () => false,
-    },
+
     menu: {
       icon: 'menu',
       getName: () => msg('Menu'),
@@ -410,7 +368,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     },
   };
 
-  #actions = [this.controls.undo, this.controls.redo, this.controls.log];
+  #actions = [this.controls.undo, this.controls.redo];
 
   @state()
   get menu() {
@@ -461,7 +419,6 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     z: this.controls.undo.action,
     y: this.controls.redo.action,
     Z: this.controls.redo.action,
-    l: this.controls.log.action,
   };
 
   private handleKeyPress(e: KeyboardEvent): void {
@@ -481,26 +438,8 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     document.addEventListener('keydown', event => this.handleKeyPress(event));
 
     this.addEventListener('oscd-open', event => this.handleOpenDoc(event));
-    this.addEventListener('oscd-edit', event => this.handleEditEvent(event));
-  }
-
-  private renderLogEntry(entry: LogEntry) {
-    return html` <abbr title="${describe(entry)}">
-      <oscd-list-item ?activated=${this.history[this.last] === entry}>
-        <span>${describe(entry)}</span>
-        <oscd-icon slot="start">history</oscd-icon>
-      </oscd-list-item></abbr
-    >`;
-  }
-
-  private renderHistory(): TemplateResult[] | TemplateResult {
-    if (this.history.length > 0) {
-      return this.history.slice().reverse().map(this.renderLogEntry, this);
-    }
-    return html`<oscd-list-item>
-      <span>${msg('Your editing history will be displayed here.')}</span>
-      <oscd-icon slot="start">info</oscd-icon>
-    </oscd-list-item>`;
+    this.addEventListener('oscd-edit-v2', this.handleEditEvent);
+    this.addEventListener('oscd-edit', this.handleEditEvent);
   }
 
   updated(changedProps: Map<string, unknown>) {
@@ -594,7 +533,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
             this.docName || nothing
           }" .doc=${this.doc} locale="${this.locale}" .docs=${
             this.docs
-          } .editCount=${this.editCount}></${unsafeStatic(this.editor)}>`
+          } .editCount=${this.xmlEditor.past.length}></${unsafeStatic(this.editor)}>`
         : nothing}
 
       <oscd-dialog
@@ -675,35 +614,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
           </oscd-text-button>
         </div>
       </oscd-dialog>
-      <oscd-dialog id="log" heading="">
-        <div slot="headline">
-          <oscd-icon>history</oscd-icon>${this.controls.log.getName()}
-        </div>
-        <form slot="content" id="log-dialog-form" method="dialog">
-          <oscd-list>${this.renderHistory()}</oscd-list>
-        </form>
-        <div slot="actions">
-          <oscd-text-button
-            ?disabled=${!this.canUndo}
-            @click=${this.undo}
-            value="undo"
-            >${msg('Undo')}<oscd-icon slot="icon"
-              >undo</oscd-icon
-            ></oscd-text-button
-          >
-          <oscd-text-button
-            ?disabled=${!this.canRedo}
-            @click=${this.redo}
-            value="redo"
-            >${msg('Redo')}<oscd-icon slot="icon"
-              >redo</oscd-icon
-            ></oscd-text-button
-          >
-          <oscd-text-button form="log-dialog-form" value="close"
-            >${msg('Close')}</oscd-text-button
-          >
-        </div>
-      </oscd-dialog>
+
       <aside>
         ${this.loadedPlugins.menu.map(
           plugin =>
@@ -711,7 +622,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
               this.docName
             }" .doc=${this.doc} locale="${this.locale}" .docs=${
               this.docs
-            } .editCount=${this.editCount}></${unsafeStatic(
+            } .editCount=${this.xmlEditor.past.length}></${unsafeStatic(
               pluginTag(plugin.src),
             )}>`,
         )}

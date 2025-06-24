@@ -1,68 +1,60 @@
-import { expect, fixture, html } from '@open-wc/testing';
-
 import {
-  Arbitrary,
-  array,
-  assert,
-  constant,
-  constantFrom,
-  dictionary,
-  object as objectArbitrary,
-  oneof,
-  property,
-  record,
-  string as stringArbitrary,
-  tuple,
-  webUrl,
-} from 'fast-check';
+  convertEdit,
+  newEditEvent,
+  newEditEventV2,
+  newOpenEvent,
+} from '@omicronenergy/oscd-api/utils.js';
+
+import { expect, fixture, html, waitUntil } from '@open-wc/testing';
 
 import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
 import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
 import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
 
 import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
-import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
+
+import { simulateKeypressOnElement } from '@omicronenergy/oscd-test-utils/utils.js';
 
 import {
-  findButtonByIcon,
+  queryButtonByIcon,
   querySelectorContainingText,
-  simulateKeypressOnElement,
-  waitForDialogState,
-} from '@omicronenergy/oscd-test-utils';
+} from '@omicronenergy/oscd-test-utils/queries.js';
 
-import {
-  Edit,
-  Insert,
-  isNamespaced,
-  NamespacedAttributeValue,
-  newEditEvent,
-  newOpenEvent,
-  Remove,
-  Update,
-} from './foundation.js';
+import { Edit } from '@omicronenergy/oscd-api';
 
 import type { OpenSCD } from './oscd-shell.js';
 
 import './oscd-shell.js';
-import { UpdateNS, Value } from './foundation/edit-event.js';
 
-export namespace util {
-  export const xmlAttributeName =
-    /^(?!xml|Xml|xMl|xmL|XMl|xML|XmL|XML)[A-Za-z_][A-Za-z0-9-_.]*(:[A-Za-z_][A-Za-z0-9-_.]*)?$/;
+// Temporary addition until we can resolve the issue with the same function
+// failing when called from oscd-test-utils
+// see: https://github.com/OMICRONEnergyOSS/oscd-test-utils/issues/11
+async function waitForDialogState(dialog: Element, state: 'open' | 'closed') {
+  await waitUntil(() => {
+    const maybeDialogWithOpen = dialog as { open?: boolean };
+    return typeof maybeDialogWithOpen.open !== 'undefined'
+      ? !!maybeDialogWithOpen.open === (state === 'open')
+      : state === 'closed';
+  }, `Dialog did not ${state} within the expected time`);
+  return dialog;
+}
 
-  export function descendants(parent: Element | XMLDocument): Node[] {
-    return (Array.from(parent.childNodes) as Node[]).concat(
-      ...Array.from(parent.children).map(child => descendants(child)),
-    );
-  }
+export const xmlAttributeName =
+  /^(?!xml|Xml|xMl|xmL|XMl|xML|XmL|XML)[A-Za-z_][A-Za-z0-9-_.]*(:[A-Za-z_][A-Za-z0-9-_.]*)?$/;
 
-  export const sclDocString = `<?xml version="1.0" encoding="UTF-8"?>
+export function descendants(parent: Element | XMLDocument): Node[] {
+  return (Array.from(parent.childNodes) as Node[]).concat(
+    ...Array.from(parent.children).map(child => descendants(child)),
+  );
+}
+
+const sclDocString = `<?xml version="1.0" encoding="UTF-8"?>
   <SCL version="2007" revision="B" xmlns="http://www.iec.ch/61850/2003/SCL" xmlns:ens1="http://example.org/somePreexistingExtensionNamespace">
   <Substation ens1:foo="a" name="A1" desc="test substation"></Substation>
 </SCL>`;
-  export const testDocStrings = [
-    sclDocString,
-    `<?xml version="1.0" encoding="UTF-8"?>
+const testDocStrings = [
+  sclDocString,
+  `<?xml version="1.0" encoding="UTF-8"?>
   <testDoc1>
 <element1 property1="value1" property2="value2">SomeText</element1>
 <element2 property2="value2" property3="value3"><!--AComment--></element2>
@@ -72,7 +64,7 @@ export namespace util {
   <subelement3 property3="value3" property1="value1"></subelement3>
 </element3>
 </testDoc1>`,
-    `<?xml version="1.0" encoding="UTF-8"?>
+  `<?xml version="1.0" encoding="UTF-8"?>
   <testDoc2>
 <element1 property1="value1" property2="value2">SomeText</element1>
 <element2 property2="value2" property3="value3"><!--AComment--></element2>
@@ -82,193 +74,59 @@ export namespace util {
   <subelement3 property3="value3" property1="value1"></subelement3>
 </element3>
 </testDoc2>`,
-  ];
-
-  export type TestDoc = { doc: XMLDocument; nodes: Node[] };
-  export const testDocs = tuple(
-    constantFrom(...testDocStrings),
-    constantFrom(...testDocStrings),
-  )
-    .map(strs =>
-      strs.map(str => new DOMParser().parseFromString(str, 'application/xml')),
-    )
-    .map(docs =>
-      docs.map(doc => ({ doc, nodes: descendants(doc).concat([doc]) })),
-    ) as Arbitrary<[TestDoc, TestDoc]>;
-
-  export function remove(nodes: Node[]): Arbitrary<Remove> {
-    const node = oneof(
-      { arbitrary: constantFrom(...nodes), weight: nodes.length },
-      testDocs.chain(docs => constantFrom(...docs.map(d => d.doc))),
-    );
-    return record({ node });
-  }
-
-  export function insert(nodes: Node[]): Arbitrary<Insert> {
-    const references = (nodes as (Node | null)[]).concat([null]);
-    const parent = constantFrom(...nodes);
-    const node = constantFrom(...nodes);
-    const reference = constantFrom(...references);
-    return record({ parent, node, reference });
-  }
-
-  export function update(nodes: Node[]): Arbitrary<Update> {
-    const element = <Arbitrary<Element>>(
-      constantFrom(...nodes.filter(nd => nd.nodeType === Node.ELEMENT_NODE))
-    );
-    const attributes = dictionary(
-      oneof(stringArbitrary(), constant('colliding-attribute-name')),
-      oneof(stringArbitrary(), constant(null)),
-    );
-    return record({ element, attributes });
-  }
-
-  export function updateNS(nodes: Node[]): Arbitrary<UpdateNS> {
-    const element = <Arbitrary<Element>>(
-      constantFrom(...nodes.filter(nd => nd.nodeType === Node.ELEMENT_NODE))
-    );
-    const attributes = dictionary(
-      stringArbitrary(),
-      oneof(stringArbitrary(), constant(null)),
-    );
-    // object() instead of nested dictionary() necessary for performance reasons
-    const attributesNS = objectArbitrary({
-      key: webUrl(),
-      values: [stringArbitrary(), constant(null)],
-      maxDepth: 1,
-    }).map(
-      aNS =>
-        Object.fromEntries(
-          Object.entries(aNS).filter(
-            ([_, attrs]) => attrs && !(typeof attrs === 'string'),
-          ),
-        ) as Partial<Record<string, Partial<Record<string, Value>>>>,
-    );
-    return record({ element, attributes, attributesNS });
-  }
-
-  export function simpleEdit(
-    nodes: Node[],
-  ): Arbitrary<Insert | Update | Remove> {
-    return oneof(remove(nodes), insert(nodes), update(nodes), updateNS(nodes));
-  }
-
-  export function complexEdit(nodes: Node[]): Arbitrary<Edit[]> {
-    return array(simpleEdit(nodes));
-  }
-
-  export function edit(nodes: Node[]): Arbitrary<Edit> {
-    return oneof(
-      { arbitrary: simpleEdit(nodes), weight: 2 },
-      complexEdit(nodes),
-    );
-  }
-
-  /** A series of arbitrary edits that allow us to test undo and redo */
-  export type UndoRedoTestCase = {
-    doc1: XMLDocument;
-    doc2: XMLDocument;
-    edits: Edit[];
-  };
-  export function undoRedoTestCases(
-    testDoc1: TestDoc,
-    testDoc2: TestDoc,
-  ): Arbitrary<UndoRedoTestCase> {
-    const nodes = testDoc1.nodes.concat(testDoc2.nodes);
-    return record({
-      doc1: constant(testDoc1.doc),
-      doc2: constant(testDoc2.doc),
-      edits: array(edit(nodes)),
-    });
-  }
-
-  export function isParentNode(node: Node): node is ParentNode {
-    return (
-      node instanceof Element ||
-      node instanceof Document ||
-      node instanceof DocumentFragment
-    );
-  }
-
-  export function isParentOf(parent: Node, node: Node | null) {
-    return (
-      isParentNode(parent) &&
-      (node === null ||
-        Array.from(parent.childNodes).includes(node as ChildNode))
-    );
-  }
-
-  export function isValidInsert({ parent, node, reference }: Insert) {
-    return (
-      node !== reference &&
-      isParentOf(parent, reference) &&
-      !node.contains(parent) &&
-      ![Node.DOCUMENT_NODE, Node.DOCUMENT_TYPE_NODE].some(
-        nodeType => node.nodeType === nodeType,
-      ) &&
-      !(
-        parent instanceof Document &&
-        (parent.documentElement || !(node instanceof Element))
-      )
-    );
-  }
-}
+];
 
 function newTestDoc() {
   const docString =
-    util.testDocStrings[Math.floor(Math.random() * util.testDocStrings.length)];
+    testDocStrings[Math.floor(Math.random() * testDocStrings.length)];
   return new DOMParser().parseFromString(docString, 'application/xml');
 }
 
 describe('oscd-shell', () => {
-  let editor: OpenSCD;
+  let oscdShell: OpenSCD;
   let sclDoc: XMLDocument;
 
   beforeEach(async () => {
-    editor = <OpenSCD>await fixture(html`<oscd-shell></oscd-shell>`);
-    sclDoc = new DOMParser().parseFromString(
-      util.sclDocString,
-      'application/xml',
-    );
-    editor.logUI.quick = true; // enable quick mode for faster tests
+    oscdShell = <OpenSCD>await fixture(html`<oscd-shell></oscd-shell>`);
+    sclDoc = new DOMParser().parseFromString(sclDocString, 'application/xml');
   });
 
   it('loads a non-SCL document on OpenDocEvent', async () => {
-    editor.dispatchEvent(newOpenEvent(sclDoc, 'test.xml'));
-    await editor.updateComplete;
-    expect(editor.docs).to.have.property('test.xml', sclDoc);
-    expect(editor).to.have.property('doc', undefined);
-    expect(editor).to.not.have.property('docName', 'test.xml');
+    oscdShell.dispatchEvent(newOpenEvent(sclDoc, 'test.xml'));
+    await oscdShell.updateComplete;
+    expect(oscdShell.docs).to.have.property('test.xml', sclDoc);
+    expect(oscdShell).to.have.property('doc', undefined);
+    expect(oscdShell).to.not.have.property('docName', 'test.xml');
   });
 
   it('opens an SCL document for editing on OpenDocEvent', async () => {
-    editor.dispatchEvent(newOpenEvent(sclDoc, 'test.scd'));
-    await editor.updateComplete;
-    expect(editor.docs).to.have.property('test.scd', sclDoc);
-    expect(editor).to.have.property('doc', sclDoc);
-    expect(editor).to.have.property('docName', 'test.scd');
+    oscdShell.dispatchEvent(newOpenEvent(sclDoc, 'test.scd'));
+    await oscdShell.updateComplete;
+    expect(oscdShell.docs).to.have.property('test.scd', sclDoc);
+    expect(oscdShell).to.have.property('doc', sclDoc);
+    expect(oscdShell).to.have.property('docName', 'test.scd');
   });
 
   describe('with an SCL document loaded', () => {
     beforeEach(async () => {
-      editor.dispatchEvent(newOpenEvent(sclDoc, 'test.scd'));
-      await editor.updateComplete;
+      oscdShell.dispatchEvent(newOpenEvent(sclDoc, 'test.scd'));
+      await oscdShell.updateComplete;
     });
 
     it('updates the UI when a document with the same name is opened', async () => {
       const newDoc = newTestDoc();
-      const oldUpdate = editor.updateComplete;
-      editor.dispatchEvent(newOpenEvent(newDoc, 'test.scd'));
-      expect(oldUpdate).to.not.equal(editor.updateComplete);
+      const oldUpdate = oscdShell.updateComplete;
+      oscdShell.dispatchEvent(newOpenEvent(newDoc, 'test.scd'));
+      expect(oldUpdate).to.not.equal(oscdShell.updateComplete);
     });
 
     it('allows the user to change the current doc name', async () => {
-      findButtonByIcon(
-        editor.shadowRoot!,
+      queryButtonByIcon(
+        oscdShell.shadowRoot!,
         'oscd-filled-icon-button',
         'edit',
       )?.click();
-      const dialog = editor.editFileUI;
+      const dialog = oscdShell.editFileUI;
       await dialog.updateComplete;
       const textfield = dialog.querySelector<OscdFilledTextField>(
         'oscd-filled-text-field',
@@ -280,25 +138,25 @@ describe('oscd-shell', () => {
       select.value = 'cid';
       await textfield.updateComplete;
       await select.updateComplete;
-      findButtonByIcon(dialog, 'oscd-text-button', 'edit')?.click();
-      await editor.updateComplete;
-      expect(editor).to.have.property('docName', 'newName.cid');
-      expect(editor).to.have.property('doc', sclDoc);
+      queryButtonByIcon(dialog, 'oscd-text-button', 'edit')?.click();
+      await oscdShell.updateComplete;
+      expect(oscdShell).to.have.property('docName', 'newName.cid');
+      expect(oscdShell).to.have.property('doc', sclDoc);
     });
 
     it('allows the user to close the current doc', async () => {
-      const currentDocName = editor.docName;
-      const editButton = findButtonByIcon(
-        editor.shadowRoot!,
+      const currentDocName = oscdShell.docName;
+      const editButton = queryButtonByIcon(
+        oscdShell.shadowRoot!,
         'oscd-filled-icon-button',
         'edit',
       );
       expect(editButton).to.exist;
       editButton?.click();
 
-      const dialog = editor.editFileUI;
+      const dialog = oscdShell.editFileUI;
       await dialog.updateComplete;
-      const deleteButton = findButtonByIcon(
+      const deleteButton = queryButtonByIcon(
         dialog,
         'oscd-text-button',
         'delete',
@@ -310,44 +168,44 @@ describe('oscd-shell', () => {
         dialog.addEventListener('closed', () => resolve(), { once: true });
       });
 
-      await editor.updateComplete;
-      expect(editor.docName).to.not.equal(currentDocName);
-      expect(editor.doc).to.be.undefined;
+      await oscdShell.updateComplete;
+      expect(oscdShell.docName).to.not.equal(currentDocName);
+      expect(oscdShell.doc).to.be.undefined;
     });
   });
 
   describe('with several documents loaded', () => {
     beforeEach(async () => {
       for (let i = 0; i < 5; i += 1) {
-        editor.dispatchEvent(newOpenEvent(newTestDoc(), `test${i}.scd`));
+        oscdShell.dispatchEvent(newOpenEvent(newTestDoc(), `test${i}.scd`));
       }
-      await editor.updateComplete;
+      await oscdShell.updateComplete;
     });
 
     it('allows the user to switch documents', async () => {
-      editor.fileMenuButtonUI?.click();
-      await editor.fileMenuUI.updateComplete;
-      (editor.fileMenuUI.firstElementChild as OscdMenuItem).click();
-      await editor.updateComplete;
-      const oldDocName = editor.docName;
-      editor.fileMenuButtonUI?.click();
-      await editor.fileMenuUI.updateComplete;
-      (editor.fileMenuUI.lastElementChild as OscdMenuItem).click();
-      await editor.updateComplete;
-      expect(editor).to.not.have.property('docName', oldDocName);
+      oscdShell.fileMenuButtonUI?.click();
+      await oscdShell.fileMenuUI.updateComplete;
+      (oscdShell.fileMenuUI.firstElementChild as OscdMenuItem).click();
+      await oscdShell.updateComplete;
+      const oldDocName = oscdShell.docName;
+      oscdShell.fileMenuButtonUI?.click();
+      await oscdShell.fileMenuUI.updateComplete;
+      (oscdShell.fileMenuUI.lastElementChild as OscdMenuItem).click();
+      await oscdShell.updateComplete;
+      expect(oscdShell).to.not.have.property('docName', oldDocName);
     });
 
     it('prevents the user from renaming the current doc to an already opened doc name', async () => {
-      const anotherDocNameWithoutExtension = Object.keys(editor.docs)
-        ?.find(docName => docName !== editor.docName)
+      const anotherDocNameWithoutExtension = Object.keys(oscdShell.docs)
+        ?.find(docName => docName !== oscdShell.docName)
         ?.split('.')[0];
-      const existingDocNameWithExtension = editor.docName;
-      findButtonByIcon(
-        editor.shadowRoot!,
+      const existingDocNameWithExtension = oscdShell.docName;
+      queryButtonByIcon(
+        oscdShell.shadowRoot!,
         'oscd-app-bar oscd-filled-icon-button',
         'edit',
       )?.click();
-      const dialog = editor.editFileUI;
+      const dialog = oscdShell.editFileUI;
       await dialog.updateComplete;
       const textfield = dialog.querySelector<OscdFilledTextField>('#fileName')!;
       textfield.value = anotherDocNameWithoutExtension!;
@@ -355,105 +213,145 @@ describe('oscd-shell', () => {
         new Event('input', { bubbles: true, composed: true }),
       );
       await textfield.updateComplete;
-      const renameButton = findButtonByIcon(dialog, 'oscd-text-button', 'edit');
+      const renameButton = queryButtonByIcon(
+        dialog,
+        'oscd-text-button',
+        'edit',
+      );
       expect(renameButton).to.exist;
       renameButton!.click();
-      await editor.updateComplete;
-      expect(editor.editFileUI.open).to.be.true;
+      await oscdShell.updateComplete;
+      expect(oscdShell.editFileUI.open).to.be.true;
 
       const [filename] = existingDocNameWithExtension.split('.');
       textfield.value = filename;
       textfield.dispatchEvent(
         new Event('input', { bubbles: true, composed: true }),
       );
-      await editor.updateComplete;
+      await oscdShell.updateComplete;
       renameButton!.click();
-      await editor.updateComplete;
-      await waitForDialogState(editor.editFileUI, 'closed');
-      expect(editor.editFileUI.open).not.to.be.true;
-      expect(editor).to.have.property('docName', existingDocNameWithExtension);
+      await waitForDialogState(oscdShell.editFileUI, 'closed');
+      await oscdShell.updateComplete;
+      expect(oscdShell.editFileUI.open).not.to.be.true;
+      expect(oscdShell).to.have.property(
+        'docName',
+        existingDocNameWithExtension,
+      );
     });
   });
 
-  it('inserts an element on Insert', () => {
-    const parent = sclDoc.documentElement;
-    const node = sclDoc.createElement('test');
-    const reference = sclDoc.querySelector('Substation');
-    editor.dispatchEvent(newEditEvent({ parent, node, reference }));
-    expect(sclDoc.documentElement.querySelector('test')).to.have.property(
-      'nextSibling',
-      reference,
-    );
-  });
+  [
+    {
+      desc: 'With EditV1 dispatched events',
+      dispatcher: (edit: Edit) => {
+        oscdShell.dispatchEvent(newEditEvent(edit));
+      },
+    },
+    {
+      desc: 'With EditV2 dispatched events',
+      dispatcher: (edit: Edit) => {
+        const editV2 = convertEdit(edit);
+        oscdShell.dispatchEvent(newEditEventV2(editV2));
+      },
+    },
+    {
+      desc: 'With EditV1 commit events to the xmlEditor',
+      dispatcher: (edit: Edit) => {
+        oscdShell.xmlEditor.commit(convertEdit(edit));
+      },
+    },
+  ].forEach(({ desc, dispatcher }) => {
+    describe(desc, () => {
+      it('inserts an element on Insert', () => {
+        const parent = sclDoc.documentElement;
+        const node = sclDoc.createElement('test');
+        const reference = sclDoc.querySelector('Substation');
+        dispatcher({ parent, node, reference });
+        expect(sclDoc.documentElement.querySelector('test')).to.have.property(
+          'nextSibling',
+          reference,
+        );
+      });
 
-  it('removes an element on Remove', () => {
-    const node = sclDoc.querySelector('Substation')!;
-    editor.dispatchEvent(newEditEvent({ node }));
-    expect(sclDoc.querySelector('Substation')).to.not.exist;
-  });
+      it('removes an element on Remove', () => {
+        const node = sclDoc.querySelector('Substation')!;
+        dispatcher({ node });
+        expect(sclDoc.querySelector('Substation')).to.not.exist;
+      });
 
-  it("updates an element's attributes on Update", () => {
-    const element = sclDoc.querySelector('Substation')!;
-    editor.dispatchEvent(
-      newEditEvent({
-        element,
-        attributes: {
-          name: 'A2',
-          desc: null,
-          ['__proto__']: 'a string', // covers a rare edge case branch
-          'ens1:attr': {
-            value: 'namespaced value',
-            namespaceURI: 'http://example.org/myns',
-          },
-          attr2: {
-            value: 'namespaced value',
-            namespaceURI: 'http://example.org/myns',
-          },
-          'ens1:foo': 'namespaced value set with a string not an object',
-        },
-      }),
-    );
-    expect(element).to.have.attribute('name', 'A2');
-    expect(element).to.not.have.attribute('desc');
-    expect(element).to.have.attribute('__proto__', 'a string');
-    expect(element).to.have.attribute('ens1:attr', 'namespaced value');
-  });
+      it("updates an element's attributes on Update", () => {
+        const element = sclDoc.querySelector('Substation')!;
+        const edit = {
+          element,
+          attributes: {
+            name: 'A2',
+            desc: null,
+            ['__proto__']: 'a string', // covers a rare edge case branch
 
-  it("updates an element's attributes on UpdateNS", () => {
-    const element = sclDoc.querySelector('Substation')!;
-    editor.dispatchEvent(
-      newEditEvent({
-        element,
-        attributes: {
-          name: 'A2',
-          desc: null,
-          ['__proto__']: 'a string', // covers a rare edge case branch
-        },
-        attributesNS: {
-          'http://example.org/myns': {
-            'myns:attr': 'value1',
-            'myns:attr2': 'value1',
+            'ens1:foo': 'namespaced value set with a string not an object',
+
+            'ens1:attr': {
+              value: 'namespaced value',
+              namespaceURI:
+                'http://example.org/somePreexistingExtensionNamespace',
+            },
+            attr2: {
+              value: 'namespaced value',
+              namespaceURI:
+                'http://example.org/somePreexistingExtensionNamespace',
+            },
           },
-          'http://example.org/myns2': {
-            attr: 'value2',
-            attr2: 'value2',
+        };
+
+        dispatcher(edit);
+
+        expect(element).to.have.attribute('name', 'A2');
+        expect(element).to.not.have.attribute('desc');
+        expect(element).to.have.attribute('__proto__', 'a string');
+        expect(element).to.have.attribute('ens1:attr', 'namespaced value');
+      });
+
+      it("updates an element's attributes on UpdateNS", () => {
+        const element = sclDoc.querySelector('Substation')!;
+
+        const edit = {
+          element,
+          attributes: {
+            name: 'A2',
+            desc: null,
+            ['__proto__']: 'a string', // covers a rare edge case branch
+
+            'myns:attr': {
+              value: 'value1',
+              namespaceURI: 'http://example.org/myns',
+            },
+            'myns:attr2': {
+              value: 'value1',
+              namespaceURI: 'http://example.org/myns',
+            },
+            attr: { value: 'value2', namespaceURI: 'http://example.org/myns2' },
+            attr2: {
+              value: 'value2',
+              namespaceURI: 'http://example.org/myns2',
+            },
           },
-          'http://example.org/myns3': {
-            attr: 'value3',
-            attr2: 'value3',
-          },
-        },
-      }),
-    );
-    expect(element).to.have.attribute('name', 'A2');
-    expect(element).to.not.have.attribute('desc');
-    expect(element).to.have.attribute('__proto__', 'a string');
-    expect(element).to.have.attribute('myns:attr', 'value1');
-    expect(element).to.have.attribute('myns:attr2', 'value1');
-    expect(element).to.have.attribute('ens2:attr', 'value2');
-    expect(element).to.have.attribute('ens2:attr2', 'value2');
-    expect(element).to.have.attribute('ens3:attr', 'value3');
-    expect(element).to.have.attribute('ens3:attr2', 'value3');
+        };
+
+        dispatcher(edit);
+
+        expect(element).to.have.attribute('name', 'A2');
+        expect(element).to.not.have.attribute('desc');
+        expect(element).to.have.attribute('__proto__', 'a string');
+        expect(element).to.have.attribute('myns:attr', 'value1');
+        expect(element).to.have.attribute('myns:attr2', 'value1');
+        expect(
+          element.getAttributeNS('http://example.org/myns2', 'attr'),
+        ).to.equal('value2');
+        expect(
+          element.getAttributeNS('http://example.org/myns2', 'attr2'),
+        ).to.equal('value2');
+      });
+    });
   });
 
   it('processes complex edits in the given order', () => {
@@ -461,8 +359,8 @@ describe('oscd-shell', () => {
     const reference = sclDoc.querySelector('Substation');
     const node1 = sclDoc.createElement('test1');
     const node2 = sclDoc.createElement('test2');
-    editor.dispatchEvent(
-      newEditEvent([
+    oscdShell.dispatchEvent(
+      newEditEventV2([
         { parent, node: node1, reference },
         { parent, node: node2, reference },
       ]),
@@ -479,45 +377,45 @@ describe('oscd-shell', () => {
 
   it('undoes a edit from Undo menu option', async () => {
     const node = sclDoc.querySelector('Substation')!;
-    editor.dispatchEvent(newEditEvent({ node }));
+    oscdShell.dispatchEvent(newEditEventV2({ node }));
 
-    const navMenuButton = findButtonByIcon(
-      editor.shadowRoot!,
+    const navMenuButton = queryButtonByIcon(
+      oscdShell.shadowRoot!,
       'oscd-filled-icon-button',
       'menu',
     );
     expect(navMenuButton).to.exist;
     navMenuButton?.click();
 
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
     const undoButton = querySelectorContainingText(
-      editor.menuUI,
+      oscdShell.menuUI,
       'oscd-list-item > span',
       'Undo',
     )?.closest('oscd-list-item') as OscdListItem;
     expect(undoButton).to.exist;
     expect(undoButton).to.have.property('disabled', false);
     undoButton?.click();
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
     expect(sclDoc.querySelector('Substation')).to.exist;
   });
 
   it('redoes an undone edit from Redo menu option', async () => {
     const node = sclDoc.querySelector('Substation')!;
-    editor.dispatchEvent(newEditEvent({ node }));
+    oscdShell.dispatchEvent(newEditEventV2({ node }));
     expect(sclDoc.querySelector('Substation')).to.not.exist;
-    editor.undo();
-    await editor.updateComplete;
+    oscdShell.undo();
+    await oscdShell.updateComplete;
     expect(sclDoc.querySelector('Substation')).to.exist;
     const redoButton = querySelectorContainingText(
-      editor.menuUI,
+      oscdShell.menuUI,
       'oscd-list-item > span',
       'Redo',
     )?.closest('oscd-list-item') as OscdListItem;
     expect(redoButton).to.exist;
     expect(redoButton).to.have.property('disabled', false);
     redoButton?.click();
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
 
     expect(sclDoc.querySelector('Substation')).to.not.exist;
   });
@@ -525,290 +423,154 @@ describe('oscd-shell', () => {
   describe('use the keyboard shortcuts', () => {
     it('displays the menu with Ctrl+m', async () => {
       simulateKeypressOnElement('m', true);
-      await editor.updateComplete;
-      expect(editor.menuUI).to.have.property('opened');
+      await oscdShell.updateComplete;
+      expect(oscdShell.menuUI).to.have.property('opened');
     });
 
     it('undoes the last edit with Ctrl+z', async () => {
       const node = sclDoc.querySelector('Substation')!;
-      editor.dispatchEvent(newEditEvent({ node }));
-      await editor.updateComplete;
+      oscdShell.dispatchEvent(newEditEventV2({ node }));
+      await oscdShell.updateComplete;
 
       expect(sclDoc.querySelector('Substation')).to.not.exist;
       simulateKeypressOnElement('z', true);
-      await editor.updateComplete;
+      await oscdShell.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.exist;
     });
 
     it('redoes the last edit with Ctrl+y', async () => {
       const node = sclDoc.querySelector('Substation')!;
-      editor.dispatchEvent(newEditEvent({ node }));
+      oscdShell.dispatchEvent(newEditEventV2({ node }));
       expect(sclDoc.querySelector('Substation')).to.not.exist;
-      editor.undo();
-      await editor.updateComplete;
+      oscdShell.undo();
+      await oscdShell.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.exist;
       simulateKeypressOnElement('y', true);
-      await editor.updateComplete;
+      await oscdShell.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.not.exist;
     });
 
     it('it redoes the last edit with Ctrl+Z', async () => {
       const node = sclDoc.querySelector('Substation')!;
-      editor.dispatchEvent(newEditEvent({ node }));
+      oscdShell.dispatchEvent(newEditEventV2({ node }));
       expect(sclDoc.querySelector('Substation')).to.not.exist;
-      editor.undo();
-      await editor.updateComplete;
+      oscdShell.undo();
+      await oscdShell.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.exist;
       simulateKeypressOnElement('Z', true);
-      await editor.updateComplete;
+      await oscdShell.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.not.exist;
-    });
-
-    it('displays the logs dialog on Ctrl+l', async () => {
-      simulateKeypressOnElement('l', true);
-      await editor.updateComplete;
-      await waitForDialogState(editor.logUI, 'open');
-      expect(editor.logUI).to.have.attribute('open');
-      const closeButton = editor.logUI?.querySelector(
-        'oscd-text-button[value="close"]',
-      ) as OscdTextButton;
-      expect(closeButton).to.exist;
-      closeButton?.click();
-      await editor.updateComplete;
-      await waitForDialogState(editor.logUI, 'closed');
-      expect(editor.logUI).to.not.have.attribute('open');
-    });
-
-    it('closes the dialog on Ctrl+l', async () => {
-      await editor.logUI.show();
-      await waitForDialogState(editor.logUI, 'open');
-      expect(editor.logUI).to.have.attribute('open');
-      simulateKeypressOnElement('l', true);
-      await waitForDialogState(editor.logUI, 'closed');
-      await editor.updateComplete;
-      expect(editor.logUI).to.not.have.attribute('open');
     });
 
     it('does not trigger anything if the Ctrl button was not pressed', async () => {
       simulateKeypressOnElement('m', false);
-      await editor.updateComplete;
-      expect(editor.menuUI).to.not.have.attribute('open');
-      expect(editor.logUI).to.not.have.attribute('open');
+      await oscdShell.updateComplete;
+      expect(oscdShell.menuUI).to.not.have.attribute('open');
     });
 
     it('does not trigger anything if the Ctrl button was pressed but the key was not one of the shortcuts', async () => {
       simulateKeypressOnElement('a', true);
-      await editor.updateComplete;
-      expect(editor.menuUI).to.not.have.attribute('open');
-      expect(editor.logUI).to.not.have.attribute('open');
+      await oscdShell.updateComplete;
+      expect(oscdShell.menuUI).to.not.have.attribute('open');
+    });
+
+    it('does not change anything if there is nothing to Undo', async () => {
+      const before = new XMLSerializer().serializeToString(sclDoc);
+      simulateKeypressOnElement('Z', true);
+      await oscdShell.updateComplete;
+      const after = new XMLSerializer().serializeToString(sclDoc);
+      expect(after).to.equal(before);
+    });
+
+    it('does not change anything if there is nothing to redo', async () => {
+      const before = new XMLSerializer().serializeToString(sclDoc);
+      simulateKeypressOnElement('y', true);
+      await oscdShell.updateComplete;
+      const after = new XMLSerializer().serializeToString(sclDoc);
+      expect(after).to.equal(before);
     });
   });
 
-  describe('with the editing history dialog open', () => {
+  describe("Out of range Undo's and Redo's", () => {
+    it('does not change anything invoking undo(0)', async () => {
+      const before = new XMLSerializer().serializeToString(sclDoc);
+      oscdShell.undo(0);
+      await oscdShell.updateComplete;
+      const after = new XMLSerializer().serializeToString(sclDoc);
+      expect(after).to.equal(before);
+    });
+
+    it('does not change anything invoking redo(0)', async () => {
+      const before = new XMLSerializer().serializeToString(sclDoc);
+      oscdShell.redo(0);
+      await oscdShell.updateComplete;
+      const after = new XMLSerializer().serializeToString(sclDoc);
+      expect(after).to.equal(before);
+    });
+
+    it('only undoes what can be undone when invoking undo(10)', async () => {
+      const before = new XMLSerializer().serializeToString(sclDoc);
+
+      const node = sclDoc.querySelector('Substation')!;
+      oscdShell.dispatchEvent(newEditEventV2({ node }));
+      await oscdShell.updateComplete;
+
+      oscdShell.undo(10);
+      await oscdShell.updateComplete;
+      const after = new XMLSerializer().serializeToString(sclDoc);
+      expect(after).to.equal(before);
+    });
+
+    it('only redoes what can be redone when invoking redo(10)', async () => {
+      const node = sclDoc.querySelector('Substation')!;
+      oscdShell.dispatchEvent(newEditEventV2({ node }));
+      await oscdShell.updateComplete;
+
+      const before = new XMLSerializer().serializeToString(sclDoc);
+
+      oscdShell.redo(10);
+      await oscdShell.updateComplete;
+      const after = new XMLSerializer().serializeToString(sclDoc);
+      expect(after).to.equal(before);
+    });
+  });
+
+  describe('Undo and Redo from the AppBar', () => {
     beforeEach(async () => {
-      editor.logUI.show();
-      await editor.updateComplete;
-    });
-
-    it('displays the edit history', async () => {
-      const historyItemsCount =
-        editor.logUI?.querySelectorAll('oscd-list > abbr').length;
       const node = sclDoc.querySelector('Substation')!;
-      editor.dispatchEvent(newEditEvent({ node }));
-      await editor.updateComplete;
-
-      expect(
-        editor.logUI?.querySelectorAll('oscd-list > abbr'),
-      ).to.have.lengthOf(historyItemsCount! + 1);
-    });
-
-    it('undoes the last edit when clicking the undo button in the log dialog', async () => {
-      const node = sclDoc.querySelector('Substation')!;
-      editor.dispatchEvent(newEditEvent({ node }));
-      await editor.updateComplete;
-      const undoButton = editor.logUI?.querySelector(
-        'oscd-text-button[value="undo"]',
-      ) as HTMLButtonElement;
-      expect(undoButton).to.exist;
-      expect(undoButton).to.have.property('disabled', false);
-      undoButton?.click();
-      await editor.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.exist;
-    });
-
-    it('redoes the last undone when clicking the redo button in the log dialog', async () => {
-      const node = sclDoc.querySelector('Substation')!;
-      editor.dispatchEvent(newEditEvent({ node }));
-      await editor.updateComplete;
-      editor.undo();
-      await editor.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.exist;
-      const redoButton = editor.logUI?.querySelector(
-        'oscd-text-button[value="redo"]',
-      ) as HTMLButtonElement;
-      expect(redoButton).to.exist;
-      expect(redoButton).to.have.property('disabled', false);
-      redoButton?.click();
-      await editor.updateComplete;
+      oscdShell.dispatchEvent(newEditEventV2({ node }));
+      await oscdShell.updateComplete;
       expect(sclDoc.querySelector('Substation')).to.not.exist;
     });
-  });
 
-  describe('generally', () => {
-    it('inserts elements on Insert edit events', () =>
-      assert(
-        property(
-          util.testDocs.chain(([doc1, doc2]) => {
-            const nodes = doc1.nodes.concat(doc2.nodes);
-            return util.insert(nodes);
-          }),
-          edit => {
-            editor.dispatchEvent(newEditEvent(edit));
-            if (util.isValidInsert(edit)) {
-              return (
-                edit.node.parentElement === edit.parent &&
-                edit.node.nextSibling === edit.reference
-              );
-            }
-            return true;
-          },
-        ),
-      ));
+    it('undoes the last edit when the AppBar undo button is clicked', async () => {
+      const undoButton = queryButtonByIcon(
+        oscdShell.shadowRoot!,
+        'oscd-app-bar oscd-filled-icon-button',
+        'undo',
+      );
+      expect(undoButton).to.exist;
+      undoButton?.click();
 
-    it('updates default namespace attributes on Update edit events', () =>
-      assert(
-        property(
-          util.testDocs.chain(([{ nodes }]) => util.update(nodes)),
-          edit => {
-            editor.dispatchEvent(newEditEvent(edit));
-            return Object.entries(edit.attributes)
-              .filter(
-                ([name, value]) =>
-                  util.xmlAttributeName.test(name) && !isNamespaced(value!),
-              )
-              .every(
-                ([name, value]) => edit.element.getAttribute(name) === value,
-              );
-          },
-        ),
-      ));
+      await oscdShell.updateComplete;
+      expect(sclDoc.querySelector('Substation')).to.exist;
+    });
 
-    it('updates namespaced attributes on Update edit events', () =>
-      assert(
-        property(
-          util.testDocs.chain(([{ nodes }]) => util.update(nodes)),
-          edit => {
-            editor.dispatchEvent(newEditEvent(edit));
-            return Object.entries(edit.attributes)
-              .filter(
-                ([name, value]) =>
-                  util.xmlAttributeName.test(name) &&
-                  isNamespaced(value!) &&
-                  value.namespaceURI,
-              )
-              .map(entry => entry as [string, NamespacedAttributeValue])
-              .every(
-                ([name, { value, namespaceURI }]) =>
-                  edit.element.getAttributeNS(
-                    <string>namespaceURI,
-                    name.includes(':') ? <string>name.split(':', 2)[1] : name,
-                  ) === value,
-              );
-          },
-        ),
-      ));
+    it('it redoes the last undo when the AppBar redo button is clicked', async () => {
+      oscdShell.undo();
+      await oscdShell.updateComplete;
+      expect(sclDoc.querySelector('Substation')).to.exist;
 
-    it('updates default- and foreign-namespace attributes on UpdateNS events', () =>
-      assert(
-        property(
-          util.testDocs.chain(([{ nodes }]) => util.updateNS(nodes)),
-          edit => {
-            editor.dispatchEvent(newEditEvent(edit));
-            return (
-              Object.entries(edit.attributes)
-                .filter(([name]) => util.xmlAttributeName.test(name))
-                .map(entry => entry as [string, Value])
-                .every(
-                  ([name, value]) => edit.element.getAttribute(name) === value,
-                ) &&
-              Object.entries(edit.attributesNS)
-                .map(entry => entry as [string, Record<string, Value>])
-                .every(([ns, attributes]) =>
-                  Object.entries(attributes)
-                    .filter(([name]) => util.xmlAttributeName.test(name))
-                    .map(entry => entry as [string, Value])
-                    .every(
-                      ([name, value]) =>
-                        edit.element.getAttributeNS(
-                          ns,
-                          name.includes(':')
-                            ? <string>name.split(':', 2)[1]
-                            : name,
-                        ) === value,
-                    ),
-                )
-            );
-          },
-        ),
-      )).timeout(20000);
+      const redoButton = queryButtonByIcon(
+        oscdShell.shadowRoot!,
+        'oscd-app-bar oscd-filled-icon-button',
+        'redo',
+      );
+      expect(redoButton).to.exist;
+      redoButton?.click();
+      await oscdShell.updateComplete;
 
-    it('removes elements on Remove edit events', () =>
-      assert(
-        property(
-          util.testDocs.chain(([{ nodes }]) => util.remove(nodes)),
-          ({ node }) => {
-            editor.dispatchEvent(newEditEvent({ node }));
-            return !node.parentNode;
-          },
-        ),
-      ));
-
-    it('undoes up to n edits on undo(n) call', () =>
-      assert(
-        property(
-          util.testDocs.chain(docs => util.undoRedoTestCases(...docs)),
-          ({ doc1, doc2, edits }: util.UndoRedoTestCase) => {
-            const [oldDoc1, oldDoc2] = [doc1, doc2].map(doc =>
-              doc.cloneNode(true),
-            );
-            edits.forEach((a: Edit) => {
-              editor.dispatchEvent(newEditEvent(a));
-            });
-            if (edits.length) {
-              editor.undo(edits.length);
-            }
-            expect(doc1).to.satisfy((doc: XMLDocument) =>
-              doc.isEqualNode(oldDoc1),
-            );
-            expect(doc2).to.satisfy((doc: XMLDocument) =>
-              doc.isEqualNode(oldDoc2),
-            );
-            return true;
-          },
-        ),
-      )).timeout(20000);
-
-    it('redoes up to n edits on redo(n) call', () =>
-      assert(
-        property(
-          util.testDocs.chain(docs => util.undoRedoTestCases(...docs)),
-          ({ doc1, doc2, edits }: util.UndoRedoTestCase) => {
-            edits.forEach((a: Edit) => {
-              editor.dispatchEvent(newEditEvent(a));
-            });
-            const [oldDoc1, oldDoc2] = [doc1, doc2].map(doc =>
-              new XMLSerializer().serializeToString(doc),
-            );
-            if (edits.length) {
-              editor.undo(edits.length + 1);
-              editor.redo(edits.length + 1);
-            }
-            const [newDoc1, newDoc2] = [doc1, doc2].map(doc =>
-              new XMLSerializer().serializeToString(doc),
-            );
-            return oldDoc1 === newDoc1 && oldDoc2 === newDoc2;
-          },
-        ),
-      )).timeout(20000);
+      expect(sclDoc.querySelector('Substation')).to.not.exist;
+    });
   });
 });
