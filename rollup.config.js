@@ -8,11 +8,11 @@ const locales = readdirSync('locales').map(locale => ({
   output: {
     sourcemap: true, // Add source map to build output
     format: 'es', // ES module type export
-    file: `dist/locales/${locale}`.slice(0, -3) + '.js', // Keep filename
+    file: `${`dist/locales/${locale}`.slice(0, -3)}.js`, // Keep filename
   },
   preserveEntrySignatures: 'strict', // leaves export of the plugin entry point
 
-  plugins: [nodeResolve(), typescript()],
+  plugins: [nodeResolve(), typescript({ declaration: false })],
 }));
 
 export default [
