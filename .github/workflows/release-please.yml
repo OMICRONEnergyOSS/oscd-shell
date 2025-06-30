@@ -23,30 +23,6 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
-  add-build-artifact-to-release:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pages: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node-env
-
-      - name: Build
-        run: npm run build
-
-      - name: Compress build output
-        run: |
-          (cd ./dist && zip -r ../oscd-shell.zip .)
-          tar -C ./dist -czvf oscd-shell.tar.gz ./
-
-      - name: Upload Compressed files
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ needs.release-please.outputs.tag_name }} oscd-shell.zip oscd-shell.tar.gz
-
   npm-publish:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
@@ -67,6 +43,9 @@ jobs:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -82,3 +61,13 @@ jobs:
           npx gh-pages -d dist -u "github-actions <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create zipped bundle
+        run: |
+          (cd ./dist && zip -r ../oscd-shell.zip .)
+          tar -C ./dist -czvf oscd-shell.tar.gz ./
+
+      - name: Upload zipped bundle to GitHub release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ needs.release-please.outputs.tag_name }} oscd-shell.zip oscd-shell.tar.gz
