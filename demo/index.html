@@ -1,95 +1,101 @@
 <!doctype html>
-<title>OpenSCD Shell Demo</title>
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap"
-/>
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
-/>
-<link
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-  rel="stylesheet"
-/>
+<html>
+  <head>
+    <title>OpenSCD Shell Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
 
-<oscd-shell></oscd-shell>
+    <oscd-shell></oscd-shell>
 
-<script type="module">
-  import '../dist/oscd-shell.js';
+    <script type="module">
+      import '../oscd-shell.js';
 
-  const plugins = {
-    menu: [
-      {
-        name: 'Add plugins...',
-        translations: { de: 'Erweitern...' },
-        icon: 'extension',
-        active: true,
-        src: '/demo/AddPlugins.js',
-      },
-      {
-        name: 'Open File',
-        translations: { de: 'Datei öffnen' },
-        icon: 'folder_open',
-        active: true,
-        src: 'https://openenergytools.github.io/oscd-open/oscd-open.js',
-      },
-      {
-        name: 'Save File',
-        translations: { de: 'Datei öffnen' },
-        icon: 'save',
-        active: true,
-        src: 'https://openenergytools.github.io/oscd-save/oscd-save.js',
-      },
-    ],
-    editor: [
-      {
-        name: 'Start',
-        translations: {
-          de: 'Start',
-        },
-        icon: 'start',
-        active: true,
-        src: 'https://openenergytools.github.io/scl-editor-landing/scl-editor-landing.js',
-      },
+      const plugins = {
+        menu: [
+          {
+            name: 'Add plugins...',
+            translations: { de: 'Erweitern...' },
+            icon: 'extension',
+            active: true,
+            src: '/demo/AddPlugins.js',
+          },
+          {
+            name: 'Open File',
+            translations: { de: 'Datei öffnen' },
+            icon: 'folder_open',
+            active: true,
+            src: 'https://openenergytools.github.io/oscd-open/oscd-open.js',
+          },
+          {
+            name: 'Save File',
+            translations: { de: 'Datei öffnen' },
+            icon: 'save',
+            active: true,
+            src: 'https://openenergytools.github.io/oscd-save/oscd-save.js',
+          },
+        ],
+        editor: [
+          {
+            name: 'Start',
+            translations: {
+              de: 'Start',
+            },
+            icon: 'start',
+            active: true,
+            src: 'https://openenergytools.github.io/scl-editor-landing/scl-editor-landing.js',
+          },
 
-      {
-        name: 'Substation',
-        icon: 'margin',
-        active: true,
-        requireDoc: true,
-        src: 'https://openenergytools.github.io/scl-substation-editor/scl-substation-editor.js',
-      },
-      {
-        name: 'Design SLD',
-        translations: {
-          de: 'Designer',
-        },
-        icon: 'add_box',
-        active: true,
-        requireDoc: true,
-        src: 'https://openenergytools.github.io/oscd-designer/oscd-designer.js',
-      },
-    ],
-  };
+          {
+            name: 'Substation',
+            icon: 'margin',
+            active: true,
+            requireDoc: true,
+            src: 'https://openenergytools.github.io/scl-substation-editor/scl-substation-editor.js',
+          },
+          {
+            name: 'Design SLD',
+            translations: {
+              de: 'Designer',
+            },
+            icon: 'add_box',
+            active: true,
+            requireDoc: true,
+            src: 'https://openenergytools.github.io/oscd-designer/oscd-designer.js',
+          },
+        ],
+      };
 
-  const editor = document.querySelector('oscd-shell');
-  const params = new URL(document.location).searchParams;
-  for (const [name, value] of params) {
-    editor.setAttribute(name, value);
-  }
-  editor.plugins = plugins;
-</script>
+      const editor = document.querySelector('oscd-shell');
+      const params = new URL(document.location).searchParams;
+      for (const [name, value] of params) {
+        editor.setAttribute(name, value);
+      }
+      editor.plugins = plugins;
+    </script>
 
-<style>
-  html,
-  body {
-    width: 100%;
-    height: 100%;
-  }
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
 
-  * {
-    margin: 0px;
-    padding: 0px;
-  }
-</style>
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+
+  <body></body>
+</html>
