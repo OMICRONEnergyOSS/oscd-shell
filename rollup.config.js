@@ -1,5 +1,6 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import copy from 'rollup-plugin-copy';
 
 import { readdirSync } from 'fs';
 
@@ -30,6 +31,15 @@ export default [
       /** Resolve bare module imports */
       nodeResolve(),
       typescript(),
+      copy({
+        targets: [
+          { src: 'demo/index.html', dest: 'dist/demo' },
+          { src: 'demo/*.js', dest: 'dist/demo' },
+          // Add more patterns if you have more assets
+        ],
+        verbose: true,
+        flatten: false,
+      }),
     ],
   },
   {
