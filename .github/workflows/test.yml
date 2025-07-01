@@ -17,6 +17,9 @@ jobs:
       - name: Run unit tests
         run: npm run-script test:unit
 
+      - name: Run ESLint checks
+        run: npm run-script lint
+
       - name: Run visual regression tests on PR
         if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         run: npm run-script test:visual
