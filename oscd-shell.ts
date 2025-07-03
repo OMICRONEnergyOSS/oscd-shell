@@ -26,15 +26,7 @@ import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js'
 
 import { XMLEditor } from '@omicronenergy/oscd-editor';
 
-import {
-  EditDetailV2,
-  EditEvent,
-  EditEventV2,
-  EditV2,
-  OpenEvent,
-} from '@omicronenergy/oscd-api';
-
-import { convertEdit, isEdit } from '@omicronenergy/oscd-api/utils.js';
+import { EditEventV2, OpenEvent } from '@omicronenergy/oscd-api';
 
 import { allLocales, sourceLocale, targetLocales } from './locales.js';
 
@@ -267,15 +259,6 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     this.requestUpdate();
   }
 
-  handleEditEvent(event: EditEvent | EditEventV2) {
-    const edit: EditV2 = isEdit(event.detail)
-      ? convertEdit(event.detail)
-      : (event.detail as EditDetailV2).edit;
-
-    this.xmlEditor.commit(edit);
-    this.requestUpdate();
-  }
-
   /** Undo the last `n` [[Edit]]s committed */
   undo(n = 1) {
     if (!this.canUndo || n < 1) {
@@ -443,8 +426,14 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     document.addEventListener('keydown', event => this.handleKeyPress(event));
 
     this.addEventListener('oscd-open', event => this.handleOpenDoc(event));
-    this.addEventListener('oscd-edit-v2', this.handleEditEvent);
-    this.addEventListener('oscd-edit', this.handleEditEvent);
+    this.addEventListener('oscd-edit-v2', (event: EditEventV2) => {
+      this.xmlEditor.commit(event.detail.edit);
+    });
+
+    // Catch all edits (from commits AND events) and trigger an update
+    this.xmlEditor.subscribe(() => {
+      this.requestUpdate();
+    });
   }
 
   updated(changedProps: Map<string, unknown>) {

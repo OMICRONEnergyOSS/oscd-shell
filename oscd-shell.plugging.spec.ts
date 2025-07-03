@@ -49,16 +49,8 @@ describe('Plugging Element', () => {
 
   beforeEach(async () => {
     editor = <OpenSCD>await fixture(html`<oscd-shell></oscd-shell>`);
-  });
-
-  it('loads menu plugins', () => {
     editor.plugins = {
       menu: sampleMenuPlugins,
-    };
-    expect(editor).property('plugins').property('menu').to.have.lengthOf(3);
-  });
-  it('loads background plugins', () => {
-    editor.plugins = {
       background: [
         {
           name: 'Background Plugin',
@@ -67,6 +59,13 @@ describe('Plugging Element', () => {
         },
       ],
     };
+  });
+
+  it('loads menu plugins', () => {
+    expect(editor).property('plugins').property('menu').to.have.lengthOf(3);
+  });
+
+  it('loads background plugins', () => {
     expect(editor)
       .property('plugins')
       .property('background')
@@ -74,16 +73,6 @@ describe('Plugging Element', () => {
   });
 
   it('background plugins are active', async () => {
-    editor.plugins = {
-      background: [
-        {
-          name: 'Background Plugin',
-          src: backgroundPluginSrc,
-          icon: 'none',
-        },
-      ],
-    };
-
     // Use a real event listener and a Promise to avoid timing issues
     const eventPromise = new Promise<CustomEvent>(resolve => {
       document.addEventListener(
