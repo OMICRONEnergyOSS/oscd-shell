@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.6](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.5...oscd-shell-v0.0.6) (2025-07-03)
+
+
+### Features
+
+* migrate to EditV2 (oscd-api + oscd-editor) ([dae94cf](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/dae94cf172954cd5270949480ff85b1d0a3b469a))
+
 ## [0.0.5](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.4...oscd-shell-v0.0.5) (2025-06-11)
 
 
