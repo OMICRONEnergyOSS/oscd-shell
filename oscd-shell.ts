@@ -55,7 +55,11 @@ export type Plugin = {
   requireDoc?: boolean;
   active?: boolean;
 };
-export type PluginSet = { menu: Plugin[]; editor: Plugin[] };
+export type PluginSet = {
+  menu: Plugin[];
+  editor: Plugin[];
+  background: Plugin[];
+};
 
 const pluginTags = new Map<string, string>();
 
@@ -188,7 +192,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     return Object.keys(this.docs).filter(name => this.isEditable(name));
   }
 
-  #plugins: PluginSet = { menu: [], editor: [] };
+  #plugins: PluginSet = { menu: [], editor: [], background: [] };
 
   @property({ type: Object })
   get plugins(): PluginSet {
@@ -229,12 +233,13 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
         });
       }),
     );
-    this.#plugins = { menu: [], editor: [], ...plugins };
+    this.#plugins = { menu: [], editor: [], background: [], ...plugins };
   }
 
   #loadedPlugins: PluginSet = {
     menu: new Array(this.plugins.menu.length).fill(null),
     editor: new Array(this.plugins.editor.length).fill(null),
+    background: new Array(this.plugins.editor.length).fill(null),
   };
 
   #loadedPluginTagNames: string[] = [];
@@ -529,11 +534,13 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       </oscd-navigation-drawer>
 
       ${this.editor
-        ? staticHtml`<${unsafeStatic(this.editor)} docName="${
-            this.docName || nothing
-          }" .doc=${this.doc} locale="${this.locale}" .docs=${
-            this.docs
-          } .editCount=${this.xmlEditor.past.length}></${unsafeStatic(this.editor)}>`
+        ? staticHtml`<${unsafeStatic(this.editor)} locale="${this.locale}"
+              docName="${this.docName}"
+              .doc=${this.doc}
+              .docs=${this.docs} 
+              .editCount=${this.xmlEditor.past.length}
+              .editor=${this.xmlEditor}>
+            </${unsafeStatic(this.editor)}>`
         : nothing}
 
       <oscd-dialog
@@ -616,17 +623,33 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       </oscd-dialog>
 
       <aside>
-        ${this.loadedPlugins.menu.map(
-          plugin =>
-            staticHtml`<${unsafeStatic(pluginTag(plugin.src))} docName="${
-              this.docName
-            }" .doc=${this.doc} locale="${this.locale}" .docs=${
-              this.docs
-            } .editCount=${this.xmlEditor.past.length}></${unsafeStatic(
-              pluginTag(plugin.src),
-            )}>`,
-        )}
-      </aside>`;
+        <div class="menu-plugins">
+          ${this.loadedPlugins.menu.map(
+            plugin =>
+              staticHtml`<${unsafeStatic(pluginTag(plugin.src))} 
+              locale="${this.locale}"
+              docName="${this.docName}"
+              .doc=${this.doc}
+              .docs=${this.docs} 
+              .editCount=${this.xmlEditor.past.length}
+              .editor=${this.xmlEditor}>
+            </${unsafeStatic(pluginTag(plugin.src))}>`,
+          )}
+        </div>
+        <div class="background-plugins">
+          ${this.loadedPlugins.background.map(
+            plugin =>
+              staticHtml`<${unsafeStatic(pluginTag(plugin.src))} 
+              locale="${this.locale}"
+              docName="${this.docName}"
+              .doc=${this.doc}
+              .docs=${this.docs} 
+              .editCount=${this.xmlEditor.past.length}
+              .editor=${this.xmlEditor}>
+            </${unsafeStatic(pluginTag(plugin.src))}>`,
+          )}
+        </div>
+      </aside> `;
   }
 
   firstUpdated() {
