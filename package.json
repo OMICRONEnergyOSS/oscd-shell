@@ -117,7 +117,8 @@
     ],
     "plugins": [
       "@typescript-eslint",
-      "eslint-plugin-tsdoc"
+      "eslint-plugin-tsdoc",
+      "prettier/recommended"
     ],
     "rules": {
       "no-unused-vars": "off",

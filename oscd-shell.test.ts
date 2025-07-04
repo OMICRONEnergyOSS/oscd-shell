@@ -67,7 +67,9 @@ async function menuPluginCount(count: number) {
     throw new Error('Editor shadow root not found');
   }
   await waitUntil(() => {
-    const allElements = editor.shadowRoot!.querySelectorAll('aside > *');
+    const allElements = editor.shadowRoot!.querySelectorAll(
+      'aside .menu-plugins > *',
+    );
     const menuPlugins = Array.from(allElements).filter(el =>
       el.tagName.toLowerCase().startsWith('oscd-'),
     );

@@ -5,6 +5,20 @@ import { html } from 'lit';
 import './oscd-shell.js';
 import type { OpenSCD, Plugin } from './oscd-shell.js';
 
+const backgroundPluginSrcStr = `export default class TestPlugin extends HTMLElement {
+        constructor() {
+          super();
+          document.addEventListener('test-tx', (event) => {
+            document.dispatchEvent(
+              new CustomEvent('test-rx', {
+                detail: event.detail
+              }),
+            );
+          });
+        }
+    }`;
+const backgroundPluginSrc = `data:text/javascript;charset=utf-8,${encodeURIComponent(backgroundPluginSrcStr)}`;
+
 const sampleMenuPlugins: Plugin[] = [
   {
     name: 'Test Menu Plugin',
@@ -35,13 +49,43 @@ describe('Plugging Element', () => {
 
   beforeEach(async () => {
     editor = <OpenSCD>await fixture(html`<oscd-shell></oscd-shell>`);
+    editor.plugins = {
+      menu: sampleMenuPlugins,
+      background: [
+        {
+          name: 'Background Plugin',
+          src: backgroundPluginSrc,
+          icon: 'none',
+        },
+      ],
+    };
   });
 
   it('loads menu plugins', () => {
-    editor.plugins = {
-      menu: sampleMenuPlugins,
-    };
     expect(editor).property('plugins').property('menu').to.have.lengthOf(3);
+  });
+
+  it('loads background plugins', () => {
+    expect(editor)
+      .property('plugins')
+      .property('background')
+      .to.have.lengthOf(1);
+  });
+
+  it('background plugins are active', async () => {
+    // Use a real event listener and a Promise to avoid timing issues
+    const eventPromise = new Promise<CustomEvent>(resolve => {
+      document.addEventListener(
+        'test-rx',
+        (e: Event) => resolve(e as CustomEvent),
+        { once: true },
+      );
+    });
+
+    document.dispatchEvent(new CustomEvent('test-tx', { detail: 'test' }));
+
+    const event = await eventPromise;
+    expect(event.detail).to.equal('test');
   });
 
   it('loading the same plugins twice does not result in duplicates', () => {
