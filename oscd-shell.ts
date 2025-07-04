@@ -45,7 +45,6 @@ export type Plugin = {
   src: string;
   icon: string;
   requireDoc?: boolean;
-  active?: boolean;
 };
 export type PluginSet = {
   menu: Plugin[];
@@ -361,45 +360,41 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   @state()
   get menu() {
     return (<Required<Control>[]>this.loadedPlugins.menu
-      ?.map((plugin): RenderedPlugin | undefined =>
-        plugin.active
-          ? {
-              icon: plugin.icon,
-              getName: () =>
-                plugin.translations?.[
-                  this.locale as (typeof targetLocales)[number]
-                ] || plugin.name,
-              isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
-              tagName: pluginTag(plugin.src),
-              action: () => {
-                this.shadowRoot!.querySelector<
-                  HTMLElement & { run: () => Promise<void> }
-                >(pluginTag(plugin.src))!.run?.();
-                this.menuUI.opened = false;
-              },
-            }
-          : undefined,
+      ?.map(
+        (plugin): RenderedPlugin =>
+          ({
+            icon: plugin.icon,
+            getName: () =>
+              plugin.translations?.[
+                this.locale as (typeof targetLocales)[number]
+              ] || plugin.name,
+            isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
+            tagName: pluginTag(plugin.src),
+            action: () => {
+              this.shadowRoot!.querySelector<
+                HTMLElement & { run: () => Promise<void> }
+              >(pluginTag(plugin.src))!.run?.();
+              this.menuUI.opened = false;
+            },
+          }) as RenderedPlugin,
       )
       .filter(p => p !== undefined)).concat(this.#actions);
   }
 
   @state()
   get editors() {
-    return <RenderedPlugin[]>this.loadedPlugins.editor
-      ?.map((plugin): RenderedPlugin | undefined =>
-        plugin.active
-          ? {
-              icon: plugin.icon,
-              getName: () =>
-                plugin.translations?.[
-                  this.locale as (typeof targetLocales)[number]
-                ] || plugin.name,
-              isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
-              tagName: pluginTag(plugin.src),
-            }
-          : undefined,
-      )
-      .filter(p => p !== undefined);
+    return <RenderedPlugin[]>this.loadedPlugins.editor?.map(
+      (plugin): RenderedPlugin | undefined =>
+        ({
+          icon: plugin.icon,
+          getName: () =>
+            plugin.translations?.[
+              this.locale as (typeof targetLocales)[number]
+            ] || plugin.name,
+          isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
+          tagName: pluginTag(plugin.src),
+        }) as RenderedPlugin,
+    );
   }
 
   private hotkeys: Partial<Record<string, () => void>> = {
