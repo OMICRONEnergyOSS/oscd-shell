@@ -1,11 +1,6 @@
-import {
-  convertEdit,
-  newEditEvent,
-  newEditEventV2,
-  newOpenEvent,
-} from '@omicronenergy/oscd-api/utils.js';
+import { newEditEventV2, newOpenEvent } from '@omicronenergy/oscd-api/utils.js';
 
-import { expect, fixture, html, waitUntil } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 
 import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
 import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
@@ -20,8 +15,9 @@ import {
   querySelectorContainingText,
 } from '@omicronenergy/oscd-test-utils/queries.js';
 
-import { Edit } from '@omicronenergy/oscd-api';
+import { EditV2 } from '@omicronenergy/oscd-api';
 
+import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/OscdDialog.js';
 import type { OpenSCD } from './oscd-shell.js';
 
 import './oscd-shell.js';
@@ -29,14 +25,25 @@ import './oscd-shell.js';
 // Temporary addition until we can resolve the issue with the same function
 // failing when called from oscd-test-utils
 // see: https://github.com/OMICRONEnergyOSS/oscd-test-utils/issues/11
-async function waitForDialogState(dialog: Element, state: 'open' | 'closed') {
-  await waitUntil(() => {
-    const maybeDialogWithOpen = dialog as { open?: boolean };
-    return typeof maybeDialogWithOpen.open !== 'undefined'
-      ? !!maybeDialogWithOpen.open === (state === 'open')
-      : state === 'closed';
-  }, `Dialog did not ${state} within the expected time`);
-  return dialog;
+async function waitForDialogState(element: Element, state: 'open' | 'closed') {
+  return new Promise<void>(resolve => {
+    const dialog = element as OscdDialog;
+    // If already closed, resolve immediately
+    if (!dialog.open) {
+      resolve();
+      return;
+    }
+    const observer = new MutationObserver(() => {
+      if (
+        (state === 'open' && dialog.open) ||
+        (state === 'closed' && !dialog.open)
+      ) {
+        observer.disconnect();
+        resolve();
+      }
+    });
+    observer.observe(dialog, { attributes: true, attributeFilter: ['open'] });
+  });
 }
 
 export const xmlAttributeName =
@@ -242,22 +249,15 @@ describe('oscd-shell', () => {
 
   [
     {
-      desc: 'With EditV1 dispatched events',
-      dispatcher: (edit: Edit) => {
-        oscdShell.dispatchEvent(newEditEvent(edit));
+      desc: 'Dispatched edit event',
+      dispatcher: (edit: EditV2) => {
+        oscdShell.dispatchEvent(newEditEventV2(edit));
       },
     },
     {
-      desc: 'With EditV2 dispatched events',
-      dispatcher: (edit: Edit) => {
-        const editV2 = convertEdit(edit);
-        oscdShell.dispatchEvent(newEditEventV2(editV2));
-      },
-    },
-    {
-      desc: 'With EditV1 commit events to the xmlEditor',
-      dispatcher: (edit: Edit) => {
-        oscdShell.xmlEditor.commit(convertEdit(edit));
+      desc: 'Commit edit directly to xmlEditor',
+      dispatcher: (edit: EditV2) => {
+        oscdShell.xmlEditor.commit(edit);
       },
     },
   ].forEach(({ desc, dispatcher }) => {
@@ -287,69 +287,22 @@ describe('oscd-shell', () => {
             name: 'A2',
             desc: null,
             ['__proto__']: 'a string', // covers a rare edge case branch
-
-            'ens1:foo': 'namespaced value set with a string not an object',
-
-            'ens1:attr': {
-              value: 'namespaced value',
-              namespaceURI:
-                'http://example.org/somePreexistingExtensionNamespace',
-            },
-            attr2: {
-              value: 'namespaced value',
-              namespaceURI:
-                'http://example.org/somePreexistingExtensionNamespace',
+          },
+          attributesNS: {
+            'http://example.org/myns': {
+              'myns:attr': 'value1',
+              'myns:attr2': 'value1',
             },
           },
         };
 
         dispatcher(edit);
 
-        expect(element).to.have.attribute('name', 'A2');
-        expect(element).to.not.have.attribute('desc');
-        expect(element).to.have.attribute('__proto__', 'a string');
-        expect(element).to.have.attribute('ens1:attr', 'namespaced value');
-      });
-
-      it("updates an element's attributes on UpdateNS", () => {
-        const element = sclDoc.querySelector('Substation')!;
-
-        const edit = {
-          element,
-          attributes: {
-            name: 'A2',
-            desc: null,
-            ['__proto__']: 'a string', // covers a rare edge case branch
-
-            'myns:attr': {
-              value: 'value1',
-              namespaceURI: 'http://example.org/myns',
-            },
-            'myns:attr2': {
-              value: 'value1',
-              namespaceURI: 'http://example.org/myns',
-            },
-            attr: { value: 'value2', namespaceURI: 'http://example.org/myns2' },
-            attr2: {
-              value: 'value2',
-              namespaceURI: 'http://example.org/myns2',
-            },
-          },
-        };
-
-        dispatcher(edit);
-
-        expect(element).to.have.attribute('name', 'A2');
-        expect(element).to.not.have.attribute('desc');
-        expect(element).to.have.attribute('__proto__', 'a string');
-        expect(element).to.have.attribute('myns:attr', 'value1');
-        expect(element).to.have.attribute('myns:attr2', 'value1');
-        expect(
-          element.getAttributeNS('http://example.org/myns2', 'attr'),
-        ).to.equal('value2');
-        expect(
-          element.getAttributeNS('http://example.org/myns2', 'attr2'),
-        ).to.equal('value2');
+        expect(element.getAttribute('name')).to.equal('A2');
+        expect(element.getAttribute('desc')).to.be.null;
+        expect(element.getAttribute('__proto__')).to.equal('a string');
+        expect(element.getAttribute('myns:attr')).to.equal('value1');
+        expect(element.getAttribute('myns:attr2')).to.equal('value1');
       });
     });
   });

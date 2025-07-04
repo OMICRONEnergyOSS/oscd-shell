@@ -33,7 +33,6 @@ const testMenuPlugin = {
   translations: { de: 'Test Rückgängig-Menü-Plugin' },
   src: 'data:text/javascript;charset=utf-8,export%20default%20class%20TestPlugin%20extends%20HTMLElement%20%7B%0D%0A%20%20async%20run()%20%7B%0D%0A%20%20const%20editor%20=%20(this.getRootNode()).host;%20%0D%0A%20editor.undo();%0D%0A%20return%20true;%0D%0A%20%20%7D%0D%0A%7D',
   icon: 'undo',
-  active: true,
   requireDoc: false,
 };
 
@@ -42,7 +41,6 @@ const testEditorPlugin = {
   translations: { de: 'Test Editor Erweiterung' },
   src: 'data:text/javascript;charset=utf-8,export%20default%20class%20TestEditorPlugin%20extends%20HTMLElement%20%7B%0D%0A%20%20constructor%20%28%29%20%7B%20super%28%29%3B%20this.innerHTML%20%3D%20%60%3Cp%3ETest%20Editor%20Plugin%3C%2Fp%3E%60%3B%20%7D%0D%0A%7D',
   icon: 'edit',
-  active: true,
   requireDoc: false,
 };
 const testEditorPlugin2 = {
@@ -50,7 +48,6 @@ const testEditorPlugin2 = {
   translations: { de: 'Test Editor Erweiterung 2' },
   src: 'data:text/javascript;charset=utf-8,export%20default%20class%20TestEditorPlugin2%20extends%20HTMLElement%20%7B%0D%0A%20%20constructor%20%28%29%20%7B%20super%28%29%3B%20this.innerHTML%20%3D%20%60%3Cp%3ETest%20Editor%20Plugin2%3C%2Fp%3E%60%3B%20%7D%0D%0A%7D',
   icon: 'edit',
-  active: true,
   requireDoc: false,
 };
 
@@ -274,7 +271,6 @@ describe('Custom plugins', () => {
       name: 'Test 123 Editor Plugin',
       src: 'data:text/javascript;charset=utf-8,export%20default%20class%20TestEditorPlugin%20extends%20HTMLElement%20%7B%0D%0A%20%20constructor%20%28%29%20%7B%20super%28%29%3B%20this.innerHTML%20%3D%20%60%3Cp%3ETest123%20Editor%20Plugin%3C%2Fp%3E%60%3B%20%7D%0D%0A%7D',
       icon: 'edit',
-      active: true,
       requireDoc: false,
     };
 
