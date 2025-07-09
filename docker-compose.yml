@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  tests:
+    image: mcr.microsoft.com/playwright:v1.50.1-noble
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    user: '${UID:-1000}:${GID:-1000}'
+    command: >
+      bash -c "npm ci && npm run test"
