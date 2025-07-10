@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.6](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.5...oscd-shell-v0.0.6) (2025-07-10)
+
+
+### Features
+
+* add support for background plugins ([f187299](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/f187299da80d7741817f5cc0735c9a0f5050179b)), closes [#43](https://github.com/OMICRONEnergyOSS/oscd-shell/issues/43)
+* migrate to EditV2 (oscd-api + oscd-editor) ([dae94cf](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/dae94cf172954cd5270949480ff85b1d0a3b469a))
+* remove edit v1 support - handled by  oscd-background-editv1 ([1902858](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/19028581aa54d32e0732d6fb2fe4593968d70679)), closes [#52](https://github.com/OMICRONEnergyOSS/oscd-shell/issues/52)
+* remove support for active flag in plugin definition ([c1c1195](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/c1c119500f1df0237eb972a5da88d1af6835c54e)), closes [#39](https://github.com/OMICRONEnergyOSS/oscd-shell/issues/39)
+
 ## [0.0.5](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.4...oscd-shell-v0.0.5) (2025-06-11)
 
 
