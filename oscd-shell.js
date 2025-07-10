@@ -108,12 +108,6 @@ const LOCALE_STATUS_EVENT = 'lit-localize-status';
  * Untagged template strings with expressions aren't supported by lit-localize
  * because they don't allow for values to be captured at runtime.
  */
-const _str = (strings, ...values) => ({
-    strTag: true,
-    strings,
-    values,
-});
-const str = _str;
 const isStrTagged = (val) => typeof val !== 'string' && 'strTag' in val;
 /**
  * Render the result of a `str` tagged template to a string. Note we don't need
@@ -940,18 +934,6 @@ class OscdAppBar extends i$3 {
     `;
     }
 }
-
-/**
- * @license
- * Copyright 2021 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-/**
- * @license
- * Copyright 2025 OMICRON Electronics GmbH
- * SPDX-License-Identifier: Apache-2.0
- */
-window.customElements.define("oscd-app-bar", OscdAppBar);
 
 /**
  * @license
@@ -2111,8 +2093,6 @@ class OscdDialog extends Dialog {
     static styles = [styles$o, styleOverrides$1];
 }
 
-customElements.define("oscd-dialog", OscdDialog);
-
 /**
  * @license
  * Copyright 2023 Google LLC
@@ -2131,8 +2111,6 @@ customElements.define("oscd-dialog", OscdDialog);
 class OscdDivider extends Divider {
     static styles = [styles$p];
 }
-
-customElements.define("oscd-divider", OscdDivider);
 
 /**
  * @license
@@ -3259,8 +3237,6 @@ class OscdFilledIconButton extends IconButton {
         };
     }
 }
-
-customElements.define("oscd-filled-icon-button", OscdFilledIconButton);
 
 /**
  * @license
@@ -7331,8 +7307,6 @@ class OscdFilledSelect extends FilledSelect {
     static styles = [styles$e, styles$f];
 }
 
-customElements.define("oscd-filled-select", OscdFilledSelect);
-
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -8301,8 +8275,6 @@ class OscdFilledTextField extends ScopedElementsMixin(FilledTextField) {
     fieldTag = i$2 `oscd-filled-field`;
 }
 
-customElements.define("oscd-filled-text-field", OscdFilledTextField);
-
 /**
  * @license
  * Copyright 2022 Google LLC
@@ -8352,8 +8324,6 @@ class OscdIcon extends Icon {
     /** @nocollapse */
     static styles = [styles$b];
 }
-
-customElements.define("oscd-icon", OscdIcon);
 
 /**
  * @license
@@ -8471,8 +8441,6 @@ const overrideStyles$2 = i$6 `
 class OscdList extends List {
     static styles = [styles$a, overrideStyles$2];
 }
-
-customElements.define("oscd-list", OscdList);
 
 /**
  * @license
@@ -8907,8 +8875,6 @@ class OscdListItem extends ListItemEl {
     static styles = [styles$8, styleOverrides];
 }
 
-customElements.define("oscd-list-item", OscdListItem);
-
 /**
  * @license
  * Copyright 2022 Google LLC
@@ -8966,8 +8932,6 @@ customElements.define("oscd-list-item", OscdListItem);
 class OscdMenu extends Menu {
     static styles = [styles$g];
 }
-
-customElements.define("oscd-menu", OscdMenu);
 
 /**
  * @license
@@ -9340,8 +9304,6 @@ class OscdMenuItem extends MenuItemEl {
     static styles = [styles$7];
 }
 
-customElements.define("oscd-menu-item", OscdMenuItem);
-
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -9475,8 +9437,6 @@ class OscdNavigationDrawer extends NavigationDrawerModal {
     ];
 }
 
-customElements.define("oscd-navigation-drawer", OscdNavigationDrawer);
-
 /**
  * @license
  * Copyright 2025 OMICRON Electronics GmbH
@@ -9534,8 +9494,6 @@ class OscdNavigationDrawerHeader extends ListItemEl {
         overrideStyles,
     ];
 }
-
-customElements.define("oscd-navigation-drawer-header", OscdNavigationDrawerHeader);
 
 /**
  * @license
@@ -9864,8 +9822,6 @@ const styles$3 = i$6 `:host{display:inline-flex;align-items:center;justify-conte
 class OscdSecondaryTab extends SecondaryTab {
     static styles = [styles$3, styles$4];
 }
-
-customElements.define("oscd-secondary-tab", OscdSecondaryTab);
 
 /**
  * @license
@@ -10207,8 +10163,6 @@ class OscdSelectOption extends SelectOptionEl {
     static styles = [styles$7];
 }
 
-customElements.define("oscd-select-option", OscdSelectOption);
-
 /**
  * @license
  * Copyright 2023 Google LLC
@@ -10518,8 +10472,6 @@ const styles$2 = i$6 `:host{box-sizing:border-box;display:flex;flex-direction:co
 class OscdTabs extends Tabs {
     static styles = [styles$2];
 }
-
-customElements.define("oscd-tabs", OscdTabs);
 
 /**
  * @license
@@ -10880,12 +10832,224 @@ class OscdTextButton extends TextButton {
     static styles = [styles$1, styles];
 }
 
-/**
- * @license
- * Copyright 2025 OMICRON Electronics GmbH
- * SPDX-License-Identifier: Apache-2.0
- */
-customElements.define("oscd-text-button", OscdTextButton);
+function isAttributesV2(attributes) {
+    if (typeof attributes !== 'object' || attributes === null) {
+        return false;
+    }
+    return Object.entries(attributes).every(([key, value]) => typeof key === 'string' && (value === null || typeof value === 'string'));
+}
+function isAttributesNS(attributesNS) {
+    if (typeof attributesNS !== 'object' || attributesNS === null) {
+        return false;
+    }
+    return Object.entries(attributesNS).every(([namespace, attributes]) => typeof namespace === 'string' &&
+        isAttributesV2(attributes));
+}
+function isComplexEditV2(edit) {
+    return edit instanceof Array && edit.every(e => isEditV2(e));
+}
+function isSetTextContent(edit) {
+    return (edit.element instanceof Element &&
+        typeof edit.textContent === 'string');
+}
+function isRemove(edit) {
+    return (edit.parent === undefined &&
+        edit.node instanceof Node);
+}
+function isSetAttributes(edit) {
+    return (edit.element instanceof Element &&
+        isAttributesV2(edit.attributes) &&
+        isAttributesNS(edit.attributesNS));
+}
+function isInsert(edit) {
+    return ((edit.parent instanceof Element ||
+        edit.parent instanceof Document ||
+        edit.parent instanceof DocumentFragment) &&
+        edit.node instanceof Node &&
+        (edit.reference instanceof Node ||
+            edit.reference === null));
+}
+function isEditV2(edit) {
+    if (isComplexEditV2(edit)) {
+        return true;
+    }
+    return (isSetAttributes(edit) ||
+        isSetTextContent(edit) ||
+        isInsert(edit) ||
+        isRemove(edit));
+}
+
+function handleSetTextContent({ element, textContent, }) {
+    const { childNodes } = element;
+    const restoreChildNodes = Array.from(childNodes).map((node) => ({
+        parent: element,
+        node,
+        reference: null,
+    }));
+    element.textContent = textContent;
+    const undoTextContent = { element, textContent: "" };
+    return [undoTextContent, ...restoreChildNodes];
+}
+function handleSetAttributes({ element, attributes = {}, attributesNS = {}, }) {
+    const oldAttributes = { ...attributes };
+    const oldAttributesNS = { ...attributesNS };
+    // save element's non-prefixed attributes for undo
+    if (attributes)
+        Object.keys(attributes)
+            .reverse()
+            .forEach((name) => {
+            oldAttributes[name] = element.getAttribute(name);
+        });
+    // change element's non-prefixed attributes
+    if (attributes)
+        for (const entry of Object.entries(attributes)) {
+            try {
+                const [name, value] = entry;
+                if (value === null)
+                    element.removeAttribute(name);
+                else
+                    element.setAttribute(name, value);
+            }
+            catch (_e) {
+                // undo nothing if update didn't work on this attribute
+                delete oldAttributes[entry[0]];
+            }
+        }
+    // save element's namespaced attributes for undo
+    if (attributesNS)
+        Object.entries(attributesNS).forEach(([ns, attrs]) => {
+            Object.keys(attrs)
+                .reverse()
+                .forEach((name) => {
+                oldAttributesNS[ns] = {
+                    ...oldAttributesNS[ns],
+                    [name]: element.getAttributeNS(ns, name.split(":").pop()),
+                };
+            });
+        });
+    // change element's namespaced attributes
+    if (attributesNS)
+        for (const nsEntry of Object.entries(attributesNS)) {
+            const [ns, attrs] = nsEntry;
+            for (const entry of Object.entries(attrs)) {
+                try {
+                    const [name, value] = entry;
+                    if (value === null) {
+                        element.removeAttributeNS(ns, name.split(":").pop());
+                    }
+                    else {
+                        element.setAttributeNS(ns, name, value);
+                    }
+                }
+                catch (_e) {
+                    delete oldAttributesNS[ns][entry[0]];
+                }
+            }
+        }
+    return {
+        element,
+        attributes: oldAttributes,
+        attributesNS: oldAttributesNS,
+    };
+}
+function handleRemove({ node }) {
+    const { parentNode: parent, nextSibling: reference } = node;
+    if (!parent)
+        return [];
+    parent.removeChild(node);
+    return {
+        node,
+        parent,
+        reference,
+    };
+}
+function handleInsert({ parent, node, reference, }) {
+    try {
+        const { parentNode, nextSibling } = node;
+        parent.insertBefore(node, reference);
+        if (parentNode)
+            // undo: move child node back to original place
+            return {
+                node,
+                parent: parentNode,
+                reference: nextSibling,
+            };
+        // undo: remove orphaned node
+        return { node };
+    }
+    catch (_e) {
+        // undo nothing if insert doesn't work on these nodes
+        return [];
+    }
+}
+/** Applies an EditV2, returning the corresponding "undo" EditV2. */
+function handleEdit(edit) {
+    if (isInsert(edit))
+        return handleInsert(edit);
+    if (isRemove(edit))
+        return handleRemove(edit);
+    if (isSetAttributes(edit))
+        return handleSetAttributes(edit);
+    if (isSetTextContent(edit))
+        return handleSetTextContent(edit);
+    if (isComplexEditV2(edit))
+        return edit
+            .map((edit) => handleEdit(edit))
+            .reverse()
+            .flat(Infinity);
+    return [];
+}
+
+var _XMLEditor_subscribers;
+class XMLEditor {
+    constructor() {
+        this.past = [];
+        this.future = [];
+        _XMLEditor_subscribers.set(this, []);
+    }
+    commit(change, { title, squash } = {}) {
+        const commit = squash && this.past.length
+            ? this.past[this.past.length - 1]
+            : { undo: [], redo: [] };
+        const undo = handleEdit(change);
+        // typed as per https://github.com/microsoft/TypeScript/issues/49280#issuecomment-1144181818 recommendation:
+        commit.undo.unshift(...[undo].flat(Infinity));
+        commit.redo.push(...[change].flat(Infinity));
+        if (title)
+            commit.title = title;
+        if (squash && this.past.length)
+            this.past.pop();
+        this.past.push(commit);
+        this.future = [];
+        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").forEach((subscriber) => subscriber(commit));
+        return commit;
+    }
+    undo() {
+        const commit = this.past.pop();
+        if (!commit)
+            return;
+        handleEdit(commit.undo);
+        this.future.unshift(commit);
+        return commit;
+    }
+    redo() {
+        const commit = this.future.shift();
+        if (!commit)
+            return;
+        handleEdit(commit.redo);
+        this.past.push(commit);
+        return commit;
+    }
+    subscribe(txCallback) {
+        const subscriberCount = __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").length;
+        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").push(txCallback);
+        return () => {
+            __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").splice(subscriberCount, 1);
+            return txCallback;
+        };
+    }
+}
+_XMLEditor_subscribers = new WeakMap();
 
 // Do not modify this file by hand!
 // Re-generate this file by running lit-localize.
@@ -10900,206 +11064,6 @@ const sourceLocale = `en`;
 const targetLocales = [
     `de`,
 ];
-
-function isComplex(edit) {
-    return edit instanceof Array;
-}
-function isInsert(edit) {
-    return edit.parent !== undefined;
-}
-function isNamespaced(value) {
-    return value !== null && typeof value !== 'string';
-}
-function isUpdate(edit) {
-    return 'element' in edit && !('attributesNS' in edit);
-}
-function isUpdateNS(edit) {
-    return 'element' in edit && 'attributesNS' in edit;
-}
-function isRemove(edit) {
-    return (edit.parent === undefined && edit.node !== undefined);
-}
-/** EDIT HANDLING */
-function uniqueNSPrefix(element, ns) {
-    let i = 1;
-    const attributes = Array.from(element.attributes);
-    const hasSamePrefix = (attribute) => attribute.prefix === `ens${i}` && attribute.namespaceURI !== ns;
-    const nsOrNull = new Set([null, ns]);
-    const differentNamespace = (prefix) => !nsOrNull.has(element.lookupNamespaceURI(prefix));
-    while (differentNamespace(`ens${i}`) || attributes.find(hasSamePrefix)) {
-        i += 1;
-    }
-    return `ens${i}`;
-}
-function localAttributeName(attribute) {
-    return attribute.includes(':') ? attribute.split(':', 2)[1] : attribute;
-}
-function handleInsert({ parent, node, reference, }) {
-    try {
-        const { parentNode, nextSibling } = node;
-        parent.insertBefore(node, reference);
-        if (parentNode) {
-            return {
-                node,
-                parent: parentNode,
-                reference: nextSibling,
-            };
-        }
-        return { node };
-    }
-    catch (e) {
-        // do nothing if insert doesn't work on these nodes
-        return [];
-    }
-}
-function handleUpdate({ element, attributes }) {
-    const oldAttributes = { ...attributes };
-    Object.entries(attributes)
-        .reverse()
-        .forEach(([name, value]) => {
-        var _a;
-        let oldAttribute;
-        if (isNamespaced(value)) {
-            oldAttribute = {
-                value: element.getAttributeNS(value.namespaceURI, localAttributeName(name)),
-                namespaceURI: value.namespaceURI,
-            };
-        }
-        else {
-            oldAttribute = ((_a = element.getAttributeNode(name)) === null || _a === void 0 ? void 0 : _a.namespaceURI)
-                ? {
-                    value: element.getAttribute(name),
-                    namespaceURI: element.getAttributeNode(name).namespaceURI,
-                }
-                : element.getAttribute(name);
-        }
-        oldAttributes[name] = oldAttribute;
-    });
-    for (const entry of Object.entries(attributes)) {
-        try {
-            const [attribute, value] = entry;
-            if (isNamespaced(value)) {
-                if (value.value === null) {
-                    element.removeAttributeNS(value.namespaceURI, localAttributeName(attribute));
-                }
-                else {
-                    element.setAttributeNS(value.namespaceURI, attribute, value.value);
-                }
-            }
-            else if (value === null) {
-                element.removeAttribute(attribute);
-            }
-            else {
-                element.setAttribute(attribute, value);
-            }
-        }
-        catch (e) {
-            // do nothing if update doesn't work on this attribute
-            delete oldAttributes[entry[0]];
-        }
-    }
-    return {
-        element,
-        attributes: oldAttributes,
-    };
-}
-function handleUpdateNS({ element, attributes, attributesNS, }) {
-    const oldAttributes = { ...attributes };
-    const oldAttributesNS = { ...attributesNS };
-    Object.keys(attributes)
-        .reverse()
-        .forEach(name => {
-        oldAttributes[name] = element.getAttribute(name);
-    });
-    for (const entry of Object.entries(attributes)) {
-        try {
-            const [name, value] = entry;
-            if (value === null) {
-                element.removeAttribute(name);
-            }
-            else {
-                element.setAttribute(name, value);
-            }
-        }
-        catch (e) {
-            // do nothing if update doesn't work on this attribute
-            delete oldAttributes[entry[0]];
-        }
-    }
-    Object.entries(attributesNS).forEach(([ns, attrs]) => {
-        Object.keys(attrs)
-            .reverse()
-            .forEach(name => {
-            oldAttributesNS[ns] = {
-                ...oldAttributesNS[ns],
-                [name]: element.getAttributeNS(ns, name),
-            };
-        });
-    });
-    for (const nsEntry of Object.entries(attributesNS)) {
-        const [ns, attrs] = nsEntry;
-        for (const entry of Object.entries(attrs)) {
-            try {
-                const [name, value] = entry;
-                if (value === null) {
-                    element.removeAttributeNS(ns, name);
-                }
-                else {
-                    let qualifiedName = name;
-                    if (!qualifiedName.includes(':')) {
-                        let prefix = element.lookupPrefix(ns);
-                        if (!prefix) {
-                            prefix = uniqueNSPrefix(element, ns);
-                        }
-                        qualifiedName = `${prefix}:${name}`;
-                    }
-                    element.setAttributeNS(ns, qualifiedName, value);
-                }
-            }
-            catch (e) {
-                delete oldAttributesNS[entry[0]];
-            }
-        }
-    }
-    /*
-     */
-    return {
-        element,
-        attributes: oldAttributes,
-        attributesNS: oldAttributesNS,
-    };
-}
-function handleRemove({ node }) {
-    var _a;
-    const { parentNode: parent, nextSibling: reference } = node;
-    (_a = node.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(node);
-    if (parent) {
-        return {
-            node,
-            parent,
-            reference,
-        };
-    }
-    return [];
-}
-function handleEdit(edit) {
-    if (isInsert(edit)) {
-        return handleInsert(edit);
-    }
-    if (isUpdate(edit)) {
-        return handleUpdate(edit);
-    }
-    if (isUpdateNS(edit)) {
-        return handleUpdateNS(edit);
-    }
-    if (isRemove(edit)) {
-        return handleRemove(edit);
-    }
-    if (isComplex(edit)) {
-        return edit.map(handleEdit).reverse();
-    }
-    return [];
-}
 
 /**
  * Hashes `str` using the cyrb64 variant of
@@ -11147,27 +11111,6 @@ const { getLocale, setLocale } = configureLocalization({
     targetLocales,
     loadLocale: locale => import(new URL(`./locales/${locale}.js`, import.meta.url).href),
 });
-function describe({ undo, redo }) {
-    let result = msg('Something unexpected happened!');
-    if (isComplex(redo)) {
-        result = msg(str `≥ ${redo.length} nodes changed`);
-    }
-    if (isInsert(redo)) {
-        if (isInsert(undo)) {
-            result = msg(str `${redo.node.nodeName} moved to ${redo.parent.nodeName}`);
-        }
-        else {
-            result = msg(str `${redo.node.nodeName} inserted into ${redo.parent.nodeName}`);
-        }
-    }
-    if (isRemove(redo)) {
-        result = msg(str `${redo.node.nodeName} removed`);
-    }
-    if (isUpdate(redo)) {
-        result = msg(str `${redo.element.tagName} updated`);
-    }
-    return result;
-}
 function renderActionItem(control, slot = 'actionItems') {
     return x `<oscd-filled-icon-button
     slot="${slot}"
@@ -11215,13 +11158,13 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
         return this.docs[this.docName];
     }
     get last() {
-        return this.editCount - 1;
+        return this.xmlEditor.past.length - 1;
     }
     get canUndo() {
-        return this.last >= 0;
+        return this.xmlEditor.past.length >= 0;
     }
     get canRedo() {
-        return this.editCount < this.history.length;
+        return this.xmlEditor.future.length >= 0;
     }
     isEditable(docName) {
         return !!this.editable.find(ext => docName.toLowerCase().endsWith(`.${ext}`));
@@ -11253,7 +11196,7 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
                 this.requestUpdate('loadedPlugins');
             });
         }));
-        __classPrivateFieldSet(this, _OpenSCD_plugins, { menu: [], editor: [], ...plugins }, "f");
+        __classPrivateFieldSet(this, _OpenSCD_plugins, { menu: [], editor: [], background: [], ...plugins }, "f");
     }
     get loadedPlugins() {
         return __classPrivateFieldGet(this, _OpenSCD_loadedPlugins, "f");
@@ -11269,33 +11212,27 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
         }
         this.requestUpdate();
     }
-    handleEditEvent(event) {
-        const edit = event.detail;
-        this.history.splice(this.editCount);
-        this.history.push({ undo: handleEdit(edit), redo: edit });
-        this.editCount += 1;
-    }
     /** Undo the last `n` [[Edit]]s committed */
     undo(n = 1) {
         if (!this.canUndo || n < 1) {
             return;
         }
-        handleEdit(this.history[this.last].undo);
-        this.editCount -= 1;
+        this.xmlEditor.undo();
         if (n > 1) {
             this.undo(n - 1);
         }
+        this.requestUpdate();
     }
     /** Redo the last `n` [[Edit]]s that have been undone */
     redo(n = 1) {
         if (!this.canRedo || n < 1) {
             return;
         }
-        handleEdit(this.history[this.editCount].redo);
-        this.editCount += 1;
+        this.xmlEditor.redo();
         if (n > 1) {
             this.redo(n - 1);
         }
+        this.requestUpdate();
     }
     get locale() {
         return getLocale();
@@ -11304,46 +11241,34 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
         try {
             setLocale(tag);
         }
-        catch (_a) {
+        catch {
             // don't change locale if tag is invalid
         }
     }
     get editor() {
-        var _a, _b;
-        return (_b = (_a = this.editors[this.editorIndex]) === null || _a === void 0 ? void 0 : _a.tagName) !== null && _b !== void 0 ? _b : '';
+        return this.editors[this.editorIndex]?.tagName ?? '';
     }
     get menu() {
-        var _a;
-        return ((_a = this.loadedPlugins.menu) === null || _a === void 0 ? void 0 : _a.map((plugin) => plugin.active
-            ? {
-                icon: plugin.icon,
-                getName: () => {
-                    var _a;
-                    return ((_a = plugin.translations) === null || _a === void 0 ? void 0 : _a[this.locale]) || plugin.name;
-                },
-                isDisabled: () => { var _a; return (_a = (plugin.requireDoc && !this.docName)) !== null && _a !== void 0 ? _a : false; },
-                tagName: pluginTag(plugin.src),
-                action: () => {
-                    var _a, _b;
-                    (_b = (_a = this.shadowRoot.querySelector(pluginTag(plugin.src))).run) === null || _b === void 0 ? void 0 : _b.call(_a);
-                    this.menuUI.opened = false;
-                },
-            }
-            : undefined).filter(p => p !== undefined)).concat(__classPrivateFieldGet(this, _OpenSCD_actions, "f"));
+        return (this.loadedPlugins.menu
+            ?.map((plugin) => ({
+            icon: plugin.icon,
+            getName: () => plugin.translations?.[this.locale] || plugin.name,
+            isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
+            tagName: pluginTag(plugin.src),
+            action: () => {
+                this.shadowRoot.querySelector(pluginTag(plugin.src)).run?.();
+                this.menuUI.opened = false;
+            },
+        }))
+            .filter(p => p !== undefined)).concat(__classPrivateFieldGet(this, _OpenSCD_actions, "f"));
     }
     get editors() {
-        var _a;
-        return (_a = this.loadedPlugins.editor) === null || _a === void 0 ? void 0 : _a.map((plugin) => plugin.active
-            ? {
-                icon: plugin.icon,
-                getName: () => {
-                    var _a;
-                    return ((_a = plugin.translations) === null || _a === void 0 ? void 0 : _a[this.locale]) || plugin.name;
-                },
-                isDisabled: () => { var _a; return (_a = (plugin.requireDoc && !this.docName)) !== null && _a !== void 0 ? _a : false; },
-                tagName: pluginTag(plugin.src),
-            }
-            : undefined).filter(p => p !== undefined);
+        return this.loadedPlugins.editor?.map((plugin) => ({
+            icon: plugin.icon,
+            getName: () => plugin.translations?.[this.locale] || plugin.name,
+            isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
+            tagName: pluginTag(plugin.src),
+        }));
     }
     handleKeyPress(e) {
         if (!e.ctrlKey) {
@@ -11357,8 +11282,7 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
     }
     constructor() {
         super();
-        this.history = [];
-        this.editCount = 0;
+        this.xmlEditor = new XMLEditor();
         /** The set of `XMLDocument`s currently loaded */
         this.docs = {};
         /** The name of the [[`doc`]] currently being edited */
@@ -11372,10 +11296,11 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
             'sed',
             'ssd',
         ];
-        _OpenSCD_plugins.set(this, { menu: [], editor: [] });
+        _OpenSCD_plugins.set(this, { menu: [], editor: [], background: [] });
         _OpenSCD_loadedPlugins.set(this, {
             menu: new Array(this.plugins.menu.length).fill(null),
             editor: new Array(this.plugins.editor.length).fill(null),
+            background: new Array(this.plugins.editor.length).fill(null),
         });
         _OpenSCD_loadedPluginTagNames.set(this, []);
         this.editorIndex = 0;
@@ -11398,20 +11323,6 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
                 },
                 isDisabled: () => !this.canRedo,
             },
-            log: {
-                icon: 'history',
-                getName: () => msg('Editing history'),
-                action: () => {
-                    if (this.logUI.open) {
-                        this.logUI.close();
-                    }
-                    else {
-                        this.logUI.show();
-                    }
-                    // this.menuUI.opened = false;
-                },
-                isDisabled: () => false,
-            },
             menu: {
                 icon: 'menu',
                 getName: () => msg('Menu'),
@@ -11425,42 +11336,28 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
                 isDisabled: () => false,
             },
         };
-        _OpenSCD_actions.set(this, [this.controls.undo, this.controls.redo, this.controls.log]);
+        _OpenSCD_actions.set(this, [this.controls.undo, this.controls.redo]);
         this.hotkeys = {
             m: this.controls.menu.action,
             z: this.controls.undo.action,
             y: this.controls.redo.action,
             Z: this.controls.redo.action,
-            l: this.controls.log.action,
         };
         document.addEventListener('keydown', event => this.handleKeyPress(event));
         this.addEventListener('oscd-open', event => this.handleOpenDoc(event));
-        this.addEventListener('oscd-edit', event => this.handleEditEvent(event));
-    }
-    renderLogEntry(entry) {
-        return x ` <abbr title="${describe(entry)}">
-      <oscd-list-item ?activated=${this.history[this.last] === entry}>
-        <span>${describe(entry)}</span>
-        <oscd-icon slot="start">history</oscd-icon>
-      </oscd-list-item></abbr
-    >`;
-    }
-    renderHistory() {
-        if (this.history.length > 0) {
-            return this.history.slice().reverse().map(this.renderLogEntry, this);
-        }
-        return x `<oscd-list-item>
-      <span>${msg('Your editing history will be displayed here.')}</span>
-      <oscd-icon slot="start">info</oscd-icon>
-    </oscd-list-item>`;
+        this.addEventListener('oscd-edit-v2', (event) => {
+            this.xmlEditor.commit(event.detail.edit);
+        });
+        // Catch all edits (from commits AND events) and trigger an update
+        this.xmlEditor.subscribe(() => {
+            this.requestUpdate();
+        });
     }
     updated(changedProps) {
-        var _a;
-        (_a = super.updated) === null || _a === void 0 ? void 0 : _a.call(this, changedProps);
+        super.updated(changedProps);
         this.updateComplete.then(() => {
-            var _a;
             // Ensure the active tab is set after tabs are rendered
-            const oscdTabs = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector('oscd-tabs');
+            const oscdTabs = this.shadowRoot.querySelector('oscd-tabs');
             if (oscdTabs && oscdTabs.activeTabIndex !== this.editorIndex) {
                 oscdTabs.activeTabIndex = this.editorIndex;
             }
@@ -11536,7 +11433,13 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
       </oscd-navigation-drawer>
 
       ${this.editor
-            ? u$1 `<${s(this.editor)} docName="${this.docName || E}" .doc=${this.doc} locale="${this.locale}" .docs=${this.docs} .editCount=${this.editCount}></${s(this.editor)}>`
+            ? u$1 `<${s(this.editor)} locale="${this.locale}"
+              docName="${this.docName}"
+              .doc=${this.doc}
+              .docs=${this.docs} 
+              .editCount=${this.xmlEditor.past.length}
+              .editor=${this.xmlEditor}>
+            </${s(this.editor)}>`
             : E}
 
       <oscd-dialog
@@ -11615,38 +11518,29 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
           </oscd-text-button>
         </div>
       </oscd-dialog>
-      <oscd-dialog id="log" heading="">
-        <div slot="headline">
-          <oscd-icon>history</oscd-icon>${this.controls.log.getName()}
-        </div>
-        <form slot="content" id="log-dialog-form" method="dialog">
-          <oscd-list>${this.renderHistory()}</oscd-list>
-        </form>
-        <div slot="actions">
-          <oscd-text-button
-            ?disabled=${!this.canUndo}
-            @click=${this.undo}
-            value="undo"
-            >${msg('Undo')}<oscd-icon slot="icon"
-              >undo</oscd-icon
-            ></oscd-text-button
-          >
-          <oscd-text-button
-            ?disabled=${!this.canRedo}
-            @click=${this.redo}
-            value="redo"
-            >${msg('Redo')}<oscd-icon slot="icon"
-              >redo</oscd-icon
-            ></oscd-text-button
-          >
-          <oscd-text-button form="log-dialog-form" value="close"
-            >${msg('Close')}</oscd-text-button
-          >
-        </div>
-      </oscd-dialog>
+
       <aside>
-        ${this.loadedPlugins.menu.map(plugin => u$1 `<${s(pluginTag(plugin.src))} docName="${this.docName}" .doc=${this.doc} locale="${this.locale}" .docs=${this.docs} .editCount=${this.editCount}></${s(pluginTag(plugin.src))}>`)}
-      </aside>`;
+        <div class="menu-plugins">
+          ${this.loadedPlugins.menu.map(plugin => u$1 `<${s(pluginTag(plugin.src))} 
+              locale="${this.locale}"
+              docName="${this.docName}"
+              .doc=${this.doc}
+              .docs=${this.docs} 
+              .editCount=${this.xmlEditor.past.length}
+              .editor=${this.xmlEditor}>
+            </${s(pluginTag(plugin.src))}>`)}
+        </div>
+        <div class="background-plugins">
+          ${this.loadedPlugins.background.map(plugin => u$1 `<${s(pluginTag(plugin.src))} 
+              locale="${this.locale}"
+              docName="${this.docName}"
+              .doc=${this.doc}
+              .docs=${this.docs} 
+              .editCount=${this.xmlEditor.past.length}
+              .editor=${this.xmlEditor}>
+            </${s(pluginTag(plugin.src))}>`)}
+        </div>
+      </aside> `;
     }
     firstUpdated() {
         const background = getComputedStyle(this.menuUI).getPropertyValue('--oscd-base2');
@@ -11835,10 +11729,7 @@ __decorate([
 ], OpenSCD.prototype, "doc", null);
 __decorate([
     r$1()
-], OpenSCD.prototype, "history", void 0);
-__decorate([
-    r$1()
-], OpenSCD.prototype, "editCount", void 0);
+], OpenSCD.prototype, "xmlEditor", void 0);
 __decorate([
     r$1()
 ], OpenSCD.prototype, "last", null);
@@ -11866,9 +11757,6 @@ __decorate([
 __decorate([
     r$1()
 ], OpenSCD.prototype, "loadedPlugins", null);
-__decorate([
-    e$3('#log')
-], OpenSCD.prototype, "logUI", void 0);
 __decorate([
     e$3('#editFile')
 ], OpenSCD.prototype, "editFileUI", void 0);

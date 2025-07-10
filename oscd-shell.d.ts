@@ -1,39 +1,36 @@
 import '@webcomponents/scoped-custom-element-registry';
 import { LitElement, TemplateResult } from 'lit';
-import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
-import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
-import { OscdDivider } from '@omicronenergy/oscd-ui/divider/oscd-divider.js';
-import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-filled-icon-button.js';
-import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
-import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
-import { OscdIcon } from '@omicronenergy/oscd-ui/icon/oscd-icon.js';
-import { OscdList } from '@omicronenergy/oscd-ui/list/oscd-list.js';
-import { OscdListItem } from '@omicronenergy/oscd-ui/list/oscd-list-item.js';
-import { OscdMenu } from '@omicronenergy/oscd-ui/menu/oscd-menu.js';
-import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/oscd-menu-item.js';
-import { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer.js';
-import { OscdNavigationDrawerHeader } from '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer-header.js';
-import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/oscd-secondary-tab.js';
-import { OscdSelectOption } from '@omicronenergy/oscd-ui/select/oscd-select-option.js';
-import { OscdTabs } from '@omicronenergy/oscd-ui/tabs/oscd-tabs.js';
-import { OscdTextButton } from '@omicronenergy/oscd-ui/button/oscd-text-button.js';
+import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
+import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/OscdDialog.js';
+import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
+import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
+import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/OscdFilledSelect.js';
+import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/OscdFilledTextField.js';
+import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
+import { OscdList } from '@omicronenergy/oscd-ui/list/OscdList.js';
+import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
+import { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
+import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
+import { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawer.js';
+import { OscdNavigationDrawerHeader } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawerHeader.js';
+import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
+import { OscdSelectOption } from '@omicronenergy/oscd-ui/select/OscdSelectOption.js';
+import { OscdTabs } from '@omicronenergy/oscd-ui/tabs/OscdTabs.js';
+import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
+import { XMLEditor } from '@omicronenergy/oscd-editor';
+import { OpenEvent } from '@omicronenergy/oscd-api';
 import { allLocales, targetLocales } from './locales.js';
-import { Edit, EditEvent, OpenEvent } from './foundation.js';
-export type LogEntry = {
-    undo: Edit;
-    redo: Edit;
-};
 export type Plugin = {
     name: string;
     translations?: Record<(typeof targetLocales)[number], string>;
     src: string;
     icon: string;
     requireDoc?: boolean;
-    active?: boolean;
 };
 export type PluginSet = {
     menu: Plugin[];
     editor: Plugin[];
+    background: Plugin[];
 };
 type Control = {
     icon: string;
@@ -68,8 +65,7 @@ export declare class OpenSCD extends OpenSCD_base {
         'oscd-menu': typeof OscdMenu;
     };
     get doc(): XMLDocument;
-    history: LogEntry[];
-    editCount: number;
+    xmlEditor: XMLEditor;
     get last(): number;
     get canUndo(): boolean;
     get canRedo(): boolean;
@@ -86,12 +82,10 @@ export declare class OpenSCD extends OpenSCD_base {
     get loadedPlugins(): PluginSet;
     addLoadedPlugin(tagName: string, kind: keyof PluginSet, plugin: Plugin, index: number): void;
     handleOpenDoc({ detail: { docName, doc } }: OpenEvent): void;
-    handleEditEvent(event: EditEvent): void;
     /** Undo the last `n` [[Edit]]s committed */
     undo(n?: number): void;
     /** Redo the last `n` [[Edit]]s that have been undone */
     redo(n?: number): void;
-    logUI: OscdDialog;
     editFileUI: OscdDialog;
     menuUI: OscdNavigationDrawer;
     fileNameUI: HTMLInputElement;
@@ -108,8 +102,6 @@ export declare class OpenSCD extends OpenSCD_base {
     private hotkeys;
     private handleKeyPress;
     constructor();
-    private renderLogEntry;
-    private renderHistory;
     updated(changedProps: Map<string, unknown>): void;
     render(): TemplateResult<1>;
     firstUpdated(): void;
