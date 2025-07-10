@@ -32,10 +32,18 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node-env
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm publish --provenance --access public
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build the package
+        run: npm run build
+      - name: Publish to NPMJS.org
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
