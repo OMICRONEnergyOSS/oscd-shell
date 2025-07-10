@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.7](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.6...oscd-shell-v0.0.7) (2025-07-10)
+
+
+### Bug Fixes
+
+* broken npm build ([8bbc236](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/8bbc236e7fdd61121de0c469bc17a99535a94f59))
+
 ## [0.0.6](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.5...oscd-shell-v0.0.6) (2025-07-10)
 
 
