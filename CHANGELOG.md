@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.8](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.7...oscd-shell-v0.0.8) (2025-07-15)
+
+
+### Features
+
+* added stateVersion ([cc8fd47](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/cc8fd476cc955497bbeaf2afdf8ebb6ef50d5702))
+
 ## [0.0.7](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.6...oscd-shell-v0.0.7) (2025-07-10)
 
 
