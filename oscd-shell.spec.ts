@@ -131,15 +131,16 @@ describe('with editor plugins loaded', () => {
     expect(plugin).to.have.property('docs');
   });
 
-  it('passes property editCount', async () => {
+  it('passes property stateVersion', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
     const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
+    expect(plugin).to.have.property('stateVersion', 0);
     expect(plugin).to.have.property('editCount', 0);
   });
 
-  it('updated passed editCount property on edit events', async () => {
+  it('updated passed stateVersion property on edit events', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
@@ -153,6 +154,7 @@ describe('with editor plugins loaded', () => {
     await editor.updateComplete;
 
     const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
+    expect(plugin).to.have.property('stateVersion', 1);
     expect(plugin).to.have.property('editCount', 1);
   });
 });
@@ -195,15 +197,16 @@ describe('with menu plugins loaded', () => {
     expect(plugin).to.have.property('docs');
   });
 
-  it('passes property editCount', async () => {
+  it('passes property stateVersion', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
     const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
+    expect(plugin).to.have.property('stateVersion', 0);
     expect(plugin).to.have.property('editCount', 0);
   });
 
-  it('updated passed editCount property on edit events', async () => {
+  it('updated passed stateVersion property on edit events', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
@@ -217,6 +220,7 @@ describe('with menu plugins loaded', () => {
     await editor.updateComplete;
 
     const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
+    expect(plugin).to.have.property('stateVersion', 1);
     expect(plugin).to.have.property('editCount', 1);
   });
 });

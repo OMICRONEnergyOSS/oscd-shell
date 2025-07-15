@@ -131,37 +131,6 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     };
   }
 
-  @state()
-  /** The `XMLDocument` currently being edited */
-  get doc(): XMLDocument {
-    return this.docs[this.docName];
-  }
-
-  @state()
-  xmlEditor: XMLEditor = new XMLEditor();
-
-  @state()
-  get last(): number {
-    return this.xmlEditor.past.length - 1;
-  }
-
-  @state()
-  get canUndo(): boolean {
-    return this.xmlEditor.past.length >= 0;
-  }
-
-  @state()
-  get canRedo(): boolean {
-    return this.xmlEditor.future.length >= 0;
-  }
-
-  /** The set of `XMLDocument`s currently loaded */
-  @state()
-  docs: Record<string, XMLDocument> = {};
-
-  /** The name of the [[`doc`]] currently being edited */
-  @property({ type: String, reflect: true }) docName = '';
-
   /** The file endings of editable files */
   @property({ type: Array, reflect: true }) editable = [
     'cid',
@@ -181,6 +150,53 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   @state()
   get editableDocs(): string[] {
     return Object.keys(this.docs).filter(name => this.isEditable(name));
+  }
+
+  private _docs: Record<string, XMLDocument> = {};
+
+  /** The set of `XMLDocument`s currently loaded */
+  @state()
+  get docs(): Record<string, XMLDocument> {
+    return this._docs;
+  }
+
+  set docs(newDocs: Record<string, XMLDocument>) {
+    this._docs = newDocs;
+    this.onDocsChanged();
+  }
+
+  onDocsChanged() {
+    this.stateVersion += 1;
+  }
+
+  /** The name of the [[`doc`]] currently being edited */
+  @property({ type: String, reflect: true }) docName = '';
+
+  @state()
+  /** The `XMLDocument` currently being edited */
+  get doc(): XMLDocument {
+    return this.docs[this.docName];
+  }
+
+  @state()
+  xmlEditor: XMLEditor = new XMLEditor();
+
+  @state()
+  stateVersion: number = -1;
+
+  @state()
+  get last(): number {
+    return this.xmlEditor.past.length - 1;
+  }
+
+  @state()
+  get canUndo(): boolean {
+    return this.xmlEditor.past.length >= 0;
+  }
+
+  @state()
+  get canRedo(): boolean {
+    return this.xmlEditor.future.length >= 0;
   }
 
   #plugins: PluginSet = { menu: [], editor: [], background: [] };
@@ -251,7 +267,10 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
   }
 
   handleOpenDoc({ detail: { docName, doc } }: OpenEvent) {
-    this.docs[docName] = doc;
+    this.docs = {
+      ...this.docs,
+      [docName]: doc,
+    };
     if (this.isEditable(docName)) {
       this.docName = docName;
     }
@@ -427,7 +446,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
 
     // Catch all edits (from commits AND events) and trigger an update
     this.xmlEditor.subscribe(() => {
-      this.requestUpdate();
+      this.stateVersion += 1;
     });
   }
 
@@ -518,11 +537,13 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
       </oscd-navigation-drawer>
 
       ${this.editor
-        ? staticHtml`<${unsafeStatic(this.editor)} locale="${this.locale}"
+        ? staticHtml`<${unsafeStatic(this.editor)} 
+              locale="${this.locale}"
               docName="${this.docName}"
               .doc=${this.doc}
               .docs=${this.docs} 
-              .editCount=${this.xmlEditor.past.length}
+              .editCount=${this.stateVersion}
+              .stateVersion=${this.stateVersion}
               .editor=${this.xmlEditor}>
             </${unsafeStatic(this.editor)}>`
         : nothing}
@@ -593,8 +614,12 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
                 return;
               }
               const newDocName = `${this.fileNameUI.value}.${this.fileExtensionUI.value}`;
-              this.docs[newDocName] = this.doc;
+              const doc = this.docs[this.docName];
               delete this.docs[this.docName];
+              this.docs = {
+                ...this.docs,
+                [newDocName]: doc,
+              };
               this.docName = newDocName;
               this.editFileUI.close();
             }}
@@ -615,7 +640,8 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
               docName="${this.docName}"
               .doc=${this.doc}
               .docs=${this.docs} 
-              .editCount=${this.xmlEditor.past.length}
+              .editCount=${this.stateVersion}
+              .stateVersion=${this.stateVersion}
               .editor=${this.xmlEditor}>
             </${unsafeStatic(pluginTag(plugin.src))}>`,
           )}
@@ -628,7 +654,8 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
               docName="${this.docName}"
               .doc=${this.doc}
               .docs=${this.docs} 
-              .editCount=${this.xmlEditor.past.length}
+              .editCount=${this.stateVersion}
+              .stateVersion=${this.stateVersion}
               .editor=${this.xmlEditor}>
             </${unsafeStatic(pluginTag(plugin.src))}>`,
           )}
