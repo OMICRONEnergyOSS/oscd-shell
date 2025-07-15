@@ -22,10 +22,7 @@
     "url": "https://github.com/OMICRONEnergyOSS/oscd-shell/issues"
   },
   "homepage": "https://github.com/OMICRONEnergyOSS/oscd-shell#readme",
-  "packageManager": "npm@11.3.0",
   "type": "module",
-  "browser": "./dist/foundation.js",
-  "main": "./dist/foundation.js",
   "exports": {
     ".": "./dist/foundation.js",
     "./oscd-shell.js": "./dist/oscd-shell.js"
