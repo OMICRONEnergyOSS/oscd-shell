@@ -18,7 +18,10 @@
     <oscd-shell></oscd-shell>
 
     <script type="module">
+      import OscdMenuOpen from '@omicronenergy/oscd-menu-open';
       import '../oscd-shell.js';
+
+      customElements.define('oscd-menu-open', OscdMenuOpen);
 
       const plugins = {
         menu: [
@@ -32,12 +35,13 @@
             name: 'Open File',
             translations: { de: 'Datei öffnen' },
             icon: 'folder_open',
-            src: 'https://openenergytools.github.io/oscd-open/oscd-open.js',
+            tagName: 'oscd-menu-open',
           },
           {
             name: 'Save File',
-            translations: { de: 'Datei öffnen' },
+            translations: { de: 'Datei speichern' },
             icon: 'save',
+            requireDoc: true,
             src: 'https://openenergytools.github.io/oscd-save/oscd-save.js',
           },
         ],
@@ -70,6 +74,7 @@
         background: [
           {
             name: 'EditV1 Events Listener',
+            icon: 'none',
             requireDoc: true,
             src: 'https://omicronenergyoss.github.io/oscd-background-editv1/oscd-background-editv1.js',
           },

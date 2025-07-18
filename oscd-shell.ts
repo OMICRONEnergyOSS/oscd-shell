@@ -4,33 +4,34 @@ import { configureLocalization, localized, msg } from '@lit/localize';
 import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
-import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 
-import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
-import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/OscdDialog.js';
-import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
-import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
-import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/OscdFilledSelect.js';
-import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/OscdFilledTextField.js';
-import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
-import { OscdList } from '@omicronenergy/oscd-ui/list/OscdList.js';
-import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
-import { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
-import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
-import { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawer.js';
-import { OscdNavigationDrawerHeader } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawerHeader.js';
-import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
-import { OscdSelectOption } from '@omicronenergy/oscd-ui/select/OscdSelectOption.js';
-import { OscdTabs } from '@omicronenergy/oscd-ui/tabs/OscdTabs.js';
-import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
-
+import '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
+import type { OscdDialog } from '@omicronenergy/oscd-ui/dialog/OscdDialog.js';
+import '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
+import '@omicronenergy/oscd-ui/divider/oscd-divider.js';
+import type { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
+import '@omicronenergy/oscd-ui/iconbutton/oscd-filled-icon-button.js';
+import '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
+import '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
+import '@omicronenergy/oscd-ui/icon/oscd-icon.js';
+import type { OscdList } from '@omicronenergy/oscd-ui/list/OscdList.js';
+import '@omicronenergy/oscd-ui/list/oscd-list.js';
+import '@omicronenergy/oscd-ui/list/oscd-list-item.js';
+import type { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
+import '@omicronenergy/oscd-ui/menu/oscd-menu.js';
+import '@omicronenergy/oscd-ui/menu/oscd-menu-item.js';
+import type { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawer.js';
+import '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer.js';
+import '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer-header.js';
+import '@omicronenergy/oscd-ui/tabs/oscd-secondary-tab.js';
+import '@omicronenergy/oscd-ui/select/oscd-select-option.js';
+import '@omicronenergy/oscd-ui/tabs/oscd-tabs.js';
+import type { OscdTabs } from '@omicronenergy/oscd-ui/tabs/OscdTabs.js';
+import '@omicronenergy/oscd-ui/button/oscd-text-button.js';
 import { XMLEditor } from '@omicronenergy/oscd-editor';
-
 import { EditEventV2, OpenEvent } from '@omicronenergy/oscd-api';
-
 import { allLocales, sourceLocale, targetLocales } from './locales.js';
-
-import { cyrb64 } from './foundation/cyrb64.js';
+import { loadSourcedPlugins } from './utils/plugin-utils.js';
 
 const _customElementsDefine = window.customElements.define;
 window.customElements.define = (name, cl, conf) => {
@@ -42,25 +43,23 @@ window.customElements.define = (name, cl, conf) => {
 export type Plugin = {
   name: string;
   translations?: Record<(typeof targetLocales)[number], string>;
+  tagName: string;
+  icon: string;
+  requireDoc?: boolean;
+};
+
+export type SourcedPlugin = {
+  name: string;
+  translations?: Record<(typeof targetLocales)[number], string>;
   src: string;
   icon: string;
   requireDoc?: boolean;
 };
-export type PluginSet = {
-  menu: Plugin[];
-  editor: Plugin[];
-  background: Plugin[];
+export type PluginSet<P = Plugin> = {
+  menu: P[];
+  editor: P[];
+  background: P[];
 };
-
-const pluginTags = new Map<string, string>();
-
-/** @returns a valid customElement tagName containing the URI hash. */
-function pluginTag(uri: string): string {
-  if (!pluginTags.has(uri)) {
-    pluginTags.set(uri, `oscd-p${cyrb64(uri)}`);
-  }
-  return pluginTags.get(uri)!;
-}
 
 type Control = {
   icon: string;
@@ -108,29 +107,7 @@ function renderMenuItem(control: Control): TemplateResult {
 
 @customElement('oscd-shell')
 @localized()
-export class OpenSCD extends ScopedElementsMixin(LitElement) {
-  static get scopedElements() {
-    return {
-      'oscd-app-bar': OscdAppBar,
-      'oscd-dialog': OscdDialog,
-      'oscd-icon': OscdIcon,
-      'oscd-filled-text-field': OscdFilledTextField,
-      'oscd-filled-select': OscdFilledSelect,
-      'oscd-select-option': OscdSelectOption,
-      'oscd-filled-icon-button': OscdFilledIconButton,
-      'oscd-list': OscdList,
-      'oscd-list-item': OscdListItem,
-      'oscd-divider': OscdDivider,
-      'oscd-menu-item': OscdMenuItem,
-      'oscd-navigation-drawer': OscdNavigationDrawer,
-      'oscd-navigation-drawer-header': OscdNavigationDrawerHeader,
-      'oscd-secondary-tab': OscdSecondaryTab,
-      'oscd-tabs': OscdTabs,
-      'oscd-text-button': OscdTextButton,
-      'oscd-menu': OscdMenu,
-    };
-  }
-
+export class OpenSCD extends LitElement {
   /** The file endings of editable files */
   @property({ type: Array, reflect: true }) editable = [
     'cid',
@@ -206,64 +183,15 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
     return this.#plugins;
   }
 
-  set plugins(plugins: Partial<PluginSet>) {
-    Object.entries(plugins).forEach(([pluginType, kind]) =>
-      kind.forEach((plugin, index) => {
-        const tagName = pluginTag(plugin.src);
-        if (this.#loadedPluginTagNames.includes(tagName)) {
-          return;
-        }
-
-        if (this.registry!.get(tagName)) {
-          this.addLoadedPlugin(
-            tagName,
-            pluginType as keyof PluginSet,
-            plugin,
-            index,
-          );
-          this.requestUpdate('loadedPlugins');
-          return;
-        }
-        const url = new URL(plugin.src, window.location.href).toString();
-        import(url).then(mod => {
-          this.addLoadedPlugin(
-            tagName,
-            pluginType as keyof PluginSet,
-            plugin,
-            index,
-          );
-          // Because this is async, we need to check (again) if the element is already defined.
-          if (!this.registry!.get(tagName)) {
-            this.registry!.define(tagName, mod.default);
-          }
-          this.requestUpdate('loadedPlugins');
-        });
-      }),
+  set plugins(plugins: Partial<PluginSet<Partial<Plugin | SourcedPlugin>>>) {
+    this.#plugins = Object.entries(plugins).reduce(
+      (acc, [pluginType, kind]) => {
+        const convertedPlugins = loadSourcedPlugins(kind);
+        acc[pluginType as keyof PluginSet] = convertedPlugins;
+        return acc;
+      },
+      { menu: [], editor: [], background: [] } as PluginSet,
     );
-    this.#plugins = { menu: [], editor: [], background: [], ...plugins };
-  }
-
-  #loadedPlugins: PluginSet = {
-    menu: new Array(this.plugins.menu.length).fill(null),
-    editor: new Array(this.plugins.editor.length).fill(null),
-    background: new Array(this.plugins.editor.length).fill(null),
-  };
-
-  #loadedPluginTagNames: string[] = [];
-
-  @state()
-  get loadedPlugins(): PluginSet {
-    return this.#loadedPlugins;
-  }
-
-  addLoadedPlugin(
-    tagName: string,
-    kind: keyof PluginSet,
-    plugin: Plugin,
-    index: number,
-  ) {
-    this.#loadedPlugins[kind][index] = plugin;
-    this.#loadedPluginTagNames.push(tagName);
   }
 
   handleOpenDoc({ detail: { docName, doc } }: OpenEvent) {
@@ -378,22 +306,23 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
 
   @state()
   get menu() {
-    return (<Required<Control>[]>this.loadedPlugins.menu
+    return (<Required<Control>[]>this.plugins.menu
       ?.map(
-        (plugin): RenderedPlugin =>
+        ({ name, tagName, requireDoc, icon, translations }): RenderedPlugin =>
           ({
-            icon: plugin.icon,
+            icon,
             getName: () =>
-              plugin.translations?.[
-                this.locale as (typeof targetLocales)[number]
-              ] || plugin.name,
-            isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
-            tagName: pluginTag(plugin.src),
+              translations?.[this.locale as (typeof targetLocales)[number]] ||
+              name,
+            isDisabled: () => (requireDoc && !this.docName) ?? false,
+            tagName,
             action: () => {
-              this.shadowRoot!.querySelector<
-                HTMLElement & { run: () => Promise<void> }
-              >(pluginTag(plugin.src))!.run?.();
-              this.menuUI.opened = false;
+              if (tagName) {
+                this.shadowRoot!.querySelector<
+                  HTMLElement & { run: () => Promise<void> }
+                >(tagName)!.run?.();
+                this.menuUI.opened = false;
+              }
             },
           }) as RenderedPlugin,
       )
@@ -402,16 +331,21 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
 
   @state()
   get editors() {
-    return <RenderedPlugin[]>this.loadedPlugins.editor?.map(
-      (plugin): RenderedPlugin | undefined =>
+    return <RenderedPlugin[]>this.plugins.editor?.map(
+      ({
+        name,
+        tagName,
+        requireDoc,
+        icon,
+        translations,
+      }): RenderedPlugin | undefined =>
         ({
-          icon: plugin.icon,
+          icon,
           getName: () =>
-            plugin.translations?.[
-              this.locale as (typeof targetLocales)[number]
-            ] || plugin.name,
-          isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
-          tagName: pluginTag(plugin.src),
+            translations?.[this.locale as (typeof targetLocales)[number]] ||
+            name,
+          isDisabled: () => (requireDoc && !this.docName) ?? false,
+          tagName,
         }) as RenderedPlugin,
     );
   }
@@ -460,6 +394,19 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
         oscdTabs.activeTabIndex = this.editorIndex;
       }
     });
+  }
+
+  renderPlugin(tagName: string) {
+    const tag = unsafeStatic(tagName);
+    return staticHtml`<${tag} 
+              locale="${this.locale}"
+              docName="${this.docName}"
+              .doc=${this.doc}
+              .docs=${this.docs} 
+              .editCount=${this.stateVersion}
+              .stateVersion=${this.stateVersion}
+              .editor=${this.xmlEditor}>
+            </${tag}>`;
   }
 
   render() {
@@ -536,17 +483,7 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
         </oscd-list>
       </oscd-navigation-drawer>
 
-      ${this.editor
-        ? staticHtml`<${unsafeStatic(this.editor)} 
-              locale="${this.locale}"
-              docName="${this.docName}"
-              .doc=${this.doc}
-              .docs=${this.docs} 
-              .editCount=${this.stateVersion}
-              .stateVersion=${this.stateVersion}
-              .editor=${this.xmlEditor}>
-            </${unsafeStatic(this.editor)}>`
-        : nothing}
+      ${this.editor ? this.renderPlugin(this.editor) : nothing}
 
       <oscd-dialog
         id="editFile"
@@ -633,32 +570,12 @@ export class OpenSCD extends ScopedElementsMixin(LitElement) {
 
       <aside>
         <div class="menu-plugins">
-          ${this.loadedPlugins.menu.map(
-            plugin =>
-              staticHtml`<${unsafeStatic(pluginTag(plugin.src))} 
-              locale="${this.locale}"
-              docName="${this.docName}"
-              .doc=${this.doc}
-              .docs=${this.docs} 
-              .editCount=${this.stateVersion}
-              .stateVersion=${this.stateVersion}
-              .editor=${this.xmlEditor}>
-            </${unsafeStatic(pluginTag(plugin.src))}>`,
-          )}
+          ${this.plugins.menu.map(plugin => this.renderPlugin(plugin.tagName))}
         </div>
         <div class="background-plugins">
-          ${this.loadedPlugins.background.map(
-            plugin =>
-              staticHtml`<${unsafeStatic(pluginTag(plugin.src))} 
-              locale="${this.locale}"
-              docName="${this.docName}"
-              .doc=${this.doc}
-              .docs=${this.docs} 
-              .editCount=${this.stateVersion}
-              .stateVersion=${this.stateVersion}
-              .editor=${this.xmlEditor}>
-            </${unsafeStatic(pluginTag(plugin.src))}>`,
-          )}
+          ${this.plugins.background
+            .filter(plugin => !plugin.requireDoc || !!this.docName)
+            .map(plugin => this.renderPlugin(plugin.tagName))}
         </div>
       </aside> `;
   }

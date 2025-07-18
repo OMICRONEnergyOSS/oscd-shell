@@ -292,17 +292,6 @@ describe('Custom plugins', () => {
 
     expect(customElementDefineSpy.called).to.be.false;
   });
-
-  it('does not allow the loading of a duplicate plugin', async () => {
-    const { menu } = editor.plugins;
-    const currentMenuPluginCount = editor.loadedPlugins.menu.length;
-    editor.plugins = {
-      menu: [...menu, ...menu],
-      editor: [],
-    };
-    await editor.updateComplete;
-    expect(editor.loadedPlugins.menu.length).to.equal(currentMenuPluginCount);
-  });
 });
 
 describe('localization', () => {
