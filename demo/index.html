@@ -19,9 +19,14 @@
 
     <script type="module">
       import OscdMenuOpen from '@omicronenergy/oscd-menu-open';
+      import OscdMenuSave from '@omicronenergy/oscd-menu-save';
+      import OscdBackgroundEditV1 from '@omicronenergy/oscd-background-editv1';
+
       import '../oscd-shell.js';
 
       customElements.define('oscd-menu-open', OscdMenuOpen);
+      customElements.define('oscd-menu-save', OscdMenuSave);
+      customElements.define('oscd-background-editv1', OscdBackgroundEditV1);
 
       const plugins = {
         menu: [
@@ -42,7 +47,7 @@
             translations: { de: 'Datei speichern' },
             icon: 'save',
             requireDoc: true,
-            src: 'https://openenergytools.github.io/oscd-save/oscd-save.js',
+            tagName: 'oscd-menu-save',
           },
         ],
         editor: [
@@ -76,7 +81,7 @@
             name: 'EditV1 Events Listener',
             icon: 'none',
             requireDoc: true,
-            src: 'https://omicronenergyoss.github.io/oscd-background-editv1/oscd-background-editv1.js',
+            tagName: 'oscd-background-editv1',
           },
         ],
       };
