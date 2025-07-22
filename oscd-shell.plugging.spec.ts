@@ -5,7 +5,7 @@ import { html } from 'lit';
 
 import './oscd-shell.js';
 import sinon from 'sinon';
-import type { OpenSCD, Plugin } from './oscd-shell.js';
+import type { OpenSCD, PluginEntry } from './oscd-shell.js';
 
 customElements.define(
   'test-menu-plugin1',
@@ -32,11 +32,14 @@ customElements.define(
   },
 );
 
-const isPluginLoaded = (editor: OpenSCD, plugin: Plugin): boolean =>
+const isPluginLoaded = (editor: OpenSCD, plugin: PluginEntry): boolean =>
   !!customElements.get(plugin.tagName) &&
   !!editor.shadowRoot?.querySelector(plugin.tagName);
 
-const waitForPlugin = async (editor: OpenSCD, plugin: Plugin): Promise<void> =>
+const waitForPlugin = async (
+  editor: OpenSCD,
+  plugin: PluginEntry,
+): Promise<void> =>
   waitUntil(
     () => isPluginLoaded(editor, plugin),
     `Plugin: "${plugin.name}" <${plugin.tagName}> failed to load. CustomElements Registry: ${customElements.get(plugin.tagName) ? 'Found' : 'Missing'}, DOM: ${editor.shadowRoot?.querySelector(plugin.tagName) ? 'Found' : 'Missing'}`,
@@ -47,7 +50,7 @@ const waitForPluginsToLoad = async (oscdShell: OpenSCD) => {
   await Promise.all(allPlugins.map(plugin => waitForPlugin(oscdShell, plugin)));
 };
 
-const sampleMenuPlugins: (Omit<Plugin, 'tagName'> & {
+const sampleMenuPlugins: (Omit<PluginEntry, 'tagName'> & {
   tagName?: string;
   src?: string;
 })[] = [

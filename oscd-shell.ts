@@ -29,7 +29,12 @@ import '@omicronenergy/oscd-ui/tabs/oscd-tabs.js';
 import type { OscdTabs } from '@omicronenergy/oscd-ui/tabs/OscdTabs.js';
 import '@omicronenergy/oscd-ui/button/oscd-text-button.js';
 import { XMLEditor } from '@omicronenergy/oscd-editor';
-import { EditEventV2, OpenEvent } from '@omicronenergy/oscd-api';
+import {
+  EditEventV2,
+  EditV2,
+  OpenEvent,
+  Transactor,
+} from '@omicronenergy/oscd-api';
 import { allLocales, sourceLocale, targetLocales } from './locales.js';
 import { loadSourcedPlugins } from './utils/plugin-utils.js';
 
@@ -40,7 +45,19 @@ window.customElements.define = (name, cl, conf) => {
   }
 };
 
-export type Plugin = {
+/* Copied from API because the export is currently missing, this should be removed when the fixed oscd-api is released */
+export interface Plugin {
+  editor: Transactor<EditV2>;
+  docs: Record<string, XMLDocument>;
+  doc?: XMLDocument; // the document currently being edited
+  docName?: string; // the current doc's name
+  stateVersion: unknown; // changes when the document is modified
+  /** @deprecated Use `stateVersion` instead */
+  editCount: number; // the number of edits made to the document
+  locale: string; // the end user's chosen locale
+}
+
+export type PluginEntry = {
   name: string;
   translations?: Record<(typeof targetLocales)[number], string>;
   tagName: string;
@@ -48,14 +65,14 @@ export type Plugin = {
   requireDoc?: boolean;
 };
 
-export type SourcedPlugin = {
+export type SourcedPluginEntry = {
   name: string;
   translations?: Record<(typeof targetLocales)[number], string>;
   src: string;
   icon: string;
   requireDoc?: boolean;
 };
-export type PluginSet<P = Plugin> = {
+export type PluginSet<P = PluginEntry> = {
   menu: P[];
   editor: P[];
   background: P[];
@@ -183,7 +200,9 @@ export class OpenSCD extends LitElement {
     return this.#plugins;
   }
 
-  set plugins(plugins: Partial<PluginSet<Partial<Plugin | SourcedPlugin>>>) {
+  set plugins(
+    plugins: Partial<PluginSet<Partial<PluginEntry | SourcedPluginEntry>>>,
+  ) {
     this.#plugins = Object.entries(plugins).reduce(
       (acc, [pluginType, kind]) => {
         const convertedPlugins = loadSourcedPlugins(kind);
@@ -399,8 +418,8 @@ export class OpenSCD extends LitElement {
   renderPlugin(tagName: string) {
     const tag = unsafeStatic(tagName);
     return staticHtml`<${tag} 
-              locale="${this.locale}"
-              docName="${this.docName}"
+              .locale="${this.locale}"
+              .docName="${this.docName}"
               .doc=${this.doc}
               .docs=${this.docs} 
               .editCount=${this.stateVersion}

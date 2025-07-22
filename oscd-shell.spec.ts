@@ -15,13 +15,9 @@ import Sinon from 'sinon';
 import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
 
 import { newEditEventV2, newOpenEvent } from '@omicronenergy/oscd-api/utils.js';
-import type { OpenSCD } from './oscd-shell.js';
+import type { OpenSCD, Plugin } from './oscd-shell.js';
 
 import { cyrb64 } from './foundation.js';
-
-function isOscdPlugin(tag: string): boolean {
-  return tag.toLocaleLowerCase().startsWith('oscd-p');
-}
 
 const doc = new DOMParser().parseFromString(
   `<testdoc></testdoc>`,
@@ -62,6 +58,8 @@ afterEach(() => {
 });
 
 describe('with editor plugins loaded', () => {
+  let editorPlugin: HTMLElement & Plugin;
+
   beforeEach(async () => {
     editor.plugins = {
       menu: [],
@@ -74,6 +72,9 @@ describe('with editor plugins loaded', () => {
         editor.shadowRoot!.querySelectorAll('oscd-secondary-tab').length === 2,
       'Custom Plugin did not load',
     );
+    editorPlugin = editor.shadowRoot?.querySelector(
+      editor!.editor,
+    ) as HTMLElement & Plugin;
   });
 
   it('changes editor plugin when clicking on the editor tab', async () => {
@@ -111,33 +112,50 @@ describe('with editor plugins loaded', () => {
   });
 
   it('passes attribute locale', () => {
-    const plugin = editor.shadowRoot?.querySelector('*[locale="en"]');
-    expect(plugin?.tagName).to.exist.and.to.satisfy(isOscdPlugin);
+    expect(editorPlugin.locale).to.equal('en');
   });
 
-  it('passes attribute docname', async () => {
-    editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-    await editor.updateComplete;
+  describe('with no document loaded', () => {
+    it('has no docName property set', () => {
+      expect(editorPlugin.docName).to.equal('');
+    });
 
-    const plugin = editor.shadowRoot?.querySelector('*[docName="test.scd"]');
-    expect(plugin?.tagName).to.exist.and.to.satisfy(isOscdPlugin);
+    it('has no doc property set', () => {
+      expect(editorPlugin.doc).to.equal(undefined);
+    });
+
+    it('has no docs property set', () => {
+      expect(editorPlugin.docs).to.be.an('object');
+      expect(editorPlugin.docs).to.be.empty;
+    });
   });
 
-  it('passes property doc', async () => {
-    editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-    await editor.updateComplete;
+  describe('with a document loaded', () => {
+    beforeEach(async () => {
+      editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+      await editor.updateComplete;
+    });
 
-    const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
-    expect(plugin).to.have.property('docs');
+    it('has its docName property set', () => {
+      expect(editorPlugin.docName).to.equal('test.scd');
+    });
+
+    it('has its doc property set', () => {
+      expect(editorPlugin.doc).to.equal(doc);
+    });
+
+    it('has its docs property set', () => {
+      expect(editorPlugin.docs).to.be.an('object');
+      expect(editorPlugin.docs['test.scd']).to.equal(doc);
+    });
   });
 
   it('passes property stateVersion', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
-    const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
-    expect(plugin).to.have.property('stateVersion', 0);
-    expect(plugin).to.have.property('editCount', 0);
+    expect(editorPlugin.stateVersion).to.equal(0);
+    expect(editorPlugin.editCount).to.equal(0);
   });
 
   it('updated passed stateVersion property on edit events', async () => {
@@ -153,13 +171,13 @@ describe('with editor plugins loaded', () => {
     );
     await editor.updateComplete;
 
-    const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
-    expect(plugin).to.have.property('stateVersion', 1);
-    expect(plugin).to.have.property('editCount', 1);
+    expect(editorPlugin.stateVersion).to.equal(1);
+    expect(editorPlugin.editCount).to.equal(1);
   });
 });
 
 describe('with menu plugins loaded', () => {
+  let menuPlugin: HTMLElement & Plugin;
   beforeEach(async () => {
     editor.plugins = {
       menu: [testMenuPlugin],
@@ -172,38 +190,58 @@ describe('with menu plugins loaded', () => {
           'oscd-list-item > span',
           testMenuPlugin.name,
         ),
-      'Custom Plugin did not load',
+      `Custom Menu Plugin "${testMenuPlugin.name}" did not load`,
     );
+    menuPlugin = editor.shadowRoot?.querySelector(
+      'aside .menu-plugins > *:first-child',
+    ) as HTMLElement & Plugin;
   });
 
   it('passes attribute locale', () => {
-    const plugin = editor.shadowRoot?.querySelector('*[locale="en"]');
-    expect(plugin?.tagName).to.exist.and.to.satisfy(isOscdPlugin);
+    expect(menuPlugin.locale).to.equal('en');
   });
 
-  it('passes attribute docname', async () => {
-    editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-    await editor.updateComplete;
+  describe('with no document loaded', () => {
+    it('has no docName property set', () => {
+      expect(menuPlugin.docName).to.equal('');
+    });
 
-    const plugin = editor.shadowRoot?.querySelector('*[docName="test.scd"]');
-    expect(plugin?.tagName).to.exist.and.to.satisfy(isOscdPlugin);
+    it('has no doc property set', () => {
+      expect(menuPlugin.doc).to.equal(undefined);
+    });
+
+    it('has no docs property set', () => {
+      expect(menuPlugin.docs).to.be.an('object');
+      expect(menuPlugin.docs).to.be.empty;
+    });
   });
 
-  it('passes property doc', async () => {
-    editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-    await editor.updateComplete;
+  describe('with a document loaded', () => {
+    beforeEach(async () => {
+      editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+      await editor.updateComplete;
+    });
 
-    const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
-    expect(plugin).to.have.property('docs');
+    it('has its docName property set', () => {
+      expect(menuPlugin.docName).to.equal('test.scd');
+    });
+
+    it('has its doc property set', () => {
+      expect(menuPlugin.doc).to.equal(doc);
+    });
+
+    it('has its docs property set', () => {
+      expect(menuPlugin.docs).to.be.an('object');
+      expect(menuPlugin.docs['test.scd']).to.equal(doc);
+    });
   });
 
   it('passes property stateVersion', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
-    const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
-    expect(plugin).to.have.property('stateVersion', 0);
-    expect(plugin).to.have.property('editCount', 0);
+    expect(menuPlugin).to.have.property('stateVersion', 0);
+    expect(menuPlugin).to.have.property('editCount', 0);
   });
 
   it('updated passed stateVersion property on edit events', async () => {
@@ -219,9 +257,8 @@ describe('with menu plugins loaded', () => {
     );
     await editor.updateComplete;
 
-    const plugin = editor.shadowRoot?.querySelector('*[docname="test.scd"]');
-    expect(plugin).to.have.property('stateVersion', 1);
-    expect(plugin).to.have.property('editCount', 1);
+    expect(menuPlugin).to.have.property('stateVersion', 1);
+    expect(menuPlugin).to.have.property('editCount', 1);
   });
 });
 

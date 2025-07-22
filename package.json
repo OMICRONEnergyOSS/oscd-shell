@@ -35,6 +35,10 @@
   "scripts": {
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
+    "build": "rimraf dist && npm run extract && npm run localize && tsc -b",
+    "bundle": "rimraf dist && npm run localize && rollup -c rollup.config.js",
+    "extract": "lit-localize extract",
+    "localize": "lit-localize build",
     "start": "npm run build && cp -r ./demo ./dist/ && concurrently -k -r \"tsc -b --watch --preserveWatchOutput\" \"wds\"",
     "start:bundle": "npm run bundle && concurrently -k -r \"rollup -c rollup.config.js --watch\" \"wds --open dist/demo/index.html --watch\"",
     "test": "npm run build && playwright install && wtr --coverage",
@@ -44,11 +48,7 @@
     "test:unit:watch": "npm run build && concurrently -k -r \"tsc -b --watch --preserveWatchOutput\" \"wtr --watch --coverage  --group default\"",
     "test:update": "npm run build && wtr --group visual --update-visual-baseline",
     "analyze": "cem analyze --litelement",
-    "extract": "lit-localize extract",
-    "localize": "lit-localize build",
-    "build": "rimraf dist && npm run extract && npm run localize && tsc -b",
     "doc": "npm run analyze -- --exclude dist && typedoc --out dist/doc oscd-shell.ts foundation.ts",
-    "bundle": "rimraf dist && npm run localize && rollup -c rollup.config.js",
     "deploy": "npm run bundle && npm run doc && gh-pages --dist 'dist'",
     "prepare": "husky"
   },

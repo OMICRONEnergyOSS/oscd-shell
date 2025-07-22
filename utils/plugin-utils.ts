@@ -1,5 +1,5 @@
 import { cyrb64 } from '../foundation/cyrb64.js';
-import { Plugin, SourcedPlugin } from '../oscd-shell.js';
+import { PluginEntry, SourcedPluginEntry } from '../oscd-shell.js';
 
 const pluginTags = new Map<string, string>();
 
@@ -22,7 +22,7 @@ function pluginTag(uri: string): string {
  * @param plugin - The plugin object that failed to load.
  * @returns A Web Component class that displays the error message.
  */
-function generateErrorWcClass(plugin: Partial<Plugin>) {
+function generateErrorWcClass(plugin: Partial<PluginEntry>) {
   const title = 'Error: Plugin failed to load.';
   const details = `Plugin: ${JSON.stringify(plugin)}`;
   const classString = `
@@ -45,7 +45,7 @@ function generateErrorWcClass(plugin: Partial<Plugin>) {
  * @param plugin - The object to check.
  * @returns true if the object is a Plugin, false otherwise.
  */
-export function isPlugin(plugin: unknown): plugin is Plugin {
+export function isPlugin(plugin: unknown): plugin is PluginEntry {
   return (
     typeof plugin === 'object' &&
     plugin !== null &&
@@ -59,7 +59,7 @@ export function isPlugin(plugin: unknown): plugin is Plugin {
  * @param plugin - The object to check.
  * @returns true if the object is a SourcedPlugin, false otherwise.
  */
-export function isSourcedPlugin(plugin: unknown): plugin is SourcedPlugin {
+export function isSourcedPlugin(plugin: unknown): plugin is SourcedPluginEntry {
   return (
     typeof plugin === 'object' &&
     plugin !== null &&
@@ -74,13 +74,13 @@ export function isSourcedPlugin(plugin: unknown): plugin is SourcedPlugin {
  * @param plugin - The plugin object to validate.
  * @returns The validated Plugin object or undefined if invalid.
  */
-export function validatePlugin(plugin: unknown): Plugin | undefined {
+export function validatePlugin(plugin: unknown): PluginEntry | undefined {
   const missingFields = [];
   if (!isPlugin(plugin)) {
     missingFields.push('tagName');
   }
 
-  const _plugin = plugin as Plugin;
+  const _plugin = plugin as PluginEntry;
   missingFields.push(
     ...(['name', 'icon'] as const).filter(
       field => !_plugin[field] || typeof _plugin[field] !== 'string',
@@ -119,8 +119,8 @@ export function validatePlugin(plugin: unknown): Plugin | undefined {
  * @returns Array of plugins with tagName included.
  */
 export function loadSourcedPlugins(
-  plugins: Partial<Plugin | SourcedPlugin>[],
-): Plugin[] {
+  plugins: Partial<PluginEntry | SourcedPluginEntry>[],
+): PluginEntry[] {
   return plugins
     .map(plugin => {
       if (isPlugin(plugin)) {
@@ -133,7 +133,7 @@ export function loadSourcedPlugins(
         );
         return undefined;
       }
-      const { src, ...rest } = plugin as SourcedPlugin;
+      const { src, ...rest } = plugin as SourcedPluginEntry;
       const hashedTagName = pluginTag(src);
       const validatedPlugin = validatePlugin({
         ...rest,
@@ -167,5 +167,5 @@ export function loadSourcedPlugins(
         });
       return validatedPlugin;
     })
-    .filter((plugin): plugin is Plugin => plugin !== undefined);
+    .filter((plugin): plugin is PluginEntry => plugin !== undefined);
 }
