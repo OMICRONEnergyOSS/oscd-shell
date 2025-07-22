@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.8](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.7...oscd-shell-v0.0.8) (2025-07-22)
+
+
+### Features
+
+* add support for tagName to plugins ([3b06907](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/3b069078d48951d3ac09159435baab103837d97d)), closes [#40](https://github.com/OMICRONEnergyOSS/oscd-shell/issues/40)
+* added stateVersion ([cc8fd47](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/cc8fd476cc955497bbeaf2afdf8ebb6ef50d5702))
+
+
+### Bug Fixes
+
+* change locale and docName from plugin attrs to props ([ed4f4cb](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/ed4f4cb100e547492cdef121a7e175113550b3e6))
+
 ## [0.0.7](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.6...oscd-shell-v0.0.7) (2025-07-10)
 
 
