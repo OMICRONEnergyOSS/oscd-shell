@@ -552,20 +552,20 @@ const t$3=globalThis,e$7=t$3.ShadowRoot&&(void 0===t$3.ShadyCSS||t$3.ShadyCSS.na
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const{is:i$5,defineProperty:e$6,getOwnPropertyDescriptor:h$1,getOwnPropertyNames:r$4,getOwnPropertySymbols:o$7,getPrototypeOf:n$5}=Object,a$2=globalThis,c$1=a$2.trustedTypes,l$3=c$1?c$1.emptyScript:"",p$1=a$2.reactiveElementPolyfillSupport,d$1=(t,s)=>t,u$3={toAttribute(t,s){switch(s){case Boolean:t=t?l$3:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,s){let i=t;switch(s){case Boolean:i=null!==t;break;case Number:i=null===t?null:Number(t);break;case Object:case Array:try{i=JSON.parse(t);}catch(t){i=null;}}return i}},f$2=(t,s)=>!i$5(t,s),b={attribute:!0,type:String,converter:u$3,reflect:!1,useDefault:!1,hasChanged:f$2};Symbol.metadata??=Symbol("metadata"),a$2.litPropertyMetadata??=new WeakMap;let y$1 = class y extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t);}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,s=b){if(s.state&&(s.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(t)&&((s=Object.create(s)).wrapped=!0),this.elementProperties.set(t,s),!s.noAccessor){const i=Symbol(),h=this.getPropertyDescriptor(t,i,s);void 0!==h&&e$6(this.prototype,t,h);}}static getPropertyDescriptor(t,s,i){const{get:e,set:r}=h$1(this.prototype,t)??{get(){return this[s]},set(t){this[s]=t;}};return {get:e,set(s){const h=e?.call(this);r?.call(this,s),this.requestUpdate(t,h,i);},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??b}static _$Ei(){if(this.hasOwnProperty(d$1("elementProperties")))return;const t=n$5(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties);}static finalize(){if(this.hasOwnProperty(d$1("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(d$1("properties"))){const t=this.properties,s=[...r$4(t),...o$7(t)];for(const i of s)this.createProperty(i,t[i]);}const t=this[Symbol.metadata];if(null!==t){const s=litPropertyMetadata.get(t);if(void 0!==s)for(const[t,i]of s)this.elementProperties.set(t,i);}this._$Eh=new Map;for(const[t,s]of this.elementProperties){const i=this._$Eu(t,s);void 0!==i&&this._$Eh.set(i,t);}this.elementStyles=this.finalizeStyles(this.styles);}static finalizeStyles(s){const i=[];if(Array.isArray(s)){const e=new Set(s.flat(1/0).reverse());for(const s of e)i.unshift(c$2(s));}else void 0!==s&&i.push(c$2(s));return i}static _$Eu(t,s){const i=s.attribute;return !1===i?void 0:"string"==typeof i?i:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev();}_$Ev(){this._$ES=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach((t=>t(this)));}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.();}removeController(t){this._$EO?.delete(t);}_$E_(){const t=new Map,s=this.constructor.elementProperties;for(const i of s.keys())this.hasOwnProperty(i)&&(t.set(i,this[i]),delete this[i]);t.size>0&&(this._$Ep=t);}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return S$1(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach((t=>t.hostConnected?.()));}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach((t=>t.hostDisconnected?.()));}attributeChangedCallback(t,s,i){this._$AK(t,i);}_$ET(t,s){const i=this.constructor.elementProperties.get(t),e=this.constructor._$Eu(t,i);if(void 0!==e&&!0===i.reflect){const h=(void 0!==i.converter?.toAttribute?i.converter:u$3).toAttribute(s,i.type);this._$Em=t,null==h?this.removeAttribute(e):this.setAttribute(e,h),this._$Em=null;}}_$AK(t,s){const i=this.constructor,e=i._$Eh.get(t);if(void 0!==e&&this._$Em!==e){const t=i.getPropertyOptions(e),h="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:u$3;this._$Em=e,this[e]=h.fromAttribute(s,t.type)??this._$Ej?.get(e)??null,this._$Em=null;}}requestUpdate(t,s,i){if(void 0!==t){const e=this.constructor,h=this[t];if(i??=e.getPropertyOptions(t),!((i.hasChanged??f$2)(h,s)||i.useDefault&&i.reflect&&h===this._$Ej?.get(t)&&!this.hasAttribute(e._$Eu(t,i))))return;this.C(t,s,i);}!1===this.isUpdatePending&&(this._$ES=this._$EP());}C(t,s,{useDefault:i,reflect:e,wrapped:h},r){i&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,r??s??this[t]),!0!==h||void 0!==r)||(this._$AL.has(t)||(this.hasUpdated||i||(s=void 0),this._$AL.set(t,s)),!0===e&&this._$Em!==t&&(this._$Eq??=new Set).add(t));}async _$EP(){this.isUpdatePending=!0;try{await this._$ES;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,s]of this._$Ep)this[t]=s;this._$Ep=void 0;}const t=this.constructor.elementProperties;if(t.size>0)for(const[s,i]of t){const{wrapped:t}=i,e=this[s];!0!==t||this._$AL.has(s)||void 0===e||this.C(s,void 0,i,e);}}let t=!1;const s=this._$AL;try{t=this.shouldUpdate(s),t?(this.willUpdate(s),this._$EO?.forEach((t=>t.hostUpdate?.())),this.update(s)):this._$EM();}catch(s){throw t=!1,this._$EM(),s}t&&this._$AE(s);}willUpdate(t){}_$AE(t){this._$EO?.forEach((t=>t.hostUpdated?.())),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t);}_$EM(){this._$AL=new Map,this.isUpdatePending=!1;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return !0}update(t){this._$Eq&&=this._$Eq.forEach((t=>this._$ET(t,this[t]))),this._$EM();}updated(t){}firstUpdated(t){}};y$1.elementStyles=[],y$1.shadowRootOptions={mode:"open"},y$1[d$1("elementProperties")]=new Map,y$1[d$1("finalized")]=new Map,p$1?.({ReactiveElement:y$1}),(a$2.reactiveElementVersions??=[]).push("2.1.0");
+ */const{is:i$5,defineProperty:e$6,getOwnPropertyDescriptor:h$1,getOwnPropertyNames:r$4,getOwnPropertySymbols:o$7,getPrototypeOf:n$5}=Object,a$2=globalThis,c$1=a$2.trustedTypes,l$3=c$1?c$1.emptyScript:"",p$1=a$2.reactiveElementPolyfillSupport,d$1=(t,s)=>t,u$3={toAttribute(t,s){switch(s){case Boolean:t=t?l$3:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,s){let i=t;switch(s){case Boolean:i=null!==t;break;case Number:i=null===t?null:Number(t);break;case Object:case Array:try{i=JSON.parse(t);}catch(t){i=null;}}return i}},f$2=(t,s)=>!i$5(t,s),b={attribute:!0,type:String,converter:u$3,reflect:!1,useDefault:!1,hasChanged:f$2};Symbol.metadata??=Symbol("metadata"),a$2.litPropertyMetadata??=new WeakMap;let y$1 = class y extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t);}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,s=b){if(s.state&&(s.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(t)&&((s=Object.create(s)).wrapped=!0),this.elementProperties.set(t,s),!s.noAccessor){const i=Symbol(),h=this.getPropertyDescriptor(t,i,s);void 0!==h&&e$6(this.prototype,t,h);}}static getPropertyDescriptor(t,s,i){const{get:e,set:r}=h$1(this.prototype,t)??{get(){return this[s]},set(t){this[s]=t;}};return {get:e,set(s){const h=e?.call(this);r?.call(this,s),this.requestUpdate(t,h,i);},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??b}static _$Ei(){if(this.hasOwnProperty(d$1("elementProperties")))return;const t=n$5(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties);}static finalize(){if(this.hasOwnProperty(d$1("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(d$1("properties"))){const t=this.properties,s=[...r$4(t),...o$7(t)];for(const i of s)this.createProperty(i,t[i]);}const t=this[Symbol.metadata];if(null!==t){const s=litPropertyMetadata.get(t);if(void 0!==s)for(const[t,i]of s)this.elementProperties.set(t,i);}this._$Eh=new Map;for(const[t,s]of this.elementProperties){const i=this._$Eu(t,s);void 0!==i&&this._$Eh.set(i,t);}this.elementStyles=this.finalizeStyles(this.styles);}static finalizeStyles(s){const i=[];if(Array.isArray(s)){const e=new Set(s.flat(1/0).reverse());for(const s of e)i.unshift(c$2(s));}else void 0!==s&&i.push(c$2(s));return i}static _$Eu(t,s){const i=s.attribute;return !1===i?void 0:"string"==typeof i?i:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev();}_$Ev(){this._$ES=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach((t=>t(this)));}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.();}removeController(t){this._$EO?.delete(t);}_$E_(){const t=new Map,s=this.constructor.elementProperties;for(const i of s.keys())this.hasOwnProperty(i)&&(t.set(i,this[i]),delete this[i]);t.size>0&&(this._$Ep=t);}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return S$1(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach((t=>t.hostConnected?.()));}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach((t=>t.hostDisconnected?.()));}attributeChangedCallback(t,s,i){this._$AK(t,i);}_$ET(t,s){const i=this.constructor.elementProperties.get(t),e=this.constructor._$Eu(t,i);if(void 0!==e&&!0===i.reflect){const h=(void 0!==i.converter?.toAttribute?i.converter:u$3).toAttribute(s,i.type);this._$Em=t,null==h?this.removeAttribute(e):this.setAttribute(e,h),this._$Em=null;}}_$AK(t,s){const i=this.constructor,e=i._$Eh.get(t);if(void 0!==e&&this._$Em!==e){const t=i.getPropertyOptions(e),h="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:u$3;this._$Em=e;const r=h.fromAttribute(s,t.type);this[e]=r??this._$Ej?.get(e)??r,this._$Em=null;}}requestUpdate(t,s,i){if(void 0!==t){const e=this.constructor,h=this[t];if(i??=e.getPropertyOptions(t),!((i.hasChanged??f$2)(h,s)||i.useDefault&&i.reflect&&h===this._$Ej?.get(t)&&!this.hasAttribute(e._$Eu(t,i))))return;this.C(t,s,i);}!1===this.isUpdatePending&&(this._$ES=this._$EP());}C(t,s,{useDefault:i,reflect:e,wrapped:h},r){i&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,r??s??this[t]),!0!==h||void 0!==r)||(this._$AL.has(t)||(this.hasUpdated||i||(s=void 0),this._$AL.set(t,s)),!0===e&&this._$Em!==t&&(this._$Eq??=new Set).add(t));}async _$EP(){this.isUpdatePending=!0;try{await this._$ES;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,s]of this._$Ep)this[t]=s;this._$Ep=void 0;}const t=this.constructor.elementProperties;if(t.size>0)for(const[s,i]of t){const{wrapped:t}=i,e=this[s];!0!==t||this._$AL.has(s)||void 0===e||this.C(s,void 0,i,e);}}let t=!1;const s=this._$AL;try{t=this.shouldUpdate(s),t?(this.willUpdate(s),this._$EO?.forEach((t=>t.hostUpdate?.())),this.update(s)):this._$EM();}catch(s){throw t=!1,this._$EM(),s}t&&this._$AE(s);}willUpdate(t){}_$AE(t){this._$EO?.forEach((t=>t.hostUpdated?.())),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t);}_$EM(){this._$AL=new Map,this.isUpdatePending=!1;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return !0}update(t){this._$Eq&&=this._$Eq.forEach((t=>this._$ET(t,this[t]))),this._$EM();}updated(t){}firstUpdated(t){}};y$1.elementStyles=[],y$1.shadowRootOptions={mode:"open"},y$1[d$1("elementProperties")]=new Map,y$1[d$1("finalized")]=new Map,p$1?.({ReactiveElement:y$1}),(a$2.reactiveElementVersions??=[]).push("2.1.1");
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t$2=globalThis,i$4=t$2.trustedTypes,s$2=i$4?i$4.createPolicy("lit-html",{createHTML:t=>t}):void 0,e$5="$lit$",h=`lit$${Math.random().toFixed(9).slice(2)}$`,o$6="?"+h,n$4=`<${o$6}>`,r$3=document,l$2=()=>r$3.createComment(""),c=t=>null===t||"object"!=typeof t&&"function"!=typeof t,a$1=Array.isArray,u$2=t=>a$1(t)||"function"==typeof t?.[Symbol.iterator],d="[ \t\n\f\r]",f$1=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,v=/-->/g,_=/>/g,m$1=RegExp(`>|${d}(?:([^\\s"'>=/]+)(${d}*=${d}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),p=/'/g,g=/"/g,$=/^(?:script|style|textarea|title)$/i,y=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),x=y(1),T=Symbol.for("lit-noChange"),E=Symbol.for("lit-nothing"),A=new WeakMap,C=r$3.createTreeWalker(r$3,129);function P(t,i){if(!a$1(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==s$2?s$2.createHTML(i):i}const V=(t,i)=>{const s=t.length-1,o=[];let r,l=2===i?"<svg>":3===i?"<math>":"",c=f$1;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,y=0;for(;y<s.length&&(c.lastIndex=y,u=c.exec(s),null!==u);)y=c.lastIndex,c===f$1?"!--"===u[1]?c=v:void 0!==u[1]?c=_:void 0!==u[2]?($.test(u[2])&&(r=RegExp("</"+u[2],"g")),c=m$1):void 0!==u[3]&&(c=m$1):c===m$1?">"===u[0]?(c=r??f$1,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?m$1:'"'===u[3]?g:p):c===g||c===p?c=m$1:c===v||c===_?c=f$1:(c=m$1,r=void 0);const x=c===m$1&&t[i+1].startsWith("/>")?" ":"";l+=c===f$1?s+n$4:d>=0?(o.push(a),s.slice(0,d)+e$5+s.slice(d)+h+x):s+h+(-2===d?i:x);}return [P(t,l+(t[s]||"<?>")+(2===i?"</svg>":3===i?"</math>":"")),o]};class N{constructor({strings:t,_$litType$:s},n){let r;this.parts=[];let c=0,a=0;const u=t.length-1,d=this.parts,[f,v]=V(t,s);if(this.el=N.createElement(f,n),C.currentNode=this.el.content,2===s||3===s){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=C.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(e$5)){const i=v[a++],s=r.getAttribute(t).split(h),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:c,name:e[2],strings:s,ctor:"."===e[1]?H:"?"===e[1]?I:"@"===e[1]?L:k}),r.removeAttribute(t);}else t.startsWith(h)&&(d.push({type:6,index:c}),r.removeAttribute(t));if($.test(r.tagName)){const t=r.textContent.split(h),s=t.length-1;if(s>0){r.textContent=i$4?i$4.emptyScript:"";for(let i=0;i<s;i++)r.append(t[i],l$2()),C.nextNode(),d.push({type:2,index:++c});r.append(t[s],l$2());}}}else if(8===r.nodeType)if(r.data===o$6)d.push({type:2,index:c});else {let t=-1;for(;-1!==(t=r.data.indexOf(h,t+1));)d.push({type:7,index:c}),t+=h.length-1;}c++;}}static createElement(t,i){const s=r$3.createElement("template");return s.innerHTML=t,s}}function S(t,i,s=t,e){if(i===T)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=c(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(!1),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=S(t,h._$AS(t,i.values),h,e)),i}class M{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??r$3).importNode(i,!0);C.currentNode=e;let h=C.nextNode(),o=0,n=0,l=s[0];for(;void 0!==l;){if(o===l.index){let i;2===l.type?i=new R(h,h.nextSibling,this,t):1===l.type?i=new l.ctor(h,l.name,l.strings,this,t):6===l.type&&(i=new z(h,this,t)),this._$AV.push(i),l=s[++n];}o!==l?.index&&(h=C.nextNode(),o++);}return C.currentNode=r$3,e}p(t){let i=0;for(const s of this._$AV)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class R{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=E,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??!0;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=S(this,t,i),c(t)?t===E||null==t||""===t?(this._$AH!==E&&this._$AR(),this._$AH=E):t!==this._$AH&&t!==T&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):u$2(t)?this.k(t):this._(t);}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t));}_(t){this._$AH!==E&&c(this._$AH)?this._$AA.nextSibling.data=t:this.T(r$3.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=N.createElement(P(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new M(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=A.get(t.strings);return void 0===i&&A.set(t.strings,i=new N(t)),i}k(t){a$1(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new R(this.O(l$2()),this.O(l$2()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){for(this._$AP?.(!1,!0,i);t&&t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}class k{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=E,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=E;}_$AI(t,i=this,s,e){const h=this.strings;let o=!1;if(void 0===h)t=S(this,t,i,0),o=!c(t)||t!==this._$AH&&t!==T,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=S(this,e[s+n],i,n),r===T&&(r=this._$AH[n]),o||=!c(r)||r!==this._$AH[n],r===E?t=E:t!==E&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===E?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}}class H extends k{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===E?void 0:t;}}class I extends k{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==E);}}class L extends k{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=S(this,t,i,0)??E)===T)return;const s=this._$AH,e=t===E&&s!==E||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==E&&(s===E||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){S(this,t);}}const j=t$2.litHtmlPolyfillSupport;j?.(N,R),(t$2.litHtmlVersions??=[]).push("3.3.0");const B=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new R(i.insertBefore(l$2(),t),t,void 0,s??{});}return h._$AI(t),h};
+const t$2=globalThis,i$4=t$2.trustedTypes,s$2=i$4?i$4.createPolicy("lit-html",{createHTML:t=>t}):void 0,e$5="$lit$",h=`lit$${Math.random().toFixed(9).slice(2)}$`,o$6="?"+h,n$4=`<${o$6}>`,r$3=document,l$2=()=>r$3.createComment(""),c=t=>null===t||"object"!=typeof t&&"function"!=typeof t,a$1=Array.isArray,u$2=t=>a$1(t)||"function"==typeof t?.[Symbol.iterator],d="[ \t\n\f\r]",f$1=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,v=/-->/g,_=/>/g,m$1=RegExp(`>|${d}(?:([^\\s"'>=/]+)(${d}*=${d}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),p=/'/g,g=/"/g,$=/^(?:script|style|textarea|title)$/i,y=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),x=y(1),T=Symbol.for("lit-noChange"),E=Symbol.for("lit-nothing"),A=new WeakMap,C=r$3.createTreeWalker(r$3,129);function P(t,i){if(!a$1(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==s$2?s$2.createHTML(i):i}const V=(t,i)=>{const s=t.length-1,o=[];let r,l=2===i?"<svg>":3===i?"<math>":"",c=f$1;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,y=0;for(;y<s.length&&(c.lastIndex=y,u=c.exec(s),null!==u);)y=c.lastIndex,c===f$1?"!--"===u[1]?c=v:void 0!==u[1]?c=_:void 0!==u[2]?($.test(u[2])&&(r=RegExp("</"+u[2],"g")),c=m$1):void 0!==u[3]&&(c=m$1):c===m$1?">"===u[0]?(c=r??f$1,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?m$1:'"'===u[3]?g:p):c===g||c===p?c=m$1:c===v||c===_?c=f$1:(c=m$1,r=void 0);const x=c===m$1&&t[i+1].startsWith("/>")?" ":"";l+=c===f$1?s+n$4:d>=0?(o.push(a),s.slice(0,d)+e$5+s.slice(d)+h+x):s+h+(-2===d?i:x);}return [P(t,l+(t[s]||"<?>")+(2===i?"</svg>":3===i?"</math>":"")),o]};class N{constructor({strings:t,_$litType$:s},n){let r;this.parts=[];let c=0,a=0;const u=t.length-1,d=this.parts,[f,v]=V(t,s);if(this.el=N.createElement(f,n),C.currentNode=this.el.content,2===s||3===s){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=C.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(e$5)){const i=v[a++],s=r.getAttribute(t).split(h),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:c,name:e[2],strings:s,ctor:"."===e[1]?H:"?"===e[1]?I:"@"===e[1]?L:k}),r.removeAttribute(t);}else t.startsWith(h)&&(d.push({type:6,index:c}),r.removeAttribute(t));if($.test(r.tagName)){const t=r.textContent.split(h),s=t.length-1;if(s>0){r.textContent=i$4?i$4.emptyScript:"";for(let i=0;i<s;i++)r.append(t[i],l$2()),C.nextNode(),d.push({type:2,index:++c});r.append(t[s],l$2());}}}else if(8===r.nodeType)if(r.data===o$6)d.push({type:2,index:c});else {let t=-1;for(;-1!==(t=r.data.indexOf(h,t+1));)d.push({type:7,index:c}),t+=h.length-1;}c++;}}static createElement(t,i){const s=r$3.createElement("template");return s.innerHTML=t,s}}function S(t,i,s=t,e){if(i===T)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=c(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(!1),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=S(t,h._$AS(t,i.values),h,e)),i}class M{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??r$3).importNode(i,!0);C.currentNode=e;let h=C.nextNode(),o=0,n=0,l=s[0];for(;void 0!==l;){if(o===l.index){let i;2===l.type?i=new R(h,h.nextSibling,this,t):1===l.type?i=new l.ctor(h,l.name,l.strings,this,t):6===l.type&&(i=new z(h,this,t)),this._$AV.push(i),l=s[++n];}o!==l?.index&&(h=C.nextNode(),o++);}return C.currentNode=r$3,e}p(t){let i=0;for(const s of this._$AV)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class R{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=E,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??!0;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=S(this,t,i),c(t)?t===E||null==t||""===t?(this._$AH!==E&&this._$AR(),this._$AH=E):t!==this._$AH&&t!==T&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):u$2(t)?this.k(t):this._(t);}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t));}_(t){this._$AH!==E&&c(this._$AH)?this._$AA.nextSibling.data=t:this.T(r$3.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=N.createElement(P(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new M(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=A.get(t.strings);return void 0===i&&A.set(t.strings,i=new N(t)),i}k(t){a$1(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new R(this.O(l$2()),this.O(l$2()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){for(this._$AP?.(!1,!0,i);t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}class k{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=E,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=E;}_$AI(t,i=this,s,e){const h=this.strings;let o=!1;if(void 0===h)t=S(this,t,i,0),o=!c(t)||t!==this._$AH&&t!==T,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=S(this,e[s+n],i,n),r===T&&(r=this._$AH[n]),o||=!c(r)||r!==this._$AH[n],r===E?t=E:t!==E&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===E?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}}class H extends k{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===E?void 0:t;}}class I extends k{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==E);}}class L extends k{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=S(this,t,i,0)??E)===T)return;const s=this._$AH,e=t===E&&s!==E||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==E&&(s===E||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){S(this,t);}}const j=t$2.litHtmlPolyfillSupport;j?.(N,R),(t$2.litHtmlVersions??=[]).push("3.3.1");const B=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new R(i.insertBefore(l$2(),t),t,void 0,s??{});}return h._$AI(t),h};
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const s$1=globalThis;let i$3 = class i extends y$1{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const r=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=B(r,this.renderRoot,this.renderOptions);}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0);}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1);}render(){return T}};i$3._$litElement$=!0,i$3["finalized"]=!0,s$1.litElementHydrateSupport?.({LitElement:i$3});const o$5=s$1.litElementPolyfillSupport;o$5?.({LitElement:i$3});(s$1.litElementVersions??=[]).push("4.2.0");
+ */const s$1=globalThis;let i$3 = class i extends y$1{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const r=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=B(r,this.renderRoot,this.renderOptions);}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0);}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1);}render(){return T}};i$3._$litElement$=!0,i$3["finalized"]=!0,s$1.litElementHydrateSupport?.({LitElement:i$3});const o$5=s$1.litElementPolyfillSupport;o$5?.({LitElement:i$3});(s$1.litElementVersions??=[]).push("4.2.1");
 
 /**
  * @license
@@ -631,168 +631,6 @@ let e$2;function r(r){return (n,o)=>e$4(n,o,{get(){return (this.renderRoot??(e$2
  * SPDX-License-Identifier: BSD-3-Clause
  */
 const a=Symbol.for(""),o$1=t=>{if(t?.r===a)return t?._$litStatic$},s=t=>({_$litStatic$:t,r:a}),i$2=(t,...r)=>({_$litStatic$:r.reduce(((r,e,a)=>r+(t=>{if(void 0!==t._$litStatic$)return t._$litStatic$;throw Error(`Value passed to 'literal' function must be a 'literal' result: ${t}. Use 'unsafeStatic' to pass non-literal values, but\n            take care to ensure page security.`)})(e)+t[a+1]),t[0]),r:a}),l$1=new Map,n$1=t=>(r,...e)=>{const a=e.length;let s,i;const n=[],u=[];let c,$=0,f=!1;for(;$<a;){for(c=r[$];$<a&&void 0!==(i=e[$],s=o$1(i));)c+=s+r[++$],f=!0;$!==a&&u.push(i),n.push(c),$++;}if($===a&&n.push(r[a]),f){const t=n.join("$$lit$$");void 0===(r=l$1.get(t))&&(n.raw=n,l$1.set(t,r=n)),e=u;}return t(r,...e)},u$1=n$1(x);
-
-const appliedClassMixins = new WeakMap();
-
-/** Vefify if the Mixin was previously applyed
- * @private
- * @param {function} mixin      Mixin being applyed
- * @param {object} superClass   Class receiving the new mixin
- * @returns {boolean}
- */
-function wasMixinPreviouslyApplied(mixin, superClass) {
-  let klass = superClass;
-  while (klass) {
-    if (appliedClassMixins.get(klass) === mixin) {
-      return true;
-    }
-    klass = Object.getPrototypeOf(klass);
-  }
-  return false;
-}
-
-/** Apply each mixin in the chain to make sure they are not applied more than once to the final class.
- * @export
- * @param {function} mixin      Mixin to be applyed
- * @returns {object}            Mixed class with mixin applied
- */
-function dedupeMixin(mixin) {
-  return superClass => {
-    if (wasMixinPreviouslyApplied(mixin, superClass)) {
-      return superClass;
-    }
-    const mixedClass = mixin(superClass);
-    appliedClassMixins.set(mixedClass, mixin);
-    return mixedClass;
-  };
-}
-
-/**
- * @typedef {import('./types.js').ScopedElementsHost} ScopedElementsHost
- * @typedef {import('./types.js').ScopedElementsMap} ScopedElementsMap
- */
-
-const version = '3.0.0';
-const versions = window.scopedElementsVersions || (window.scopedElementsVersions = []);
-if (!versions.includes(version)) {
-  versions.push(version);
-}
-
-/**
- * @template {import('./types.js').Constructor<HTMLElement>} T
- * @param {T} superclass
- * @return {T & import('./types.js').Constructor<ScopedElementsHost>}
- */
-const ScopedElementsMixinImplementation$1 = superclass =>
-  /** @type {ScopedElementsHost} */
-  class ScopedElementsHost extends superclass {
-    /**
-     * Obtains the scoped elements definitions map if specified.
-     *
-     * @type {ScopedElementsMap=}
-     */
-    static scopedElements;
-
-    static get scopedElementsVersion() {
-      return version;
-    }
-
-    /** @type {CustomElementRegistry=} */
-    static __registry;
-
-    /**
-     * Obtains the CustomElementRegistry associated to the ShadowRoot.
-     *
-     * @returns {CustomElementRegistry=}
-     */
-    get registry() {
-      return /** @type {typeof ScopedElementsHost} */ (this.constructor).__registry;
-    }
-
-    /**
-     * Set the CustomElementRegistry associated to the ShadowRoot
-     *
-     * @param {CustomElementRegistry} registry
-     */
-    set registry(registry) {
-      /** @type {typeof ScopedElementsHost} */ (this.constructor).__registry = registry;
-    }
-
-    /**
-     * @param {ShadowRootInit} options
-     * @returns {ShadowRoot}
-     */
-    attachShadow(options) {
-      const { scopedElements } = /** @type {typeof ScopedElementsHost} */ (this.constructor);
-
-      const shouldCreateRegistry =
-        !this.registry ||
-        // @ts-ignore
-        (this.registry === this.constructor.__registry &&
-          !Object.prototype.hasOwnProperty.call(this.constructor, '__registry'));
-
-      /**
-       * Create a new registry if:
-       * - the registry is not defined
-       * - this class doesn't have its own registry *AND* has no shared registry
-       * This is important specifically for superclasses/inheritance
-       */
-      if (shouldCreateRegistry) {
-        this.registry = new CustomElementRegistry();
-        for (const [tagName, klass] of Object.entries(scopedElements ?? {})) {
-          this.registry.define(tagName, klass);
-        }
-      }
-
-      return super.attachShadow({
-        ...options,
-        // The polyfill currently expects the registry to be passed as `customElements`
-        customElements: this.registry,
-        // But the proposal has moved forward, and renamed it to `registry`
-        // For backwards compatibility, we pass it as both
-        registry: this.registry,
-      });
-    }
-  };
-
-const ScopedElementsMixin$1 = dedupeMixin(ScopedElementsMixinImplementation$1);
-
-/**
- * @typedef {import('./types.js').ScopedElementsHost} ScopedElementsHost
- * @typedef {import('./types.js').ScopedElementsMap} ScopedElementsMap
- * @typedef {import('lit').CSSResultOrNative} CSSResultOrNative
- * @typedef {import('lit').LitElement} LitElement
- * @typedef {typeof import('lit').LitElement} TypeofLitElement
- * @typedef {import('@open-wc/dedupe-mixin').Constructor<LitElement>} LitElementConstructor
- * @typedef {import('@open-wc/dedupe-mixin').Constructor<ScopedElementsHost>} ScopedElementsHostConstructor
- */
-
-/**
- * @template {LitElementConstructor} T
- * @param {T} superclass
- * @return {T & ScopedElementsHostConstructor}
- */
-const ScopedElementsMixinImplementation = superclass =>
-  /** @type {ScopedElementsHost} */
-  class ScopedElementsHost extends ScopedElementsMixin$1(superclass) {
-    createRenderRoot() {
-      const { shadowRootOptions, elementStyles } = /** @type {TypeofLitElement} */ (
-        this.constructor
-      );
-
-      const shadowRoot = this.attachShadow(shadowRootOptions);
-      // @ts-ignore
-      this.renderOptions.creationScope = shadowRoot;
-
-      S$1(shadowRoot, elementStyles);
-
-      this.renderOptions.renderBefore ??= shadowRoot.firstChild;
-
-      return shadowRoot;
-    }
-  };
-
-const ScopedElementsMixin = dedupeMixin(ScopedElementsMixinImplementation);
 
 /**
  * @license
@@ -934,6 +772,18 @@ class OscdAppBar extends i$3 {
     `;
     }
 }
+
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/**
+ * @license
+ * Copyright 2025 OMICRON Electronics GmbH
+ * SPDX-License-Identifier: Apache-2.0
+ */
+window.customElements.define("oscd-app-bar", OscdAppBar);
 
 /**
  * @license
@@ -2093,6 +1943,8 @@ class OscdDialog extends Dialog {
     static styles = [styles$o, styleOverrides$1];
 }
 
+customElements.define("oscd-dialog", OscdDialog);
+
 /**
  * @license
  * Copyright 2023 Google LLC
@@ -2111,6 +1963,8 @@ class OscdDialog extends Dialog {
 class OscdDivider extends Divider {
     static styles = [styles$p];
 }
+
+customElements.define("oscd-divider", OscdDivider);
 
 /**
  * @license
@@ -3237,6 +3091,8 @@ class OscdFilledIconButton extends IconButton {
         };
     }
 }
+
+customElements.define("oscd-filled-icon-button", OscdFilledIconButton);
 
 /**
  * @license
@@ -7307,6 +7163,8 @@ class OscdFilledSelect extends FilledSelect {
     static styles = [styles$e, styles$f];
 }
 
+customElements.define("oscd-filled-select", OscdFilledSelect);
+
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -8251,6 +8109,168 @@ class FilledTextField extends TextField {
 const styles$c = i$6 `:host{display:inline-flex;outline:none;resize:both;text-align:start;-webkit-tap-highlight-color:rgba(0,0,0,0)}.text-field,.field{width:100%}.text-field{display:inline-flex}.field{cursor:text}.disabled .field{cursor:default}.text-field,.textarea .field{resize:inherit}slot[name=container]{border-radius:inherit}.icon{color:currentColor;display:flex;align-items:center;justify-content:center;fill:currentColor;position:relative}.icon ::slotted(*){display:flex;position:absolute}[has-start] .icon.leading{font-size:var(--_leading-icon-size);height:var(--_leading-icon-size);width:var(--_leading-icon-size)}[has-end] .icon.trailing{font-size:var(--_trailing-icon-size);height:var(--_trailing-icon-size);width:var(--_trailing-icon-size)}.input-wrapper{display:flex}.input-wrapper>*{all:inherit;padding:0}.input{caret-color:var(--_caret-color);overflow-x:hidden;text-align:inherit}.input::placeholder{color:currentColor;opacity:1}.input::-webkit-calendar-picker-indicator{display:none}.input::-webkit-search-decoration,.input::-webkit-search-cancel-button{display:none}@media(forced-colors: active){.input{background:none}}.no-spinner .input::-webkit-inner-spin-button,.no-spinner .input::-webkit-outer-spin-button{display:none}.no-spinner .input[type=number]{-moz-appearance:textfield}:focus-within .input{caret-color:var(--_focus-caret-color)}.error:focus-within .input{caret-color:var(--_error-focus-caret-color)}.text-field:not(.disabled) .prefix{color:var(--_input-text-prefix-color)}.text-field:not(.disabled) .suffix{color:var(--_input-text-suffix-color)}.text-field:not(.disabled) .input::placeholder{color:var(--_input-text-placeholder-color)}.prefix,.suffix{text-wrap:nowrap;width:min-content}.prefix{padding-inline-end:var(--_input-text-prefix-trailing-space)}.suffix{padding-inline-start:var(--_input-text-suffix-leading-space)}
 `;
 
+const appliedClassMixins = new WeakMap();
+
+/** Vefify if the Mixin was previously applyed
+ * @private
+ * @param {function} mixin      Mixin being applyed
+ * @param {object} superClass   Class receiving the new mixin
+ * @returns {boolean}
+ */
+function wasMixinPreviouslyApplied(mixin, superClass) {
+  let klass = superClass;
+  while (klass) {
+    if (appliedClassMixins.get(klass) === mixin) {
+      return true;
+    }
+    klass = Object.getPrototypeOf(klass);
+  }
+  return false;
+}
+
+/** Apply each mixin in the chain to make sure they are not applied more than once to the final class.
+ * @export
+ * @param {function} mixin      Mixin to be applyed
+ * @returns {object}            Mixed class with mixin applied
+ */
+function dedupeMixin(mixin) {
+  return superClass => {
+    if (wasMixinPreviouslyApplied(mixin, superClass)) {
+      return superClass;
+    }
+    const mixedClass = mixin(superClass);
+    appliedClassMixins.set(mixedClass, mixin);
+    return mixedClass;
+  };
+}
+
+/**
+ * @typedef {import('./types.js').ScopedElementsHost} ScopedElementsHost
+ * @typedef {import('./types.js').ScopedElementsMap} ScopedElementsMap
+ */
+
+const version = '3.0.0';
+const versions = window.scopedElementsVersions || (window.scopedElementsVersions = []);
+if (!versions.includes(version)) {
+  versions.push(version);
+}
+
+/**
+ * @template {import('./types.js').Constructor<HTMLElement>} T
+ * @param {T} superclass
+ * @return {T & import('./types.js').Constructor<ScopedElementsHost>}
+ */
+const ScopedElementsMixinImplementation$1 = superclass =>
+  /** @type {ScopedElementsHost} */
+  class ScopedElementsHost extends superclass {
+    /**
+     * Obtains the scoped elements definitions map if specified.
+     *
+     * @type {ScopedElementsMap=}
+     */
+    static scopedElements;
+
+    static get scopedElementsVersion() {
+      return version;
+    }
+
+    /** @type {CustomElementRegistry=} */
+    static __registry;
+
+    /**
+     * Obtains the CustomElementRegistry associated to the ShadowRoot.
+     *
+     * @returns {CustomElementRegistry=}
+     */
+    get registry() {
+      return /** @type {typeof ScopedElementsHost} */ (this.constructor).__registry;
+    }
+
+    /**
+     * Set the CustomElementRegistry associated to the ShadowRoot
+     *
+     * @param {CustomElementRegistry} registry
+     */
+    set registry(registry) {
+      /** @type {typeof ScopedElementsHost} */ (this.constructor).__registry = registry;
+    }
+
+    /**
+     * @param {ShadowRootInit} options
+     * @returns {ShadowRoot}
+     */
+    attachShadow(options) {
+      const { scopedElements } = /** @type {typeof ScopedElementsHost} */ (this.constructor);
+
+      const shouldCreateRegistry =
+        !this.registry ||
+        // @ts-ignore
+        (this.registry === this.constructor.__registry &&
+          !Object.prototype.hasOwnProperty.call(this.constructor, '__registry'));
+
+      /**
+       * Create a new registry if:
+       * - the registry is not defined
+       * - this class doesn't have its own registry *AND* has no shared registry
+       * This is important specifically for superclasses/inheritance
+       */
+      if (shouldCreateRegistry) {
+        this.registry = new CustomElementRegistry();
+        for (const [tagName, klass] of Object.entries(scopedElements ?? {})) {
+          this.registry.define(tagName, klass);
+        }
+      }
+
+      return super.attachShadow({
+        ...options,
+        // The polyfill currently expects the registry to be passed as `customElements`
+        customElements: this.registry,
+        // But the proposal has moved forward, and renamed it to `registry`
+        // For backwards compatibility, we pass it as both
+        registry: this.registry,
+      });
+    }
+  };
+
+const ScopedElementsMixin$1 = dedupeMixin(ScopedElementsMixinImplementation$1);
+
+/**
+ * @typedef {import('./types.js').ScopedElementsHost} ScopedElementsHost
+ * @typedef {import('./types.js').ScopedElementsMap} ScopedElementsMap
+ * @typedef {import('lit').CSSResultOrNative} CSSResultOrNative
+ * @typedef {import('lit').LitElement} LitElement
+ * @typedef {typeof import('lit').LitElement} TypeofLitElement
+ * @typedef {import('@open-wc/dedupe-mixin').Constructor<LitElement>} LitElementConstructor
+ * @typedef {import('@open-wc/dedupe-mixin').Constructor<ScopedElementsHost>} ScopedElementsHostConstructor
+ */
+
+/**
+ * @template {LitElementConstructor} T
+ * @param {T} superclass
+ * @return {T & ScopedElementsHostConstructor}
+ */
+const ScopedElementsMixinImplementation = superclass =>
+  /** @type {ScopedElementsHost} */
+  class ScopedElementsHost extends ScopedElementsMixin$1(superclass) {
+    createRenderRoot() {
+      const { shadowRootOptions, elementStyles } = /** @type {TypeofLitElement} */ (
+        this.constructor
+      );
+
+      const shadowRoot = this.attachShadow(shadowRootOptions);
+      // @ts-ignore
+      this.renderOptions.creationScope = shadowRoot;
+
+      S$1(shadowRoot, elementStyles);
+
+      this.renderOptions.renderBefore ??= shadowRoot.firstChild;
+
+      return shadowRoot;
+    }
+  };
+
+const ScopedElementsMixin = dedupeMixin(ScopedElementsMixinImplementation);
+
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -8274,6 +8294,8 @@ class OscdFilledTextField extends ScopedElementsMixin(FilledTextField) {
     }
     fieldTag = i$2 `oscd-filled-field`;
 }
+
+customElements.define("oscd-filled-text-field", OscdFilledTextField);
 
 /**
  * @license
@@ -8324,6 +8346,8 @@ class OscdIcon extends Icon {
     /** @nocollapse */
     static styles = [styles$b];
 }
+
+customElements.define("oscd-icon", OscdIcon);
 
 /**
  * @license
@@ -8441,6 +8465,8 @@ const overrideStyles$2 = i$6 `
 class OscdList extends List {
     static styles = [styles$a, overrideStyles$2];
 }
+
+customElements.define("oscd-list", OscdList);
 
 /**
  * @license
@@ -8875,6 +8901,8 @@ class OscdListItem extends ListItemEl {
     static styles = [styles$8, styleOverrides];
 }
 
+customElements.define("oscd-list-item", OscdListItem);
+
 /**
  * @license
  * Copyright 2022 Google LLC
@@ -8932,6 +8960,8 @@ class OscdListItem extends ListItemEl {
 class OscdMenu extends Menu {
     static styles = [styles$g];
 }
+
+customElements.define("oscd-menu", OscdMenu);
 
 /**
  * @license
@@ -9304,6 +9334,8 @@ class OscdMenuItem extends MenuItemEl {
     static styles = [styles$7];
 }
 
+customElements.define("oscd-menu-item", OscdMenuItem);
+
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -9437,6 +9469,8 @@ class OscdNavigationDrawer extends NavigationDrawerModal {
     ];
 }
 
+customElements.define("oscd-navigation-drawer", OscdNavigationDrawer);
+
 /**
  * @license
  * Copyright 2025 OMICRON Electronics GmbH
@@ -9494,6 +9528,8 @@ class OscdNavigationDrawerHeader extends ListItemEl {
         overrideStyles,
     ];
 }
+
+customElements.define("oscd-navigation-drawer-header", OscdNavigationDrawerHeader);
 
 /**
  * @license
@@ -9822,6 +9858,8 @@ const styles$3 = i$6 `:host{display:inline-flex;align-items:center;justify-conte
 class OscdSecondaryTab extends SecondaryTab {
     static styles = [styles$3, styles$4];
 }
+
+customElements.define("oscd-secondary-tab", OscdSecondaryTab);
 
 /**
  * @license
@@ -10163,6 +10201,8 @@ class OscdSelectOption extends SelectOptionEl {
     static styles = [styles$7];
 }
 
+customElements.define("oscd-select-option", OscdSelectOption);
+
 /**
  * @license
  * Copyright 2023 Google LLC
@@ -10472,6 +10512,8 @@ const styles$2 = i$6 `:host{box-sizing:border-box;display:flex;flex-direction:co
 class OscdTabs extends Tabs {
     static styles = [styles$2];
 }
+
+customElements.define("oscd-tabs", OscdTabs);
 
 /**
  * @license
@@ -10832,6 +10874,13 @@ class OscdTextButton extends TextButton {
     static styles = [styles$1, styles];
 }
 
+/**
+ * @license
+ * Copyright 2025 OMICRON Electronics GmbH
+ * SPDX-License-Identifier: Apache-2.0
+ */
+customElements.define("oscd-text-button", OscdTextButton);
+
 function isAttributesV2(attributes) {
     if (typeof attributes !== 'object' || attributes === null) {
         return false;
@@ -10857,9 +10906,10 @@ function isRemove(edit) {
         edit.node instanceof Node);
 }
 function isSetAttributes(edit) {
-    return (edit.element instanceof Element &&
-        isAttributesV2(edit.attributes) &&
-        isAttributesNS(edit.attributesNS));
+    const setAttrs = edit;
+    return (setAttrs.element instanceof Element &&
+        (isAttributesV2(setAttrs.attributes) ||
+            isAttributesNS(setAttrs.attributesNS)));
 }
 function isInsert(edit) {
     return ((edit.parent instanceof Element ||
@@ -11091,21 +11141,150 @@ function cyrb64(str) {
     /* eslint-enable no-bitwise */
 }
 
-var _OpenSCD_plugins, _OpenSCD_loadedPlugins, _OpenSCD_loadedPluginTagNames, _OpenSCD_actions;
-const _customElementsDefine = window.customElements.define;
-window.customElements.define = (name, cl, conf) => {
-    if (!customElements.get(name)) {
-        _customElementsDefine.call(window.customElements, name, cl, conf);
-    }
-};
 const pluginTags = new Map();
-/** @returns a valid customElement tagName containing the URI hash. */
+/*
+ * Generates a unique tag name for a plugin based on its source URI.
+ * This is used to ensure that each plugin has a unique identifier in the CustomElements registry.
+ * @param uri - The source URI of the plugin.
+ * @returns A unique tag name for the plugin.
+ */
 function pluginTag(uri) {
     if (!pluginTags.has(uri)) {
         pluginTags.set(uri, `oscd-p${cyrb64(uri)}`);
     }
     return pluginTags.get(uri);
 }
+/**
+ * Generates a Web Component class that displays an error message when a plugin fails to load.
+ * This is used to provide feedback to the Distro developer when a plugin cannot be loaded due to an error.
+ * @param plugin - The plugin object that failed to load.
+ * @returns A Web Component class that displays the error message.
+ */
+function generateErrorWcClass(plugin) {
+    const title = 'Error: Plugin failed to load.';
+    const details = `Plugin: ${JSON.stringify(plugin)}`;
+    const classString = `
+  return class extends HTMLElement {
+
+    connectedCallback() {
+      this.innerHTML = '<h1>${title}</h1><p>${details}</p><emphasis>Check your plugins.json</emphasis>';
+    }
+
+    async run() {
+      alert('${title}\\n\\n ${details}; \\n\\n Check your plugins.json');
+    }
+  }`;
+    // eslint-disable-next-line no-new-func
+    return new Function(classString)();
+}
+/**
+ * Checks if the given object is a valid Plugin.
+ * @param plugin - The object to check.
+ * @returns true if the object is a Plugin, false otherwise.
+ */
+function isPlugin(plugin) {
+    return (typeof plugin === 'object' &&
+        plugin !== null &&
+        'tagName' in plugin &&
+        typeof plugin.tagName === 'string');
+}
+/**
+ * Checks if the given object is a SourcedPlugin.
+ * @param plugin - The object to check.
+ * @returns true if the object is a SourcedPlugin, false otherwise.
+ */
+function isSourcedPlugin(plugin) {
+    return (typeof plugin === 'object' &&
+        plugin !== null &&
+        'src' in plugin &&
+        typeof plugin.src === 'string');
+}
+/**
+ * Validates a Plugin object, checking for required fields and types.
+ * If the plugin is invalid, it logs an error and returns undefined.
+ * @param plugin - The plugin object to validate.
+ * @returns The validated Plugin object or undefined if invalid.
+ */
+function validatePlugin(plugin) {
+    const missingFields = [];
+    if (!isPlugin(plugin)) {
+        missingFields.push('tagName');
+    }
+    const _plugin = plugin;
+    missingFields.push(...['name', 'icon'].filter(field => !_plugin[field] || typeof _plugin[field] !== 'string'));
+    if (typeof _plugin.requireDoc !== 'undefined' &&
+        typeof _plugin.requireDoc !== 'boolean') {
+        missingFields.push('requireDoc');
+    }
+    if (typeof _plugin.translations !== 'undefined' &&
+        (typeof _plugin.translations !== 'object' ||
+            Object.values(_plugin.translations).some(t => typeof t !== 'string'))) {
+        missingFields.push('translations');
+    }
+    if (missingFields.length > 0) {
+        // eslint-disable-next-line no-console
+        console.error(`[Invalid Plugin]\n${JSON.stringify(plugin, null, 2)}\nMissing/Invalid fields [${missingFields.join(',')}] - skipping.`);
+        return undefined;
+    }
+    return _plugin;
+}
+/**
+ * Goes through all the plugins in the PluginSet and loads any sourced plugins, replacing the src field with a tagName.
+ * If a plugin does not have a tagName, it will be generated based on its src.
+ * All plugins returned are validated for required fields.
+ * If a sourced plugin fails to load (bad src), it will be replaced with an Error Web Component.
+ * @param plugins - Array of plugins to convert.
+ * @returns Array of plugins with tagName included.
+ */
+function loadSourcedPlugins(plugins) {
+    return plugins
+        .map(plugin => {
+        if (isPlugin(plugin)) {
+            return validatePlugin(plugin);
+        }
+        if (!isSourcedPlugin(plugin)) {
+            // eslint-disable-next-line no-console
+            console.error(`[Invalid Plugin] Requires a tagName or src - skipping. ${JSON.stringify(plugin)}`);
+            return undefined;
+        }
+        const { src, ...rest } = plugin;
+        const hashedTagName = pluginTag(src);
+        const validatedPlugin = validatePlugin({
+            ...rest,
+            tagName: hashedTagName,
+        });
+        if (!validatedPlugin) {
+            return undefined;
+        }
+        if (customElements.get(hashedTagName)) {
+            return validatedPlugin;
+        }
+        const url = new URL(src, window.location.href).toString();
+        import(url)
+            .then(mod => {
+            // Because this is async, we need to check (again) if the element is already defined.
+            if (!customElements?.get(hashedTagName)) {
+                customElements.define(hashedTagName, mod.default);
+            }
+        })
+            .catch(err => {
+            // eslint-disable-next-line no-console
+            console.error(`[Invalid Plugin] Failed to load plugin ${plugin.name} from ${url}`, err);
+            const ErrWc = generateErrorWcClass(plugin);
+            customElements.define(hashedTagName, ErrWc);
+        });
+        return validatedPlugin;
+    })
+        .filter((plugin) => plugin !== undefined);
+}
+
+var _OpenSCD_plugins, _OpenSCD_actions;
+const _customElementsDefine = window.customElements.define;
+window.customElements.define = (name, cl, conf) => {
+    if (!customElements.get(name)) {
+        _customElementsDefine.call(window.customElements, name, cl, conf);
+    }
+};
 const { getLocale, setLocale } = configureLocalization({
     sourceLocale,
     targetLocales,
@@ -11132,27 +11311,23 @@ function renderMenuItem(control) {
     </oscd-list-item>
   `;
 }
-let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
-    static get scopedElements() {
-        return {
-            'oscd-app-bar': OscdAppBar,
-            'oscd-dialog': OscdDialog,
-            'oscd-icon': OscdIcon,
-            'oscd-filled-text-field': OscdFilledTextField,
-            'oscd-filled-select': OscdFilledSelect,
-            'oscd-select-option': OscdSelectOption,
-            'oscd-filled-icon-button': OscdFilledIconButton,
-            'oscd-list': OscdList,
-            'oscd-list-item': OscdListItem,
-            'oscd-divider': OscdDivider,
-            'oscd-menu-item': OscdMenuItem,
-            'oscd-navigation-drawer': OscdNavigationDrawer,
-            'oscd-navigation-drawer-header': OscdNavigationDrawerHeader,
-            'oscd-secondary-tab': OscdSecondaryTab,
-            'oscd-tabs': OscdTabs,
-            'oscd-text-button': OscdTextButton,
-            'oscd-menu': OscdMenu,
-        };
+let OpenSCD = class OpenSCD extends i$3 {
+    isEditable(docName) {
+        return !!this.editable.find(ext => docName.toLowerCase().endsWith(`.${ext}`));
+    }
+    get editableDocs() {
+        return Object.keys(this.docs).filter(name => this.isEditable(name));
+    }
+    /** The set of `XMLDocument`s currently loaded */
+    get docs() {
+        return this._docs;
+    }
+    set docs(newDocs) {
+        this._docs = newDocs;
+        this.onDocsChanged();
+    }
+    onDocsChanged() {
+        this.stateVersion += 1;
     }
     get doc() {
         return this.docs[this.docName];
@@ -11166,47 +11341,21 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
     get canRedo() {
         return this.xmlEditor.future.length >= 0;
     }
-    isEditable(docName) {
-        return !!this.editable.find(ext => docName.toLowerCase().endsWith(`.${ext}`));
-    }
-    get editableDocs() {
-        return Object.keys(this.docs).filter(name => this.isEditable(name));
-    }
     get plugins() {
         return __classPrivateFieldGet(this, _OpenSCD_plugins, "f");
     }
     set plugins(plugins) {
-        Object.entries(plugins).forEach(([pluginType, kind]) => kind.forEach((plugin, index) => {
-            const tagName = pluginTag(plugin.src);
-            if (__classPrivateFieldGet(this, _OpenSCD_loadedPluginTagNames, "f").includes(tagName)) {
-                return;
-            }
-            if (this.registry.get(tagName)) {
-                this.addLoadedPlugin(tagName, pluginType, plugin, index);
-                this.requestUpdate('loadedPlugins');
-                return;
-            }
-            const url = new URL(plugin.src, window.location.href).toString();
-            import(url).then(mod => {
-                this.addLoadedPlugin(tagName, pluginType, plugin, index);
-                // Because this is async, we need to check (again) if the element is already defined.
-                if (!this.registry.get(tagName)) {
-                    this.registry.define(tagName, mod.default);
-                }
-                this.requestUpdate('loadedPlugins');
-            });
-        }));
-        __classPrivateFieldSet(this, _OpenSCD_plugins, { menu: [], editor: [], background: [], ...plugins }, "f");
-    }
-    get loadedPlugins() {
-        return __classPrivateFieldGet(this, _OpenSCD_loadedPlugins, "f");
-    }
-    addLoadedPlugin(tagName, kind, plugin, index) {
-        __classPrivateFieldGet(this, _OpenSCD_loadedPlugins, "f")[kind][index] = plugin;
-        __classPrivateFieldGet(this, _OpenSCD_loadedPluginTagNames, "f").push(tagName);
+        __classPrivateFieldSet(this, _OpenSCD_plugins, Object.entries(plugins).reduce((acc, [pluginType, kind]) => {
+            const convertedPlugins = loadSourcedPlugins(kind);
+            acc[pluginType] = convertedPlugins;
+            return acc;
+        }, { menu: [], editor: [], background: [] }), "f");
     }
     handleOpenDoc({ detail: { docName, doc } }) {
-        this.docs[docName] = doc;
+        this.docs = {
+            ...this.docs,
+            [docName]: doc,
+        };
         if (this.isEditable(docName)) {
             this.docName = docName;
         }
@@ -11249,25 +11398,29 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
         return this.editors[this.editorIndex]?.tagName ?? '';
     }
     get menu() {
-        return (this.loadedPlugins.menu
-            ?.map((plugin) => ({
-            icon: plugin.icon,
-            getName: () => plugin.translations?.[this.locale] || plugin.name,
-            isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
-            tagName: pluginTag(plugin.src),
+        return (this.plugins.menu
+            ?.map(({ name, tagName, requireDoc, icon, translations }) => ({
+            icon,
+            getName: () => translations?.[this.locale] ||
+                name,
+            isDisabled: () => (requireDoc && !this.docName) ?? false,
+            tagName,
             action: () => {
-                this.shadowRoot.querySelector(pluginTag(plugin.src)).run?.();
-                this.menuUI.opened = false;
+                if (tagName) {
+                    this.shadowRoot.querySelector(tagName).run?.();
+                    this.menuUI.opened = false;
+                }
             },
         }))
             .filter(p => p !== undefined)).concat(__classPrivateFieldGet(this, _OpenSCD_actions, "f"));
     }
     get editors() {
-        return this.loadedPlugins.editor?.map((plugin) => ({
-            icon: plugin.icon,
-            getName: () => plugin.translations?.[this.locale] || plugin.name,
-            isDisabled: () => (plugin.requireDoc && !this.docName) ?? false,
-            tagName: pluginTag(plugin.src),
+        return this.plugins.editor?.map(({ name, tagName, requireDoc, icon, translations, }) => ({
+            icon,
+            getName: () => translations?.[this.locale] ||
+                name,
+            isDisabled: () => (requireDoc && !this.docName) ?? false,
+            tagName,
         }));
     }
     handleKeyPress(e) {
@@ -11282,11 +11435,6 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
     }
     constructor() {
         super();
-        this.xmlEditor = new XMLEditor();
-        /** The set of `XMLDocument`s currently loaded */
-        this.docs = {};
-        /** The name of the [[`doc`]] currently being edited */
-        this.docName = '';
         /** The file endings of editable files */
         this.editable = [
             'cid',
@@ -11296,13 +11444,12 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
             'sed',
             'ssd',
         ];
+        this._docs = {};
+        /** The name of the [[`doc`]] currently being edited */
+        this.docName = '';
+        this.xmlEditor = new XMLEditor();
+        this.stateVersion = -1;
         _OpenSCD_plugins.set(this, { menu: [], editor: [], background: [] });
-        _OpenSCD_loadedPlugins.set(this, {
-            menu: new Array(this.plugins.menu.length).fill(null),
-            editor: new Array(this.plugins.editor.length).fill(null),
-            background: new Array(this.plugins.editor.length).fill(null),
-        });
-        _OpenSCD_loadedPluginTagNames.set(this, []);
         this.editorIndex = 0;
         this.controls = {
             undo: {
@@ -11350,7 +11497,7 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
         });
         // Catch all edits (from commits AND events) and trigger an update
         this.xmlEditor.subscribe(() => {
-            this.requestUpdate();
+            this.stateVersion += 1;
         });
     }
     updated(changedProps) {
@@ -11362,6 +11509,18 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
                 oscdTabs.activeTabIndex = this.editorIndex;
             }
         });
+    }
+    renderPlugin(tagName) {
+        const tag = s(tagName);
+        return u$1 `<${tag} 
+              .locale="${this.locale}"
+              .docName="${this.docName}"
+              .doc=${this.doc}
+              .docs=${this.docs} 
+              .editCount=${this.stateVersion}
+              .stateVersion=${this.stateVersion}
+              .editor=${this.xmlEditor}>
+            </${tag}>`;
     }
     render() {
         return x `<oscd-app-bar slot="appContent">
@@ -11432,15 +11591,7 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
         </oscd-list>
       </oscd-navigation-drawer>
 
-      ${this.editor
-            ? u$1 `<${s(this.editor)} locale="${this.locale}"
-              docName="${this.docName}"
-              .doc=${this.doc}
-              .docs=${this.docs} 
-              .editCount=${this.xmlEditor.past.length}
-              .editor=${this.xmlEditor}>
-            </${s(this.editor)}>`
-            : E}
+      ${this.editor ? this.renderPlugin(this.editor) : E}
 
       <oscd-dialog
         id="editFile"
@@ -11506,8 +11657,12 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
                 return;
             }
             const newDocName = `${this.fileNameUI.value}.${this.fileExtensionUI.value}`;
-            this.docs[newDocName] = this.doc;
+            const doc = this.docs[this.docName];
             delete this.docs[this.docName];
+            this.docs = {
+                ...this.docs,
+                [newDocName]: doc,
+            };
             this.docName = newDocName;
             this.editFileUI.close();
         }}
@@ -11521,24 +11676,12 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
 
       <aside>
         <div class="menu-plugins">
-          ${this.loadedPlugins.menu.map(plugin => u$1 `<${s(pluginTag(plugin.src))} 
-              locale="${this.locale}"
-              docName="${this.docName}"
-              .doc=${this.doc}
-              .docs=${this.docs} 
-              .editCount=${this.xmlEditor.past.length}
-              .editor=${this.xmlEditor}>
-            </${s(pluginTag(plugin.src))}>`)}
+          ${this.plugins.menu.map(plugin => this.renderPlugin(plugin.tagName))}
         </div>
         <div class="background-plugins">
-          ${this.loadedPlugins.background.map(plugin => u$1 `<${s(pluginTag(plugin.src))} 
-              locale="${this.locale}"
-              docName="${this.docName}"
-              .doc=${this.doc}
-              .docs=${this.docs} 
-              .editCount=${this.xmlEditor.past.length}
-              .editor=${this.xmlEditor}>
-            </${s(pluginTag(plugin.src))}>`)}
+          ${this.plugins.background
+            .filter(plugin => !plugin.requireDoc || !!this.docName)
+            .map(plugin => this.renderPlugin(plugin.tagName))}
         </div>
       </aside> `;
     }
@@ -11548,8 +11691,6 @@ let OpenSCD = class OpenSCD extends ScopedElementsMixin(i$3) {
     }
 };
 _OpenSCD_plugins = new WeakMap();
-_OpenSCD_loadedPlugins = new WeakMap();
-_OpenSCD_loadedPluginTagNames = new WeakMap();
 _OpenSCD_actions = new WeakMap();
 OpenSCD.styles = i$6 `
     .fileext {
@@ -11724,12 +11865,27 @@ OpenSCD.styles = i$6 `
     }
   `;
 __decorate([
+    n$3({ type: Array, reflect: true })
+], OpenSCD.prototype, "editable", void 0);
+__decorate([
+    r$1()
+], OpenSCD.prototype, "editableDocs", null);
+__decorate([
+    r$1()
+], OpenSCD.prototype, "docs", null);
+__decorate([
+    n$3({ type: String, reflect: true })
+], OpenSCD.prototype, "docName", void 0);
+__decorate([
     r$1()
     /** The `XMLDocument` currently being edited */
 ], OpenSCD.prototype, "doc", null);
 __decorate([
     r$1()
 ], OpenSCD.prototype, "xmlEditor", void 0);
+__decorate([
+    r$1()
+], OpenSCD.prototype, "stateVersion", void 0);
 __decorate([
     r$1()
 ], OpenSCD.prototype, "last", null);
@@ -11740,23 +11896,8 @@ __decorate([
     r$1()
 ], OpenSCD.prototype, "canRedo", null);
 __decorate([
-    r$1()
-], OpenSCD.prototype, "docs", void 0);
-__decorate([
-    n$3({ type: String, reflect: true })
-], OpenSCD.prototype, "docName", void 0);
-__decorate([
-    n$3({ type: Array, reflect: true })
-], OpenSCD.prototype, "editable", void 0);
-__decorate([
-    r$1()
-], OpenSCD.prototype, "editableDocs", null);
-__decorate([
     n$3({ type: Object })
 ], OpenSCD.prototype, "plugins", null);
-__decorate([
-    r$1()
-], OpenSCD.prototype, "loadedPlugins", null);
 __decorate([
     e$3('#editFile')
 ], OpenSCD.prototype, "editFileUI", void 0);
