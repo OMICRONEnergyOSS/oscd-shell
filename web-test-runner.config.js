@@ -16,6 +16,7 @@ const filteredLogs = [
   'Running in dev mode',
   'Lit is in dev mode',
   'scheduled an update',
+  '[Invalid Plugin]',
 ];
 
 const browsers = [
