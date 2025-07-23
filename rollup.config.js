@@ -1,8 +1,17 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import copy from 'rollup-plugin-copy';
 
-import { readdirSync } from 'fs';
+import fs, { readdirSync } from 'fs';
+
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
+
+const tsconfig = JSON.parse(fs.readFileSync('./tsconfig.json', 'utf8'));
+const demoTsconfig = {
+  ...tsconfig,
+  compilerOptions: { ...tsconfig.compilerOptions, outDir: 'dist/demo' },
+};
 
 const locales = readdirSync('locales').map(locale => ({
   input: `locales/${locale}`,
@@ -33,7 +42,7 @@ export default [
       typescript(),
       copy({
         targets: [
-          { src: 'demo/index.html', dest: 'dist/demo' },
+          { src: 'demo/embedded.html', dest: 'dist/demo' },
           { src: 'demo/*.js', dest: 'dist/demo' },
           // Add more patterns if you have more assets
         ],
@@ -57,5 +66,21 @@ export default [
       nodeResolve(),
       typescript(),
     ],
+  },
+  {
+    input: 'demo/index.html',
+    plugins: [
+      html({
+        input: 'demo/index.html',
+        minify: true,
+      }),
+      nodeResolve(),
+      typescript(demoTsconfig),
+    ],
+    output: {
+      dir: 'dist/demo',
+      format: 'es',
+      sourcemap: true,
+    },
   },
 ].concat(locales);

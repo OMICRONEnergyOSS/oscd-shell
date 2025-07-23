@@ -4,13 +4,17 @@
 const hmr = process.argv.includes('--hmr');
 
 export default /** @type {import('@web/dev-server').DevServerConfig} */ ({
-  open: '/dist/demo/',
+  rootDir: 'dist',
+  open: 'demo/',
   /** Use regular watch mode if HMR is not enabled. */
   watch: !hmr,
+  /** nodeResolve commented out here because we ONLY want it to resolve running wds in development.
+   * When running wds with the bundle (start:bundle) command, wds must not resolve node modules.
+   */
   /** Resolve bare module imports */
-  nodeResolve: {
-    exportConditions: ['browser', 'development'],
-  },
+  // nodeResolve: {
+  //   exportConditions: ['browser', 'development'],
+  // },
 
   /** Compile JS for older browsers. Requires @web/dev-server-esbuild plugin */
   // esbuildTarget: 'auto'
