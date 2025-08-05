@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@lit/localize": "^0.12.2",
-    "@omicronenergy/oscd-api": "^0.1.0",
+    "@omicronenergy/oscd-api": "^0.1.3",
     "@omicronenergy/oscd-background-editv1": "^0.0.6",
     "@omicronenergy/oscd-editor": "^1.5.0",
     "@omicronenergy/oscd-menu-open": "^0.0.6",
