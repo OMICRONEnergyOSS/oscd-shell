@@ -8,7 +8,7 @@ import type { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/osc
 import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
 
 import { newOpenEvent } from '@omicronenergy/oscd-api/utils.js';
-import { queryButtonByIcon } from '@omicronenergy/oscd-test-utils/queries.js';
+import { queryButtonByIcon } from '@omicronenergy/oscd-test-utils';
 
 import { allLocales } from './locales.js';
 import type { OpenSCD } from './oscd-shell.js';

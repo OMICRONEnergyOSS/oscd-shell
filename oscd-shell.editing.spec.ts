@@ -8,12 +8,11 @@ import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
 
 import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
 
-import { simulateKeypressOnElement } from '@omicronenergy/oscd-test-utils/utils.js';
-
 import {
+  simulateKeypressOnElement,
   queryButtonByIcon,
   querySelectorContainingText,
-} from '@omicronenergy/oscd-test-utils/queries.js';
+} from '@omicronenergy/oscd-test-utils';
 
 import { EditV2 } from '@omicronenergy/oscd-api';
 
