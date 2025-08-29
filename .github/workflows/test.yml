@@ -1,25 +1,9 @@
-name: Test
+name: Unit Tests
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.50.1-noble
-      options: --user 1001
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-node-env
-
-      - name: Run unit tests
-        run: npm run-script test:unit
-
-      - name: Run ESLint checks
-        run: npm run-script lint
-
-      - name: Run visual regression tests on PR
-        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
-        run: npm run-script test:visual
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: OMICRONEnergyOSS/oscd-gh-workflows/.github/workflows/unit-and-vrt-tests.yml@main

@@ -11,7 +11,7 @@ import { newOpenEvent } from '@omicronenergy/oscd-api/utils.js';
 import { queryButtonByIcon } from '@omicronenergy/oscd-test-utils';
 
 import { allLocales } from './locales.js';
-import type { OpenSCD } from './oscd-shell.js';
+import type { OscdShell } from './oscd-shell.js';
 
 const factor = window.process && process.env.CI ? 4 : 2;
 
@@ -21,8 +21,8 @@ function timeout(ms: number) {
   });
 }
 
-function isMenuFullyOpen(editor: OpenSCD) {
-  const rect = editor.menuUI?.shadowRoot
+function isMenuFullyOpen(shell: OscdShell) {
+  const rect = shell.menuUI?.shadowRoot
     ?.querySelector('.md3-navigation-drawer-modal--opened')
     ?.getBoundingClientRect();
   return rect && rect.width <= 360;
@@ -35,7 +35,7 @@ const doc = new DOMParser().parseFromString(
   'application/xml',
 );
 
-let editor: OpenSCD;
+let oscdShell: OscdShell;
 let appBar!: OscdAppBar;
 let menuButton!: OscdFilledIconButton;
 
@@ -44,30 +44,31 @@ async function openMenuDrawer() {
     throw new Error('App bar or menu button not found');
   }
   menuButton.click();
-  await editor.menuUI?.updateComplete;
-  await waitUntil(() => isMenuFullyOpen(editor), 'menu did not appear', {
+  await oscdShell.menuUI?.updateComplete;
+  await waitUntil(() => isMenuFullyOpen(oscdShell), 'menu did not appear', {
     timeout: 2000,
   });
   await timeout(200);
 }
 
 async function editorTabCount(count: number) {
-  if (!editor.shadowRoot) {
+  if (!oscdShell.shadowRoot) {
     throw new Error('Editor shadow root not found');
   }
   await waitUntil(
     () =>
-      editor.shadowRoot!.querySelectorAll('oscd-secondary-tab').length >= count,
+      oscdShell.shadowRoot!.querySelectorAll('oscd-secondary-tab').length >=
+      count,
     `waiting for ${count} editor tabs timmed out`,
   );
 }
 
 async function menuPluginCount(count: number) {
-  if (!editor.shadowRoot) {
+  if (!oscdShell.shadowRoot) {
     throw new Error('Editor shadow root not found');
   }
   await waitUntil(() => {
-    const allElements = editor.shadowRoot!.querySelectorAll(
+    const allElements = oscdShell.shadowRoot!.querySelectorAll(
       'aside .menu-plugins > *',
     );
     const menuPlugins = Array.from(allElements).filter(el =>
@@ -78,10 +79,10 @@ async function menuPluginCount(count: number) {
 }
 
 beforeEach(async () => {
-  editor = document.createElement('oscd-shell');
-  document.body.prepend(editor);
-  await editor.updateComplete;
-  appBar = editor.shadowRoot?.querySelector('oscd-app-bar') as OscdAppBar;
+  oscdShell = document.createElement('oscd-shell');
+  document.body.prepend(oscdShell);
+  await oscdShell.updateComplete;
+  appBar = oscdShell.shadowRoot?.querySelector('oscd-app-bar') as OscdAppBar;
   menuButton =
     appBar &&
     (queryButtonByIcon(
@@ -98,58 +99,58 @@ beforeEach(async () => {
 });
 
 afterEach(() => {
-  editor.remove();
+  oscdShell.remove();
 });
 
 it(`changes locales on attribute change`, async () => {
-  editor.setAttribute('locale', 'invalid');
-  await editor.updateComplete;
+  oscdShell.setAttribute('locale', 'invalid');
+  await oscdShell.updateComplete;
 
-  expect(editor).to.have.property('locale', 'en');
+  expect(oscdShell).to.have.property('locale', 'en');
 
-  editor.setAttribute('locale', 'de');
-  await editor.updateComplete;
+  oscdShell.setAttribute('locale', 'de');
+  await oscdShell.updateComplete;
 
   await timeout(180);
-  await editor.updateComplete;
-  expect(editor).to.have.property('locale', 'de');
+  await oscdShell.updateComplete;
+  expect(oscdShell).to.have.property('locale', 'de');
 });
 
 allLocales.forEach(lang =>
   describe(`translated to ${lang}`, () => {
     beforeEach(async () => {
-      editor.setAttribute('locale', lang);
-      await editor.updateComplete;
+      oscdShell.setAttribute('locale', lang);
+      await oscdShell.updateComplete;
       await waitUntil(
-        () => editor.locale === lang,
+        () => oscdShell.locale === lang,
         `setting locale to ${lang} failed`,
       );
     });
 
     it(`displays a top app bar`, async () => {
-      await editor.updateComplete;
+      await oscdShell.updateComplete;
       await timeout(20);
-      await visualDiff(editor, `app-bar-${lang}`);
+      await visualDiff(oscdShell, `app-bar-${lang}`);
     });
 
     it(`displays a menu on button click`, async () => {
-      await editor.updateComplete;
+      await oscdShell.updateComplete;
       await openMenuDrawer();
-      await visualDiff(editor, `menu-drawer-${lang}`);
+      await visualDiff(oscdShell, `menu-drawer-${lang}`);
     });
 
     it(`displays a current document title`, async () => {
-      await editor.updateComplete;
+      await oscdShell.updateComplete;
 
-      editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-      await editor.updateComplete;
+      oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+      await oscdShell.updateComplete;
       await timeout(20);
-      await visualDiff(editor, `document-name-${lang}`);
+      await visualDiff(oscdShell, `document-name-${lang}`);
     });
 
     describe('with menu plugins loaded', () => {
       beforeEach(async () => {
-        editor.plugins = {
+        oscdShell.plugins = {
           editor: [],
           menu: [
             {
@@ -174,35 +175,35 @@ allLocales.forEach(lang =>
             },
           ],
         };
-        await editor.updateComplete;
+        await oscdShell.updateComplete;
         await menuPluginCount(3);
       });
 
       it('displays menu plugins in the menu', async () => {
         await openMenuDrawer();
-        await visualDiff(editor, `menu-plugins-${lang}`);
+        await visualDiff(oscdShell, `menu-plugins-${lang}`);
       });
 
       it('triggers menu plugins on menu entry click', async () => {
         await openMenuDrawer();
-        editor.menuUI
+        oscdShell.menuUI
           ?.querySelector<OscdFilledIconButton>('oscd-list-item:nth-of-type(2)')
           ?.click();
-        editor.menuUI
+        oscdShell.menuUI
           ?.querySelector<OscdFilledIconButton>('oscd-list-item:nth-of-type(3)')
           ?.click();
 
-        await editor.updateComplete;
+        await oscdShell.updateComplete;
         await timeout(200);
-        expect(editor.docName).to.equal('testDoc.scd');
-        await editor.updateComplete;
-        await visualDiff(editor, `menu-plugins-triggered-${lang}`);
+        expect(oscdShell.docName).to.equal('testDoc.scd');
+        await oscdShell.updateComplete;
+        await visualDiff(oscdShell, `menu-plugins-triggered-${lang}`);
       });
     });
 
     describe('with editor plugins loaded', () => {
       beforeEach(async () => {
-        editor.plugins = {
+        oscdShell.plugins = {
           menu: [],
           editor: [
             {
@@ -227,30 +228,30 @@ allLocales.forEach(lang =>
             },
           ],
         };
-        await editor.updateComplete;
+        await oscdShell.updateComplete;
         await editorTabCount(2);
       });
 
       it('displays editor plugins', async () => {
-        await visualDiff(editor, `editor-plugins-${lang}`);
+        await visualDiff(oscdShell, `editor-plugins-${lang}`);
       });
 
       it('displays more tabs with a doc loaded', async () => {
-        editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-        await editor.updateComplete;
+        oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+        await oscdShell.updateComplete;
         await editorTabCount(3);
         await timeout(500);
-        await visualDiff(editor, `editor-plugins-with-doc-${lang}`);
+        await visualDiff(oscdShell, `editor-plugins-with-doc-${lang}`);
       });
 
       it('changes active editor plugin on tab click', async () => {
-        editor.shadowRoot
+        oscdShell.shadowRoot
           ?.querySelector<OscdSecondaryTab>('oscd-secondary-tab:nth-of-type(2)')
           ?.click();
 
-        await editor.updateComplete;
+        await oscdShell.updateComplete;
         await timeout(120);
-        await visualDiff(editor, `editor-plugins-selected-${lang}`);
+        await visualDiff(oscdShell, `editor-plugins-selected-${lang}`);
       });
     });
   }),

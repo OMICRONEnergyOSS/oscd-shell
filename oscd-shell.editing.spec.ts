@@ -17,7 +17,7 @@ import {
 import { EditV2 } from '@omicronenergy/oscd-api';
 
 import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/OscdDialog.js';
-import type { OpenSCD } from './oscd-shell.js';
+import type { OscdShell } from './oscd-shell.js';
 
 import './oscd-shell.js';
 
@@ -89,11 +89,11 @@ function newTestDoc() {
 }
 
 describe('oscd-shell', () => {
-  let oscdShell: OpenSCD;
+  let oscdShell: OscdShell;
   let sclDoc: XMLDocument;
 
   beforeEach(async () => {
-    oscdShell = <OpenSCD>await fixture(html`<oscd-shell></oscd-shell>`);
+    oscdShell = <OscdShell>await fixture(html`<oscd-shell></oscd-shell>`);
     sclDoc = new DOMParser().parseFromString(sclDocString, 'application/xml');
   });
 

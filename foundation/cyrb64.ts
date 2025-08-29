@@ -4,10 +4,9 @@
  * @returns digest - a rather insecure hash, very quickly
  */
 export function cyrb64(str: string): string {
-  /* eslint-disable no-bitwise */
   let h1 = 0xdeadbeef;
   let h2 = 0x41c6ce57;
-  /* eslint-disable-next-line no-plusplus */
+
   for (let i = 0, ch; i < str.length; i++) {
     ch = str.charCodeAt(i);
     h1 = Math.imul(h1 ^ ch, 2654435761);
@@ -23,5 +22,4 @@ export function cyrb64(str: string): string {
     (h2 >>> 0).toString(16).padStart(8, '0') +
     (h1 >>> 0).toString(16).padStart(8, '0')
   );
-  /* eslint-enable no-bitwise */
 }

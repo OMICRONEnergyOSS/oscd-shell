@@ -1,81 +1,17 @@
-name: release-please
-
+name: Release Please
 on:
   push:
     branches:
       - main
 
 jobs:
-  release-please:
-    runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
+  release:
     permissions:
       contents: write
-      pull-requests: write
       issues: write
-    steps:
-      - uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
-
-  npm-publish:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
+      pull-requests: write
       id-token: write
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
-      - name: Build the package
-        run: npm run build
-      - name: Publish to NPMJS.org
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  deploy:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pages: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-node-env
-
-      - name: Build
-        run: npm run bundle
-
-      - name: Deploy
-        run: |
-          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          npx gh-pages -d dist -u "github-actions <support+actions@github.com>"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create zipped bundle
-        run: |
-          (cd ./dist && zip -r ../oscd-shell.zip .)
-          tar -C ./dist -czvf oscd-shell.tar.gz ./
-
-      - name: Upload zipped bundle to GitHub release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ needs.release-please.outputs.tag_name }} oscd-shell.zip oscd-shell.tar.gz
+    uses: OMICRONEnergyOSS/oscd-gh-workflows/.github/workflows/release-please.yml@main
+    secrets:
+      npm_token: ${{ secrets.NPM_TOKEN }}
+      gh_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,11 +1,9 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
-import copy from 'rollup-plugin-copy';
-
-import fs, { readdirSync } from 'fs';
-
 import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
+import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
+import copy from 'rollup-plugin-copy';
+import fs, { readdirSync } from 'fs';
 
 const tsconfig = JSON.parse(fs.readFileSync('./tsconfig.json', 'utf8'));
 const demoTsconfig = {
@@ -39,16 +37,11 @@ export default [
     plugins: [
       /** Resolve bare module imports */
       nodeResolve(),
+
       typescript(),
-      copy({
-        targets: [
-          { src: 'demo/embedded.html', dest: 'dist/demo' },
-          { src: 'demo/*.js', dest: 'dist/demo' },
-          // Add more patterns if you have more assets
-        ],
-        verbose: true,
-        flatten: false,
-      }),
+
+      /** Bundle assets references via import.meta.url */
+      importMetaAssets(),
     ],
   },
   {
@@ -74,8 +67,23 @@ export default [
         input: 'demo/index.html',
         minify: true,
       }),
+      /** Resolve bare module imports */
       nodeResolve(),
+
       typescript(demoTsconfig),
+
+      /** Bundle assets references via import.meta.url */
+      importMetaAssets(),
+      copy({
+        targets: [
+          { src: 'demo/sample.scd', dest: 'dist/demo' },
+          { src: 'demo/embedded.html', dest: 'dist/demo' },
+          { src: 'demo/*.js', dest: 'dist/demo' },
+          // Add more patterns if you have more assets
+        ],
+        verbose: true,
+        flatten: false,
+      }),
     ],
     output: {
       dir: 'dist/demo',

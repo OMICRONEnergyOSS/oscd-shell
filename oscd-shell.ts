@@ -1,33 +1,26 @@
-import '@webcomponents/scoped-custom-element-registry';
-
-import { configureLocalization, localized, msg } from '@lit/localize';
 import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
+import { configureLocalization, localized, msg } from '@lit/localize';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
-import '@omicronenergy/oscd-ui/app-bar/oscd-app-bar.js';
-import type { OscdDialog } from '@omicronenergy/oscd-ui/dialog/OscdDialog.js';
-import '@omicronenergy/oscd-ui/dialog/oscd-dialog.js';
-import '@omicronenergy/oscd-ui/divider/oscd-divider.js';
-import type { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
-import '@omicronenergy/oscd-ui/iconbutton/oscd-filled-icon-button.js';
-import '@omicronenergy/oscd-ui/select/oscd-filled-select.js';
-import '@omicronenergy/oscd-ui/textfield/oscd-filled-text-field.js';
-import '@omicronenergy/oscd-ui/icon/oscd-icon.js';
-import type { OscdList } from '@omicronenergy/oscd-ui/list/OscdList.js';
-import '@omicronenergy/oscd-ui/list/oscd-list.js';
-import '@omicronenergy/oscd-ui/list/oscd-list-item.js';
-import type { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
-import '@omicronenergy/oscd-ui/menu/oscd-menu.js';
-import '@omicronenergy/oscd-ui/menu/oscd-menu-item.js';
-import type { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawer.js';
-import '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer.js';
-import '@omicronenergy/oscd-ui/navigation-drawer/oscd-navigation-drawer-header.js';
-import '@omicronenergy/oscd-ui/tabs/oscd-secondary-tab.js';
-import '@omicronenergy/oscd-ui/select/oscd-select-option.js';
-import '@omicronenergy/oscd-ui/tabs/oscd-tabs.js';
-import type { OscdTabs } from '@omicronenergy/oscd-ui/tabs/OscdTabs.js';
-import '@omicronenergy/oscd-ui/button/oscd-text-button.js';
+import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
+import { OscdDialog } from '@omicronenergy/oscd-ui/dialog/OscdDialog.js';
+import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
+import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
+import { OscdFilledSelect } from '@omicronenergy/oscd-ui/select/OscdFilledSelect.js';
+import { OscdFilledTextField } from '@omicronenergy/oscd-ui/textfield/OscdFilledTextField.js';
+import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
+import { OscdList } from '@omicronenergy/oscd-ui/list/OscdList.js';
+import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
+import { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
+import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
+import { OscdNavigationDrawer } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawer.js';
+import { OscdNavigationDrawerHeader } from '@omicronenergy/oscd-ui/navigation-drawer/OscdNavigationDrawerHeader.js';
+import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
+import { OscdSelectOption } from '@omicronenergy/oscd-ui/select/OscdSelectOption.js';
+import { OscdTabs } from '@omicronenergy/oscd-ui/tabs/OscdTabs.js';
+import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
 import { XMLEditor } from '@omicronenergy/oscd-editor';
 import {
   EditEventV2,
@@ -38,21 +31,14 @@ import {
 import { allLocales, sourceLocale, targetLocales } from './locales.js';
 import { loadSourcedPlugins } from './utils/plugin-utils.js';
 
-const _customElementsDefine = window.customElements.define;
-window.customElements.define = (name, cl, conf) => {
-  if (!customElements.get(name)) {
-    _customElementsDefine.call(window.customElements, name, cl, conf);
-  }
-};
-
 /* Copied from API because the export is currently missing, this should be removed when the fixed oscd-api is released */
 export interface Plugin {
   editor: Transactor<EditV2>;
   docs: Record<string, XMLDocument>;
   doc?: XMLDocument; // the document currently being edited
   docName?: string; // the current doc's name
-  stateVersion: unknown; // changes when the document is modified
-  /** @deprecated Use `stateVersion` instead */
+  docVersion: unknown; // changes when the document is modified
+  /** @deprecated Use `docVersion` instead */
   editCount: number; // the number of edits made to the document
   locale: string; // the end user's chosen locale
 }
@@ -124,7 +110,27 @@ function renderMenuItem(control: Control): TemplateResult {
 
 @customElement('oscd-shell')
 @localized()
-export class OpenSCD extends LitElement {
+export class OscdShell extends ScopedElementsMixin(LitElement) {
+  static scopedElements = {
+    'oscd-app-bar': OscdAppBar,
+    'oscd-dialog': OscdDialog,
+    'oscd-divider': OscdDivider,
+    'oscd-filled-icon-button': OscdFilledIconButton,
+    'oscd-filled-select': OscdFilledSelect,
+    'oscd-filled-text-field': OscdFilledTextField,
+    'oscd-icon': OscdIcon,
+    'oscd-list': OscdList,
+    'oscd-list-item': OscdListItem,
+    'oscd-menu': OscdMenu,
+    'oscd-menu-item': OscdMenuItem,
+    'oscd-navigation-drawer': OscdNavigationDrawer,
+    'oscd-navigation-drawer-header': OscdNavigationDrawerHeader,
+    'oscd-secondary-tab': OscdSecondaryTab,
+    'oscd-select-option': OscdSelectOption,
+    'oscd-tabs': OscdTabs,
+    'oscd-text-button': OscdTextButton,
+  };
+
   /** The file endings of editable files */
   @property({ type: Array, reflect: true }) editable = [
     'cid',
@@ -160,7 +166,7 @@ export class OpenSCD extends LitElement {
   }
 
   onDocsChanged() {
-    this.stateVersion += 1;
+    this.docVersion += 1;
   }
 
   /** The name of the [[`doc`]] currently being edited */
@@ -176,7 +182,7 @@ export class OpenSCD extends LitElement {
   xmlEditor: XMLEditor = new XMLEditor();
 
   @state()
-  stateVersion: number = -1;
+  docVersion: number = -1;
 
   @state()
   get last(): number {
@@ -205,7 +211,7 @@ export class OpenSCD extends LitElement {
   ) {
     this.#plugins = Object.entries(plugins).reduce(
       (acc, [pluginType, kind]) => {
-        const convertedPlugins = loadSourcedPlugins(kind);
+        const convertedPlugins = loadSourcedPlugins(kind, this.registry!);
         acc[pluginType as keyof PluginSet] = convertedPlugins;
         return acc;
       },
@@ -394,12 +400,13 @@ export class OpenSCD extends LitElement {
 
     this.addEventListener('oscd-open', event => this.handleOpenDoc(event));
     this.addEventListener('oscd-edit-v2', (event: EditEventV2) => {
-      this.xmlEditor.commit(event.detail.edit);
+      const { edit, title, squash } = event.detail;
+      this.xmlEditor.commit(edit, { title, squash });
     });
 
     // Catch all edits (from commits AND events) and trigger an update
     this.xmlEditor.subscribe(() => {
-      this.stateVersion += 1;
+      this.docVersion += 1;
     });
   }
 
@@ -409,8 +416,11 @@ export class OpenSCD extends LitElement {
     this.updateComplete.then(() => {
       // Ensure the active tab is set after tabs are rendered
       const oscdTabs = this.shadowRoot!.querySelector('oscd-tabs');
-      if (oscdTabs && oscdTabs.activeTabIndex !== this.editorIndex) {
-        oscdTabs.activeTabIndex = this.editorIndex;
+      if (
+        oscdTabs &&
+        (oscdTabs as OscdTabs).activeTabIndex !== this.editorIndex
+      ) {
+        (oscdTabs as OscdTabs).activeTabIndex = this.editorIndex;
       }
     });
   }
@@ -422,8 +432,8 @@ export class OpenSCD extends LitElement {
               .docName="${this.docName}"
               .doc=${this.doc}
               .docs=${this.docs} 
-              .editCount=${this.stateVersion}
-              .stateVersion=${this.stateVersion}
+              .editCount=${this.docVersion}
+              .docVersion=${this.docVersion}
               .editor=${this.xmlEditor}>
             </${tag}>`;
   }
@@ -782,6 +792,6 @@ export class OpenSCD extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'oscd-shell': OpenSCD;
+    'oscd-shell': OscdShell;
   }
 }

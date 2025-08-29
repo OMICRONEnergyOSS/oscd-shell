@@ -1,7 +1,7 @@
-/* eslint-disable no-alert */
-export default class DemoPluginSrc extends HTMLElement {
-  /* eslint-disable-next-line class-methods-use-this */
+export class DemoPluginSrc extends HTMLElement {
   run() {
     console.log(`${this.tagName}.run()`);
   }
 }
+
+export default DemoPluginSrc;

@@ -1,19 +1,17 @@
-## npm
-/node_modules/
-/npm-debug.log
+node_modules
+*.tsbuildinfo
 
-## testing
-/coverage/
+## editors
+/.idea
+/.vscode
 
-# build
-/locales.ts
-/locales
-/dist
-/custom-elements.json
-/.tsbuildinfo
-/.rollup.cache
-/screenshots/*/failed/
+## build artifacts
+dist
+coverage
+doc
+screenshots/*/failed/
+locales.ts
+locales
+custom-elements.json
 
-# IDE
-.vscode/
-.idea/
+

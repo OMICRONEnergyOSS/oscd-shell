@@ -1,51 +1,47 @@
-/* eslint-disable max-classes-per-file */
 import { expect, fixture, waitUntil } from '@open-wc/testing';
 
 import { html } from 'lit';
 
 import './oscd-shell.js';
 import sinon from 'sinon';
-import type { OpenSCD, PluginEntry } from './oscd-shell.js';
+import type { OscdShell, PluginEntry } from './oscd-shell.js';
 
-customElements.define(
-  'test-menu-plugin1',
-  class TestMenuPlugin1 extends HTMLElement {
-    async run() {
-      return !!this;
-    }
-  },
-);
+// customElements.define(
+//   'test-menu-plugin1',
+class TestMenuPlugin1 extends HTMLElement {
+  async run() {
+    return !!this;
+  }
+}
+// );
 
-customElements.define(
-  'test-background-plugin',
-  class TestBackgroundPlugin extends HTMLElement {
-    constructor() {
-      super();
-      document.addEventListener('test-tx', event => {
-        document.dispatchEvent(
-          new CustomEvent('test-rx', {
-            detail: (event as CustomEvent).detail,
-          }),
-        );
-      });
-    }
-  },
-);
+class TestBackgroundPlugin extends HTMLElement {
+  constructor() {
+    super();
+    document.addEventListener('test-tx', event => {
+      document.dispatchEvent(
+        new CustomEvent('test-rx', {
+          detail: (event as CustomEvent).detail,
+        }),
+      );
+    });
+  }
+}
 
-const isPluginLoaded = (editor: OpenSCD, plugin: PluginEntry): boolean =>
-  !!customElements.get(plugin.tagName) &&
-  !!editor.shadowRoot?.querySelector(plugin.tagName);
+const isPluginLoaded = (shell: OscdShell, plugin: PluginEntry): boolean =>
+  !!shell.registry?.get(plugin.tagName) &&
+  !!shell.shadowRoot?.querySelector(plugin.tagName);
 
 const waitForPlugin = async (
-  editor: OpenSCD,
+  shell: OscdShell,
   plugin: PluginEntry,
 ): Promise<void> =>
   waitUntil(
-    () => isPluginLoaded(editor, plugin),
-    `Plugin: "${plugin.name}" <${plugin.tagName}> failed to load. CustomElements Registry: ${customElements.get(plugin.tagName) ? 'Found' : 'Missing'}, DOM: ${editor.shadowRoot?.querySelector(plugin.tagName) ? 'Found' : 'Missing'}`,
+    () => isPluginLoaded(shell, plugin),
+    `Plugin: "${plugin.name}" <${plugin.tagName}> failed to load. CustomElements Registry: ${shell.registry?.get(plugin.tagName) ? 'Found' : 'Missing'}, DOM: ${shell.shadowRoot?.querySelector(plugin.tagName) ? 'Found' : 'Missing'}`,
   );
 
-const waitForPluginsToLoad = async (oscdShell: OpenSCD) => {
+const waitForPluginsToLoad = async (oscdShell: OscdShell) => {
   const allPlugins = Object.values(oscdShell.plugins).flat();
   await Promise.all(allPlugins.map(plugin => waitForPlugin(oscdShell, plugin)));
 };
@@ -76,10 +72,17 @@ const sampleMenuPlugins: (Omit<PluginEntry, 'tagName'> & {
 ];
 
 describe('OscdShell Plugin Handling', () => {
-  let oscdShell: OpenSCD;
+  let oscdShell: OscdShell;
 
   beforeEach(async () => {
     oscdShell = await fixture(html`<oscd-shell></oscd-shell>`);
+    const registry = oscdShell.registry!;
+    if (!registry.get('test-background-plugin')) {
+      registry?.define('test-background-plugin', TestBackgroundPlugin);
+    }
+    if (!registry.get('test-menu-plugin1')) {
+      registry?.define('test-menu-plugin1', TestMenuPlugin1);
+    }
     oscdShell.plugins = {
       menu: sampleMenuPlugins,
       background: [
@@ -92,6 +95,10 @@ describe('OscdShell Plugin Handling', () => {
     };
     await oscdShell.updateComplete;
     await waitForPluginsToLoad(oscdShell);
+  });
+
+  afterEach(() => {
+    oscdShell.remove();
   });
 
   it('loads menu plugins', () => {

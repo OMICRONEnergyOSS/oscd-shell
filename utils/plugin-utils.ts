@@ -36,7 +36,7 @@ function generateErrorWcClass(plugin: Partial<PluginEntry>) {
       alert('${title}\\n\\n ${details}; \\n\\n Check your plugins.json');
     }
   }`;
-  // eslint-disable-next-line no-new-func
+
   return new Function(classString)();
 }
 
@@ -101,7 +101,6 @@ export function validatePlugin(plugin: unknown): PluginEntry | undefined {
   }
 
   if (missingFields.length > 0) {
-    // eslint-disable-next-line no-console
     console.error(
       `[Invalid Plugin]\n${JSON.stringify(plugin, null, 2)}\nMissing/Invalid fields [${missingFields.join(',')}] - skipping.`,
     );
@@ -120,6 +119,7 @@ export function validatePlugin(plugin: unknown): PluginEntry | undefined {
  */
 export function loadSourcedPlugins(
   plugins: Partial<PluginEntry | SourcedPluginEntry>[],
+  registry: CustomElementRegistry,
 ): PluginEntry[] {
   return plugins
     .map(plugin => {
@@ -127,7 +127,6 @@ export function loadSourcedPlugins(
         return validatePlugin(plugin);
       }
       if (!isSourcedPlugin(plugin)) {
-        // eslint-disable-next-line no-console
         console.error(
           `[Invalid Plugin] Requires a tagName or src - skipping. ${JSON.stringify(plugin)}`,
         );
@@ -144,7 +143,7 @@ export function loadSourcedPlugins(
         return undefined;
       }
 
-      if (customElements.get(hashedTagName)) {
+      if (registry.get(hashedTagName)) {
         return validatedPlugin;
       }
 
@@ -152,18 +151,17 @@ export function loadSourcedPlugins(
       import(url)
         .then(mod => {
           // Because this is async, we need to check (again) if the element is already defined.
-          if (!customElements?.get(hashedTagName)) {
-            customElements.define(hashedTagName, mod.default);
+          if (!registry?.get(hashedTagName)) {
+            registry.define(hashedTagName, mod.default);
           }
         })
         .catch(err => {
-          // eslint-disable-next-line no-console
           console.error(
             `[Invalid Plugin] Failed to load plugin ${plugin.name} from ${url}`,
             err,
           );
           const ErrWc = generateErrorWcClass(plugin);
-          customElements.define(hashedTagName, ErrWc);
+          registry.define(hashedTagName, ErrWc);
         });
       return validatedPlugin;
     })

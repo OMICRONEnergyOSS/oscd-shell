@@ -1,11 +1,8 @@
-/* eslint-disable no-alert */
-export default class AddPlugins extends HTMLElement {
-  /* eslint-disable-next-line class-methods-use-this */
+export class AddPlugins extends HTMLElement {
   run() {
     const editor = this.getRootNode().host;
     const kind = window.confirm(
-      `Add a menu type plugin?
-If you choose 'Cancel', an editor type plugin will be added instead.`,
+      `Add a menu type plugin?\nIf you choose 'Cancel', an editor type plugin will be added instead.`,
     )
       ? 'menu'
       : 'editor';
@@ -37,3 +34,5 @@ If you choose 'Cancel', an editor type plugin will be added instead.`,
     editor.requestUpdate('plugins');
   }
 }
+
+export default AddPlugins;

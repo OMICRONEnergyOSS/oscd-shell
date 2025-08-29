@@ -1,5 +1,7 @@
+/* eslint-disable no-undef */
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import { playwrightLauncher } from '@web/test-runner-playwright';
+import { polyfill } from '@web/dev-server-polyfill';
 
 import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';
@@ -77,76 +79,89 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
         return result;
       },
     }),
+    polyfill({
+      scopedCustomElementRegistry: true,
+    }),
   ],
 
-  files: 'dist/**/*.spec.js',
-
-  coverageConfig: {
-    exclude: [
-      '**/node_modules/**',
-      '**/__wds-outside-root__/**', // Exclude external modules like oscd-ui
-    ],
-  },
-
   groups: [
+    {
+      name: 'unit',
+      files: 'dist/**/*.spec.js',
+    },
     {
       name: 'visual',
       files: 'dist/**/*.test.js',
       testRunnerHtml: testFramework => `
 <!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap" >
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" >
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" >
-  </head>
-  <body>
-    <style class="deanimator">
-    *, *::before, *::after {
-     -moz-transition: none !important;
-     transition: none !important;
-     -moz-animation: none !important;
-     animation: none !important;
-    }
-    </style>
-    <script>window.process = { env: ${JSON.stringify(process.env)} }</script>
-    <script type="module" src="${testFramework}"></script>
-    <script>
-    function descendants(parent) {
-      return (Array.from(parent.childNodes)).concat(
-        ...Array.from(parent.children).map(child => descendants(child))
-      );
-    }
-    const deanimator = document.querySelector('.deanimator');
-    function deanimate(element) {
-      if (!element.shadowRoot) return;
-      if (element.shadowRoot.querySelector('.deanimator')) return;
-      const style = deanimator.cloneNode(true);
-      element.shadowRoot.appendChild(style);
-      descendants(element.shadowRoot).forEach(deanimate);
-    }
-    const observer = new MutationObserver((mutationList, observer) => {
-      for (const mutation of mutationList) {
-        if (mutation.type === 'childList') {
-          descendants(document.body).forEach(deanimate);
-        }
-      }
-    });
-    observer.observe(document.body, {childList: true, subtree:true});
-    </script>
-    <style>
-    * {
-      margin: 0px;
-      padding: 0px;
-    }
+        <html>
+          <head>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined&display=block" />
+          </head>
+          <body>
+            <style class="deanimator">
+            *, *::before, *::after {
+            -moz-transition: none !important;
+            transition: none !important;
+            -moz-animation: none !important;
+            animation: none !important;
+            }
+            </style>
+            <style>
+              * {
+                --oscd-primary: var(#2aa198);
+                --oscd-secondary: var(--oscd-theme-secondary, #6c71c4);
+                --oscd-error: var(--oscd-theme-error, #dc322f);
+    
+               --oscd-base03: var(--oscd-theme-base03, #002b36);
+               --oscd-base02: var(--oscd-theme-base02, #073642);
+               --oscd-base01: var(--oscd-theme-base01, #586e75);
+               --oscd-base00: var(--oscd-theme-base00, #657b83);
+               --oscd-base0: var(--oscd-theme-base0, #839496);
+               --oscd-base1: var(--oscd-theme-base1, #93a1a1);
+               --oscd-base2: var(--oscd-theme-base2, #eee8d5);
+               --oscd-base3: var(--oscd-theme-base3, #fdf6e3);
+             }
+            </style>
+            <script>window.process = { env: ${JSON.stringify(process.env)} }</script>
+            <script type="module" src="${testFramework}"></script>
+            <script>
+            function descendants(parent) {
+              return (Array.from(parent.childNodes)).concat(
+                ...Array.from(parent.children).map(child => descendants(child))
+              );
+            }
+            const deanimator = document.querySelector('.deanimator');
+            function deanimate(element) {
+              if (!element.shadowRoot) return;
+              if (element.shadowRoot.querySelector('.deanimator')) return;
+              const style = deanimator.cloneNode(true);
+              element.shadowRoot.appendChild(style);
+              descendants(element.shadowRoot).forEach(deanimate);
+            }
+            const observer = new MutationObserver((mutationList, observer) => {
+              for (const mutation of mutationList) {
+                if (mutation.type === 'childList') {
+                  descendants(document.body).forEach(deanimate);
+                }
+              }
+            });
+            observer.observe(document.body, {childList: true, subtree:true});
+            </script>
+            <style>
+              * {
+                margin: 0px;
+                padding: 0px;
+              }
 
-    oscd-shell {
-      display: block;
-      height: 600px;
-    }
-    </style>
-  </body>
-</html>`,
+              oscd-shell {
+                display: block;
+                height: 600px;
+              }
+            </style>
+          </body>
+        </html>`,
     },
   ],
 

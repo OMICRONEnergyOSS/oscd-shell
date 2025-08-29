@@ -13,7 +13,7 @@ import Sinon from 'sinon';
 import { OscdSecondaryTab } from '@omicronenergy/oscd-ui/tabs/OscdSecondaryTab.js';
 
 import { newEditEventV2, newOpenEvent } from '@omicronenergy/oscd-api/utils.js';
-import type { OpenSCD, Plugin } from './oscd-shell.js';
+import type { OscdShell, Plugin } from './oscd-shell.js';
 
 import { cyrb64 } from './foundation.js';
 
@@ -50,38 +50,39 @@ const testEditorPlugin2 = {
   requireDoc: false,
 };
 
-let editor: OpenSCD;
+let oscdShell: OscdShell;
 beforeEach(() => {
-  editor = document.createElement('oscd-shell');
-  document.body.prepend(editor);
+  oscdShell = document.createElement('oscd-shell');
+  document.body.prepend(oscdShell);
 });
 
 afterEach(() => {
-  editor.remove();
+  oscdShell.remove();
 });
 
 describe('with editor plugins loaded', () => {
   let editorPlugin: HTMLElement & Plugin;
 
   beforeEach(async () => {
-    editor.plugins = {
+    oscdShell.plugins = {
       menu: [],
       editor: [testEditorPlugin, testEditorPlugin2],
     };
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
 
     await waitUntil(
       () =>
-        editor.shadowRoot!.querySelectorAll('oscd-secondary-tab').length === 2,
+        oscdShell.shadowRoot!.querySelectorAll('oscd-secondary-tab').length ===
+        2,
       'Custom Plugin did not load',
     );
-    editorPlugin = editor.shadowRoot?.querySelector(
-      editor!.editor,
+    editorPlugin = oscdShell.shadowRoot?.querySelector(
+      oscdShell!.editor,
     ) as HTMLElement & Plugin;
   });
 
   it('changes editor plugin when clicking on the editor tab', async () => {
-    const editorTabBar = editor.shadowRoot?.querySelector(
+    const editorTabBar = oscdShell.shadowRoot?.querySelector(
       'oscd-tabs',
     ) as OscdTabs;
     expect(editorTabBar).to.exist;
@@ -100,13 +101,13 @@ describe('with editor plugins loaded', () => {
     expect(lastTab).to.exist;
     lastTab!.click();
 
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
     await waitUntil(
-      () => editor.shadowRoot!.querySelector(editor!.editor),
+      () => oscdShell.shadowRoot!.querySelector(oscdShell!.editor),
       'second editor plugin did not load',
     );
-    const secondEditorPluginContent = editor.shadowRoot!.querySelector(
-      editor!.editor,
+    const secondEditorPluginContent = oscdShell.shadowRoot!.querySelector(
+      oscdShell!.editor,
     );
     expect(
       secondEditorPluginContent?.querySelector('p')?.textContent?.trim(),
@@ -135,8 +136,8 @@ describe('with editor plugins loaded', () => {
 
   describe('with a document loaded', () => {
     beforeEach(async () => {
-      editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-      await editor.updateComplete;
+      oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+      await oscdShell.updateComplete;
     });
 
     it('has its docName property set', () => {
@@ -153,28 +154,28 @@ describe('with editor plugins loaded', () => {
     });
   });
 
-  it('passes property stateVersion', async () => {
-    editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-    await editor.updateComplete;
+  it('passes property docVersion', async () => {
+    oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+    await oscdShell.updateComplete;
 
-    expect(editorPlugin.stateVersion).to.equal(0);
+    expect(editorPlugin.docVersion).to.equal(0);
     expect(editorPlugin.editCount).to.equal(0);
   });
 
-  it('updated passed stateVersion property on edit events', async () => {
-    editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-    await editor.updateComplete;
+  it('updated passed docVersion property on edit events', async () => {
+    oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+    await oscdShell.updateComplete;
 
-    editor.dispatchEvent(
+    oscdShell.dispatchEvent(
       newEditEventV2({
         element: doc.querySelector('testdoc')!,
         attributes: { name: 'someName' },
         attributesNS: {},
       }),
     );
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
 
-    expect(editorPlugin.stateVersion).to.equal(1);
+    expect(editorPlugin.docVersion).to.equal(1);
     expect(editorPlugin.editCount).to.equal(1);
   });
 });
@@ -182,20 +183,20 @@ describe('with editor plugins loaded', () => {
 describe('with menu plugins loaded', () => {
   let menuPlugin: HTMLElement & Plugin;
   beforeEach(async () => {
-    editor.plugins = {
+    oscdShell.plugins = {
       menu: [testMenuPlugin],
     };
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
     await waitUntil(
       () =>
         querySelectorContainingText(
-          editor.menuUI,
+          oscdShell.menuUI,
           'oscd-list-item > span',
           testMenuPlugin.name,
         ),
       `Custom Menu Plugin "${testMenuPlugin.name}" did not load`,
     );
-    menuPlugin = editor.shadowRoot?.querySelector(
+    menuPlugin = oscdShell.shadowRoot?.querySelector(
       'aside .menu-plugins > *:first-child',
     ) as HTMLElement & Plugin;
   });
@@ -221,8 +222,8 @@ describe('with menu plugins loaded', () => {
 
   describe('with a document loaded', () => {
     beforeEach(async () => {
-      editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-      await editor.updateComplete;
+      oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+      await oscdShell.updateComplete;
     });
 
     it('has its docName property set', () => {
@@ -239,44 +240,44 @@ describe('with menu plugins loaded', () => {
     });
   });
 
-  it('passes property stateVersion', async () => {
-    editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-    await editor.updateComplete;
+  it('passes property docVersion', async () => {
+    oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+    await oscdShell.updateComplete;
 
-    expect(menuPlugin).to.have.property('stateVersion', 0);
+    expect(menuPlugin).to.have.property('docVersion', 0);
     expect(menuPlugin).to.have.property('editCount', 0);
   });
 
-  it('updated passed stateVersion property on edit events', async () => {
-    editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
-    await editor.updateComplete;
+  it('updated passed docVersion property on edit events', async () => {
+    oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+    await oscdShell.updateComplete;
 
-    editor.dispatchEvent(
+    oscdShell.dispatchEvent(
       newEditEventV2({
         element: doc.querySelector('testdoc')!,
         attributes: { name: 'someName' },
         attributesNS: {},
       }),
     );
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
 
-    expect(menuPlugin).to.have.property('stateVersion', 1);
+    expect(menuPlugin).to.have.property('docVersion', 1);
     expect(menuPlugin).to.have.property('editCount', 1);
   });
 });
 
 describe('Custom plugins', () => {
   beforeEach(async () => {
-    editor.plugins = {
+    oscdShell.plugins = {
       menu: [testMenuPlugin],
       editor: [testEditorPlugin],
     };
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
 
     await waitUntil(
       () =>
         querySelectorContainingText(
-          editor.menuUI,
+          oscdShell.menuUI,
           'oscd-list-item > span',
           testMenuPlugin.name,
         ),
@@ -289,24 +290,24 @@ describe('Custom plugins', () => {
       sclDocString,
       'application/xml',
     );
-    editor.dispatchEvent(newOpenEvent(sclDoc, 'test.scd'));
-    await editor.updateComplete;
-    const node = editor.doc.querySelector('Substation')!;
-    editor.dispatchEvent(newEditEventV2({ node }));
-    await editor.updateComplete;
+    oscdShell.dispatchEvent(newOpenEvent(sclDoc, 'test.scd'));
+    await oscdShell.updateComplete;
+    const node = oscdShell.doc.querySelector('Substation')!;
+    oscdShell.dispatchEvent(newEditEventV2({ node }));
+    await oscdShell.updateComplete;
     expect(sclDoc.querySelector('Substation')).to.not.exist;
 
-    editor.menuUI.opened = true;
-    await editor.menuUI.updateComplete;
+    oscdShell.menuUI.opened = true;
+    await oscdShell.menuUI.updateComplete;
     const pluginMenuItem = querySelectorContainingText(
-      editor.menuUI,
+      oscdShell.menuUI,
       'oscd-list-item > span',
       'Test Undo Menu Plugin',
     )?.closest('oscd-list-item') as OscdListItem;
     expect(pluginMenuItem).to.exist;
     expect(pluginMenuItem).to.have.property('disabled', false);
     pluginMenuItem?.click();
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
     expect(sclDoc.querySelector('Substation')).to.exist;
   });
 
@@ -320,17 +321,21 @@ describe('Custom plugins', () => {
 
     const customEditorPluginTagName = `oscd-p${cyrb64(customEditorPlugin.src)}`;
 
-    customElements.define(
-      customEditorPluginTagName,
-      class extends HTMLElement {},
-    );
+    if (!oscdShell.registry?.get(customEditorPluginTagName)) {
+      oscdShell.registry?.define(
+        customEditorPluginTagName,
+        class extends HTMLElement {},
+      );
+    }
 
-    const customElementDefineSpy = Sinon.spy(window.customElements, 'define');
+    expect(oscdShell.registry).not.to.be.undefined;
+    const customElementDefineSpy =
+      oscdShell.registry?.define && Sinon.spy(oscdShell.registry, 'define');
 
-    editor.plugins = { menu: [], editor: [customEditorPlugin] };
-    await editor.updateComplete;
+    oscdShell.plugins = { menu: [], editor: [customEditorPlugin] };
+    await oscdShell.updateComplete;
 
-    expect(customElementDefineSpy.called).to.be.false;
+    expect(customElementDefineSpy!.called).to.be.false;
   });
 });
 
@@ -339,15 +344,15 @@ describe('localization', () => {
   let editorTabStrings: string[] = [];
 
   beforeEach(async () => {
-    editor.plugins = {
+    oscdShell.plugins = {
       menu: [testMenuPlugin],
       editor: [testEditorPlugin],
     };
-    await editor.updateComplete;
+    await oscdShell.updateComplete;
     await waitUntil(
       () =>
         querySelectorContainingText(
-          editor.menuUI,
+          oscdShell.menuUI,
           'oscd-list-item > span',
           testMenuPlugin.name,
         ),
@@ -356,7 +361,7 @@ describe('localization', () => {
     await waitUntil(
       () =>
         querySelectorContainingText(
-          editor.shadowRoot!.querySelector('oscd-tabs')!,
+          oscdShell.shadowRoot!.querySelector('oscd-tabs')!,
           'oscd-secondary-tab',
           testEditorPlugin.name,
         ),
@@ -364,34 +369,34 @@ describe('localization', () => {
     );
 
     menuItemStrings = Array.from(
-      editor.menuUI.querySelectorAll('oscd-list-item > span'),
-    ).map((span: Element) => span.textContent?.trim() || '');
+      oscdShell.menuUI.querySelectorAll('oscd-list-item > span'),
+    ).map(span => (span as Element).textContent?.trim() || '');
 
     editorTabStrings = Array.from(
-      editor?.shadowRoot?.querySelectorAll('oscd-secondary-tab') || [],
+      oscdShell?.shadowRoot?.querySelectorAll('oscd-secondary-tab') || [],
     ).map(
-      (tab: Element) =>
-        Array.from(tab.childNodes)
+      tab =>
+        Array.from((tab as Element).childNodes)
           .filter(node => node.nodeType === Node.TEXT_NODE)
           .map(node => node.textContent?.trim() ?? '')[0] || '',
     );
 
     // we only change the locale after waiting for the plugins to load and getting their default strings
-    editor.locale = 'de';
-    await waitUntil(() => editor.locale === 'de', 'Locale failed to change');
+    oscdShell.locale = 'de';
+    await waitUntil(() => oscdShell.locale === 'de', 'Locale failed to change');
   });
 
   afterEach(async () => {
     // reset to en so we can find the loaded plugins by their name
-    editor.locale = 'en';
-    await editor.updateComplete;
+    oscdShell.locale = 'en';
+    await oscdShell.updateComplete;
   });
 
   it('the menu items appear in german', () => {
     const untranslatedStrings = Array.from(
-      editor.menuUI.querySelectorAll('oscd-list-item > span'),
+      oscdShell.menuUI.querySelectorAll('oscd-list-item > span'),
     )
-      .map((span: Element) => span.textContent?.trim() || '')
+      .map(span => (span as Element).textContent?.trim() || '')
       .filter((text: string) => menuItemStrings.includes(text));
 
     expect(untranslatedStrings).to.be.empty;
@@ -399,19 +404,19 @@ describe('localization', () => {
 
   it('the editor plugin appears in german', () => {
     const untranslatedStrings = Array.from(
-      editor.shadowRoot?.querySelectorAll('oscd-secondary-tab') || [],
+      oscdShell.shadowRoot?.querySelectorAll('oscd-secondary-tab') || [],
     )
-      .map((span: Element) => span.textContent?.trim() || '')
+      .map(span => (span as Element).textContent?.trim() || '')
       .filter((text: string) => editorTabStrings.includes(text));
 
     expect(untranslatedStrings).to.be.empty;
   });
 
   it('it remains in english after attempting to load a non-existing locale', async () => {
-    editor.locale = 'en';
-    // @ts-ignore
-    editor.locale = 'xx';
-    await waitUntil(() => editor.locale === 'en', 'Locale failed to change');
-    expect(editor.locale).to.equal('en');
+    oscdShell.locale = 'en';
+    // @ts-expect-error we want to test a non-existing locale
+    oscdShell.locale = 'xx';
+    await waitUntil(() => oscdShell.locale === 'en', 'Locale failed to change');
+    expect(oscdShell.locale).to.equal('en');
   });
 });

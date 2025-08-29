@@ -8,105 +8,26 @@
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+      href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined&display=block"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet"
-    />
-
+  </head>
+  <body>
     <oscd-shell></oscd-shell>
-
-    <script type="module">
-      import OscdMenuOpen from '@omicronenergy/oscd-menu-open';
-      import OscdMenuSave from '@omicronenergy/oscd-menu-save';
-      import OscdBackgroundEditV1 from '@omicronenergy/oscd-background-editv1';
-
-      import '../oscd-shell.js';
-
-      customElements.define('oscd-menu-open', OscdMenuOpen);
-      customElements.define('oscd-menu-save', OscdMenuSave);
-      customElements.define('oscd-background-editv1', OscdBackgroundEditV1);
-
-      const plugins = {
-        menu: [
-          {
-            name: 'Add plugins...',
-            translations: { de: 'Erweitern...' },
-            icon: 'extension',
-            src: '/demo/AddPlugins.js',
-          },
-          {
-            name: 'Open File',
-            translations: { de: 'Datei öffnen' },
-            icon: 'folder_open',
-            tagName: 'oscd-menu-open',
-          },
-          {
-            name: 'Save File',
-            translations: { de: 'Datei speichern' },
-            icon: 'save',
-            requireDoc: true,
-            tagName: 'oscd-menu-save',
-          },
-        ],
-        editor: [
-          {
-            name: 'Start',
-            translations: {
-              de: 'Start',
-            },
-            icon: 'start',
-            src: 'https://openenergytools.github.io/scl-editor-landing/scl-editor-landing.js',
-          },
-
-          {
-            name: 'Substation',
-            icon: 'margin',
-            requireDoc: true,
-            src: 'https://openenergytools.github.io/scl-substation-editor/scl-substation-editor.js',
-          },
-          {
-            name: 'Design SLD',
-            translations: {
-              de: 'Designer',
-            },
-            icon: 'add_box',
-            requireDoc: true,
-            src: 'https://openenergytools.github.io/oscd-designer/oscd-designer.js',
-          },
-        ],
-        background: [
-          {
-            name: 'EditV1 Events Listener',
-            icon: 'none',
-            requireDoc: true,
-            tagName: 'oscd-background-editv1',
-          },
-        ],
-      };
-
-      const editor = document.querySelector('oscd-shell');
-      const params = new URL(document.location).searchParams;
-      for (const [name, value] of params) {
-        editor.setAttribute(name, value);
-      }
-      editor.plugins = plugins;
-    </script>
+    <script type="module" src="index.js"></script>
 
     <style>
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-      }
-
       * {
+        --oscd-theme-text-font: 'Roboto';
+        --oscd-theme-icon-font: 'Material Symbols Outlined';
+
         margin: 0px;
         padding: 0px;
       }
-    </style>
-  </head>
 
-  <body></body>
+      abbr {
+        text-decoration: none;
+        border-bottom: none;
+      }
+    </style>
+  </body>
 </html>

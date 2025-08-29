@@ -33,22 +33,22 @@
     "!/dist/*.test.*"
   ],
   "scripts": {
-    "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
-    "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
-    "build": "rimraf dist/* && cp -r ./demo ./dist/ && npm run extract && npm run localize && tsc -b",
-    "bundle": "rimraf dist && npm run localize && rollup -c rollup.config.js",
+    "lint": "eslint .",
+    "format": "eslint . --fix",
     "extract": "lit-localize extract",
     "localize": "lit-localize build",
-    "start": "npm run build && concurrently -k -r \"tsc -b --watch --preserveWatchOutput\" \"wds --node-resolve\"",
-    "start:bundle": "npm run bundle && concurrently -k -r \"rollup -c rollup.config.js --watch\" \"wds --watch\"",
-    "test": "npm run build && playwright install && wtr --coverage",
-    "test:unit": "npm run build && playwright install && wtr --coverage --group default",
-    "test:visual": "npm run build && playwright install && wtr --group visual",
-    "test:watch": "npm run build && concurrently -k -r \"tsc -b --watch --preserveWatchOutput\" \"wtr --watch --coverage\"",
+    "copy-demo": "cp -r ./demo ./dist/",
+    "build": "rimraf dist && mkdir dist && npm run copy-demo && npm run extract && npm run localize && npm run analyze -- --exclude dist && tsc ",
+    "bundle": "rimraf dist && npm run localize && rollup -c rollup.config.js",
+    "start": "npm run build && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"chokidar './demo/**/*' -c 'npm run copy-demo'\" \"wds --hmr --node-resolve\"",
+    "start:bundle": "npm run bundle && concurrently -k -r \"rollup -c rollup.config.js --watch\" \"wds --watch \"",
+    "test": "npm run build && wtr --coverage --group unit",
+    "test:watch": "npm run build && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch --group unit --coverage\"",
     "test:unit:watch": "npm run build && concurrently -k -r \"tsc -b --watch --preserveWatchOutput\" \"wtr --watch --coverage  --group default\"",
-    "test:update": "npm run build && wtr --group visual --update-visual-baseline",
-    "analyze": "cem analyze --litelement",
+    "analyze": "cem analyze --litelement --exclude demo/* --exclude dist/* --exclude *.spec.ts --exclude *.test.ts --exclude coverage/*",
     "doc": "npm run analyze -- --exclude dist && typedoc --out dist/doc oscd-shell.ts foundation.ts",
+    "test:visual": "npm run build && wtr --group visual",
+    "test:update": "npm run build && wtr --group visual --update-visual-baseline",
     "deploy": "npm run bundle && npm run doc && gh-pages --dist 'dist'",
     "prepare": "husky"
   },
@@ -58,133 +58,68 @@
     "@omicronenergy/oscd-background-editv1": "^0.0.6",
     "@omicronenergy/oscd-editor": "^1.5.0",
     "@omicronenergy/oscd-menu-open": "^0.0.6",
-    "@omicronenergy/oscd-menu-save": "^0.0.1",
+    "@omicronenergy/oscd-menu-save": "^0.0.2",
     "@omicronenergy/oscd-test-utils": "^0.0.8",
     "@omicronenergy/oscd-ui": "^0.0.6",
-    "@open-wc/scoped-elements": "^3.0.5",
+    "@open-wc/scoped-elements": "^3.0.6",
     "@webcomponents/scoped-custom-element-registry": "^0.0.10",
-    "lit": "^3.3.0",
-    "tslib": "^2.6.3"
+    "lit": "^3.3.1",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@custom-elements-manifest/analyzer": "^0.10.4",
+    "@custom-elements-manifest/analyzer": "^0.10.5",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.34.0",
     "@lit/localize-tools": "^0.8.0",
-    "@open-wc/building-rollup": "3.0.2",
-    "@open-wc/eslint-config": "^12.0.3",
+    "@open-wc/dev-server-hmr": "^0.2.0",
+    "@open-wc/eslint-config": "^13.0.0",
     "@open-wc/testing": "^4.0.0",
-    "@rollup/plugin-typescript": "^12.1.2",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.15.18",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
-    "@typescript-eslint/parser": "^7.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
     "@web/dev-server": "^0.4.6",
-    "@web/test-runner": "^0.20.2",
-    "@web/test-runner-playwright": "^0.11.0",
-    "@web/test-runner-visual-regression": "^0.9.0",
-    "concurrently": "^9.1.2",
-    "es-dev-server": "^2.1.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.4.1",
+    "@web/dev-server-polyfill": "^1.0.6",
+    "@web/rollup-plugin-html": "^2.3.0",
+    "@web/rollup-plugin-import-meta-assets": "^2.3.0",
+    "@web/test-runner": "0.20.2",
+    "@web/test-runner-commands": "^0.9.0",
+    "@web/test-runner-playwright": "0.11.1",
+    "@web/test-runner-visual-regression": "0.9.0",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-html": "^8.1.3",
+    "eslint-plugin-lit": "^2.1.1",
+    "eslint-plugin-lit-a11y": "^5.1.1",
+    "eslint-plugin-no-only-tests": "^3.3.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-tsdoc": "^0.4.0",
-    "fast-check": "^4.1.1",
+    "eslint-plugin-wc": "^3.0.1",
     "gh-pages": "^6.3.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.0",
-    "prettier": "^3.3.2",
-    "rollup": "^3.21.0",
+    "lint-staged": "^16.1.5",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "prettier": "^3.6.2",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.49.0",
     "rollup-plugin-copy": "^3.5.0",
     "sinon": "^21.0.0",
     "tsdoc": "^0.0.4",
-    "typedoc": "^0.28.4",
-    "typescript": "5.5.3"
+    "typedoc": "^0.28.11",
+    "typescript": "^5.9.2"
   },
   "overrides": {
-    "playwright": {
-      ".": "1.50.1",
-      "@web/test-runner-playwright": "0.11.0"
+    "@web/test-runner-playwright": {
+      "playwright": "1.54.1"
     }
   },
   "customElements": "custom-elements.json",
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "lib": [
-        "es2018",
-        "dom"
-      ]
-    },
-    "extends": [
-      "@open-wc",
-      "prettier"
-    ],
-    "plugins": [
-      "@typescript-eslint",
-      "eslint-plugin-tsdoc",
-      "prettier"
-    ],
-    "rules": {
-      "no-unused-vars": "off",
-      "class-methods-use-this": [
-        "error",
-        {
-          "exceptMethods": [
-            "locale"
-          ]
-        }
-      ],
-      "@typescript-eslint/no-explicit-any": [
-        "error",
-        {
-          "ignoreRestArgs": true
-        }
-      ],
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          "devDependencies": [
-            "**/*.test.ts",
-            "**/*.spec.ts",
-            "./dist"
-          ]
-        }
-      ],
-      "curly": [
-        "error",
-        "all"
-      ],
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "destructuredArrayIgnorePattern": "^_"
-        }
-      ],
-      "import/no-unresolved": "off",
-      "import/extensions": [
-        "error",
-        "always",
-        {
-          "ignorePackages": true
-        }
-      ],
-      "prettier/prettier": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.spec.ts",
-          "**/*.test.ts"
-        ],
-        "rules": {
-          "no-unused-expressions": "off"
-        }
-      }
-    ]
-  },
   "prettier": {
     "singleQuote": true,
     "arrowParens": "avoid"
@@ -195,6 +130,9 @@
     }
   },
   "lint-staged": {
-    "*.ts": "npm run format"
+    "*.ts": [
+      "eslint --fix",
+      "eslint"
+    ]
   }
 }
