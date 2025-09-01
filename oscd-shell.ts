@@ -51,8 +51,8 @@ export interface Plugin {
   docs: Record<string, XMLDocument>;
   doc?: XMLDocument; // the document currently being edited
   docName?: string; // the current doc's name
-  stateVersion: unknown; // changes when the document is modified
-  /** @deprecated Use `stateVersion` instead */
+  docVersion: unknown; // changes when the document is modified
+  /** @deprecated Use `docVersion` instead */
   editCount: number; // the number of edits made to the document
   locale: string; // the end user's chosen locale
 }
@@ -160,7 +160,7 @@ export class OpenSCD extends LitElement {
   }
 
   onDocsChanged() {
-    this.stateVersion += 1;
+    this.docVersion += 1;
   }
 
   /** The name of the [[`doc`]] currently being edited */
@@ -176,7 +176,7 @@ export class OpenSCD extends LitElement {
   xmlEditor: XMLEditor = new XMLEditor();
 
   @state()
-  stateVersion: number = -1;
+  docVersion: number = -1;
 
   @state()
   get last(): number {
@@ -400,7 +400,7 @@ export class OpenSCD extends LitElement {
 
     // Catch all edits (from commits AND events) and trigger an update
     this.xmlEditor.subscribe(() => {
-      this.stateVersion += 1;
+      this.docVersion += 1;
     });
   }
 
@@ -423,8 +423,8 @@ export class OpenSCD extends LitElement {
               .docName="${this.docName}"
               .doc=${this.doc}
               .docs=${this.docs} 
-              .editCount=${this.stateVersion}
-              .stateVersion=${this.stateVersion}
+              .editCount=${this.docVersion}
+              .docVersion=${this.docVersion}
               .editor=${this.xmlEditor}>
             </${tag}>`;
   }

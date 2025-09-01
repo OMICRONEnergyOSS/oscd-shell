@@ -153,15 +153,15 @@ describe('with editor plugins loaded', () => {
     });
   });
 
-  it('passes property stateVersion', async () => {
+  it('passes property docVersion', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
-    expect(editorPlugin.stateVersion).to.equal(0);
+    expect(editorPlugin.docVersion).to.equal(0);
     expect(editorPlugin.editCount).to.equal(0);
   });
 
-  it('updated passed stateVersion property on edit events', async () => {
+  it('updated passed docVersion property on edit events', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
@@ -174,7 +174,7 @@ describe('with editor plugins loaded', () => {
     );
     await editor.updateComplete;
 
-    expect(editorPlugin.stateVersion).to.equal(1);
+    expect(editorPlugin.docVersion).to.equal(1);
     expect(editorPlugin.editCount).to.equal(1);
   });
 });
@@ -239,15 +239,15 @@ describe('with menu plugins loaded', () => {
     });
   });
 
-  it('passes property stateVersion', async () => {
+  it('passes property docVersion', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
-    expect(menuPlugin).to.have.property('stateVersion', 0);
+    expect(menuPlugin).to.have.property('docVersion', 0);
     expect(menuPlugin).to.have.property('editCount', 0);
   });
 
-  it('updated passed stateVersion property on edit events', async () => {
+  it('updated passed docVersion property on edit events', async () => {
     editor.dispatchEvent(newOpenEvent(doc, 'test.scd'));
     await editor.updateComplete;
 
@@ -260,7 +260,7 @@ describe('with menu plugins loaded', () => {
     );
     await editor.updateComplete;
 
-    expect(menuPlugin).to.have.property('stateVersion', 1);
+    expect(menuPlugin).to.have.property('docVersion', 1);
     expect(menuPlugin).to.have.property('editCount', 1);
   });
 });
