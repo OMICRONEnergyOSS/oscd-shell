@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.9](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.8...oscd-shell-v0.0.9) (2025-09-29)
+
+
+### Features
+
+* stateVersion should be docVersion ([a40c701](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/a40c70112a0396442b3b94a22c01b896c30b7b92)), closes [#71](https://github.com/OMICRONEnergyOSS/oscd-shell/issues/71)
+
+
+### Bug Fixes
+
+* adjust tests after updating modules ([7cf82cb](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/7cf82cb61720900bcb8814e60faf2f1c0fd9865f))
+* broken demo on bundle ([1d6a72d](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/1d6a72d288da4eb8dff6a619e2d219f9c1a2d151))
+* handleEditEventV2 should respect squash and title ([62e21d3](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/62e21d3d1d342c60206bdcc5981905b21b05eb70))
+
 ## [0.0.8](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.7...oscd-shell-v0.0.8) (2025-07-22)
 
 
