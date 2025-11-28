@@ -1,0 +1,9 @@
+name: Update Screenshots
+on: [push, workflow_dispatch]
+
+jobs:
+  test:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: OMICRONEnergyOSS/oscd-gh-workflows/.github/workflows/update-screenshots.yml@main

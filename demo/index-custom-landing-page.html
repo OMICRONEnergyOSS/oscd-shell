@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title>OpenSCD Shell Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined&display=block"
+    />
+  </head>
+  <body>
+    <oscd-shell locale="de">
+      <demo-landing-page slot="landing-page"></demo-landing-page>
+    </oscd-shell>
+    <script type="module" src="index.js"></script>
+    <script type="module" src="demo-landing-page.js"></script>
+
+    <style>
+      * {
+        --oscd-theme-text-font: 'Roboto';
+        --oscd-theme-icon-font: 'Material Symbols Outlined';
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+      }
+
+      abbr {
+        text-decoration: none;
+        border-bottom: none;
+      }
+
+      body {
+        background-color: #eee8d5;
+      }
+    </style>
+  </body>
+</html>
