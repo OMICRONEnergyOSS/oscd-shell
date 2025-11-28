@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.0.10](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.9...oscd-shell-v0.0.10) (2025-11-28)
+
+
+### Features
+
+* refactor oscd-shell to fully support scoped custom elements ([77a5bea](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/77a5beac60e401f85e15d01ac3d8b6457ddb6c4a))
+* support rendering without appIcon ([903b690](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/903b690e0d91ca6a6c352d1a0104d3096ce693a9))
+* update tooling and all module deps ([d6b6bf8](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/d6b6bf868afa2f950cc2be8025c5cd2d806621dd))
+* update UI to new design ([edb8b29](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/edb8b296aed487c04dafe85e0578194f56ce7ce6))
+
+
+### Bug Fixes
+
+* correct issues with bundling, so shell can be used from a uri pointing to a bundle ([2d728ae](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/2d728ae8e19f02bb58364854e21c3e40ca4b4e6a))
+* correct path issues with dyn loaded locales ([6efd5ae](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/6efd5ae0596abedecd98d1bedb30e17efda63a12))
+* set default them colors using omicron color palette ([1cbba92](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/1cbba926b4f0554de4c0489693d5b9f1116ab6a5))
+* update to the latest oscd-editor to fix undo/redo issues ([16cf2ed](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/16cf2edf799c37f3141f83ccc4795eb5e3a513c9))
+
+
+### Styles
+
+* improve default theme contrast ([277840b](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/277840bc623ffd5adaa76215ff6ab094fa25fe29))
+
 ## [0.0.9](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.8...oscd-shell-v0.0.9) (2025-09-29)
 
 
