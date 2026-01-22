@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.12](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.11...oscd-shell-v0.0.12) (2026-01-22)
+
+
+### Features
+
+* fix npm publishing ([88c7af7](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/88c7af777019755d99824f57f1e2b8cb6cd5c18d))
+
 ## [0.0.11](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.10...oscd-shell-v0.0.11) (2026-01-22)
 
 
