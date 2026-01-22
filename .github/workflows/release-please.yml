@@ -1,15 +1,16 @@
 name: Release Please
-
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
 
 jobs:
-  npm-publish:
-
-    runs-on: ubuntu-latest
+  release:
     permissions:
       contents: write
+      issues: write
+      pull-requests: write
       id-token: write
     uses: OMICRONEnergyOSS/oscd-gh-workflows/.github/workflows/release-please.yml@main
     secrets:
