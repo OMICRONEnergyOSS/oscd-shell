@@ -2619,139 +2619,6 @@ if (!window.localization) {
     window.localization = { getLocale, setLocale };
 }
 
-const colors = i$6 `
-  * {
-    --french-blue-15: #0b335b;
-    --french-blue-55: #2485e5;
-
-    --omicron-yellow: #f5e214;
-
-    --slate-0: #121417; /* L* ≈ 7% */
-    --slate-5: #1a1e23; /* L* ≈ 10% */
-    --slate-10: #23282f; /* L* ≈ 14% */
-    --slate-15: #2c323a; /* L* ≈ 18% */
-    --slate-20: #363d47; /* L* ≈ 22% */
-    --slate-25: #3d4651; /* L* ≈ 26% */
-    --slate-30: #46505d; /* L* ≈ 30% */
-    --slate-35: #4f5a69; /* L* ≈ 34% */
-    --slate-40: #586474; /* L* ≈ 38% */
-    --slate-45: #606e80; /* L* ≈ 42% */
-    --slate-50: #69788c; /* L* ≈ 46% */
-    --slate-55: #738296; /* L* ≈ 50% */
-    --slate-60: #7f8c9f; /* L* ≈ 54% */
-    --slate-65: #8b97a7; /* L* ≈ 58% */
-    --slate-70: #96a1b0; /* L* ≈ 62% */
-    --slate-75: #a2abb9; /* L* ≈ 66% */
-    --slate-80: #aeb6c2; /* L* ≈ 70% */
-    --slate-85: #b9c0ca; /* L* ≈ 74% */
-    --slate-90: #c5cbd3; /* L* ≈ 78% */
-    --slate-95: #d0d5dc; /* L* ≈ 82% */
-    --slate-100: #dce0e5; /* L* ≈ 86% */
-    --slate-105: #e8eaed; /* L* ≈ 90% */
-    --slate-110: #f3f5f6; /* L* ≈ 94% */
-    /* --slate-white: #FFF; L* ≈ 100% */
-
-    --coal-0: #0a0a0a; /* L* ≈ 4% */
-    --coal-5: #141414; /* L* ≈ 8% */
-    --coal-10: #1f1f1f; /* L* ≈ 12% */
-    --coal-15: #292929; /* L* ≈ 16% */
-    --coal-20: #333333; /* L* ≈ 20% */
-    --coal-25: #3d3d3d; /* L* ≈ 24% */
-    --coal-30: #474747; /* L* ≈ 28% */
-    --coal-35: #525252; /* L* ≈ 32% */
-    --coal-40: #5c5c5c; /* L* ≈ 36% */
-    --coal-45: #666666; /* L* ≈ 40% */
-    --coal-50: #707070; /* L* ≈ 44% */
-    --coal-55: #7a7a7a; /* L* ≈ 48% */
-    --coal-60: #858585; /* L* ≈ 52% */
-    --coal-65: #8f8f8f; /* L* ≈ 56% */
-    --coal-70: #999999; /* L* ≈ 60% */
-    --coal-75: #a3a3a3; /* L* ≈ 64% */
-    --coal-80: #adadad; /* L* ≈ 68% */
-    --coal-85: #b8b8b8; /* L* ≈ 72% */
-    --coal-90: #c2c2c2; /* L* ≈ 76% */
-    --coal-95: #cccccc; /* L* ≈ 80% */
-    --coal-100: #d6d6d6; /* L* ≈ 84% */
-    --coal-105: #e0e0e0; /* L* ≈ 88% */
-    --coal-110: #ebebeb; /* L* ≈ 92% */
-    /* --coal-white: #FFF; L* ≈ 100% */
-  }
-`;
-
-const theming = i$6 `
-  ${colors}
-  * {
-    --oscd-primary: var(--oscd-theme-primary, var(--french-blue-15));
-    --oscd-secondary: var(--oscd-theme-secondary, var(--french-blue-55));
-    --secondary: var(--oscd-secondary);
-    --oscd-theme-error: var(--oscd-theme-error, #dc322f);
-    --oscd-base03: var(--oscd-theme-base03, var(--slate-0));
-    --oscd-base02: var(--oscd-theme-base02, var(--slate-5));
-    --oscd-base01: var(--oscd-theme-base01, var(--slate-25));
-    --oscd-base00: var(--oscd-theme-base00, var(--slate-30));
-    --oscd-base0: var(--oscd-theme-base0, var(--slate-65));
-    --oscd-base1: var(--oscd-theme-base1, var(--slate-70));
-    --oscd-base2: var(--oscd-theme-base2, var(--slate-110));
-    --oscd-base3: var(--oscd-theme-base3, white);
-    --oscd-error: var(--oscd-theme-error, #dc322f);
-    --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-    --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
-    --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
-    --oscd-warning: var(--oscd-theme-warning, #b58900);
-    --md-sys-color-primary: var(--oscd-primary);
-    --md-sys-color-on-primary: var(--oscd-base3);
-    --md-sys-color-secondary: var(--oscd-secondary);
-    --md-sys-color-on-secondary: var(--oscd-base3);
-    --md-sys-color-secondary-container: var(--oscd-base2);
-    --md-sys-color-surface: var(--oscd-base3);
-    --md-sys-color-on-surface: var(--oscd-base00);
-    --md-sys-color-surface-variant: var(--oscd-base3);
-    --md-sys-color-on-surface-variant: var(--oscd-base00);
-    --md-sys-color-surface-bright: var(--oscd-base2);
-    --md-sys-color-surface-container: var(--oscd-base3);
-    --md-sys-color-surface-container-high: var(--oscd-base3);
-    --md-sys-color-surface-container-highest: var(--oscd-base3);
-    --md-sys-color-outline-variant: var(--oscd-primary);
-    --md-sys-color-scrim: #000000;
-    --md-sys-color-error: var(--oscd-error);
-    --md-sys-color-on-error: var(--oscd-base3);
-    /* --md-menu-item-selected-label-text-color: var(--oscd-base01); */
-    --md-icon-button-disabled-icon-color: var(--oscd-base3);
-    /* MDC Theme Colors 
-       * Needed for supporting any pluggins still using the depricated MWC Components
-       */
-    --mdc-theme-primary: var(--oscd-primary);
-    --mdc-theme-secondary: var(--oscd-secondary);
-    --mdc-theme-background: var(--oscd-base3);
-    --mdc-theme-surface: var(--oscd-base3);
-    --mdc-theme-on-primary: var(--oscd-base2);
-    --mdc-theme-on-secondary: var(--oscd-base3);
-    --mdc-theme-on-background: var(--oscd-base00);
-    --mdc-theme-on-surface: var(--oscd-base00);
-    --mdc-theme-text-primary-on-background: var(--oscd-base01);
-    --mdc-theme-text-secondary-on-background: var(--oscd-base3);
-    --mdc-theme-text-icon-on-background: var(--oscd-base3);
-    --mdc-theme-error: var(--oscd-error);
-    --mdc-button-disabled-ink-color: var(--oscd-base1);
-    --mdc-drawer-heading-ink-color: var(--oscd-base00);
-    --mdc-dialog-heading-ink-color: var(--oscd-base00);
-    --mdc-text-field-fill-color: var(--oscd-base2);
-    --mdc-text-field-ink-color: var(--oscd-base02);
-    --mdc-text-field-label-ink-color: var(--oscd-base01);
-    --mdc-text-field-idle-line-color: var(--oscd-base00);
-    --mdc-text-field-hover-line-color: var(--oscd-base02);
-    --mdc-select-fill-color: var(--oscd-base2);
-    --mdc-select-ink-color: var(--oscd-base02);
-    --mdc-select-label-ink-color: var(--oscd-base01);
-    --mdc-select-idle-line-color: var(--oscd-base00);
-    --mdc-select-hover-line-color: var(--oscd-base02);
-    --mdc-select-dropdown-icon-color: var(--oscd-base01);
-    --mdc-typography-font-family: var(--oscd-text-font);
-    --mdc-icon-font: var(--oscd-icon-font);
-    --mdc-theme-text-disabled-on-light: rgba(255, 255, 255, 0.38);
-  }
-`;
-
 /**
  * @license
  * Copyright 2024 Google LLC
@@ -7276,11 +7143,94 @@ OscdShell.scopedElements = {
     'landing-page': LandingPage,
 };
 OscdShell.styles = i$6 `
-    ${theming}
+    /* Theme variables with default values */
+    * {
+      --oscd-primary: var(--oscd-theme-primary, #0b335b);
+      --oscd-secondary: var(--oscd-theme-secondary, #2485e5);
+      --oscd-base03: var(--oscd-theme-base03, #121417);
+      --oscd-base02: var(--oscd-theme-base02, #1a1e23);
+      --oscd-base01: var(--oscd-theme-base01, #3d4651);
+      --oscd-base00: var(--oscd-theme-base00, #46505d);
+      --oscd-base0: var(--oscd-theme-base0, #8b97a7);
+      --oscd-base1: var(--oscd-theme-base1, #96a1b0);
+      --oscd-base2: var(--oscd-theme-base2, #f3f5f6);
+      --oscd-base3: var(--oscd-theme-base3, white);
+      --oscd-error: var(--oscd-theme-error, #dc322f);
+      --oscd-warning: var(--oscd-theme-warning, #b58900);
+      --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+      --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
+      --oscd-icon-font: var(
+        --oscd-theme-icon-font,
+        'Material Symbols Outlined'
+      );
+
+      /* Fallbacks for Material Design variables */
+      --md-sys-color-primary: var(--oscd-primary);
+      --md-sys-color-on-primary: var(--oscd-base3);
+      --md-sys-color-secondary: var(--oscd-secondary);
+      --md-sys-color-on-secondary: var(--oscd-base3);
+      --md-sys-color-secondary-container: var(--oscd-base2);
+      --md-sys-color-surface: var(--oscd-base3);
+      --md-sys-color-on-surface: var(--oscd-base00);
+      --md-sys-color-surface-variant: var(--oscd-base3);
+      --md-sys-color-on-surface-variant: var(--oscd-base00);
+      --md-sys-color-surface-bright: var(--oscd-base2);
+      --md-sys-color-surface-container: var(--oscd-base3);
+      --md-sys-color-surface-container-high: var(--oscd-base3);
+      --md-sys-color-surface-container-highest: var(--oscd-base3);
+      --md-sys-color-outline-variant: var(--oscd-primary);
+      --md-sys-color-scrim: #000000;
+      --md-sys-color-error: var(--oscd-error);
+      --md-sys-color-on-error: var(--oscd-base3);
+      --md-icon-button-disabled-icon-color: var(--oscd-base3);
+      /* --md-menu-item-selected-label-text-color: var(--oscd-base01); */
+      --md-icon-button-disabled-icon-color: var(--oscd-base3);
+
+      /* MDC Theme Colors 
+       * Needed for supporting any pluggins still using the depricated MWC Components
+       */
+      --mdc-theme-primary: var(--oscd-primary);
+      --mdc-theme-secondary: var(--oscd-secondary);
+      --mdc-theme-background: var(--oscd-base3);
+      --mdc-theme-surface: var(--oscd-base3);
+      --mdc-theme-on-primary: var(--oscd-base2);
+      --mdc-theme-on-secondary: var(--oscd-base3);
+      --mdc-theme-on-background: var(--oscd-base00);
+      --mdc-theme-on-surface: var(--oscd-base00);
+      --mdc-theme-text-primary-on-background: var(--oscd-base01);
+      --mdc-theme-text-secondary-on-background: var(--oscd-base3);
+      --mdc-theme-text-icon-on-background: var(--oscd-base3);
+      --mdc-theme-error: var(--oscd-error);
+      --mdc-button-disabled-ink-color: var(--oscd-base1);
+      --mdc-drawer-heading-ink-color: var(--oscd-base00);
+      --mdc-dialog-heading-ink-color: var(--oscd-base00);
+      --mdc-text-field-fill-color: var(--oscd-base2);
+      --mdc-text-field-ink-color: var(--oscd-base02);
+      --mdc-text-field-label-ink-color: var(--oscd-base01);
+      --mdc-text-field-idle-line-color: var(--oscd-base00);
+      --mdc-text-field-hover-line-color: var(--oscd-base02);
+      --mdc-select-fill-color: var(--oscd-base2);
+      --mdc-select-ink-color: var(--oscd-base02);
+      --mdc-select-label-ink-color: var(--oscd-base01);
+      --mdc-select-idle-line-color: var(--oscd-base00);
+      --mdc-select-hover-line-color: var(--oscd-base02);
+      --mdc-select-dropdown-icon-color: var(--oscd-base01);
+      --mdc-typography-font-family: var(--oscd-text-font);
+      --mdc-icon-font: var(--oscd-icon-font);
+      --mdc-theme-text-disabled-on-light: rgba(255, 255, 255, 0.38);
+    }
 
     * {
       --app-bar-height: 54px;
       --side-panel-width: 280px;
+
+      --md-sys-color-primary: var(--oscd-primary);
+      --md-sys-color-on-primary: var(--oscd-base3);
+
+      --md-sys-color-secondary-container: var(--oscd-base2);
+
+      --md-sys-color-surface: var(--oscd-base3);
+      --md-sys-color-on-surface: var(--oscd-base00);
     }
 
     :host {
@@ -7326,7 +7276,7 @@ OscdShell.styles = i$6 `
 
     section.editor-container {
       grid-area: editor;
-      background-color: var(--slate-100);
+      background-color: var(--oscd-base3);
       padding: 8px;
       overflow: auto;
       position: relative;
