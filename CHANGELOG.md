@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.11](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.10...oscd-shell-v0.0.11) (2026-01-22)
+
+
+### Bug Fixes
+
+* change all theme references to use --oscd-theme-* ([e169ade](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/e169ade3b3244c63cfbc6ceb768ec17b7767a054))
+
 ## [0.0.10](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.9...oscd-shell-v0.0.10) (2025-11-28)
 
 
