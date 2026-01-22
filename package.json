@@ -1,10 +1,10 @@
 {
-  "name": "@omicronenergy/oscd-shell",
-  "version": "0.0.11",
+  "name": "@stee-re/oscd-shell",
+  "version": "0.0.2",
   "description": "The shell component of OpenSCD, where plugins are loaded and the application is initialized.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OMICRONEnergyOSS/oscd-shell.git"
+    "url": "git+https://github.com/stee-re/oscd-shell.git"
   },
   "keywords": [
     "scl",
