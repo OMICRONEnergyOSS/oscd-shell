@@ -4,6 +4,13 @@
 
 - change all theme references to use --oscd-theme-\* ([e169ade](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/e169ade3b3244c63cfbc6ceb768ec17b7767a054))
 
+## [0.0.12](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.11...oscd-shell-v0.0.12) (2026-01-22)
+
+
+### Features
+
+* fix npm publishing ([15f10d1](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/15f10d1f4284fea1fa625505e8305e1f3a09bdbd))
+
 ## [0.0.10](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.9...oscd-shell-v0.0.10) (2025-11-28)
 
 ### Features
