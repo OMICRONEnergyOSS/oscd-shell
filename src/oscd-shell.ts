@@ -558,26 +558,6 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
         margin: 0;
         padding: 0;
       }
-
-      oscd-navigation-drawer-header {
-        --md-list-item-supporting-text-color: var(--md-sys-color-on-surface);
-      }
-
-      .edit-dialog-remove-button {
-        --md-text-button-icon-color: var(--oscd-error);
-        --md-text-button-label-text-color: var(--oscd-error);
-        --md-text-button-focus-label-text-color: var(--oscd-error);
-        --md-text-button-focus-icon-color: var(--oscd-error);
-        --md-text-button-hover-label-text-color: var(--oscd-error);
-        --md-text-button-hover-state-layer-color: var(--oscd-error);
-        --md-text-button-hover-icon-color: var(--oscd-error);
-        --md-text-button-pressed-label-text-color: var(--oscd-error);
-        --md-text-button-pressed-state-layer-color: var(--oscd-error);
-        --md-text-button-pressed-icon-color: var(--oscd-error);
-      }
-      #title {
-        position: relative;
-      }
     `,
   ];
 }
