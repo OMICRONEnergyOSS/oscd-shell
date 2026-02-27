@@ -3681,12 +3681,12 @@ EditorPluginsPanel.scopedElements = {
 };
 EditorPluginsPanel.styles = i$6 `
     :host {
-      width: 76px;
-      height: calc(100% - 20px);
+      width: var(--editor-plugins-panel-width);
+      height: calc(100% - var(--editor-plugins-panel-padding-top));
       display: grid;
       grid-template-rows: 1fr auto;
       min-height: 0;
-      padding-top: 20px;
+      padding-top: var(--editor-plugins-panel-padding-top);
       transition: width 0.1s ease-in-out;
       overflow-y: auto;
       overflow-x: hidden;
@@ -3694,16 +3694,24 @@ EditorPluginsPanel.styles = i$6 `
 
     .editors-list {
       min-height: 0;
-      --md-list-item-leading-space: 22px;
-      --md-list-item-trailing-space: 10px;
-      --md-icon-size: 28px;
+      --md-list-item-leading-space: var(
+        --editor-plugins-panel-item-leading-space
+      );
+      --md-list-item-trailing-space: var(
+        --editor-plugins-panel-item-trailing-space
+      );
+      --md-icon-size: var(--editor-plugins-panel-item-icon-size);
       --md-list-container-color: rgba(0, 0, 0, 0);
-      --md-list-item-label-text-color: var(--oscd-base3);
-      --md-list-item-leading-icon-color: var(--oscd-base3);
+      --md-list-item-label-text-color: var(
+        --editor-plugins-panel-item-text-color
+      );
+      --md-list-item-leading-icon-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
     }
 
     .editors-list .active {
-      background-color: var(--oscd-primary);
+      background-color: var(--editor-plugins-panel-item-active-bg);
     }
 
     .editors-list oscd-list-item span {
@@ -3720,20 +3728,28 @@ EditorPluginsPanel.styles = i$6 `
     }
 
     .toggle-button {
-      --md-icon-color: var(--oscd-base3);
-      --md-icon-button-icon-size: 32px;
-      --md-icon-button-hover-state-layer-color: var(--oscd-base3);
+      --md-icon-color: var(--editor-plugins-panel-item-icon-color);
+      --md-icon-button-icon-size: var(--editor-plugins-panel-item-icon-size);
+      --md-icon-button-hover-state-layer-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
       --md-icon-button-hover-state-layer-opacity: 0.08;
-      --md-icon-button-icon-color: var(--oscd-base3);
-      --md-icon-button-hover-icon-color: var(--oscd-base3);
-      --md-icon-button-focus-icon-color: var(--oscd-base3);
-      --md-icon-button-pressed-icon-color: var(--oscd-base3);
+      --md-icon-button-icon-color: var(--editor-plugins-panel-item-icon-color);
+      --md-icon-button-hover-icon-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
+      --md-icon-button-focus-icon-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
+      --md-icon-button-pressed-icon-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
       --md-icon-button-state-layer-height: 48px;
       --md-icon-button-state-layer-width: 48px;
     }
 
     :host([expanded]) {
-      width: var(--side-panel-width, 240px);
+      width: var(--editor-plugins-panel-width);
     }
 
     /* :host([expanded]) .footer {
@@ -5981,25 +5997,38 @@ PluginsMenu.styles = i$6 `
     }
 
     img {
-      height: 34.4px;
-      width: auto;
+      height: var(--app-bar-app-icon-height);
+      width: var(--app-bar-app-icon-width);
     }
 
     :host h1.app-title {
-      font-family: Roboto;
-      font-size: 22.114px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
+      font-family: var(--app-bar-title-text-font-family);
+      font-size: var(--app-bar-title-text-font-size);
+      font-style: var(--app-bar-title-text-font-style);
+      font-weight: var(--app-bar-title-text-font-weight);
+      line-height: var(--app-bar-title-text-line-height);
+      letter-spacing: var(--app-bar-title-text-letter-spacing);
+      color: var(--app-bar-title-text-color);
       display: inline;
     }
     oscd-menu {
-      min-width: 350px;
-      padding: 12px;
+      min-width: var(--plugins-menu-min-width);
+      padding: var(--plugins-menu-padding);
+      --md-menu-container-color: var(--plugins-menu-container-color);
     }
 
     oscd-menu-item {
       width: 100%;
+      --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
+      --md-menu-item-leading-icon-color: var(
+        --plugins-menu-item-leading-icon-color
+      );
+      --md-menu-item-selected-container-color: var(
+        --plugins-menu-item-selected-container-color
+      );
+      --md-menu-item-selected-label-text-color: var(
+        --plugins-menu-item-selected-label-color
+      );
     }
   `;
 __decorate([
@@ -6463,13 +6492,13 @@ LandingPage.styles = i$6 `
     }
 
     .heading {
-      color: var(--oscd-base3);
+      color: var(--landing-heading-color);
       text-align: center;
-      font-family: 'Roboto';
-      font-size: 50px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
+      font-family: var(--landing-heading-font-family);
+      font-size: var(--landing-heading-size);
+      font-style: var(--landing-heading-style);
+      font-weight: var(--landing-heading-weight);
+      line-height: var(--landing-heading-line-height);
 
       margin-block-start: 64px;
       margin-block-end: 8px;
@@ -6478,36 +6507,36 @@ LandingPage.styles = i$6 `
     }
 
     .sub-heading {
-      color: var(--oscd-base3);
+      color: var(--landing-subheading-color);
       text-align: center;
-      font-family: Roboto;
-      font-size: 16.909px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 65.194px; /* 385.56% */
+      font-family: var(--landing-subheading-font-family);
+      font-size: var(--landing-subheading-size);
+      font-style: var(--landing-subheading-style);
+      font-weight: var(--landing-subheading-weight);
+      line-height: var(--landing-subheading-line-height);
 
       margin-block-end: 168px;
     }
 
     .menu-plugins-grid {
-      width: 60%;
+      width: var(--landing-grid-width);
       display: flex;
       flex-wrap: wrap;
-      gap: 95px;
+      gap: var(--landing-grid-gap);
       justify-content: center;
       margin: 0 auto;
       padding: 16px 0;
     }
 
     .menu-plugin-item {
-      --md-text-button-container-shape: 2px;
+      --md-text-button-container-shape: var(--landing-card-radius);
       display: flex;
       flex-direction: row;
       align-items: center;
       text-align: center;
       padding: 8px;
-      color: var(--oscd-base3);
-      background: var(--oscd-primary);
+      color: var(--landing-card-text-color);
+      background: var(--landing-card-background);
       transition: background-color 0.3s;
       cursor: pointer;
     }
@@ -6517,19 +6546,19 @@ LandingPage.styles = i$6 `
     }
 
     .menu-plugin-item-content {
-      color: var(--oscd-base3);
-      width: 240px;
-      height: 180px;
+      color: var(--landing-card-text-color);
+      width: var(--landing-card-width);
+      height: var(--landing-card-height);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 24px;
-      font-family: 'Roboto';
+      font-family: var(--landing-heading-font-family);
     }
 
     .menu-plugin-item-content oscd-icon {
-      --md-icon-size: 54px;
+      --md-icon-size: var(--landing-card-icon-size);
     }
 
     .menu-plugin-item-content span {
@@ -6547,7 +6576,7 @@ LandingPage.styles = i$6 `
       height: 50px;
       background: linear-gradient(
         to top left,
-        var(--omicron-yellow) 50%,
+        var(--landing-card-corner-accent) 50%,
         transparent 50%
       );
     }
@@ -6623,11 +6652,11 @@ FilesMenu.styles = i$6 `
 
     :host oscd-text-button {
       --md-text-button-label-text-line-height: normal;
-      --md-text-button-label-text-family: 'Roboto';
-      --md-text-button-label-text-weight: 500;
-      --md-text-button-label-text-size: 18px;
+      --md-text-button-label-text-family: var(--file-menu-text-font-family);
+      --md-text-button-label-text-weight: var(--file-menu-text-weight);
+      --md-text-button-label-text-size: var(--file-menu-text-size);
       --md-text-button-label-text-style: normal;
-      --md-sys-color-primary: var(--oscd-base3);
+      --md-sys-color-primary: var(--file-menu-text-color);
       display: inline;
     }
 
@@ -6636,12 +6665,23 @@ FilesMenu.styles = i$6 `
     }
 
     oscd-menu {
-      min-width: 350px;
-      padding: 12px;
+      min-width: var(--plugins-menu-min-width);
+      padding: var(--plugins-menu-padding);
+      --md-menu-container-color: var(--plugins-menu-container-color);
     }
 
     oscd-menu-item {
       width: 100%;
+      --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
+      --md-menu-item-leading-icon-color: var(
+        --plugins-menu-item-leading-icon-color
+      );
+      --md-menu-item-selected-container-color: var(
+        --plugins-menu-item-selected-container-color
+      );
+      --md-menu-item-selected-label-text-color: var(
+        --plugins-menu-item-selected-label-color
+      );
     }
   `;
 __decorate([
@@ -6659,6 +6699,317 @@ __decorate([
 FilesMenu = __decorate([
     localized()
 ], FilesMenu);
+
+/**
+ * Single source of truth for oscd-shell design tokens.
+ *
+ * This block contains:
+ * 1) Internal base tokens and fallbacks
+ * 2) Public token -> internal token mappings
+ *
+ * Keep this as an all-or-nothing layer so mappings can safely reference
+ * internal base tokens (e.g. --oscd-base*).
+ */
+const oscdShellDesignTokens = i$6 `
+  /* Internal base theme tokens and defaults */
+  * {
+    --oscd-primary: var(--oscd-theme-primary, #0b335b);
+    --oscd-secondary: var(--oscd-theme-secondary, #2485e5);
+    --oscd-base03: var(--oscd-theme-base03, #121417);
+    --oscd-base02: var(--oscd-theme-base02, #1a1e23);
+    --oscd-base01: var(--oscd-theme-base01, #3d4651);
+    --oscd-base00: var(--oscd-theme-base00, #46505d);
+    --oscd-base0: var(--oscd-theme-base0, #8b97a7);
+    --oscd-base1: var(--oscd-theme-base1, #96a1b0);
+    --oscd-base2: var(--oscd-theme-base2, #f3f5f6);
+    --oscd-base3: var(--oscd-theme-base3, white);
+    --oscd-error: var(--oscd-theme-error, #dc322f);
+    --oscd-warning: var(--oscd-theme-warning, #b58900);
+    --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+    --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
+    --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
+
+    /* Fallbacks for Material Design variables */
+    --md-sys-color-primary: var(--oscd-primary);
+    --md-sys-color-on-primary: var(--oscd-base3);
+    --md-sys-color-secondary: var(--oscd-secondary);
+    --md-sys-color-on-secondary: var(--oscd-base3);
+    --md-sys-color-secondary-container: var(--oscd-base2);
+    --md-sys-color-surface: var(--oscd-base3);
+    --md-sys-color-on-surface: var(--oscd-base00);
+    --md-sys-color-surface-variant: var(--oscd-base3);
+    --md-sys-color-on-surface-variant: var(--oscd-base00);
+    --md-sys-color-surface-bright: var(--oscd-base2);
+    --md-sys-color-surface-container: var(--oscd-base3);
+    --md-sys-color-surface-container-high: var(--oscd-base3);
+    --md-sys-color-surface-container-highest: var(--oscd-base3);
+    --md-sys-color-outline-variant: var(--oscd-primary);
+    --md-sys-color-scrim: #000000;
+    --md-sys-color-error: var(--oscd-error);
+    --md-sys-color-on-error: var(--oscd-base3);
+    --md-icon-button-disabled-icon-color: var(--oscd-base3);
+    /* --md-menu-item-selected-label-text-color: var(--oscd-base01); */
+    --md-icon-button-disabled-icon-color: var(--oscd-base3);
+
+    /* MDC Theme Colors
+     * Needed for supporting any pluggins still using the depricated MWC Components
+     */
+    --mdc-theme-primary: var(--oscd-primary);
+    --mdc-theme-secondary: var(--oscd-secondary);
+    --mdc-theme-background: var(--oscd-base3);
+    --mdc-theme-surface: var(--oscd-base3);
+    --mdc-theme-on-primary: var(--oscd-base2);
+    --mdc-theme-on-secondary: var(--oscd-base2);
+    --mdc-theme-on-background: var(--oscd-base00);
+    --mdc-theme-on-surface: var(--oscd-base00);
+    --mdc-theme-text-primary-on-background: var(--oscd-base01);
+    --mdc-theme-text-secondary-on-background: var(--oscd-base00);
+    --mdc-theme-text-icon-on-background: var(--oscd-base00);
+    --mdc-theme-error: var(--oscd-error);
+    --mdc-button-disabled-ink-color: var(--oscd-base1);
+    --mdc-drawer-heading-ink-color: var(--oscd-base00);
+    --mdc-dialog-heading-ink-color: var(--oscd-base00);
+    --mdc-text-field-fill-color: var(--oscd-base2);
+    --mdc-text-field-disabled-fill-color: var(--oscd-base3);
+    --mdc-text-field-ink-color: var(--oscd-base00);
+    --mdc-text-field-label-ink-color: var(--oscd-base00);
+    --mdc-text-field-idle-line-color: var(--oscd-base00);
+    --mdc-text-field-hover-line-color: var(--oscd-base02);
+    --mdc-select-fill-color: var(--oscd-base2);
+    --mdc-select-disabled-fill-color: var(--oscd-base3);
+    --mdc-select-ink-color: var(--oscd-base00);
+    --mdc-select-label-ink-color: var(--oscd-base00);
+    --mdc-select-idle-line-color: var(--oscd-base00);
+    --mdc-select-hover-line-color: var(--oscd-base02);
+    --mdc-select-dropdown-icon-color: var(--oscd-base01);
+    --mdc-typography-font-family: var(--oscd-text-font);
+    --mdc-icon-font: var(--oscd-icon-font);
+    --mdc-theme-text-disabled-on-light: rgba(255, 255, 255, 0.38);
+  }
+
+  * {
+    --app-bar-height: 54px;
+    --side-panel-width: 280px;
+
+    --md-sys-color-primary: var(--oscd-primary);
+    --md-sys-color-on-primary: var(--oscd-base3);
+
+    --md-sys-color-secondary-container: var(--oscd-base2);
+
+    --md-sys-color-surface: var(--oscd-base3);
+    --md-sys-color-on-surface: var(--oscd-base00);
+  }
+
+  /*
+   * Public token -> internal token mappings
+   *
+   * Example pattern:
+   * --internal-variable-name: var(--oscd-shell-public-token, <default>);
+   */
+  * {
+    /* App bar */
+    --app-bar-color: var(--oscd-shell-app-bar-color, var(--oscd-base3));
+    --app-bar-background-color: var(
+      --oscd-shell-app-bar-background-color,
+      var(--oscd-primary)
+    );
+    --app-bar-height: var(--oscd-shell-app-bar-height, 54px);
+    --app-bar-small-height: var(--oscd-shell-app-bar-small-height, 48px);
+    --app-bar-elevation: var(
+      --oscd-shell-app-bar-elevation,
+      var(--md-sys-elevation-level-2)
+    );
+    --app-bar-app-icon-height: var(--oscd-shell-app-bar-icon-height, 34.4px);
+    --app-bar-app-icon-width: var(--oscd-shell-app-bar-icon-width, auto);
+    --app-bar-title-text-font-family: var(
+      --oscd-shell-app-bar-title-font-family,
+      var(--oscd-text-font)
+    );
+    --app-bar-title-text-color: var(
+      --oscd-shell-app-bar-title-color,
+      var(--app-bar-color)
+    );
+    --app-bar-title-text-font-size: var(
+      --oscd-shell-app-bar-title-font-size,
+      22.114px
+    );
+    --app-bar-title-text-font-weight: var(
+      --oscd-shell-app-bar-title-font-weight,
+      400
+    );
+    --app-bar-title-text-font-style: var(
+      --oscd-shell-app-bar-title-font-style,
+      normal
+    );
+    --app-bar-title-text-line-height: var(
+      --oscd-shell-app-bar-title-line-height,
+      normal
+    );
+    --app-bar-title-text-letter-spacing: var(
+      --oscd-shell-app-bar-title-letter-spacing,
+      inherit
+    );
+    --app-bar-action-icon-size: var(
+      --oscd-shell-app-bar-action-icon-size,
+      24px
+    );
+    --app-bar-action-icon-color: var(
+      --oscd-shell-app-bar-action-icon-color,
+      var(--md-sys-color-on-primary)
+    );
+
+    /* Bridge to oscd-ui app bar tokens */
+    --oscd-app-bar-color: var(--app-bar-color);
+    --oscd-app-bar-background-color: var(--app-bar-background-color);
+    --oscd-app-bar-elevation: var(--app-bar-elevation);
+    --oscd-app-bar-title-font-family: var(--app-bar-title-text-font-family);
+    --oscd-app-bar-title-font-size: var(--app-bar-title-text-font-size);
+    --oscd-app-bar-title-font-weight: var(--app-bar-title-text-font-weight);
+    --oscd-app-bar-title-line-height: var(--app-bar-title-text-line-height);
+
+    /* Files menu */
+    --file-menu-text-font-family: var(
+      --oscd-shell-file-menu-text-font-family,
+      var(--oscd-text-font)
+    );
+    --file-menu-text-size: var(--oscd-shell-file-menu-text-size, 18px);
+    --file-menu-text-weight: var(--oscd-shell-file-menu-text-weight, 500);
+    --file-menu-text-color: var(
+      --oscd-shell-file-menu-text-color,
+      var(--oscd-base3)
+    );
+
+    /* Plugins menu */
+    --plugins-menu-min-width: var(--oscd-shell-plugins-menu-min-width, 350px);
+    --plugins-menu-padding: var(--oscd-shell-plugins-menu-padding, 12px);
+    --plugins-menu-container-color: var(
+      --oscd-shell-plugins-menu-container-color,
+      var(--oscd-base3)
+    );
+    --plugins-menu-item-label-color: var(
+      --oscd-shell-plugins-menu-item-label-color,
+      var(--oscd-base00)
+    );
+    --plugins-menu-item-leading-icon-color: var(
+      --oscd-shell-plugins-menu-item-leading-icon-color,
+      var(--oscd-base00)
+    );
+    --plugins-menu-item-selected-container-color: var(
+      --oscd-shell-plugins-menu-item-selected-container-color,
+      var(--oscd-base2)
+    );
+    --plugins-menu-item-selected-label-color: var(
+      --oscd-shell-plugins-menu-item-selected-label-color,
+      var(--oscd-base00)
+    );
+
+    /* Editor plugins panel */
+    --editor-plugins-panel-width: var(
+      --oscd-shell-editor-plugins-panel-width,
+      280px
+    );
+    --editor-plugins-panel-collapsed-width: var(
+      --oscd-shell-editor-plugins-panel-width,
+      280px
+    );
+    --editor-plugins-panel-padding-top: var(
+      --oscd-shell-editor-plugins-panel-padding-top,
+      20px
+    );
+    --editor-plugins-panel-item-leading-space: var(
+      --oscd-shell-editor-plugins-panel-item-leading-space,
+      22px
+    );
+    --editor-plugins-panel-item-trailing-space: var(
+      --oscd-shell-editor-plugins-panel-item-trailing-space,
+      10px
+    );
+    --editor-plugins-panel-item-icon-size: var(
+      --oscd-shell-editor-plugins-panel-item-icon-size,
+      28px
+    );
+    --editor-plugins-panel-item-text-color: var(
+      --oscd-shell-editor-plugins-panel-item-text-color,
+      var(--oscd-base3)
+    );
+    --editor-plugins-panel-item-icon-color: var(
+      --oscd-shell-editor-plugins-panel-item-icon-color,
+      var(--oscd-base3)
+    );
+    --editor-plugins-panel-item-active-bg: var(
+      --oscd-shell-editor-plugins-panel-item-active-bg,
+      var(--oscd-primary)
+    );
+    --side-panel-width: var(--editor-plugins-panel-width);
+
+    /* Main editor container */
+    --editor-background-color: var(
+      --oscd-shell-editor-background-color,
+      var(--oscd-base3)
+    );
+    --editor-padding: var(--oscd-shell-editor-padding, 8px);
+
+    /* Landing page */
+    --landing-heading-color: var(
+      --oscd-shell-landing-heading-color,
+      var(--oscd-base3)
+    );
+    --landing-heading-font-family: var(
+      --oscd-shell-landing-heading-font-family,
+      var(--oscd-text-font)
+    );
+    --landing-heading-size: var(--oscd-shell-landing-heading-size, 50px);
+    --landing-heading-style: var(--oscd-shell-landing-heading-style, normal);
+    --landing-heading-weight: var(--oscd-shell-landing-heading-weight, 600);
+    --landing-heading-line-height: var(
+      --oscd-shell-landing-heading-line-height,
+      normal
+    );
+
+    --landing-subheading-color: var(
+      --oscd-shell-landing-subheading-color,
+      var(--oscd-base3)
+    );
+    --landing-subheading-font-family: var(
+      --oscd-shell-landing-subheading-font-family,
+      var(--oscd-text-font)
+    );
+    --landing-subheading-size: var(
+      --oscd-shell-landing-subheading-size,
+      16.909px
+    );
+    --landing-subheading-style: var(
+      --oscd-shell-landing-subheading-style,
+      normal
+    );
+    --landing-subheading-weight: var(
+      --oscd-shell-landing-subheading-weight,
+      400
+    );
+    --landing-subheading-line-height: var(
+      --oscd-shell-landing-subheading-line-height,
+      65.194px
+    );
+    --landing-grid-width: var(--oscd-shell-landing-grid-width, 60%);
+    --landing-grid-gap: var(--oscd-shell-landing-grid-gap, 95px);
+    --landing-card-width: var(--oscd-shell-landing-card-width, 240px);
+    --landing-card-height: var(--oscd-shell-landing-card-height, 180px);
+    --landing-card-background: var(
+      --oscd-shell-landing-card-background,
+      var(--oscd-primary)
+    );
+    --landing-card-text-color: var(
+      --oscd-shell-landing-card-text-color,
+      var(--oscd-base3)
+    );
+    --landing-card-radius: var(--oscd-shell-landing-card-radius, 2px);
+    --landing-card-icon-size: var(--oscd-shell-landing-card-icon-size, 54px);
+    --landing-card-corner-accent: var(
+      --oscd-shell-landing-card-corner-accent,
+      var(--omicron-yellow)
+    );
+  }
+`;
 
 /**
  * @license
@@ -7142,184 +7493,83 @@ OscdShell.scopedElements = {
     'editor-plugins-panel': EditorPluginsPanel,
     'landing-page': LandingPage,
 };
-OscdShell.styles = i$6 `
-    /* Theme variables with default values */
-    * {
-      --oscd-primary: var(--oscd-theme-primary, #0b335b);
-      --oscd-secondary: var(--oscd-theme-secondary, #2485e5);
-      --oscd-base03: var(--oscd-theme-base03, #121417);
-      --oscd-base02: var(--oscd-theme-base02, #1a1e23);
-      --oscd-base01: var(--oscd-theme-base01, #3d4651);
-      --oscd-base00: var(--oscd-theme-base00, #46505d);
-      --oscd-base0: var(--oscd-theme-base0, #8b97a7);
-      --oscd-base1: var(--oscd-theme-base1, #96a1b0);
-      --oscd-base2: var(--oscd-theme-base2, #f3f5f6);
-      --oscd-base3: var(--oscd-theme-base3, white);
-      --oscd-error: var(--oscd-theme-error, #dc322f);
-      --oscd-warning: var(--oscd-theme-warning, #b58900);
-      --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-      --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
-      --oscd-icon-font: var(
-        --oscd-theme-icon-font,
-        'Material Symbols Outlined'
-      );
+OscdShell.styles = [
+    oscdShellDesignTokens,
+    i$6 `
+      :host {
+        height: 100%;
+        display: grid;
+        grid-template-rows: min-content 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          'header'
+          'main';
+      }
 
-      /* Fallbacks for Material Design variables */
-      --md-sys-color-primary: var(--oscd-primary);
-      --md-sys-color-on-primary: var(--oscd-base3);
-      --md-sys-color-secondary: var(--oscd-secondary);
-      --md-sys-color-on-secondary: var(--oscd-base3);
-      --md-sys-color-secondary-container: var(--oscd-base2);
-      --md-sys-color-surface: var(--oscd-base3);
-      --md-sys-color-on-surface: var(--oscd-base00);
-      --md-sys-color-surface-variant: var(--oscd-base3);
-      --md-sys-color-on-surface-variant: var(--oscd-base00);
-      --md-sys-color-surface-bright: var(--oscd-base2);
-      --md-sys-color-surface-container: var(--oscd-base3);
-      --md-sys-color-surface-container-high: var(--oscd-base3);
-      --md-sys-color-surface-container-highest: var(--oscd-base3);
-      --md-sys-color-outline-variant: var(--oscd-primary);
-      --md-sys-color-scrim: #000000;
-      --md-sys-color-error: var(--oscd-error);
-      --md-sys-color-on-error: var(--oscd-base3);
-      --md-icon-button-disabled-icon-color: var(--oscd-base3);
-      /* --md-menu-item-selected-label-text-color: var(--oscd-base01); */
-      --md-icon-button-disabled-icon-color: var(--oscd-base3);
+      oscd-app-bar {
+        grid-area: header;
+        box-shadow: var(--md-sys-elevation-level-2);
+        z-index: 10;
+      }
 
-      /* MDC Theme Colors 
-       * Needed for supporting any pluggins still using the depricated MWC Components
-       */
-      --mdc-theme-primary: var(--oscd-primary);
-      --mdc-theme-secondary: var(--oscd-secondary);
-      --mdc-theme-background: var(--oscd-base3);
-      --mdc-theme-surface: var(--oscd-base3);
-      --mdc-theme-on-primary: var(--oscd-base2);
-      --mdc-theme-on-secondary: var(--oscd-base3);
-      --mdc-theme-on-background: var(--oscd-base00);
-      --mdc-theme-on-surface: var(--oscd-base00);
-      --mdc-theme-text-primary-on-background: var(--oscd-base01);
-      --mdc-theme-text-secondary-on-background: var(--oscd-base3);
-      --mdc-theme-text-icon-on-background: var(--oscd-base3);
-      --mdc-theme-error: var(--oscd-error);
-      --mdc-button-disabled-ink-color: var(--oscd-base1);
-      --mdc-drawer-heading-ink-color: var(--oscd-base00);
-      --mdc-dialog-heading-ink-color: var(--oscd-base00);
-      --mdc-text-field-fill-color: var(--oscd-base2);
-      --mdc-text-field-ink-color: var(--oscd-base02);
-      --mdc-text-field-label-ink-color: var(--oscd-base01);
-      --mdc-text-field-idle-line-color: var(--oscd-base00);
-      --mdc-text-field-hover-line-color: var(--oscd-base02);
-      --mdc-select-fill-color: var(--oscd-base2);
-      --mdc-select-ink-color: var(--oscd-base02);
-      --mdc-select-label-ink-color: var(--oscd-base01);
-      --mdc-select-idle-line-color: var(--oscd-base00);
-      --mdc-select-hover-line-color: var(--oscd-base02);
-      --mdc-select-dropdown-icon-color: var(--oscd-base01);
-      --mdc-typography-font-family: var(--oscd-text-font);
-      --mdc-icon-font: var(--oscd-icon-font);
-      --mdc-theme-text-disabled-on-light: rgba(255, 255, 255, 0.38);
-    }
+      oscd-app-bar * {
+        --md-filled-icon-button-disabled-container-opacity: var(
+          --app-bar-action-icon-disabled-container-opacity,
+          0
+        );
+        --md-filled-icon-button-disabled-icon-color: var(
+          --app-bar-action-icon-disabled-color,
+          var(--md-sys-color-on-primary)
+        );
+        --md-filled-icon-button-icon-size: var(--app-bar-action-icon-size);
+        --md-filled-icon-button-icon-color: var(--app-bar-action-icon-color);
+      }
 
-    * {
-      --app-bar-height: 54px;
-      --side-panel-width: 280px;
+      main {
+        grid-area: main;
+        display: grid;
+        grid-template-columns: var(--side-panel-width) 1fr;
+        grid-template-areas: 'sidebar editor';
+        overflow: hidden;
+      }
 
-      --md-sys-color-primary: var(--oscd-primary);
-      --md-sys-color-on-primary: var(--oscd-base3);
+      /* Side panel collapsed state */
+      main.sidebar-collapsed {
+        grid-template-columns: 0 1fr;
+      }
 
-      --md-sys-color-secondary-container: var(--oscd-base2);
+      section.editors-side-panel-section {
+        grid-area: sidebar;
+        overflow-y: auto;
+        overflow-x: hidden;
+        transition: transform 0.3s ease-in-out;
+      }
 
-      --md-sys-color-surface: var(--oscd-base3);
-      --md-sys-color-on-surface: var(--oscd-base00);
-    }
+      /* Hide side panel when collapsed */
+      main.sidebar-collapsed section.editors-side-panel-section {
+        transform: translateX(-100%);
+      }
 
-    :host {
-      height: 100%;
-      display: grid;
-      grid-template-rows: min-content 1fr;
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        'header'
-        'main';
-    }
+      section.editor-container {
+        grid-area: editor;
+        background-color: var(--editor-background-color);
+        padding: var(--editor-padding);
+        overflow: auto;
+        position: relative;
+      }
 
-    oscd-app-bar {
-      grid-area: header;
-      box-shadow: var(--md-sys-elevation-level-2);
-      z-index: 10;
-    }
-
-    main {
-      grid-area: main;
-      display: grid;
-      grid-template-columns: var(--side-panel-width) 1fr;
-      grid-template-areas: 'sidebar editor';
-      overflow: hidden;
-    }
-
-    /* Side panel collapsed state */
-    main.sidebar-collapsed {
-      grid-template-columns: 0 1fr;
-    }
-
-    section.editors-side-panel-section {
-      grid-area: sidebar;
-      overflow-y: auto;
-      overflow-x: hidden;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    /* Hide side panel when collapsed */
-    main.sidebar-collapsed section.editors-side-panel-section {
-      transform: translateX(-100%);
-    }
-
-    section.editor-container {
-      grid-area: editor;
-      background-color: var(--oscd-base3);
-      padding: 8px;
-      overflow: auto;
-      position: relative;
-    }
-
-    .off-screen-plugin-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      margin: 0;
-      padding: 0;
-    }
-
-    oscd-navigation-drawer-header {
-      --md-list-item-supporting-text-color: var(--md-sys-color-on-surface);
-    }
-
-    oscd-app-bar * {
-      --md-filled-icon-button-disabled-container-opacity: 0;
-      --md-filled-icon-button-disabled-icon-color: var(
-        --md-sys-color-on-primary
-      );
-    }
-
-    .edit-dialog-remove-button {
-      --md-text-button-icon-color: var(--oscd-error);
-      --md-text-button-label-text-color: var(--oscd-error);
-      --md-text-button-focus-label-text-color: var(--oscd-error);
-      --md-text-button-focus-icon-color: var(--oscd-error);
-      --md-text-button-hover-label-text-color: var(--oscd-error);
-      --md-text-button-hover-state-layer-color: var(--oscd-error);
-      --md-text-button-hover-icon-color: var(--oscd-error);
-      --md-text-button-pressed-label-text-color: var(--oscd-error);
-      --md-text-button-pressed-state-layer-color: var(--oscd-error);
-      --md-text-button-pressed-icon-color: var(--oscd-error);
-    }
-    #title {
-      position: relative;
-    }
-  `;
+      .off-screen-plugin-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+    `,
+];
 __decorate([
     n$3({ type: String })
 ], OscdShell.prototype, "appIcon", void 0);

@@ -95,7 +95,7 @@ export declare class OscdShell extends OscdShell_base {
     renderOffScreenPlugins(): import("lit-html").TemplateResult<1>;
     renderDefaultLandingPage(): import("lit-html").TemplateResult<1>;
     render(): import("lit-html").TemplateResult<1>;
-    static styles: import("lit").CSSResult;
+    static styles: import("lit").CSSResult[];
 }
 declare global {
     interface HTMLElementTagNameMap {
