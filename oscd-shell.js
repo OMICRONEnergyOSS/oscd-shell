@@ -6011,6 +6011,13 @@ PluginsMenu.styles = i$6 `
       color: var(--app-bar-title-text-color);
       display: inline;
     }
+
+    oscd-filled-icon-button {
+      --md-sys-color-on-primary: var(--plugins-menu-button-color);
+      --md-filled-icon-button-icon-color: var(--plugins-menu-button-color);
+      --md-filled-icon-button-icon-size: var(--plugins-menu-button-size);
+    }
+
     oscd-menu {
       min-width: var(--plugins-menu-min-width);
       padding: var(--plugins-menu-padding);
@@ -6855,7 +6862,7 @@ const oscdShellDesignTokens = i$6 `
     );
     --app-bar-action-icon-color: var(
       --oscd-shell-app-bar-action-icon-color,
-      var(--md-sys-color-on-primary)
+      var(--oscd-base3)
     );
 
     /* Bridge to oscd-ui app bar tokens */
@@ -6880,6 +6887,14 @@ const oscdShellDesignTokens = i$6 `
     );
 
     /* Plugins menu */
+    --plugins-menu-button-size: var(
+      --oscd-shell-plugins-menu-button-size,
+      24px
+    );
+    --plugins-menu-button-color: var(
+      --oscd-shell-plugins-menu-button-color,
+      var(--oscd-base3)
+    );
     --plugins-menu-min-width: var(--oscd-shell-plugins-menu-min-width, 350px);
     --plugins-menu-padding: var(--oscd-shell-plugins-menu-padding, 12px);
     --plugins-menu-container-color: var(
@@ -7523,6 +7538,7 @@ OscdShell.styles = [
         );
         --md-filled-icon-button-icon-size: var(--app-bar-action-icon-size);
         --md-filled-icon-button-icon-color: var(--app-bar-action-icon-color);
+        --md-sys-color-on-primary: var(--app-bar-action-icon-color);
       }
 
       main {
