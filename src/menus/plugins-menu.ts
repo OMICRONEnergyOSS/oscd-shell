@@ -114,25 +114,38 @@ export class PluginsMenu extends ScopedElementsMixin(LitElement) {
     }
 
     img {
-      height: 34.4px;
-      width: auto;
+      height: var(--app-bar-app-icon-height);
+      width: var(--app-bar-app-icon-width);
     }
 
     :host h1.app-title {
-      font-family: Roboto;
-      font-size: 22.114px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
+      font-family: var(--app-bar-title-text-font-family);
+      font-size: var(--app-bar-title-text-font-size);
+      font-style: var(--app-bar-title-text-font-style);
+      font-weight: var(--app-bar-title-text-font-weight);
+      line-height: var(--app-bar-title-text-line-height);
+      letter-spacing: var(--app-bar-title-text-letter-spacing);
+      color: var(--app-bar-title-text-color);
       display: inline;
     }
     oscd-menu {
-      min-width: 350px;
-      padding: 12px;
+      min-width: var(--plugins-menu-min-width);
+      padding: var(--plugins-menu-padding);
+      --md-menu-container-color: var(--plugins-menu-container-color);
     }
 
     oscd-menu-item {
       width: 100%;
+      --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
+      --md-menu-item-leading-icon-color: var(
+        --plugins-menu-item-leading-icon-color
+      );
+      --md-menu-item-selected-container-color: var(
+        --plugins-menu-item-selected-container-color
+      );
+      --md-menu-item-selected-label-text-color: var(
+        --plugins-menu-item-selected-label-color
+      );
     }
   `;
 }

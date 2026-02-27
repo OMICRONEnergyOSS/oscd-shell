@@ -94,12 +94,12 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
 
   static styles = css`
     :host {
-      width: 76px;
-      height: calc(100% - 20px);
+      width: var(--editor-plugins-panel-width);
+      height: calc(100% - var(--editor-plugins-panel-padding-top));
       display: grid;
       grid-template-rows: 1fr auto;
       min-height: 0;
-      padding-top: 20px;
+      padding-top: var(--editor-plugins-panel-padding-top);
       transition: width 0.1s ease-in-out;
       overflow-y: auto;
       overflow-x: hidden;
@@ -107,16 +107,24 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
 
     .editors-list {
       min-height: 0;
-      --md-list-item-leading-space: 22px;
-      --md-list-item-trailing-space: 10px;
-      --md-icon-size: 28px;
+      --md-list-item-leading-space: var(
+        --editor-plugins-panel-item-leading-space
+      );
+      --md-list-item-trailing-space: var(
+        --editor-plugins-panel-item-trailing-space
+      );
+      --md-icon-size: var(--editor-plugins-panel-item-icon-size);
       --md-list-container-color: rgba(0, 0, 0, 0);
-      --md-list-item-label-text-color: var(--oscd-base3);
-      --md-list-item-leading-icon-color: var(--oscd-base3);
+      --md-list-item-label-text-color: var(
+        --editor-plugins-panel-item-text-color
+      );
+      --md-list-item-leading-icon-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
     }
 
     .editors-list .active {
-      background-color: var(--oscd-primary);
+      background-color: var(--editor-plugins-panel-item-active-bg);
     }
 
     .editors-list oscd-list-item span {
@@ -133,20 +141,28 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     }
 
     .toggle-button {
-      --md-icon-color: var(--oscd-base3);
-      --md-icon-button-icon-size: 32px;
-      --md-icon-button-hover-state-layer-color: var(--oscd-base3);
+      --md-icon-color: var(--editor-plugins-panel-item-icon-color);
+      --md-icon-button-icon-size: var(--editor-plugins-panel-item-icon-size);
+      --md-icon-button-hover-state-layer-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
       --md-icon-button-hover-state-layer-opacity: 0.08;
-      --md-icon-button-icon-color: var(--oscd-base3);
-      --md-icon-button-hover-icon-color: var(--oscd-base3);
-      --md-icon-button-focus-icon-color: var(--oscd-base3);
-      --md-icon-button-pressed-icon-color: var(--oscd-base3);
+      --md-icon-button-icon-color: var(--editor-plugins-panel-item-icon-color);
+      --md-icon-button-hover-icon-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
+      --md-icon-button-focus-icon-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
+      --md-icon-button-pressed-icon-color: var(
+        --editor-plugins-panel-item-icon-color
+      );
       --md-icon-button-state-layer-height: 48px;
       --md-icon-button-state-layer-width: 48px;
     }
 
     :host([expanded]) {
-      width: var(--side-panel-width, 240px);
+      width: var(--editor-plugins-panel-width);
     }
 
     /* :host([expanded]) .footer {

@@ -88,11 +88,11 @@ export class FilesMenu extends ScopedElementsMixin(LitElement) {
 
     :host oscd-text-button {
       --md-text-button-label-text-line-height: normal;
-      --md-text-button-label-text-family: 'Roboto';
-      --md-text-button-label-text-weight: 500;
-      --md-text-button-label-text-size: 18px;
+      --md-text-button-label-text-family: var(--file-menu-text-font-family);
+      --md-text-button-label-text-weight: var(--file-menu-text-weight);
+      --md-text-button-label-text-size: var(--file-menu-text-size);
       --md-text-button-label-text-style: normal;
-      --md-sys-color-primary: var(--oscd-base3);
+      --md-sys-color-primary: var(--file-menu-text-color);
       display: inline;
     }
 
@@ -101,12 +101,23 @@ export class FilesMenu extends ScopedElementsMixin(LitElement) {
     }
 
     oscd-menu {
-      min-width: 350px;
-      padding: 12px;
+      min-width: var(--plugins-menu-min-width);
+      padding: var(--plugins-menu-padding);
+      --md-menu-container-color: var(--plugins-menu-container-color);
     }
 
     oscd-menu-item {
       width: 100%;
+      --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
+      --md-menu-item-leading-icon-color: var(
+        --plugins-menu-item-leading-icon-color
+      );
+      --md-menu-item-selected-container-color: var(
+        --plugins-menu-item-selected-container-color
+      );
+      --md-menu-item-selected-label-text-color: var(
+        --plugins-menu-item-selected-label-color
+      );
     }
   `;
 }

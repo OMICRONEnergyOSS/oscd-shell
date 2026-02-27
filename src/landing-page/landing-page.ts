@@ -77,13 +77,13 @@ export class LandingPage extends ScopedElementsMixin(LitElement) {
     }
 
     .heading {
-      color: var(--oscd-base3);
+      color: var(--landing-heading-color);
       text-align: center;
-      font-family: 'Roboto';
-      font-size: 50px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
+      font-family: var(--landing-heading-font-family);
+      font-size: var(--landing-heading-size);
+      font-style: var(--landing-heading-style);
+      font-weight: var(--landing-heading-weight);
+      line-height: var(--landing-heading-line-height);
 
       margin-block-start: 64px;
       margin-block-end: 8px;
@@ -92,36 +92,36 @@ export class LandingPage extends ScopedElementsMixin(LitElement) {
     }
 
     .sub-heading {
-      color: var(--oscd-base3);
+      color: var(--landing-subheading-color);
       text-align: center;
-      font-family: Roboto;
-      font-size: 16.909px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 65.194px; /* 385.56% */
+      font-family: var(--landing-subheading-font-family);
+      font-size: var(--landing-subheading-size);
+      font-style: var(--landing-subheading-style);
+      font-weight: var(--landing-subheading-weight);
+      line-height: var(--landing-subheading-line-height);
 
       margin-block-end: 168px;
     }
 
     .menu-plugins-grid {
-      width: 60%;
+      width: var(--landing-grid-width);
       display: flex;
       flex-wrap: wrap;
-      gap: 95px;
+      gap: var(--landing-grid-gap);
       justify-content: center;
       margin: 0 auto;
       padding: 16px 0;
     }
 
     .menu-plugin-item {
-      --md-text-button-container-shape: 2px;
+      --md-text-button-container-shape: var(--landing-card-radius);
       display: flex;
       flex-direction: row;
       align-items: center;
       text-align: center;
       padding: 8px;
-      color: var(--oscd-base3);
-      background: var(--oscd-primary);
+      color: var(--landing-card-text-color);
+      background: var(--landing-card-background);
       transition: background-color 0.3s;
       cursor: pointer;
     }
@@ -131,19 +131,19 @@ export class LandingPage extends ScopedElementsMixin(LitElement) {
     }
 
     .menu-plugin-item-content {
-      color: var(--oscd-base3);
-      width: 240px;
-      height: 180px;
+      color: var(--landing-card-text-color);
+      width: var(--landing-card-width);
+      height: var(--landing-card-height);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 24px;
-      font-family: 'Roboto';
+      font-family: var(--landing-heading-font-family);
     }
 
     .menu-plugin-item-content oscd-icon {
-      --md-icon-size: 54px;
+      --md-icon-size: var(--landing-card-icon-size);
     }
 
     .menu-plugin-item-content span {
@@ -161,7 +161,7 @@ export class LandingPage extends ScopedElementsMixin(LitElement) {
       height: 50px;
       background: linear-gradient(
         to top left,
-        var(--omicron-yellow) 50%,
+        var(--landing-card-corner-accent) 50%,
         transparent 50%
       );
     }
