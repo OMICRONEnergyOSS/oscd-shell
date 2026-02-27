@@ -2,6 +2,13 @@
 
 - fix npm publishing ([88c7af7](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/88c7af777019755d99824f57f1e2b8cb6cd5c18d))
 
+## [0.0.13](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.12...oscd-shell-v0.0.13) (2026-02-27)
+
+
+### Bug Fixes
+
+* include styling overrides for plugins-menu button ([98ac0ab](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/98ac0aba8a3fd56f60d048e1fa5de7ff3e95ca70))
+
 ## [0.0.12](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.11...oscd-shell-v0.0.12) (2026-02-27)
 
 
