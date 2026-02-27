@@ -155,7 +155,7 @@ export const oscdShellDesignTokens = css`
     );
     --app-bar-action-icon-color: var(
       --oscd-shell-app-bar-action-icon-color,
-      var(--md-sys-color-on-primary)
+      var(--oscd-base3)
     );
 
     /* Bridge to oscd-ui app bar tokens */
@@ -180,6 +180,14 @@ export const oscdShellDesignTokens = css`
     );
 
     /* Plugins menu */
+    --plugins-menu-button-size: var(
+      --oscd-shell-plugins-menu-button-size,
+      24px
+    );
+    --plugins-menu-button-color: var(
+      --oscd-shell-plugins-menu-button-color,
+      var(--oscd-base3)
+    );
     --plugins-menu-min-width: var(--oscd-shell-plugins-menu-min-width, 350px);
     --plugins-menu-padding: var(--oscd-shell-plugins-menu-padding, 12px);
     --plugins-menu-container-color: var(

@@ -128,6 +128,13 @@ export class PluginsMenu extends ScopedElementsMixin(LitElement) {
       color: var(--app-bar-title-text-color);
       display: inline;
     }
+
+    oscd-filled-icon-button {
+      --md-sys-color-on-primary: var(--plugins-menu-button-color);
+      --md-filled-icon-button-icon-color: var(--plugins-menu-button-color);
+      --md-filled-icon-button-icon-size: var(--plugins-menu-button-size);
+    }
+
     oscd-menu {
       min-width: var(--plugins-menu-min-width);
       padding: var(--plugins-menu-padding);

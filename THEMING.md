@@ -67,6 +67,8 @@ In your distro theme.css file, you can define values for any of the variables do
 
 | Design Token                                              | Default         | Affects                      |
 | --------------------------------------------------------- | --------------- | ---------------------------- |
+| `--oscd-shell-plugins-menu-button-color`                  | `--oscd-base3`  | Menu button Icon color       |
+| `--oscd-shell-plugins-menu-button-size`                   | `24px`          | Menu button Icon size        |
 | `--oscd-shell-plugins-menu-min-width`                     | `350px`         | Dropdown width               |
 | `--oscd-shell-plugins-menu-padding`                       | `12px`          | Menu inner spacing           |
 | `--oscd-shell-plugins-menu-container-color`               | `--oscd-base3`  | Menu surface                 |

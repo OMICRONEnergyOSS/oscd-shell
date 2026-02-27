@@ -513,6 +513,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
         );
         --md-filled-icon-button-icon-size: var(--app-bar-action-icon-size);
         --md-filled-icon-button-icon-color: var(--app-bar-action-icon-color);
+        --md-sys-color-on-primary: var(--app-bar-action-icon-color);
       }
 
       main {
