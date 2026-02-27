@@ -2,6 +2,20 @@
 
 - fix npm publishing ([88c7af7](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/88c7af777019755d99824f57f1e2b8cb6cd5c18d))
 
+## [0.0.12](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.11...oscd-shell-v0.0.12) (2026-02-27)
+
+
+### Features
+
+* expose css design tokens so shell can be correctly customized ([657b996](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/657b996d4ca7bb5d7dc4adae1f2281d6b14cf976))
+* fix npm publishing ([432f359](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/432f359734e0def5913c3dde548427572267b40f))
+* fix npm publishing ([15f10d1](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/15f10d1f4284fea1fa625505e8305e1f3a09bdbd))
+
+
+### Bug Fixes
+
+* align mdc colors with open-scd defaults ([8112719](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/811271930b3d90cc26d850ec44d97540bee940ef))
+
 ## [0.0.11](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.10...oscd-shell-v0.0.11) (2026-01-22)
 
 ### Bug Fixes
