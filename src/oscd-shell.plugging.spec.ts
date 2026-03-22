@@ -5,6 +5,7 @@ import { html } from 'lit';
 import '../oscd-shell.js';
 import sinon from 'sinon';
 import type { OscdShell } from './oscd-shell.js';
+import { flattenEditors } from './oscd-shell.js';
 import {
   TestBackgroundPlugin,
   TestMenuPlugin1,
@@ -208,7 +209,7 @@ describe('OscdShell Plugin Handling', () => {
       const { editor } = oscdShell.plugins;
       expect(editor).to.have.lengthOf(1);
       const editorPluginElement = oscdShell.shadowRoot?.querySelector(
-        editor[0].tagName,
+        flattenEditors(editor)[0].tagName,
       );
       expect(editorPluginElement, 'Editor Plugin Element').to.exist;
       expect(editorPluginElement?.querySelector('h1')?.textContent).to.contain(

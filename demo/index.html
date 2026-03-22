@@ -7,9 +7,10 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap"
     />
     <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1"
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined&display=block"
     />
+
     <link rel="stylesheet" href="./colors.css" />
     <link rel="stylesheet" href="./theming.css" />
   </head>
@@ -21,6 +22,17 @@
       await import('@webcomponents/scoped-custom-element-registry');
       await import('../dist/oscd-shell.js');
       await import('./index.js');
+
+      const _customElementsDefine = window.customElements.define;
+      window.customElements.define = (name, cl, conf) => {
+        if (!customElements.get(name)) {
+          try {
+            _customElementsDefine.call(window.customElements, name, cl, conf);
+          } catch (e) {
+            console.warn(e);
+          }
+        }
+      };
     </script>
   </body>
 </html>

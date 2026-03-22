@@ -14,6 +14,14 @@
   <source>Menu</source>
   <target>Menü</target>
 </trans-unit>
+<trans-unit id="s7293d04c5979a8ad">
+  <source>Expand sidebar</source>
+  <target>Menü erweitern</target>
+</trans-unit>
+<trans-unit id="s8f10b4e57121e256">
+  <source>Collapse sidebar</source>
+  <target>Menü einklappen</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
