@@ -11,7 +11,7 @@ import { localized, msg } from '@lit/localize';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
 import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
-import { XMLEditor } from '@omicronenergy/oscd-editor';
+import { XMLEditor } from '@openscd/oscd-editor';
 import { EditEventV2, OpenEvent } from '@openscd/oscd-api';
 
 import { loadSourcedPlugins } from './utils/plugin-utils.js';
