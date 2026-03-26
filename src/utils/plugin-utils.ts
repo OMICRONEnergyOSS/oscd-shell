@@ -1,5 +1,11 @@
 import { cyrb64 } from '../foundation/cyrb64.js';
-import { PluginEntry, SourcedPluginEntry } from '../oscd-shell.js';
+import {
+  EditorPluginEntry,
+  PluginEntry,
+  PluginGroup,
+  ResolvedPluginGroup,
+  SourcedPluginEntry,
+} from '../oscd-shell.js';
 
 const pluginTags = new Map<string, string>();
 
@@ -38,6 +44,21 @@ function generateErrorWcClass(plugin: Partial<PluginEntry>) {
   }`;
 
   return new Function(classString)();
+}
+
+/**
+ * Checks if the given object is a PluginGroup (has a `plugins` array child, no `src`/`tagName`).
+ * Works for both input PluginGroup and resolved ResolvedPluginGroup.
+ */
+export function isPluginGroup(
+  plugin: unknown,
+): plugin is PluginGroup | ResolvedPluginGroup {
+  return (
+    typeof plugin === 'object' &&
+    plugin !== null &&
+    'plugins' in plugin &&
+    Array.isArray((plugin as { plugins: unknown }).plugins)
+  );
 }
 
 /**
@@ -117,6 +138,37 @@ export function validatePlugin(plugin: unknown): PluginEntry | undefined {
  * @param plugins - Array of plugins to convert.
  * @returns Array of plugins with tagName included.
  */
+/**
+ * Like `loadSourcedPlugins` but handles the editor array which may contain `PluginGroup` entries.
+ * Groups are resolved by loading their child plugins; flat entries are loaded as-is.
+ */
+export function loadEditorPlugins(
+  plugins: (Partial<PluginEntry | SourcedPluginEntry> | PluginGroup)[],
+  registry: CustomElementRegistry,
+): EditorPluginEntry[] {
+  const result: EditorPluginEntry[] = [];
+  for (const plugin of plugins) {
+    if (isPluginGroup(plugin)) {
+      const resolved: ResolvedPluginGroup = {
+        name: plugin.name,
+        translations: plugin.translations,
+        icon: plugin.icon,
+        requireDoc: plugin.requireDoc,
+        plugins: loadSourcedPlugins((plugin as PluginGroup).plugins, registry),
+      };
+      result.push(resolved);
+    } else {
+      result.push(
+        ...loadSourcedPlugins(
+          [plugin as Partial<PluginEntry | SourcedPluginEntry>],
+          registry,
+        ),
+      );
+    }
+  }
+  return result;
+}
+
 export function loadSourcedPlugins(
   plugins: Partial<PluginEntry | SourcedPluginEntry>[],
   registry: CustomElementRegistry,

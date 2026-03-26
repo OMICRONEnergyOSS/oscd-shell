@@ -1,6 +1,6 @@
 /* eslint-disable import-x/no-extraneous-dependencies */
 import { waitUntil } from '@open-wc/testing';
-import { OscdShell, PluginEntry } from '../../oscd-shell.js';
+import { flattenEditors, OscdShell, PluginEntry } from '../../oscd-shell.js';
 
 export const sampleMenuPlugins: (Omit<PluginEntry, 'tagName'> & {
   tagName?: string;
@@ -85,7 +85,7 @@ export const waitForPluginsToInstantiate = async (
 export const waitForAllPluginsToInstantiate = async (shell: OscdShell) => {
   const docLoaded = !!shell.docName;
 
-  const editorPlugin = shell.plugins.editor.find(
+  const editorPlugin = flattenEditors(shell.plugins.editor).find(
     editor => editor.tagName === shell.editor,
   );
 

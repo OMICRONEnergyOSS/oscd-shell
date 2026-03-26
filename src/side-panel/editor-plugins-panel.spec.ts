@@ -2,17 +2,25 @@ import { expect, fixture, html } from '@open-wc/testing';
 import type { OscdShell } from '../oscd-shell.js';
 import '../oscd-shell.js';
 import { EditorPluginsPanel } from './editor-plugins-panel.js';
+import { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdIconButton.js';
 import { createTestDocs } from '../utils/testing/test-doc-helpers.js';
-import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
 import { sampleEditorPlugins } from '../utils/testing/plugin-helpers.js';
 import { TestMenuPlugin1 } from '../utils/testing/test-plugins.js';
 
 const findPanelToggleButton = (pluginsMenu: EditorPluginsPanel) => {
   const toggleButton = pluginsMenu.shadowRoot?.querySelector(
     'oscd-icon-button.toggle-button',
-  ) as OscdFilledIconButton;
+  ) as OscdIconButton;
   expect(toggleButton).to.exist;
   return toggleButton;
+};
+
+const findToggleLabel = (pluginsMenu: EditorPluginsPanel) => {
+  const label = pluginsMenu.shadowRoot?.querySelector(
+    'span.toggle-sidebar',
+  ) as HTMLSpanElement;
+  expect(label).to.exist;
+  return label;
 };
 
 const isPanelExpanded = (pluginsMenu: EditorPluginsPanel) => {
@@ -95,6 +103,31 @@ describe('editor-plugins-panel', () => {
     await editorPluginsPanel2.updateComplete;
     expect(isPanelExpanded(editorPluginsPanel2)).to.be.false;
     oscdShell2.remove();
+  });
+
+  it('collapses on toggle label click', async () => {
+    expect(isPanelExpanded(editorPluginsPanel)).to.be.true;
+    findToggleLabel(editorPluginsPanel).click();
+    await editorPluginsPanel.updateComplete;
+    expect(isPanelExpanded(editorPluginsPanel)).to.be.false;
+  });
+
+  it('collapses on Enter key press on toggle label', async () => {
+    expect(isPanelExpanded(editorPluginsPanel)).to.be.true;
+    findToggleLabel(editorPluginsPanel).dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+    );
+    await editorPluginsPanel.updateComplete;
+    expect(isPanelExpanded(editorPluginsPanel)).to.be.false;
+  });
+
+  it('collapses on Space key press on toggle label', async () => {
+    expect(isPanelExpanded(editorPluginsPanel)).to.be.true;
+    findToggleLabel(editorPluginsPanel).dispatchEvent(
+      new KeyboardEvent('keydown', { key: ' ', bubbles: true }),
+    );
+    await editorPluginsPanel.updateComplete;
+    expect(isPanelExpanded(editorPluginsPanel)).to.be.false;
   });
 
   it('saves expanded/collapsed state (when toggled) in localStorage', async () => {
