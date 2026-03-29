@@ -14,7 +14,7 @@ import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFill
 import { XMLEditor } from '@openscd/oscd-editor';
 import { EditEventV2, OpenEvent } from '@openscd/oscd-api';
 
-import { loadSourcedPlugins } from './utils/plugin-utils.js';
+import { loadSourcedPlugins, loadEditorPlugins } from './utils/plugin-utils.js';
 import {
   getLocale,
   LocaleTag,
@@ -45,11 +45,40 @@ export type SourcedPluginEntry = {
   icon: string;
   requireDoc?: boolean;
 };
-export type PluginSet<P = PluginEntry> = {
-  menu: P[];
-  editor: P[];
-  background: P[];
+
+/** A named grouping of editor plugins. Has no `src`/`tagName` — it is not itself renderable. */
+export type PluginGroup = {
+  name: string;
+  translations?: Translations;
+  icon: string;
+  requireDoc?: boolean;
+  plugins: (PluginEntry | SourcedPluginEntry)[];
 };
+
+/** A `PluginGroup` after sourced children have been resolved to `PluginEntry` items. */
+export type ResolvedPluginGroup = {
+  name: string;
+  translations?: Translations;
+  icon: string;
+  requireDoc?: boolean;
+  plugins: PluginEntry[];
+};
+
+/** A flat editor plugin or a resolved plugin group. */
+export type EditorPluginEntry = PluginEntry | ResolvedPluginGroup;
+
+export type PluginSet = {
+  menu: PluginEntry[];
+  editor: EditorPluginEntry[];
+  background: PluginEntry[];
+};
+
+/** Flattens groups so callers can work with a simple indexed list of leaf plugins. */
+export function flattenEditors(editors: EditorPluginEntry[]): PluginEntry[] {
+  return editors.flatMap(e =>
+    'plugins' in e ? (e as ResolvedPluginGroup).plugins : [e as PluginEntry],
+  );
+}
 
 @localized()
 @customElement('oscd-shell')
@@ -117,16 +146,17 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
   }
 
   set plugins(
-    plugins: Partial<PluginSet<Partial<PluginEntry | SourcedPluginEntry>>>,
+    plugins: Partial<{
+      menu: Partial<PluginEntry | SourcedPluginEntry>[];
+      editor: (Partial<PluginEntry | SourcedPluginEntry> | PluginGroup)[];
+      background: Partial<PluginEntry | SourcedPluginEntry>[];
+    }>,
   ) {
-    this._plugins = Object.entries(plugins).reduce(
-      (acc, [pluginType, kind]) => {
-        const convertedPlugins = loadSourcedPlugins(kind, this.registry!);
-        acc[pluginType as keyof PluginSet] = convertedPlugins;
-        return acc;
-      },
-      { menu: [], editor: [], background: [] } as PluginSet,
-    );
+    this._plugins = {
+      menu: loadSourcedPlugins(plugins.menu ?? [], this.registry!),
+      editor: loadEditorPlugins(plugins.editor ?? [], this.registry!),
+      background: loadSourcedPlugins(plugins.background ?? [], this.registry!),
+    };
   }
 
   /*
@@ -144,7 +174,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
 
   @state()
   get editor() {
-    return this.plugins.editor[this.editorIndex]?.tagName ?? '';
+    return flattenEditors(this.plugins.editor)[this.editorIndex]?.tagName ?? '';
   }
 
   @state()
@@ -519,26 +549,14 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
       main {
         grid-area: main;
         display: grid;
-        grid-template-columns: var(--side-panel-width) 1fr;
+        grid-template-columns: auto 1fr;
         grid-template-areas: 'sidebar editor';
         overflow: hidden;
       }
 
-      /* Side panel collapsed state */
-      main.sidebar-collapsed {
-        grid-template-columns: 0 1fr;
-      }
-
       section.editors-side-panel-section {
         grid-area: sidebar;
-        overflow-y: auto;
-        overflow-x: hidden;
-        transition: transform 0.3s ease-in-out;
-      }
-
-      /* Hide side panel when collapsed */
-      main.sidebar-collapsed section.editors-side-panel-section {
-        transform: translateX(-100%);
+        overflow: hidden;
       }
 
       section.editor-container {

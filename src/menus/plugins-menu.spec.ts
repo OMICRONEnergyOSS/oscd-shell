@@ -44,6 +44,20 @@ describe('plugins-menu', () => {
     await pluginsMenu.updateComplete;
   });
 
+  it('renders an img when appIcon is set', async () => {
+    pluginsMenu.appIcon =
+      'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PC9zdmc+';
+    await pluginsMenu.updateComplete;
+    const img = pluginsMenu.shadowRoot?.querySelector('img');
+    expect(img).to.exist;
+    expect(img!.getAttribute('alt')).to.equal('logo');
+  });
+
+  it('does not render an img when appIcon is not set', async () => {
+    const img = pluginsMenu.shadowRoot?.querySelector('img');
+    expect(img).to.not.exist;
+  });
+
   it('displays a menu item for each menu plugin', async () => {
     const menuOpenButton = findMenuOpenButton(pluginsMenu);
     menuOpenButton?.click();

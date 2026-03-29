@@ -54,35 +54,116 @@ const plugins = {
   ],
   editor: [
     {
-      name: 'SLD Designer',
-      translations: {
-        de: 'SLD entwerfen',
-      },
+      name: 'SLD',
       icon: 'add_box',
       requireDoc: true,
-      src: 'https://omicronenergyoss.github.io/oscd-editor-sld/oscd-editor-sld.js',
+      plugins: [
+        {
+          name: 'Design SLD',
+          icon: 'add_box',
+          requireDoc: true,
+          src: 'https://omicronenergyoss.github.io/oscd-editor-sld/oscd-editor-sld.js',
+        },
+        {
+          name: 'Edit Substation',
+          icon: 'margin',
+          requireDoc: true,
+          src: 'https://OpenEnergyTools.github.io/scl-substation-editor/scl-substation-editor.js',
+        },
+      ],
     },
-
+    {
+      name: 'View GOOSE/SMV',
+      icon: 'hub',
+      requireDoc: true,
+      plugins: [
+        {
+          name: 'Edit Communication',
+          icon: 'hub',
+          requireDoc: true,
+          src: 'https://danyill.github.io/scl-communication-editor/scl-communication-editor.js',
+        },
+        {
+          name: 'Explore Communication',
+          icon: 'lan',
+          requireDoc: true,
+          src: 'https://sprinteins.github.io/oscd-plugins/oscd-plugins.js',
+        },
+      ],
+    },
+    {
+      name: 'Subscriptions & Supervisions',
+      icon: 'add_box',
+      requireDoc: true,
+      plugins: [
+        {
+          name: 'Subscribe (Later Binding)',
+          icon: 'link',
+          requireDoc: true,
+          src: 'https://danyill.github.io/oscd-subscriber-later-binding/oscd-subscriber-later-binding.js',
+        },
+        {
+          name: 'Supervise',
+          icon: 'ecg',
+          requireDoc: true,
+          src: 'https://danyill.github.io/oscd-supervision/oscd-supervision.js',
+        },
+      ],
+    },
+    {
+      name: 'Publish and Address',
+      icon: 'network_node',
+      requireDoc: true,
+      plugins: [
+        {
+          name: 'Publish',
+          icon: 'publish',
+          requireDoc: true,
+          src: 'https://com-pas.github.io/oscd-publisher/oscd-publisher.js',
+        },
+        {
+          name: 'Address Multicast (TP)',
+          icon: 'auto_fix_normal',
+          requireDoc: true,
+          src: 'https://danyill.github.io/oscd-tp-multicast-naming/oscd-tp-multicast-naming.js',
+        },
+        {
+          name: 'Communicate',
+          icon: 'network_node',
+          requireDoc: true,
+          src: 'https://openenergytools.github.io/scl-communication/scl-communication.js',
+        },
+      ],
+    },
+    {
+      name: 'Configure Network (TP)',
+      icon: 'news',
+      requireDoc: true,
+      src: 'https://danyill.github.io/oscd-network-config/oscd-network-config.js',
+    },
+    {
+      name: 'Compare',
+      icon: 'compare',
+      requireDoc: true,
+      src: 'https://OMICRONEnergyOSS.github.io/oscd-editor-diff/oscd-editor-diff.js',
+    },
+    {
+      name: 'Stencil',
+      icon: 'draw_collage',
+      requireDoc: true,
+      src: 'https://danyill.github.io/oscd-stencil/oscd-stencil.js',
+    },
     {
       name: 'Source Editor',
-      translations: { de: 'Source Editor' },
       icon: 'code',
       requireDoc: true,
-      tagName: 'oscd-editor-source',
-    },
-  ],
-  background: [
-    {
-      name: 'EditV1 Events Listener',
-      icon: 'none',
-      requireDoc: true,
-      tagName: 'oscd-background-editv1',
+      src: 'https://OMICRONEnergyOSS.github.io/oscd-editor-source/oscd-editor-source.js',
     },
     {
-      name: 'EditV1 Events Listener',
-      icon: 'none',
+      name: 'Describe',
+      icon: 'description',
       requireDoc: true,
-      tagName: 'oscd-background-editv1',
+      src: 'https://danyill.github.io/oscd-description/oscd-description.js',
     },
   ],
 };

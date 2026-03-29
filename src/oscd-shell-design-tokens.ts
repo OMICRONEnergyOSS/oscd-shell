@@ -214,11 +214,11 @@ export const oscdShellDesignTokens = css`
     /* Editor plugins panel */
     --editor-plugins-panel-width: var(
       --oscd-shell-editor-plugins-panel-width,
-      280px
+      320px
     );
     --editor-plugins-panel-collapsed-width: var(
-      --oscd-shell-editor-plugins-panel-width,
-      280px
+      --oscd-shell-editor-plugins-panel-collapsed-width,
+      72px
     );
     --editor-plugins-panel-padding-top: var(
       --oscd-shell-editor-plugins-panel-padding-top,
@@ -247,6 +247,10 @@ export const oscdShellDesignTokens = css`
     --editor-plugins-panel-item-active-bg: var(
       --oscd-shell-editor-plugins-panel-item-active-bg,
       var(--oscd-primary)
+    );
+    --editor-plugins-panel-group-active-bg: var(
+      --oscd-shell-editor-plugins-panel-group-active-bg,
+      var(--oscd-secondary)
     );
     --side-panel-width: var(--editor-plugins-panel-width);
 
