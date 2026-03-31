@@ -109,7 +109,6 @@
     "rollup": "^4.60.0",
     "rollup-plugin-copy": "^3.5.0",
     "sinon": "^21.0.3",
-    "tsdoc": "^0.0.4",
     "typedoc": "^0.28.18",
     "typescript": "^5.9.3"
   },
