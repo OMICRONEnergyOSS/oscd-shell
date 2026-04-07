@@ -1370,16 +1370,16 @@ __decorate([
 const styles$d = i$6 `:host{display:flex;margin:auto;pointer-events:none}:host([disabled]){display:none}@media(forced-colors: active){:host{display:none}}:host,.surface{border-radius:inherit;position:absolute;inset:0;overflow:hidden}.surface{-webkit-tap-highlight-color:rgba(0,0,0,0)}.surface::before,.surface::after{content:"";opacity:0;position:absolute}.surface::before{background-color:var(--md-ripple-hover-color, var(--md-sys-color-on-surface, #1d1b20));inset:0;transition:opacity 15ms linear,background-color 15ms linear}.surface::after{background:radial-gradient(closest-side, var(--md-ripple-pressed-color, var(--md-sys-color-on-surface, #1d1b20)) max(100% - 70px, 65%), transparent 100%);transform-origin:center center;transition:opacity 375ms linear}.hovered::before{background-color:var(--md-ripple-hover-color, var(--md-sys-color-on-surface, #1d1b20));opacity:var(--md-ripple-hover-opacity, 0.08)}.pressed::after{opacity:var(--md-ripple-pressed-opacity, 0.12);transition-duration:105ms}
 `;
 
-/**
- * @license
- * Copyright 2022 Google LLC
- * SPDX-License-Identifier: Apache-2.0
+/*
+ * GENERATED SOURCE FILE. DO NOT MODIFY.
+ * Modifications will be overwritten.
+ * To prevent this file from being overwritten, remove this comment entirely.
  */
 /**
+ * @tagname oscd-ripple
  * @summary Ripples, also known as state layers, are visual indicators used to
  * communicate the status of a component or interactive element.
  *
- * @description A state layer is a semi-transparent covering on an element that
  * indicates its state. State layers provide a systematic approach to
  * visualizing states by using opacity. A layer can be applied to an entire
  * element or in a circular shape and only one state layer can be applied at a
@@ -1388,9 +1388,9 @@ const styles$d = i$6 `:host{display:flex;margin:auto;pointer-events:none}:host([
  * @final
  * @suppress {visibility}
  */
-class MdRipple extends Ripple {
+class OscdRipple extends Ripple {
 }
-MdRipple.styles = [styles$d];
+OscdRipple.styles = [styles$d];
 
 /**
  * @license
@@ -1495,20 +1495,21 @@ const HANDLED_BY_FOCUS_RING = Symbol('handledByFocusRing');
 const styles$c = i$6 `:host{animation-delay:0s,calc(var(--md-focus-ring-duration, 600ms)*.25);animation-duration:calc(var(--md-focus-ring-duration, 600ms)*.25),calc(var(--md-focus-ring-duration, 600ms)*.75);animation-timing-function:cubic-bezier(0.2, 0, 0, 1);box-sizing:border-box;color:var(--md-focus-ring-color, var(--md-sys-color-secondary, #625b71));display:none;pointer-events:none;position:absolute}:host([visible]){display:flex}:host(:not([inward])){animation-name:outward-grow,outward-shrink;border-end-end-radius:calc(var(--md-focus-ring-shape-end-end, var(--md-focus-ring-shape, var(--md-sys-shape-corner-full, 9999px))) + var(--md-focus-ring-outward-offset, 2px));border-end-start-radius:calc(var(--md-focus-ring-shape-end-start, var(--md-focus-ring-shape, var(--md-sys-shape-corner-full, 9999px))) + var(--md-focus-ring-outward-offset, 2px));border-start-end-radius:calc(var(--md-focus-ring-shape-start-end, var(--md-focus-ring-shape, var(--md-sys-shape-corner-full, 9999px))) + var(--md-focus-ring-outward-offset, 2px));border-start-start-radius:calc(var(--md-focus-ring-shape-start-start, var(--md-focus-ring-shape, var(--md-sys-shape-corner-full, 9999px))) + var(--md-focus-ring-outward-offset, 2px));inset:calc(-1*var(--md-focus-ring-outward-offset, 2px));outline:var(--md-focus-ring-width, 3px) solid currentColor}:host([inward]){animation-name:inward-grow,inward-shrink;border-end-end-radius:calc(var(--md-focus-ring-shape-end-end, var(--md-focus-ring-shape, var(--md-sys-shape-corner-full, 9999px))) - var(--md-focus-ring-inward-offset, 0px));border-end-start-radius:calc(var(--md-focus-ring-shape-end-start, var(--md-focus-ring-shape, var(--md-sys-shape-corner-full, 9999px))) - var(--md-focus-ring-inward-offset, 0px));border-start-end-radius:calc(var(--md-focus-ring-shape-start-end, var(--md-focus-ring-shape, var(--md-sys-shape-corner-full, 9999px))) - var(--md-focus-ring-inward-offset, 0px));border-start-start-radius:calc(var(--md-focus-ring-shape-start-start, var(--md-focus-ring-shape, var(--md-sys-shape-corner-full, 9999px))) - var(--md-focus-ring-inward-offset, 0px));border:var(--md-focus-ring-width, 3px) solid currentColor;inset:var(--md-focus-ring-inward-offset, 0px)}@keyframes outward-grow{from{outline-width:0}to{outline-width:var(--md-focus-ring-active-width, 8px)}}@keyframes outward-shrink{from{outline-width:var(--md-focus-ring-active-width, 8px)}}@keyframes inward-grow{from{border-width:0}to{border-width:var(--md-focus-ring-active-width, 8px)}}@keyframes inward-shrink{from{border-width:var(--md-focus-ring-active-width, 8px)}}@media(prefers-reduced-motion){:host{animation:none}}
 `;
 
-/**
- * @license
- * Copyright 2021 Google LLC
- * SPDX-License-Identifier: Apache-2.0
+/*
+ * GENERATED SOURCE FILE. DO NOT MODIFY.
+ * Modifications will be overwritten.
+ * To prevent this file from being overwritten, remove this comment entirely.
  */
 /**
+ * @tagname oscd-focus-ring
  * TODO(b/267336424): add docs
  *
  * @final
  * @suppress {visibility}
  */
-class MdFocusRing extends FocusRing {
+class OscdFocusRing extends FocusRing {
 }
-MdFocusRing.styles = [styles$c];
+OscdFocusRing.styles = [styles$c];
 
 /**
  * @license
@@ -2202,8 +2203,8 @@ class OscdFilledIconButton extends ScopedElementsMixin(IconButton) {
     }
 }
 OscdFilledIconButton.scopedElements = {
-    'md-ripple': MdRipple,
-    'md-focus-ring': MdFocusRing,
+    'md-ripple': OscdRipple,
+    'md-focus-ring': OscdFocusRing,
 };
 OscdFilledIconButton.styles = [styles$a, styles$b];
 
@@ -2665,8 +2666,8 @@ class OscdIconButton extends ScopedElementsMixin(IconButton) {
     }
 }
 OscdIconButton.scopedElements = {
-    'md-ripple': MdRipple,
-    'md-focus-ring': MdFocusRing,
+    'md-ripple': OscdRipple,
+    'md-focus-ring': OscdFocusRing,
 };
 OscdIconButton.styles = [styles$a, styles$9];
 
@@ -3297,16 +3298,17 @@ function slotHasContent(slot) {
 const styles$6 = i$6 `:host{color:var(--md-sys-color-on-surface, #1d1b20);font-family:var(--md-sys-typescale-body-large-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-body-large-size, 1rem);font-weight:var(--md-sys-typescale-body-large-weight, var(--md-ref-typeface-weight-regular, 400));line-height:var(--md-sys-typescale-body-large-line-height, 1.5rem);align-items:center;box-sizing:border-box;display:flex;gap:16px;min-height:56px;overflow:hidden;padding:12px 16px;position:relative;text-overflow:ellipsis}:host([multiline]){min-height:72px}[name=overline]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-label-small-size, 0.6875rem);font-weight:var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500));line-height:var(--md-sys-typescale-label-small-line-height, 1rem)}[name=supporting-text]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-body-medium-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-body-medium-size, 0.875rem);font-weight:var(--md-sys-typescale-body-medium-weight, var(--md-ref-typeface-weight-regular, 400));line-height:var(--md-sys-typescale-body-medium-line-height, 1.25rem)}[name=trailing-supporting-text]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-label-small-size, 0.6875rem);font-weight:var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500));line-height:var(--md-sys-typescale-label-small-line-height, 1rem)}[name=container]::slotted(*){inset:0;position:absolute}.default-slot{display:inline}.default-slot,.text ::slotted(*){overflow:hidden;text-overflow:ellipsis}.text{display:flex;flex:1;flex-direction:column;overflow:hidden}
 `;
 
-/**
- * @license
- * Copyright 2023 Google LLC
- * SPDX-License-Identifier: Apache-2.0
+/*
+ * GENERATED SOURCE FILE. DO NOT MODIFY.
+ * Modifications will be overwritten.
+ * To prevent this file from being overwritten, remove this comment entirely.
  */
 /**
+ * @tagname oscd-item
  * An item layout component that can be used inside list items to give them
  * their customizable structure.
  *
- * `<md-item>` does not have any functionality, which must be added by the
+ * `<oscd-item>` does not have any functionality, which must be added by the
  * component using it.
  *
  * All text will wrap unless `white-space: nowrap` is set on the item or any of
@@ -3324,29 +3326,29 @@ const styles$6 = i$6 `:host{color:var(--md-sys-color-on-surface, #1d1b20);font-f
  *
  * @example
  * ```html
- * <md-item>Single line</md-item>
+ * <oscd-item>Single line</oscd-item>
  *
- * <md-item>
+ * <oscd-item>
  *   <div class="custom-content">...</div>
- * </md-item>
+ * </oscd-item>
  *
  * <!-- Classic 1 to 3+ line list items -->
- * <md-item>
+ * <oscd-item>
  *   <md-icon slot="start">image</md-icon>
  *   <div slot="overline">Overline</div>
  *   <div slot="headline">Headline</div>
  *   <div="supporting-text">Supporting text</div>
  *   <div="trailing-supporting-text">Trailing</div>
  *   <md-icon slot="end">image</md-icon>
- * </md-item>
+ * </oscd-item>
  * ```
  *
- * When wrapping `<md-item>`, forward the available slots to use the same slot
+ * When wrapping `<oscd-item>`, forward the available slots to use the same slot
  * structure for the wrapping component (this is what `<md-list-item>` does).
  *
  * @example
  * ```html
- * <md-item>
+ * <oscd-item>
  *   <slot></slot>
  *   <slot name="overline" slot="overline"></slot>
  *   <slot name="headline" slot="headline"></slot>
@@ -3355,15 +3357,15 @@ const styles$6 = i$6 `:host{color:var(--md-sys-color-on-surface, #1d1b20);font-f
  *       slot="trailing-supporting-text"></slot>
  *   <slot name="start" slot="start"></slot>
  *   <slot name="end" slot="end"></slot>
- * </md-item>
+ * </oscd-item>
  * ```
  *
  * @final
  * @suppress {visibility}
  */
-class MdItem extends Item {
+class OscdItem extends Item {
 }
-MdItem.styles = [styles$6];
+OscdItem.styles = [styles$6];
 
 // Separate variable needed for closure.
 const listItemBaseClass = mixinDelegatesAria(i$3);
@@ -3612,9 +3614,9 @@ const styles$5 = i$6 `:host{display:flex;-webkit-tap-highlight-color:rgba(0,0,0,
 class OscdListItem extends ScopedElementsMixin(ListItemEl) {
 }
 OscdListItem.scopedElements = {
-    'md-ripple': MdRipple,
-    'md-item': MdItem,
-    'md-focus-ring': MdFocusRing,
+    'md-ripple': OscdRipple,
+    'md-item': OscdItem,
+    'md-focus-ring': OscdFocusRing,
 };
 OscdListItem.styles = [styles$5];
 
@@ -3803,22 +3805,23 @@ class Elevation extends i$3 {
 const styles$4 = i$6 `:host,.shadow,.shadow::before,.shadow::after{border-radius:inherit;inset:0;position:absolute;transition-duration:inherit;transition-property:inherit;transition-timing-function:inherit}:host{display:flex;pointer-events:none;transition-property:box-shadow,opacity}.shadow::before,.shadow::after{content:"";transition-property:box-shadow,opacity;--_level: var(--md-elevation-level, 0);--_shadow-color: var(--md-elevation-shadow-color, var(--md-sys-color-shadow, #000))}.shadow::before{box-shadow:0px calc(1px*(clamp(0,var(--_level),1) + clamp(0,var(--_level) - 3,1) + 2*clamp(0,var(--_level) - 4,1))) calc(1px*(2*clamp(0,var(--_level),1) + clamp(0,var(--_level) - 2,1) + clamp(0,var(--_level) - 4,1))) 0px var(--_shadow-color);opacity:.3}.shadow::after{box-shadow:0px calc(1px*(clamp(0,var(--_level),1) + clamp(0,var(--_level) - 1,1) + 2*clamp(0,var(--_level) - 2,3))) calc(1px*(3*clamp(0,var(--_level),2) + 2*clamp(0,var(--_level) - 2,3))) calc(1px*(clamp(0,var(--_level),4) + 2*clamp(0,var(--_level) - 4,1))) var(--_shadow-color);opacity:.15}
 `;
 
-/**
- * @license
- * Copyright 2022 Google LLC
- * SPDX-License-Identifier: Apache-2.0
+/*
+ * GENERATED SOURCE FILE. DO NOT MODIFY.
+ * Modifications will be overwritten.
+ * To prevent this file from being overwritten, remove this comment entirely.
  */
 /**
- * The `<md-elevation>` custom element with default styles.
+ * @tagname oscd-elevation
+ * The `<oscd-elevation>` custom element with default styles.
  *
  * Elevation is the relative distance between two surfaces along the z-axis.
  *
  * @final
  * @suppress {visibility}
  */
-class MdElevation extends Elevation {
+class OscdElevation extends Elevation {
 }
-MdElevation.styles = [styles$4];
+OscdElevation.styles = [styles$4];
 
 /**
  * @license
@@ -5539,8 +5542,8 @@ InternalMenu.styles = [styles$3];
 class OscdMenu extends ScopedElementsMixin(InternalMenu) {
 }
 OscdMenu.scopedElements = {
-    'md-focus-ring': MdFocusRing,
-    'md-elevation': MdElevation,
+    'md-focus-ring': OscdFocusRing,
+    'md-elevation': OscdElevation,
 };
 OscdMenu.styles = [styles$3];
 
@@ -5919,9 +5922,9 @@ const styles$2 = i$6 `:host{display:flex;--md-ripple-hover-color: var(--md-menu-
 class OscdMenuItem extends ScopedElementsMixin(MenuItemEl) {
 }
 OscdMenuItem.scopedElements = {
-    'md-ripple': MdRipple,
-    'md-item': MdItem,
-    'md-focus-ring': MdFocusRing,
+    'md-ripple': OscdRipple,
+    'md-item': OscdItem,
+    'md-focus-ring': OscdFocusRing,
 };
 OscdMenuItem.styles = [styles$2];
 
@@ -6427,28 +6430,10 @@ const styles = i$6 `:host{--_container-height: var(--md-text-button-container-he
 class OscdTextButton extends ScopedElementsMixin(TextButton) {
 }
 OscdTextButton.scopedElements = {
-    'md-ripple': MdRipple,
-    'md-focus-ring': MdFocusRing,
+    'md-ripple': OscdRipple,
+    'md-focus-ring': OscdFocusRing,
 };
 OscdTextButton.styles = [styles$1, styles];
-
-/*
- * GENERATED SOURCE FILE. DO NOT MODIFY.
- * Modifications will be overwritten.
- * To prevent this file from being overwritten, remove this comment entirely.
- */
-/**
- * @tagname oscd-elevation
- * The `<oscd-elevation>` custom element with default styles.
- *
- * Elevation is the relative distance between two surfaces along the z-axis.
- *
- * @final
- * @suppress {visibility}
- */
-class OscdElevation extends Elevation {
-}
-OscdElevation.styles = [styles$4];
 
 let LandingPage = class LandingPage extends ScopedElementsMixin(i$3) {
     constructor() {

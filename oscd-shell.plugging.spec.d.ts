@@ -1,1 +1,1 @@
-import '../oscd-shell.js';
+import './oscd-shell.js';
