@@ -2,7 +2,7 @@ import { expect, fixture } from '@open-wc/testing';
 
 import { html } from 'lit';
 
-import '../oscd-shell.js';
+import './oscd-shell.js';
 import sinon from 'sinon';
 import type { OscdShell } from './oscd-shell.js';
 import {

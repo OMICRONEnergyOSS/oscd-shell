@@ -2,7 +2,7 @@ import { expect, fixture, waitUntil } from '@open-wc/testing';
 
 import { html } from 'lit';
 
-import '../oscd-shell.js';
+import './oscd-shell.js';
 
 import type { OscdShell } from './oscd-shell.js';
 

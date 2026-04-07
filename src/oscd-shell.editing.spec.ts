@@ -6,7 +6,7 @@ import { EditV2 } from '@openscd/oscd-api';
 
 import type { OscdShell } from './oscd-shell.js';
 
-import '../oscd-shell.js';
+import './oscd-shell.js';
 import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
 import { queryButtonByIcon } from '@omicronenergy/oscd-test-utils';
 
