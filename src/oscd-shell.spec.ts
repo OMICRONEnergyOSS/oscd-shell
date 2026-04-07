@@ -1,7 +1,7 @@
 import { expect, fixture, fixtureCleanup, waitUntil } from '@open-wc/testing';
 import { getFirstTextNodeContent } from '@omicronenergy/oscd-test-utils';
 
-import '../oscd-shell.js';
+import './oscd-shell.js';
 
 import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
 import Sinon from 'sinon';

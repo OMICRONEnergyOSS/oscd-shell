@@ -1,7 +1,7 @@
 import { expect, fixture, waitUntil } from '@open-wc/testing';
 import { visualDiff } from '@web/test-runner-visual-regression';
 
-import '../oscd-shell.js';
+import './oscd-shell.js';
 
 import type { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/oscd-filled-icon-button.js';
 
@@ -18,7 +18,13 @@ import { TestMenuPlugin1 } from './utils/testing/test-plugins.js';
 import { PluginsMenu } from './menus/plugins-menu.js';
 import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
 
-const factor = window.process && process.env.CI ? 4 : 2;
+const factor = (
+  window as Window & {
+    process?: { env?: { CI?: string } };
+  }
+).process?.env?.CI
+  ? 4
+  : 2;
 
 function timeout(ms: number) {
   return new Promise(res => {
