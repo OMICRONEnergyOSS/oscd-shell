@@ -11388,6 +11388,12 @@ EditorPluginsPanel.styles = i$6 `
     oscd-tree {
       margin-inline: 0;
       min-height: 0;
+      /* .tree-scroll is the sole flex item allowed to shrink/scroll; without
+         this, a too-short container shrinks each tree's box below its
+         rendered content instead of letting the scroll container overflow,
+         and the (unclipped) shadow-DOM rows bleed past the shrunk box into
+         whichever tree follows. */
+      flex-shrink: 0;
       --oscd-tree-row-height: 36px;
       --oscd-tree-item-min-height: 36px;
       --oscd-tree-row-gap: 4px;
@@ -12725,6 +12731,7 @@ const oscdShellDesignTokens = i$6 `
     --oscd-base3: var(--oscd-theme-base3, #fdf6e3);
     --oscd-error: var(--oscd-theme-error, #dc322f);
     --oscd-warning: var(--oscd-theme-warning, #b58900);
+    --oscd-shape: var(--oscd-theme-shape, 8px);
     --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
     --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
     --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
@@ -12748,6 +12755,16 @@ const oscdShellDesignTokens = i$6 `
     --md-sys-color-error: var(--oscd-error);
     --md-sys-color-on-error: var(--oscd-base3);
     --md-icon-button-disabled-icon-color: var(--oscd-base3);
+
+    /* Material shape scale, derived from --oscd-shape (the Material
+     * "small" corner size) per the ratios documented in oscd-api's
+     * theming.md: none=0, extra-small=0.5x, small=1x, medium=1.5x, large=2x.
+     */
+    --md-sys-shape-corner-none: 0;
+    --md-sys-shape-corner-extra-small: calc(0.5 * var(--oscd-shape));
+    --md-sys-shape-corner-small: var(--oscd-shape);
+    --md-sys-shape-corner-medium: calc(1.5 * var(--oscd-shape));
+    --md-sys-shape-corner-large: calc(2 * var(--oscd-shape));
 
     /* MD3 has no single generic "system font" token (unlike color); its
      * closest reference-tier equivalent is --md-ref-typeface-plain. Icon
