@@ -886,6 +886,12 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     oscd-tree {
       margin-inline: 0;
       min-height: 0;
+      /* .tree-scroll is the sole flex item allowed to shrink/scroll; without
+         this, a too-short container shrinks each tree's box below its
+         rendered content instead of letting the scroll container overflow,
+         and the (unclipped) shadow-DOM rows bleed past the shrunk box into
+         whichever tree follows. */
+      flex-shrink: 0;
       --oscd-tree-row-height: 36px;
       --oscd-tree-item-min-height: 36px;
       --oscd-tree-row-gap: 4px;
