@@ -2,6 +2,18 @@
 
 - fix npm publishing ([88c7af7](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/88c7af777019755d99824f57f1e2b8cb6cd5c18d))
 
+## [0.0.15](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.14...oscd-shell-v0.0.15) (2026-09-13)
+
+
+### Features
+
+* add support for new --oscd-shape design token ([013a47d](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/013a47de549303625a4684637ab43c7de2d50789))
+
+
+### Bug Fixes
+
+* pinned tree bleeds into main tree in editors sidepanel ([983cf75](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/983cf75f6080b755b922771687de0c5790553689))
+
 ## [0.0.14](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.13...oscd-shell-v0.0.14) (2026-08-31)
 
 
