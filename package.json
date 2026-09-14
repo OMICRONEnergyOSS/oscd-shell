@@ -110,7 +110,7 @@
     "rollup-plugin-copy": "^3.5.0",
     "sinon": "^21.0.3",
     "typedoc": "^0.28.18",
-    "typescript": "^6.0.2"
+    "typescript": "^7.0.2"
   },
   "overrides": {
     "@web/test-runner-playwright": {
