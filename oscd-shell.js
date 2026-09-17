@@ -2827,11 +2827,12 @@ function isPluginGroup(item) {
         Array.isArray(item.plugins));
 }
 /**
- * Checks if the given object is a valid Plugin.
+ * Checks whether the given object carries a `tagName`, i.e. names an element
+ * the shell does not have to load itself.
  * @param item - The object to check.
- * @returns true if the object is a Plugin, false otherwise.
+ * @returns true if the object is a TaggedPlugin, false otherwise.
  */
-function isPluginEntry(item) {
+function isTaggedPlugin(item) {
     return (typeof item === 'object' &&
         item !== null &&
         'tagName' in item &&
@@ -2856,7 +2857,7 @@ function isSourcedPlugin(item) {
  */
 function validatePlugin(plugin) {
     const missingFields = [];
-    if (!isPluginEntry(plugin)) {
+    if (!isTaggedPlugin(plugin)) {
         missingFields.push('tagName');
     }
     const _plugin = plugin;
@@ -2876,14 +2877,6 @@ function validatePlugin(plugin) {
     }
     return _plugin;
 }
-/**
- * Goes through all the plugins in the PluginSet and loads any sourced plugins, replacing the src field with a tagName.
- * If a plugin does not have a tagName, it will be generated based on its src.
- * All plugins returned are validated for required fields.
- * If a sourced plugin fails to load (bad src), it will be replaced with an Error Web Component.
- * @param plugins - Array of plugins to convert.
- * @returns Array of plugins with tagName included.
- */
 function loadSourcedPlugins(plugins, registry) {
     return plugins
         .map(plugin => {
@@ -2893,10 +2886,10 @@ function loadSourcedPlugins(plugins, registry) {
                 plugins: loadSourcedPlugins(plugin.plugins, registry),
             };
         }
-        if (isPluginEntry(plugin)) {
-            return validatePlugin(plugin);
-        }
         if (!isSourcedPlugin(plugin)) {
+            if (isTaggedPlugin(plugin)) {
+                return validatePlugin(plugin);
+            }
             console.error(`[Invalid Plugin] Requires a tagName or src - skipping. ${JSON.stringify(plugin)}`);
             return undefined;
         }
@@ -13254,15 +13247,26 @@ let OscdShell = class OscdShell extends ScopedElementsMixin(i$3) {
             // don't change locale if tag is invalid
         }
     }
+    /**
+     * The plugin set as declared. Deliberately symmetric: what you assign is
+     * what you read back, untouched. Resolution (deriving `tagName` from `src`,
+     * validating, importing) happens into `_resolvedPlugins`, so the hashed
+     * tag names it invents stay an implementation detail.
+     */
     get plugins() {
         return this._plugins;
     }
     set plugins(plugins) {
-        this._plugins = Object.entries(plugins).reduce((acc, [pluginType, kind]) => {
-            const convertedPlugins = loadSourcedPlugins(kind, this.registry);
-            acc[pluginType] = convertedPlugins;
-            return acc;
-        }, { menu: [], editor: [], background: [] });
+        this._plugins = {
+            menu: plugins.menu ?? [],
+            editor: plugins.editor ?? [],
+            background: plugins.background ?? [],
+        };
+        this._resolvedPlugins = {
+            menu: loadSourcedPlugins(this._plugins.menu, this.registry),
+            editor: loadSourcedPlugins(this._plugins.editor, this.registry),
+            background: loadSourcedPlugins(this._plugins.background, this.registry),
+        };
     }
     /*
      * States
@@ -13313,7 +13317,20 @@ let OscdShell = class OscdShell extends ScopedElementsMixin(i$3) {
             'sed',
             'ssd',
         ];
-        this._plugins = { menu: [], editor: [], background: [] };
+        this._plugins = {
+            menu: [],
+            editor: [],
+            background: [],
+        };
+        /** Internal representation of processed `_plugins`. These plugins have been validated and the
+         * `tagName` here is guaranteed, sourced entries imported into the registry & tagged. This copy of the
+         *  plugins is kept separate from the _plugins, which remain an unmodified single source of truth.
+         */
+        this._resolvedPlugins = {
+            menu: [],
+            editor: [],
+            background: [],
+        };
         /** The name of the [[`doc`]] currently being edited */
         this.docName = '';
         /** The set of `XMLDocument`s currently loaded */
@@ -13423,7 +13440,7 @@ let OscdShell = class OscdShell extends ScopedElementsMixin(i$3) {
     }
     willUpdate(changedProperties) {
         if (changedProperties.has('docName') || changedProperties.has('plugins')) {
-            const firstEditor = flattenPluginEntries(this.plugins.editor)[0];
+            const firstEditor = flattenPluginEntries(this._resolvedPlugins.editor)[0];
             if (this.docName && firstEditor && !this.selectedEditor) {
                 this.selectedEditor = firstEditor;
             }
@@ -13475,12 +13492,12 @@ let OscdShell = class OscdShell extends ScopedElementsMixin(i$3) {
         return b `
       <section class="off-screen-plugin-container" aria-hidden="true">
         <div class="menu-plugins">
-          ${flattenPluginEntries(this.plugins.menu)
+          ${flattenPluginEntries(this._resolvedPlugins.menu)
             .filter(plugin => !plugin.requireDoc || !!this.docName)
             .map(plugin => this.renderPlugin(plugin))}
         </div>
         <div class="background-plugins">
-          ${this.plugins.background
+          ${this._resolvedPlugins.background
             .filter(plugin => !plugin.requireDoc || !!this.docName)
             .map(plugin => this.renderPlugin(plugin))}
         </div>
@@ -13492,7 +13509,7 @@ let OscdShell = class OscdShell extends ScopedElementsMixin(i$3) {
       <landing-page
         heading=${this.landingPageHeading}
         subHeading=${this.landingPageSubHeading}
-        .menuPlugins=${flattenPluginEntries(this.plugins.menu).filter(plugin => !plugin.requireDoc || !!this.docName)}
+        .menuPlugins=${flattenPluginEntries(this._resolvedPlugins.menu).filter(plugin => !plugin.requireDoc || !!this.docName)}
         .locale=${this.locale}
         @menu-plugin-select=${(event) => this.handlePluginMenuSelect(event)}
       >
@@ -13517,7 +13534,7 @@ let OscdShell = class OscdShell extends ScopedElementsMixin(i$3) {
           appTitle=${this.appTitle}
           appIcon=${this.appIcon}
           .editableDocs=${this.editableDocs}
-          .menuPlugins=${this.plugins.menu}
+          .menuPlugins=${this._resolvedPlugins.menu}
           .locale=${this.locale}
           @menu-plugin-select=${(event) => this.handlePluginMenuSelect(event)}
         ></plugins-menu>
@@ -13573,7 +13590,7 @@ let OscdShell = class OscdShell extends ScopedElementsMixin(i$3) {
       <main>
         <section class="editors-side-panel-section">
           <editor-plugins-panel
-            .editors=${this.plugins.editor}
+            .editors=${this._resolvedPlugins.editor}
             .selectedEditor=${this.selectedEditor}
             .locale=${this.locale}
             @editor-select=${(e) => {

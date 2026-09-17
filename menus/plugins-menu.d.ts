@@ -5,7 +5,7 @@ import { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
 import { OscdSubMenu } from '@omicronenergy/oscd-ui/menu/OscdSubMenu.js';
 import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
 import { LocaleTag } from '../localization.js';
-import { PluginEntry, PluginGroup } from '../oscd-shell.js';
+import { PluginGroup, ResolvedPlugin } from '../oscd-shell.js';
 declare global {
     interface HTMLElementTagNameMap {
         'plugins-menu': PluginsMenu;
@@ -21,14 +21,14 @@ export declare class PluginsMenu extends PluginsMenu_base {
         'oscd-menu-item': typeof OscdMenuItem;
     };
     editableDocs: string[];
-    menuPlugins: PluginEntry[];
+    menuPlugins: ResolvedPlugin[];
     appIcon: string;
     appTitle: string;
     locale: LocaleTag;
     open: () => void;
     menu: OscdMenu;
-    renderMenuGroup(plugin: PluginGroup<PluginEntry>, hasDoc: boolean): import("lit-html").TemplateResult<1>;
-    renderMenuItem(plugin: PluginEntry, hasDoc: boolean): import("lit-html").TemplateResult<1>;
+    renderMenuGroup(plugin: PluginGroup<ResolvedPlugin>, hasDoc: boolean): import("lit-html").TemplateResult<1>;
+    renderMenuItem(plugin: ResolvedPlugin, hasDoc: boolean): import("lit-html").TemplateResult<1>;
     render(): import("lit-html").TemplateResult<1>;
     static styles: import("lit").CSSResult;
 }

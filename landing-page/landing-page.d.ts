@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
 import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
-import { PluginEntry } from '../oscd-shell.js';
+import { ResolvedPlugin } from '../oscd-shell.js';
 import { LocaleTag } from '../localization.js';
 import { OscdElevation } from '@omicronenergy/oscd-ui/elevation/OscdElevation.js';
 declare global {
@@ -18,7 +18,7 @@ export declare class LandingPage extends LandingPage_base {
     };
     heading: string;
     subHeading: string;
-    menuPlugins: PluginEntry[];
+    menuPlugins: ResolvedPlugin[];
     locale: LocaleTag;
     render(): import("lit-html").TemplateResult<1>;
     static styles: import("lit").CSSResult;

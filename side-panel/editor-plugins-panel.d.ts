@@ -5,7 +5,7 @@ import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
 import { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
 import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
 import { LocaleTag } from '../localization.js';
-import { PluginEntry, PluginGroup } from '../oscd-shell.js';
+import { PluginGroup, ResolvedPlugin } from '../oscd-shell.js';
 import { OscdTree, TreeNode, TreeRenderContext } from '@omicronenergy/oscd-ui/tree/OscdTree.js';
 import { OscdTreeItem } from '@omicronenergy/oscd-ui/tree/OscdTreeItem.js';
 import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
@@ -15,7 +15,7 @@ type PlaceholderTreeNode = {
     name: string;
     translations?: Record<string, string>;
 };
-type EditorPluginTreeNode = (PluginGroup | PluginEntry | PlaceholderTreeNode) & TreeNode & {
+type EditorPluginTreeNode = (PluginGroup<ResolvedPlugin> | ResolvedPlugin | PlaceholderTreeNode) & TreeNode & {
     children?: EditorPluginTreeNode[];
     plugins?: EditorPluginTreeNode[];
 };
@@ -24,7 +24,7 @@ declare global {
         'editor-plugins-panel': EditorPluginsPanel;
     }
 }
-export declare function buildTreeNodes(plugins: (PluginEntry | PluginGroup)[]): EditorPluginTreeNode[];
+export declare function buildTreeNodes(plugins: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[]): EditorPluginTreeNode[];
 declare const EditorPluginsPanel_base: typeof LitElement & import("@open-wc/scoped-elements/lit-element.js").ScopedElementsHostConstructor;
 export declare class EditorPluginsPanel extends EditorPluginsPanel_base {
     static scopedElements: {
@@ -39,8 +39,8 @@ export declare class EditorPluginsPanel extends EditorPluginsPanel_base {
         'oscd-menu-item': typeof OscdMenuItem;
     };
     id: string;
-    editors: (PluginEntry | PluginGroup)[];
-    selectedEditor?: PluginEntry;
+    editors: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[];
+    selectedEditor?: ResolvedPlugin;
     locale: LocaleTag;
     expanded: boolean;
     /**
