@@ -1,20 +1,14 @@
 /* eslint-disable import-x/no-extraneous-dependencies */
 import { waitUntil } from '@open-wc/testing';
-import { OscdShell, PluginEntry, PluginGroup } from '../../oscd-shell.js';
+import {
+  OscdShell,
+  OscdPlugin,
+  PluginGroup,
+  ResolvedPlugin,
+} from '../../oscd-shell.js';
 import { flattenPluginEntries } from '../plugin-utils.js';
 
-export const sampleMenuPlugins: (
-  | PluginGroup<
-      Omit<PluginEntry, 'tagName'> & {
-        tagName?: string;
-        src?: string;
-      }
-    >
-  | (Omit<PluginEntry, 'tagName'> & {
-      tagName?: string;
-      src?: string;
-    })
-)[] = [
+export const sampleMenuPlugins: (PluginGroup<OscdPlugin> | OscdPlugin)[] = [
   {
     name: 'Test Menu Plugin',
     translations: { de: 'Test Menu Erweiterung' },
@@ -42,10 +36,7 @@ export const sampleMenuPlugins: (
   },
 ];
 
-export const sampleEditorPlugins: (Omit<PluginEntry, 'tagName'> & {
-  tagName?: string;
-  src?: string;
-})[] = [
+export const sampleEditorPlugins: OscdPlugin[] = [
   {
     name: 'Test Editor Plugin',
     translations: { de: 'Test Editor Erweiterung' },
@@ -60,9 +51,9 @@ export const sampleEditorPlugins: (Omit<PluginEntry, 'tagName'> & {
 ];
 
 export function findPluginByTagName(
-  pluginSet: (PluginEntry | PluginGroup<PluginEntry>)[],
+  pluginSet: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[],
   tagName: string,
-): PluginEntry | undefined {
+): ResolvedPlugin | undefined {
   return flattenPluginEntries(pluginSet).find(
     plugin => plugin.tagName === tagName,
   );
@@ -76,7 +67,7 @@ export const isPluginInstanciated = (
   !!shell.shadowRoot?.querySelector(pluginTagName);
 
 export const waitForPluginInstanciation = async (
-  plugin: PluginEntry,
+  plugin: ResolvedPlugin,
   shell: OscdShell,
 ): Promise<void> =>
   waitUntil(
@@ -89,7 +80,7 @@ export const waitForPluginInstanciation = async (
   );
 
 export const waitForPluginsToInstantiate = async (
-  plugins: PluginEntry[],
+  plugins: ResolvedPlugin[],
   shell: OscdShell,
 ) =>
   await Promise.all(
@@ -111,17 +102,20 @@ export const waitForAllPluginsToInstantiate = async (shell: OscdShell) => {
 
   const editorPlugin =
     docLoaded && shell.selectedEditor
-      ? findPluginByTagName(shell.plugins.editor, shell.selectedEditor.tagName)
+      ? findPluginByTagName(
+          shell._resolvedPlugins.editor,
+          shell.selectedEditor.tagName,
+        )
       : undefined;
 
-  const menuPlugins = flattenPluginEntries(shell.plugins.menu).filter(
+  const menuPlugins = flattenPluginEntries(shell._resolvedPlugins.menu).filter(
     plugin => !plugin.requireDoc || docLoaded,
   );
-  const backgroundPlugins = shell.plugins.background.filter(
+  const backgroundPlugins = shell._resolvedPlugins.background.filter(
     plugin => !plugin.requireDoc || docLoaded,
   );
 
-  const allPlugins: PluginEntry[] = [
+  const allPlugins: ResolvedPlugin[] = [
     ...menuPlugins,
     ...backgroundPlugins,
     ...(editorPlugin ? [editorPlugin] : []),

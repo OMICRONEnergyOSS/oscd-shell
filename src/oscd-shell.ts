@@ -29,36 +29,55 @@ import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
 import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
 import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
 
-export interface PluginBase {
+/** Fields shared by plugin entries and the groups that contain them. */
+export interface PluginMetadata {
   name: string;
   translations?: Record<string, string>;
   icon: string;
 }
 
-export interface SourcedPluginEntry extends PluginBase {
-  src: string;
+/** Fields common to actual plugins (not groups)
+ * require a document. */
+export interface OscdPluginBase extends PluginMetadata {
   requireDoc?: boolean;
 }
 
-export interface PluginEntry extends PluginBase {
-  tagName: string;
-  requireDoc?: boolean;
+/** A plugin dynamically imported at runtime from a URL, defined by the `src` field.
+ *  The shell will load the plugin and assign it a unique tagName generated from hashing the `src` url. */
+export interface SourcedPlugin extends OscdPluginBase {
+  src: string;
 }
+
+/** A plugin already defined in the registry under `tagName`. */
+export interface TaggedPlugin extends OscdPluginBase {
+  tagName: string;
+}
+
+/** A declared plugin, either sourced or already registered. */
+export type OscdPlugin = SourcedPlugin | TaggedPlugin;
 
 /**
- * The unvalidated plugin shape accepted at the `plugins` setter boundary.
- * Fields are optional and either `tagName` or `src` may be present; the
- * concrete kind is resolved and validated later by `loadSourcedPlugins`.
+ * The shell's internal object for all plugins. Here `tagName` is guaranteed because
+ * resolution has already happened, and `src` is deliberately absent - it has
+ * served its purpose and nothing downstream reads it.
+ * Currently its the same shape as TaggedPlugin, their purposes are
+ * different and clarity is favored over brevity.
  */
-export type InputPluginEntry = Partial<PluginEntry & SourcedPluginEntry>;
+export interface ResolvedPlugin extends OscdPluginBase {
+  tagName: string;
+}
 
+/** A group of plugins. */
 export interface PluginGroup<
-  P extends Partial<PluginBase> = PluginEntry,
-> extends PluginBase {
+  P extends PluginMetadata = OscdPlugin,
+> extends PluginMetadata {
   plugins: P[];
 }
 
-export interface PluginSet<P extends Partial<PluginBase> = PluginEntry> {
+/**
+ * The root object representing the plugins property (and the resolved plugins).
+ */
+export interface PluginSet<P extends PluginMetadata = OscdPlugin> {
   menu: (P | PluginGroup<P>)[];
   editor: (P | PluginGroup<P>)[];
   background: P[];
@@ -123,22 +142,44 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
     }
   }
 
-  _plugins: PluginSet = { menu: [], editor: [], background: [] };
+  _plugins: PluginSet<OscdPlugin> = {
+    menu: [],
+    editor: [],
+    background: [],
+  };
 
+  /** Internal representation of processed `_plugins`. These plugins have been validated and the
+   * `tagName` here is guaranteed, sourced entries imported into the registry & tagged. This copy of the
+   *  plugins is kept separate from the _plugins, which remain an unmodified single source of truth.
+   */
+  _resolvedPlugins: PluginSet<ResolvedPlugin> = {
+    menu: [],
+    editor: [],
+    background: [],
+  };
+
+  /**
+   * The plugin set as declared. Deliberately symmetric: what you assign is
+   * what you read back, untouched. Resolution (deriving `tagName` from `src`,
+   * validating, importing) happens into `_resolvedPlugins`, so the hashed
+   * tag names it invents stay an implementation detail.
+   */
   @property({ type: Object })
-  get plugins(): PluginSet {
+  get plugins(): PluginSet<OscdPlugin> {
     return this._plugins;
   }
 
-  set plugins(plugins: Partial<PluginSet<InputPluginEntry>>) {
-    this._plugins = Object.entries(plugins).reduce(
-      (acc, [pluginType, kind]) => {
-        const convertedPlugins = loadSourcedPlugins(kind, this.registry!);
-        acc[pluginType as keyof PluginSet] = convertedPlugins;
-        return acc;
-      },
-      { menu: [], editor: [], background: [] } as PluginSet,
-    );
+  set plugins(plugins: Partial<PluginSet<OscdPlugin>>) {
+    this._plugins = {
+      menu: plugins.menu ?? [],
+      editor: plugins.editor ?? [],
+      background: plugins.background ?? [],
+    };
+    this._resolvedPlugins = {
+      menu: loadSourcedPlugins(this._plugins.menu, this.registry!),
+      editor: loadSourcedPlugins(this._plugins.editor, this.registry!),
+      background: loadSourcedPlugins(this._plugins.background, this.registry!),
+    };
   }
 
   /*
@@ -155,7 +196,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
   }
 
   @state()
-  selectedEditor?: PluginEntry;
+  selectedEditor?: ResolvedPlugin;
 
   @state()
   /** The `XMLDocument` currently being edited */
@@ -222,7 +263,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
 
   willUpdate(changedProperties: Map<PropertyKey, unknown>) {
     if (changedProperties.has('docName') || changedProperties.has('plugins')) {
-      const firstEditor = flattenPluginEntries(this.plugins.editor)[0];
+      const firstEditor = flattenPluginEntries(this._resolvedPlugins.editor)[0];
       if (this.docName && firstEditor && !this.selectedEditor) {
         this.selectedEditor = firstEditor;
       }
@@ -334,7 +375,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
   };
 
   handlePluginMenuSelect(customEvent: CustomEvent) {
-    const plugin = customEvent.detail.plugin as PluginEntry;
+    const plugin = customEvent.detail.plugin as ResolvedPlugin;
     if (plugin.tagName) {
       this.shadowRoot!.querySelector<
         HTMLElement & { run: () => Promise<void> }
@@ -378,7 +419,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
     );
   }
 
-  renderPlugin(plugin: PluginEntry) {
+  renderPlugin(plugin: ResolvedPlugin) {
     const tag = unsafeStatic(plugin.tagName);
     return staticHtml`<${tag}
               .locale="${this.locale}"
@@ -395,12 +436,12 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
     return html`
       <section class="off-screen-plugin-container" aria-hidden="true">
         <div class="menu-plugins">
-          ${flattenPluginEntries(this.plugins.menu)
+          ${flattenPluginEntries(this._resolvedPlugins.menu)
             .filter(plugin => !plugin.requireDoc || !!this.docName)
             .map(plugin => this.renderPlugin(plugin))}
         </div>
         <div class="background-plugins">
-          ${this.plugins.background
+          ${this._resolvedPlugins.background
             .filter(plugin => !plugin.requireDoc || !!this.docName)
             .map(plugin => this.renderPlugin(plugin))}
         </div>
@@ -413,7 +454,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
       <landing-page
         heading=${this.landingPageHeading}
         subHeading=${this.landingPageSubHeading}
-        .menuPlugins=${flattenPluginEntries(this.plugins.menu).filter(
+        .menuPlugins=${flattenPluginEntries(this._resolvedPlugins.menu).filter(
           plugin => !plugin.requireDoc || !!this.docName,
         )}
         .locale=${this.locale}
@@ -443,7 +484,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
           appTitle=${this.appTitle}
           appIcon=${this.appIcon}
           .editableDocs=${this.editableDocs}
-          .menuPlugins=${this.plugins.menu}
+          .menuPlugins=${this._resolvedPlugins.menu}
           .locale=${this.locale}
           @menu-plugin-select=${(event: CustomEvent) =>
             this.handlePluginMenuSelect(event)}
@@ -504,7 +545,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
       <main>
         <section class="editors-side-panel-section">
           <editor-plugins-panel
-            .editors=${this.plugins.editor}
+            .editors=${this._resolvedPlugins.editor}
             .selectedEditor=${this.selectedEditor}
             .locale=${this.locale}
             @editor-select=${(e: CustomEvent) => {

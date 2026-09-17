@@ -1,5 +1,5 @@
 import { expect, fixture, html } from '@open-wc/testing';
-import type { OscdShell, PluginEntry } from '../oscd-shell.js';
+import type { OscdShell, ResolvedPlugin } from '../oscd-shell.js';
 
 import '../oscd-shell.js';
 import { TestMenuPlugin1 } from '../utils/testing/test-plugins.js';
@@ -28,7 +28,7 @@ describe('default landing-page', () => {
         landingPageSubHeading=${testSubHeading}
       ></oscd-shell>`,
     );
-    const testMenuPlugin1TagName = (sampleMenuPlugins[0] as PluginEntry)
+    const testMenuPlugin1TagName = (sampleMenuPlugins[0] as ResolvedPlugin)
       .tagName!;
     expect(testMenuPlugin1TagName).to.not.be.undefined;
     if (oscdShell?.registry?.get(testMenuPlugin1TagName) === undefined) {
@@ -66,7 +66,7 @@ describe('default landing-page', () => {
 
   it('renders all menu plugins, not requiring a document, as large tiles (buttons)', async () => {
     const menuPluginsNotRequiringDoc = flattenPluginEntries(
-      oscdShell.plugins.menu,
+      oscdShell._resolvedPlugins.menu,
     ).filter(plugin => !plugin.requireDoc);
     const menuPluginElements =
       landingPage.shadowRoot!.querySelectorAll('.menu-plugin-item');
@@ -78,7 +78,7 @@ describe('default landing-page', () => {
 
   it('triggers the run method of the plugin when a menu tile is clicked', async () => {
     const testMenuPlugin1Def = sampleMenuPlugins.find(
-      plugin => (plugin as PluginEntry).tagName === 'test-menu-plugin1',
+      plugin => (plugin as ResolvedPlugin).tagName === 'test-menu-plugin1',
     );
     const menuPluginElements =
       landingPage.shadowRoot!.querySelectorAll('.menu-plugin-item');

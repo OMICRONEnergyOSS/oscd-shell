@@ -6,7 +6,7 @@ import { localized } from '@lit/localize';
 import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
 import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
 
-import { PluginEntry } from '../oscd-shell.js';
+import { ResolvedPlugin } from '../oscd-shell.js';
 import { LocaleTag } from '../localization.js';
 import { OscdElevation } from '@omicronenergy/oscd-ui/elevation/OscdElevation.js';
 
@@ -31,7 +31,7 @@ export class LandingPage extends ScopedElementsMixin(LitElement) {
   @property({ type: String })
   subHeading: string = '';
   @property({ type: Array })
-  menuPlugins: PluginEntry[] = [];
+  menuPlugins: ResolvedPlugin[] = [];
 
   @property({ type: String, reflect: true })
   locale!: LocaleTag;

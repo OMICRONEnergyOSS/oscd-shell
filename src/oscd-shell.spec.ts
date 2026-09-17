@@ -7,7 +7,7 @@ import { OscdTreeItem } from '@omicronenergy/oscd-ui/tree/OscdTreeItem.js';
 import Sinon from 'sinon';
 
 import { newEditEventV2, newOpenEvent } from '@openscd/oscd-api/utils.js';
-import type { OscdShell, PluginEntry } from './oscd-shell.js';
+import type { OscdShell, ResolvedPlugin } from './oscd-shell.js';
 
 import { cyrb64 } from './foundation.js';
 import { Plugin } from '@openscd/oscd-api';
@@ -95,7 +95,7 @@ describe('OscdShell', () => {
 
       expect(
         oscdShell.shadowRoot?.querySelector(
-          (oscdShell.plugins.editor[0] as PluginEntry).tagName,
+          (oscdShell.plugins.editor[0] as ResolvedPlugin).tagName,
         ),
       ).to.not.exist;
     });

@@ -1,15 +1,16 @@
 import { expect } from '@open-wc/testing';
 import {
-  isPluginEntry,
+  isTaggedPlugin,
   isSourcedPlugin,
   validatePlugin,
   filterBySearchTerm,
   filterByPinned,
+  loadSourcedPlugins,
 } from './plugin-utils.js';
-import { PluginEntry, PluginGroup } from '../oscd-shell.js';
+import { PluginGroup, ResolvedPlugin } from '../oscd-shell.js';
 
 describe('Plugin Utils', () => {
-  describe('isPlugin', () => {
+  describe('isTaggedPlugin', () => {
     it('should return true for a valid Plugin object', () => {
       const plugin = {
         tagName: 'test-plugin',
@@ -17,7 +18,7 @@ describe('Plugin Utils', () => {
         icon: 'test-icon',
         requireDoc: false,
       };
-      expect(plugin).satisfies(isPluginEntry);
+      expect(plugin).satisfies(isTaggedPlugin);
     });
 
     it('should return false for an object without tagName', () => {
@@ -26,7 +27,7 @@ describe('Plugin Utils', () => {
         icon: 'test-icon',
         requireDoc: false,
       };
-      expect(plugin).to.not.satisfy(isPluginEntry);
+      expect(plugin).to.not.satisfy(isTaggedPlugin);
     });
 
     it('should return false for a SourcePlugin', () => {
@@ -35,7 +36,7 @@ describe('Plugin Utils', () => {
         icon: 'test-icon',
         src: 'data:text/javascript;charset=utf-8,import%20%7B%20default%20as%20TestPlugin%20%7D%20from%20"./test-plugin.js";',
       };
-      expect(plugin).to.not.satisfy(isPluginEntry);
+      expect(plugin).to.not.satisfy(isTaggedPlugin);
     });
   });
 
@@ -141,18 +142,21 @@ describe('validatePlugin', () => {
 });
 
 describe('filterBySearchTerm', () => {
-  const leaf = (name: string, tagName: string): PluginEntry => ({
+  const leaf = (name: string, tagName: string): ResolvedPlugin => ({
     name,
     tagName,
     icon: 'margin',
   });
-  const group = (name: string, plugins: PluginEntry[]): PluginGroup => ({
+  const group = (
+    name: string,
+    plugins: ResolvedPlugin[],
+  ): PluginGroup<ResolvedPlugin> => ({
     name,
     icon: 'folder',
     plugins,
   });
 
-  const editors: (PluginEntry | PluginGroup)[] = [
+  const editors: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] = [
     leaf('Substation Editor', 'oscd-substation'),
     leaf('Single Line Diagram', 'oscd-sld'),
     group('Communication', [
@@ -180,13 +184,13 @@ describe('filterBySearchTerm', () => {
   it('matches anywhere within a plugin name, not just the start', () => {
     const result = filterBySearchTerm(editors, 'line');
     expect(result).to.have.lengthOf(1);
-    expect((result[0] as PluginEntry).name).to.equal('Single Line Diagram');
+    expect((result[0] as ResolvedPlugin).name).to.equal('Single Line Diagram');
   });
 
   it('preserves group structure and keeps only matching children', () => {
     const result = filterBySearchTerm(editors, 'goose');
     expect(result).to.have.lengthOf(1);
-    const communication = result[0] as PluginGroup;
+    const communication = result[0] as PluginGroup<ResolvedPlugin>;
     expect(communication.name).to.equal('Communication');
     expect(communication.plugins.map(p => p.name)).to.deep.equal([
       'GOOSE Editor',
@@ -205,7 +209,7 @@ describe('filterBySearchTerm', () => {
   });
 
   it('matches the localized label when a locale is given', () => {
-    const localized: (PluginEntry | PluginGroup)[] = [
+    const localized: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] = [
       {
         ...leaf('Substation Editor', 'oscd-substation'),
         translations: { de: 'Unterstation' },
@@ -214,11 +218,11 @@ describe('filterBySearchTerm', () => {
     ];
     const result = filterBySearchTerm(localized, 'unterstation', 'de');
     expect(result).to.have.lengthOf(1);
-    expect((result[0] as PluginEntry).tagName).to.equal('oscd-substation');
+    expect((result[0] as ResolvedPlugin).tagName).to.equal('oscd-substation');
   });
 
   it('does not match the localized label when no locale is given', () => {
-    const localized: (PluginEntry | PluginGroup)[] = [
+    const localized: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] = [
       {
         ...leaf('Substation Editor', 'oscd-substation'),
         translations: { de: 'Unterstation' },
@@ -229,12 +233,12 @@ describe('filterBySearchTerm', () => {
 });
 
 describe('filterByPinned', () => {
-  const leaf = (name: string, tagName: string): PluginEntry => ({
+  const leaf = (name: string, tagName: string): ResolvedPlugin => ({
     name,
     tagName,
     icon: 'margin',
   });
-  const editors: (PluginEntry | PluginGroup)[] = [
+  const editors: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] = [
     leaf('Substation Editor', 'oscd-substation'),
     {
       name: 'Communication',
@@ -266,5 +270,55 @@ describe('filterByPinned', () => {
 
   it('ignores pinned ids that do not match any plugin', () => {
     expect(filterByPinned(editors, ['does-not-exist'])).to.be.empty;
+  });
+});
+
+describe('loadSourcedPlugins', () => {
+  const src =
+    'data:text/javascript;charset=utf-8,export%20default%20class%20extends%20HTMLElement%20%7B%7D';
+
+  it('derives a tagName from src and drops src from the render form', () => {
+    const [resolved] = loadSourcedPlugins(
+      [{ name: 'Sourced', icon: 'icon', src }],
+      customElements,
+    );
+
+    expect(resolved.tagName).to.match(/^oscd-p/);
+    expect(resolved).to.not.have.property('src');
+  });
+
+  it('derives the same tagName for the same src, so repeated loads are stable', () => {
+    const [first] = loadSourcedPlugins(
+      [{ name: 'Sourced', icon: 'icon', src }],
+      customElements,
+    );
+    const [second] = loadSourcedPlugins(
+      [{ name: 'Sourced', icon: 'icon', src }],
+      customElements,
+    );
+
+    expect(second).to.deep.equal(first);
+  });
+
+  it('resolves from src when an entry carries both src and a stale tagName', () => {
+    const [resolved] = loadSourcedPlugins(
+      [{ name: 'Sourced', icon: 'icon', src, tagName: 'oscd-pSTALE' }],
+      customElements,
+    );
+
+    expect(resolved.tagName).to.not.equal('oscd-pSTALE');
+  });
+
+  it('passes a tagName-only entry through unchanged', () => {
+    const [resolved] = loadSourcedPlugins(
+      [{ name: 'Tagged', icon: 'icon', tagName: 'oscd-tagged' }],
+      customElements,
+    );
+
+    expect(resolved).to.deep.equal({
+      name: 'Tagged',
+      icon: 'icon',
+      tagName: 'oscd-tagged',
+    });
   });
 });

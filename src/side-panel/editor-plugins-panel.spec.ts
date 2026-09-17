@@ -2,7 +2,7 @@ import { expect, fixture, html } from '@open-wc/testing';
 import type { OscdShell } from '../oscd-shell.js';
 import '../oscd-shell.js';
 import { EditorPluginsPanel } from './editor-plugins-panel.js';
-import type { PluginEntry, PluginGroup } from '../oscd-shell.js';
+import type { ResolvedPlugin, PluginGroup } from '../oscd-shell.js';
 import { createTestDocs } from '../utils/testing/test-doc-helpers.js';
 import { sampleEditorPlugins } from '../utils/testing/plugin-helpers.js';
 import { TestMenuPlugin1 } from '../utils/testing/test-plugins.js';
@@ -12,8 +12,8 @@ import { OscdOutlinedSearchField } from '@omicronenergy/oscd-ui/search-field/Osc
 import sinon from 'sinon';
 
 // A grouped editor fixture, used to exercise the collapsed rail's group
-// flyout (rendered only when `editors` contains a `PluginGroup`).
-const groupedEditorPlugins: (PluginEntry | PluginGroup)[] = [
+// flyout (rendered only when `editors` contains a `PluginGroup<ResolvedPlugin>`).
+const groupedEditorPlugins: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] = [
   {
     name: 'Grouped Editors',
     icon: 'folder',
@@ -303,7 +303,7 @@ describe('editor-plugins-panel', () => {
   it('selects the only search result when Enter is pressed in the search field', async () => {
     await setSearch('Plugin 2');
     const field = getSearchField();
-    let selected: PluginEntry | undefined;
+    let selected: ResolvedPlugin | undefined;
     editorPluginsPanel.addEventListener('editor-select', (event: Event) => {
       selected = (event as CustomEvent).detail.editor;
     });
@@ -426,7 +426,8 @@ describe('editor-plugins-panel', () => {
   });
 
   it('pins and unpins an editor, persisting the ids to localStorage', async () => {
-    const tagName = (oscdShell.plugins.editor[0] as PluginEntry).tagName;
+    const tagName = (oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin)
+      .tagName;
 
     editorPluginsPanel.togglePin(tagName);
     await editorPluginsPanel.updateComplete;
@@ -441,7 +442,7 @@ describe('editor-plugins-panel', () => {
   });
 
   it('reflects the selected editor into the pinned tree selectedIds', async () => {
-    const editor = oscdShell.plugins.editor[0] as PluginEntry;
+    const editor = oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin;
 
     editorPluginsPanel.togglePin(editor.tagName);
     editorPluginsPanel.selectedEditor = editor;
@@ -454,11 +455,11 @@ describe('editor-plugins-panel', () => {
   });
 
   it('selects an editor chosen from the pinned tree', async () => {
-    const editor = oscdShell.plugins.editor[0] as PluginEntry;
+    const editor = oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin;
     editorPluginsPanel.togglePin(editor.tagName);
     await editorPluginsPanel.updateComplete;
 
-    let selected: PluginEntry | undefined;
+    let selected: ResolvedPlugin | undefined;
     editorPluginsPanel.addEventListener('editor-select', (event: Event) => {
       selected = (event as CustomEvent).detail.editor;
     });
@@ -569,11 +570,12 @@ describe('editor-plugins-panel', () => {
       findRailSearchButton(editorPluginsPanel).click();
       await editorPluginsPanel.updateComplete;
 
-      let selected: PluginEntry | undefined;
+      let selected: ResolvedPlugin | undefined;
       editorPluginsPanel.addEventListener('editor-select', (event: Event) => {
         selected = (event as CustomEvent).detail.editor;
       });
-      const tagName = (oscdShell.plugins.editor[0] as PluginEntry).tagName;
+      const tagName = (oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin)
+        .tagName;
       editorPluginsPanel.selectEditor([tagName]);
       await editorPluginsPanel.updateComplete;
 
@@ -585,13 +587,13 @@ describe('editor-plugins-panel', () => {
     it('selects a root editor from the collapsed rail', async () => {
       await collapse(editorPluginsPanel);
 
-      const editor = oscdShell.plugins.editor[0] as PluginEntry;
+      const editor = oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin;
       const railEditors = editorPluginsPanel.shadowRoot!.querySelectorAll(
         '.rail > oscd-icon-button.rail-item',
       );
       const railEditor = railEditors[2] as HTMLElement;
       expect(!!railEditor).to.be.true;
-      let selected: PluginEntry | undefined;
+      let selected: ResolvedPlugin | undefined;
       editorPluginsPanel.addEventListener('editor-select', (event: Event) => {
         selected = (event as CustomEvent).detail.editor;
       });
@@ -607,7 +609,8 @@ describe('editor-plugins-panel', () => {
 
   describe('pinned/editors tree expand-state persistence', () => {
     it('persists the pinned tree expanded ids on `expanded-ids-changed`', async () => {
-      const tagName = (oscdShell.plugins.editor[0] as PluginEntry).tagName;
+      const tagName = (oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin)
+        .tagName;
       editorPluginsPanel.togglePin(tagName);
       await editorPluginsPanel.updateComplete;
 
@@ -719,7 +722,7 @@ describe('editor-plugins-panel', () => {
       findGroupRailButton().click();
       await groupedPanel.updateComplete;
 
-      let selected: PluginEntry | undefined;
+      let selected: ResolvedPlugin | undefined;
       groupedPanel.addEventListener('editor-select', (event: Event) => {
         selected = (event as CustomEvent).detail.editor;
       });

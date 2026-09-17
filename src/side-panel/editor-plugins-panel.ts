@@ -11,7 +11,7 @@ import { OscdMenu } from '@omicronenergy/oscd-ui/menu/OscdMenu.js';
 import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
 
 import { LocaleTag } from '../localization.js';
-import { PluginEntry, PluginGroup } from '../oscd-shell.js';
+import { PluginGroup, ResolvedPlugin } from '../oscd-shell.js';
 import {
   OscdTree,
   TreeNode,
@@ -34,7 +34,11 @@ type PlaceholderTreeNode = {
   translations?: Record<string, string>;
 };
 
-type EditorPluginTreeNode = (PluginGroup | PluginEntry | PlaceholderTreeNode) &
+type EditorPluginTreeNode = (
+  | PluginGroup<ResolvedPlugin>
+  | ResolvedPlugin
+  | PlaceholderTreeNode
+) &
   TreeNode & {
     children?: EditorPluginTreeNode[];
     plugins?: EditorPluginTreeNode[];
@@ -73,10 +77,10 @@ const pinnedIcon = html`<svg
 </svg>`;
 
 export function buildTreeNodes(
-  plugins: (PluginEntry | PluginGroup)[],
+  plugins: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[],
 ): EditorPluginTreeNode[] {
   function pluginEntryToTreeNode(
-    pluginEntry: PluginEntry,
+    pluginEntry: ResolvedPlugin,
   ): EditorPluginTreeNode {
     return {
       ...pluginEntry,
@@ -88,7 +92,7 @@ export function buildTreeNodes(
   return plugins.map((editor, index) => {
     const isGroup = isPluginGroup(editor);
     if (isGroup) {
-      const children = (editor as PluginGroup).plugins.map(
+      const children = (editor as PluginGroup<ResolvedPlugin>).plugins.map(
         pluginEntryToTreeNode,
       );
       return {
@@ -97,7 +101,7 @@ export function buildTreeNodes(
         children,
       };
     }
-    return pluginEntryToTreeNode(editor as PluginEntry);
+    return pluginEntryToTreeNode(editor as ResolvedPlugin);
   });
 }
 
@@ -124,10 +128,10 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
   id = 'editor-plugins-panel';
 
   @property({ type: Array })
-  editors: (PluginEntry | PluginGroup)[] = [];
+  editors: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] = [];
 
   @property({ type: Number })
-  selectedEditor?: PluginEntry;
+  selectedEditor?: ResolvedPlugin;
 
   @property({ type: String })
   locale!: LocaleTag;
@@ -251,7 +255,7 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
    * Dispatches the `editor-select` event and leaves transient search mode, if
    * active. Used by both the expanded trees and the collapsed rail flyouts.
    */
-  private dispatchEditorSelect(editor?: PluginEntry) {
+  private dispatchEditorSelect(editor?: ResolvedPlugin) {
     this.dispatchEvent(
       new CustomEvent('editor-select', {
         detail: { editor },
@@ -614,14 +618,14 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
         ${this.editors.map((entry, index) =>
           isPluginGroup(entry)
             ? this.renderRailGroup(entry, `group-${index}`)
-            : this.renderRailLeaf(entry as PluginEntry),
+            : this.renderRailLeaf(entry as ResolvedPlugin),
         )}
       </div>
     `;
   }
 
   private renderRailGroup(
-    group: PluginGroup,
+    group: PluginGroup<ResolvedPlugin>,
     anchorId: string,
     showEmptyPlaceholder = false,
   ) {
@@ -660,7 +664,7 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     `;
   }
 
-  private renderRailLeaf(plugin: PluginEntry) {
+  private renderRailLeaf(plugin: ResolvedPlugin) {
     const label = plugin.translations?.[this.locale] ?? plugin.name;
     const active = plugin.tagName === this.selectedEditor?.tagName;
     return html`
@@ -674,7 +678,7 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     `;
   }
 
-  private renderFlyoutItem(plugin: PluginEntry) {
+  private renderFlyoutItem(plugin: ResolvedPlugin) {
     const label = plugin.translations?.[this.locale] ?? plugin.name;
     const selected = plugin.tagName === this.selectedEditor?.tagName;
     return html`

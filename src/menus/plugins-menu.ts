@@ -10,7 +10,7 @@ import { OscdSubMenu } from '@omicronenergy/oscd-ui/menu/OscdSubMenu.js';
 import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
 
 import { LocaleTag, Translation } from '../localization.js';
-import { PluginEntry, PluginGroup } from '../oscd-shell.js';
+import { PluginGroup, ResolvedPlugin } from '../oscd-shell.js';
 import { isPluginGroup } from '../utils/plugin-utils.js';
 
 declare global {
@@ -34,7 +34,7 @@ export class PluginsMenu extends ScopedElementsMixin(LitElement) {
   editableDocs: string[] = [];
 
   @property({ type: Array })
-  menuPlugins: PluginEntry[] = [];
+  menuPlugins: ResolvedPlugin[] = [];
 
   @property({ type: String })
   appIcon!: string;
@@ -54,7 +54,7 @@ export class PluginsMenu extends ScopedElementsMixin(LitElement) {
   @query('oscd-menu')
   menu!: OscdMenu;
 
-  renderMenuGroup(plugin: PluginGroup<PluginEntry>, hasDoc: boolean) {
+  renderMenuGroup(plugin: PluginGroup<ResolvedPlugin>, hasDoc: boolean) {
     return html`
       <oscd-sub-menu>
         <oscd-menu-item slot="item">
@@ -73,7 +73,7 @@ export class PluginsMenu extends ScopedElementsMixin(LitElement) {
     `;
   }
 
-  renderMenuItem(plugin: PluginEntry, hasDoc: boolean) {
+  renderMenuItem(plugin: ResolvedPlugin, hasDoc: boolean) {
     return html`
       <oscd-menu-item
         .disabled=${!!plugin.requireDoc && !hasDoc}

@@ -1,8 +1,8 @@
 import { expect } from '@open-wc/testing';
 import { buildTreeNodes } from './editor-plugins-panel.js';
-import { PluginEntry, PluginGroup } from '../oscd-shell.js';
+import { ResolvedPlugin, PluginGroup } from '../oscd-shell.js';
 
-const leaf = (name: string, tagName: string): PluginEntry => ({
+const leaf = (name: string, tagName: string): ResolvedPlugin => ({
   name,
   tagName,
   icon: 'margin',
@@ -19,7 +19,7 @@ describe('buildTreeNodes', () => {
   });
 
   it('converts a group into a node with a unique positional id and built children', () => {
-    const group: PluginGroup = {
+    const group: PluginGroup<ResolvedPlugin> = {
       name: 'Communication',
       icon: 'folder',
       plugins: [leaf('GOOSE Editor', 'oscd-goose')],
@@ -31,7 +31,7 @@ describe('buildTreeNodes', () => {
   });
 
   it('gives same-named groups distinct ids by position', () => {
-    const group = (name: string): PluginGroup => ({
+    const group = (name: string): PluginGroup<ResolvedPlugin> => ({
       name,
       icon: 'folder',
       plugins: [],

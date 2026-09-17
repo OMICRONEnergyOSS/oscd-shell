@@ -1,9 +1,11 @@
 import { cyrb64 } from '../foundation/cyrb64.js';
 import {
-  PluginBase,
-  PluginEntry,
+  PluginMetadata,
   PluginGroup,
-  SourcedPluginEntry,
+  ResolvedPlugin,
+  OscdPlugin,
+  SourcedPlugin,
+  TaggedPlugin,
 } from '../oscd-shell.js';
 
 const pluginTags = new Map<string, string>();
@@ -21,15 +23,13 @@ function pluginTag(uri: string): string {
   return pluginTags.get(uri)!;
 }
 
-export type AnyPluginEntry = PluginEntry | SourcedPluginEntry;
-
 /**
  * Helper fn to filter root plugins and grouped plugins, whilst preserving the structure.
  */
 export function filterPlugins(
-  pluginItems: (PluginEntry | PluginGroup<PluginEntry>)[],
-  predicate: (plugin: PluginEntry) => boolean,
-): (PluginEntry | PluginGroup<PluginEntry>)[] {
+  pluginItems: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[],
+  predicate: (plugin: ResolvedPlugin) => boolean,
+): (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] {
   return pluginItems
     .map(item =>
       isPluginGroup(item)
@@ -48,7 +48,7 @@ export function filterPlugins(
 /**
  * Returns a flattened array of all plugin entries from a given PluginSet, including those nested within PluginGroups.
  */
-export function flattenPluginEntries<P extends PluginBase = PluginEntry>(
+export function flattenPluginEntries<P extends PluginMetadata = ResolvedPlugin>(
   pluginSet: (P | PluginGroup<P>)[],
 ): P[] {
   return pluginSet.flatMap(item =>
@@ -65,10 +65,10 @@ export function flattenPluginEntries<P extends PluginBase = PluginEntry>(
  * returns the plugins unchanged.
  */
 export function filterBySearchTerm(
-  editors: (PluginEntry | PluginGroup<PluginEntry>)[],
+  editors: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[],
   searchTerm: string,
   locale?: string,
-): (PluginEntry | PluginGroup<PluginEntry>)[] {
+): (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] {
   const term = searchTerm.trim().toLowerCase();
   if (!term) {
     return editors;
@@ -87,9 +87,9 @@ export function filterBySearchTerm(
  * entries whose tagName is included in the given pinnedIds.
  */
 export function filterByPinned(
-  editors: (PluginEntry | PluginGroup<PluginEntry>)[],
+  editors: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[],
   pinnedIds: string[],
-): PluginEntry[] {
+): ResolvedPlugin[] {
   return flattenPluginEntries(editors).filter(plugin =>
     pinnedIds.includes(plugin.tagName),
   );
@@ -101,7 +101,7 @@ export function filterByPinned(
  * @param plugin - The plugin object that failed to load.
  * @returns A Web Component class that displays the error message.
  */
-function generateErrorWcClass(plugin: Partial<PluginEntry>) {
+function generateErrorWcClass(plugin: OscdPlugin) {
   const title = 'Error: Plugin failed to load.';
   const details = `Plugin: ${JSON.stringify(plugin)}`;
   const classString = `
@@ -119,7 +119,7 @@ function generateErrorWcClass(plugin: Partial<PluginEntry>) {
   return new Function(classString)();
 }
 
-export function isPluginGroup<P extends PluginBase = PluginEntry>(
+export function isPluginGroup<P extends PluginMetadata = ResolvedPlugin>(
   item: unknown,
 ): item is PluginGroup<P> {
   return (
@@ -131,11 +131,12 @@ export function isPluginGroup<P extends PluginBase = PluginEntry>(
 }
 
 /**
- * Checks if the given object is a valid Plugin.
+ * Checks whether the given object carries a `tagName`, i.e. names an element
+ * the shell does not have to load itself.
  * @param item - The object to check.
- * @returns true if the object is a Plugin, false otherwise.
+ * @returns true if the object is a TaggedPlugin, false otherwise.
  */
-export function isPluginEntry(item: unknown): item is PluginEntry {
+export function isTaggedPlugin(item: unknown): item is TaggedPlugin {
   return (
     typeof item === 'object' &&
     item !== null &&
@@ -149,7 +150,7 @@ export function isPluginEntry(item: unknown): item is PluginEntry {
  * @param item - The object to check.
  * @returns true if the object is a SourcedPlugin, false otherwise.
  */
-export function isSourcedPlugin(item: unknown): item is SourcedPluginEntry {
+export function isSourcedPlugin(item: unknown): item is SourcedPlugin {
   return (
     typeof item === 'object' &&
     item !== null &&
@@ -164,13 +165,13 @@ export function isSourcedPlugin(item: unknown): item is SourcedPluginEntry {
  * @param plugin - The plugin object to validate.
  * @returns The validated Plugin object or undefined if invalid.
  */
-export function validatePlugin(plugin: unknown): PluginEntry | undefined {
+export function validatePlugin(plugin: unknown): ResolvedPlugin | undefined {
   const missingFields = [];
-  if (!isPluginEntry(plugin)) {
+  if (!isTaggedPlugin(plugin)) {
     missingFields.push('tagName');
   }
 
-  const _plugin = plugin as PluginEntry;
+  const _plugin = plugin as ResolvedPlugin;
   missingFields.push(
     ...(['name', 'icon'] as const).filter(
       field => !_plugin[field] || typeof _plugin[field] !== 'string',
@@ -200,17 +201,31 @@ export function validatePlugin(plugin: unknown): PluginEntry | undefined {
 }
 
 /**
- * Goes through all the plugins in the PluginSet and loads any sourced plugins, replacing the src field with a tagName.
- * If a plugin does not have a tagName, it will be generated based on its src.
- * All plugins returned are validated for required fields.
- * If a sourced plugin fails to load (bad src), it will be replaced with an Error Web Component.
- * @param plugins - Array of plugins to convert.
- * @returns Array of plugins with tagName included.
+ * Resolves a declared plugin list into its render form: every entry is
+ * validated and comes back with a `tagName`, sourced entries having been
+ * imported into the registry under a tag derived from their `src`.
+ *
+ * `src` is checked before `tagName`, so an entry carrying both is re-resolved
+ * from source rather than trusting a tag that may be stale. `src` is dropped
+ * from the result - the declared set remains the record of where a plugin
+ * came from.
+ *
+ * If a sourced plugin fails to load (bad src), it is replaced with an Error Web Component.
+ * @param plugins - Array of declared plugins to resolve.
+ * @returns Array of resolved plugins, each with a tagName.
  */
 export function loadSourcedPlugins(
-  plugins: Partial<PluginEntry | SourcedPluginEntry>[],
+  plugins: OscdPlugin[],
   registry: CustomElementRegistry,
-): PluginEntry[] {
+): ResolvedPlugin[];
+export function loadSourcedPlugins(
+  plugins: (OscdPlugin | PluginGroup<OscdPlugin>)[],
+  registry: CustomElementRegistry,
+): (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[];
+export function loadSourcedPlugins(
+  plugins: (OscdPlugin | PluginGroup<OscdPlugin>)[],
+  registry: CustomElementRegistry,
+): (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] {
   return plugins
     .map(plugin => {
       if (isPluginGroup(plugin)) {
@@ -220,16 +235,17 @@ export function loadSourcedPlugins(
         };
       }
 
-      if (isPluginEntry(plugin)) {
-        return validatePlugin(plugin);
-      }
       if (!isSourcedPlugin(plugin)) {
+        if (isTaggedPlugin(plugin)) {
+          return validatePlugin(plugin);
+        }
         console.error(
           `[Invalid Plugin] Requires a tagName or src - skipping. ${JSON.stringify(plugin)}`,
         );
         return undefined;
       }
-      const { src, ...rest } = plugin as SourcedPluginEntry;
+
+      const { src, ...rest } = plugin as SourcedPlugin;
       const hashedTagName = pluginTag(src);
       const validatedPlugin = validatePlugin({
         ...rest,
@@ -263,5 +279,8 @@ export function loadSourcedPlugins(
         });
       return validatedPlugin;
     })
-    .filter((plugin): plugin is PluginEntry => plugin !== undefined);
+    .filter(
+      (plugin): plugin is ResolvedPlugin | PluginGroup<ResolvedPlugin> =>
+        plugin !== undefined,
+    );
 }

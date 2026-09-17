@@ -4,7 +4,7 @@ import { html } from 'lit';
 
 import './oscd-shell.js';
 import sinon from 'sinon';
-import type { OscdShell, PluginEntry } from './oscd-shell.js';
+import type { OscdPlugin, OscdShell, ResolvedPlugin } from './oscd-shell.js';
 import {
   TestBackgroundPlugin,
   TestMenuPlugin1,
@@ -111,50 +111,44 @@ describe('OscdShell Plugin Handling', () => {
         .to.have.lengthOf(2);
     });
 
-    it('ignores plugins with no tagName or src', async () => {
+    it('keeps a plugin with no tagName or src in the declared set, but excludes it from the resolved set', async () => {
       oscdShell.plugins = {
         editor: [
           {
             name: 'Tagless, Sourceless, Hopeless Plugin',
             icon: 'coronavirus',
-          },
+          } as unknown as OscdPlugin,
         ],
       };
       await oscdShell.updateComplete;
-      expect(oscdShell)
-        .property('plugins')
-        .property('editor')
-        .to.have.lengthOf(0);
+      expect(oscdShell.plugins.editor).to.have.lengthOf(1);
+      expect(oscdShell._resolvedPlugins.editor).to.have.lengthOf(0);
     });
 
-    it('ignores invalid SourcePlugins', async () => {
+    it('excludes an invalid SourcePlugin from the resolved set', async () => {
       oscdShell.plugins = {
         background: [
           {
             src: 'test-background-plugin',
-          },
+          } as unknown as OscdPlugin,
         ],
       };
       await oscdShell.updateComplete;
-      expect(oscdShell)
-        .property('plugins')
-        .property('background')
-        .to.have.lengthOf(0);
+      expect(oscdShell.plugins.background).to.have.lengthOf(1);
+      expect(oscdShell._resolvedPlugins.background).to.have.lengthOf(0);
     });
 
-    it('ignores plugins missing a few fields', async () => {
+    it('excludes a plugin missing required fields from the resolved set', async () => {
       oscdShell.plugins = {
         background: [
           {
             tagName: 'test-background-plugin',
-          },
+          } as unknown as OscdPlugin,
         ],
       };
       await oscdShell.updateComplete;
-      expect(oscdShell)
-        .property('plugins')
-        .property('background')
-        .to.have.lengthOf(0);
+      expect(oscdShell.plugins.background).to.have.lengthOf(1);
+      expect(oscdShell._resolvedPlugins.background).to.have.lengthOf(0);
     });
   });
 
@@ -187,10 +181,10 @@ describe('OscdShell Plugin Handling', () => {
     });
 
     it('should replace the corrupted menu plugins wc with the Error WC', async () => {
-      const { menu } = oscdShell.plugins;
+      const { menu } = oscdShell._resolvedPlugins;
       expect(menu).to.have.lengthOf(1);
       const menuPluginElement = oscdShell.shadowRoot?.querySelector(
-        (menu[0] as PluginEntry).tagName,
+        (menu[0] as ResolvedPlugin).tagName,
       ) as HTMLElement & {
         run: () => Promise<void>;
       };
@@ -205,10 +199,10 @@ describe('OscdShell Plugin Handling', () => {
     });
 
     it('should replace the corrupted editor plugins wc with the Error WC', () => {
-      const { editor } = oscdShell.plugins;
+      const { editor } = oscdShell._resolvedPlugins;
       expect(editor).to.have.lengthOf(1);
       const editorPluginElement = oscdShell.shadowRoot?.querySelector(
-        (editor[0] as PluginEntry).tagName,
+        (editor[0] as ResolvedPlugin).tagName,
       );
       expect(editorPluginElement, 'Editor Plugin Element').to.exist;
       expect(editorPluginElement?.querySelector('h1')?.textContent).to.contain(
