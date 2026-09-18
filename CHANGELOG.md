@@ -2,6 +2,13 @@
 
 - fix npm publishing ([88c7af7](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/88c7af777019755d99824f57f1e2b8cb6cd5c18d))
 
+## [0.0.16](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.15...oscd-shell-v0.0.16) (2026-09-18)
+
+
+### Features
+
+* cleanup Plugin interface namings & prevent plugins property mutation ([4d77761](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/4d77761c9dff54f70960d1a5e7e8a7fee99510ee))
+
 ## [0.0.15](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.14...oscd-shell-v0.0.15) (2026-09-13)
 
 
