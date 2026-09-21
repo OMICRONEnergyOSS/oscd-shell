@@ -77,7 +77,7 @@
     "@web/dev-server-polyfill": "^1.0.6",
     "@web/rollup-plugin-html": "^3.1.0",
     "@web/rollup-plugin-import-meta-assets": "^2.3.3",
-    "@web/test-runner-playwright": "^0.11.1",
+    "@web/test-runner-playwright": "^1.0.0",
     "@web/test-runner-visual-regression": "^0.10.0",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
