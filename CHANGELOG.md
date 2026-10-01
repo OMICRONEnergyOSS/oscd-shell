@@ -2,6 +2,13 @@
 
 - fix npm publishing ([88c7af7](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/88c7af777019755d99824f57f1e2b8cb6cd5c18d))
 
+## [0.0.17](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.16...oscd-shell-v0.0.17) (2026-10-01)
+
+
+### Features
+
+* migrated to reworked oscd-ui v0.1.0 ([21db5d8](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/21db5d86b13b1fb13fb18d42b7962d6a525d0d1d))
+
 ## [0.0.16](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.15...oscd-shell-v0.0.16) (2026-09-18)
 
 
