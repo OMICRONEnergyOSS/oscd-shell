@@ -1,5 +1,8 @@
 import { LitElement } from 'lit';
 import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
+import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
+import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
+import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
 import { XMLEditor } from '@openscd/oscd-editor';
 import { EditEventV2, OpenEvent } from '@openscd/oscd-api';
 import { LocaleTag } from './localization.js';
@@ -8,9 +11,6 @@ import { PluginsMenu } from './menus/plugins-menu.js';
 import { LandingPage } from './landing-page/landing-page.js';
 import { RenameEvent, CloseEvent } from './foundation/events.js';
 import { FilesMenu } from './menus/files-menu.js';
-import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
-import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
-import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
 /** Fields shared by plugin entries and the groups that contain them. */
 export interface PluginMetadata {
     name: string;

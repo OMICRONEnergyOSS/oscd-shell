@@ -762,6 +762,64 @@ const setLocale$1 = (newLocale) => {
  */
 const a=Symbol.for(""),o$1=t=>{if(t?.r===a)return t?._$litStatic$},s=t=>({_$litStatic$:t,r:a}),i$2=(t,...r)=>({_$litStatic$:r.reduce((r,e,a)=>r+(t=>{if(void 0!==t._$litStatic$)return t._$litStatic$;throw Error(`Value passed to 'literal' function must be a 'literal' result: ${t}. Use 'unsafeStatic' to pass non-literal values, but\n            take care to ensure page security.`)})(e)+t[a+1],t[0]),r:a}),l$1=new Map,n$1=t=>(r,...e)=>{const a=e.length;let s,i;const n=[],u=[];let c,$=0,f=false;for(;$<a;){for(c=r[$];$<a&&void 0!==(i=e[$],s=o$1(i));)c+=s+r[++$],f=true;$!==a&&u.push(i),n.push(c),$++;}if($===a&&n.push(r[a]),f){const t=n.join("$$lit$$");void 0===(r=l$1.get(t))&&(n.raw=n,l$1.set(t,r=n)),e=u;}return t(r,...e)},u=n$1(b);
 
+const oscdMd3Mappings = i$6 `
+  :host {
+    --md-sys-color-error: var(--oscd-theme-error, #dc322f);
+    --md-sys-color-error-container: var(--oscd-theme-base2, #eee8d5);
+    --md-sys-color-inverse-on-surface: var(--oscd-theme-base3, #fdf6e3);
+    --md-sys-color-inverse-surface: var(--oscd-theme-base03, #002b36);
+    --md-sys-color-on-error: var(--oscd-theme-base3, #fdf6e3);
+    --md-sys-color-on-error-container: var(--oscd-theme-base00, #657b83);
+    --md-sys-color-on-primary: var(--oscd-theme-base3, #fdf6e3);
+    --md-sys-color-on-primary-container: var(--oscd-theme-base00, #657b83);
+    --md-sys-color-on-secondary: var(--oscd-theme-base3, #fdf6e3);
+    --md-sys-color-on-secondary-container: var(--oscd-theme-base00, #657b83);
+    --md-sys-color-on-surface: var(--oscd-theme-base00, #657b83);
+    --md-sys-color-on-surface-variant: var(--oscd-theme-base0, #839496);
+    --md-sys-color-on-tertiary-container: var(--oscd-theme-base00, #657b83);
+    --md-sys-color-outline: var(--oscd-theme-base01, #586e75);
+    --md-sys-color-outline-variant: var(--oscd-theme-base1, #93a1a1);
+    --md-sys-color-primary: var(--oscd-theme-primary, #2aa198);
+    --md-sys-color-primary-container: var(--oscd-theme-base2, #eee8d5);
+    --md-sys-color-scrim: #000;
+    --md-sys-color-secondary: var(--oscd-theme-secondary, #6c71c4);
+    --md-sys-color-secondary-container: var(--oscd-theme-base2, #eee8d5);
+    --md-sys-color-shadow: #000;
+    --md-sys-color-surface: var(--oscd-theme-base3, #fdf6e3);
+    --md-sys-color-surface-container: var(--oscd-theme-base2, #eee8d5);
+    --md-sys-color-surface-container-high: var(--oscd-theme-base2, #eee8d5);
+    --md-sys-color-surface-container-highest: var(--oscd-theme-base2, #eee8d5);
+    --md-sys-color-surface-container-low: var(--oscd-theme-base3, #fdf6e3);
+    --md-sys-color-tertiary: var(--oscd-theme-secondary, #6c71c4);
+    --md-sys-color-tertiary-container: var(--oscd-theme-base2, #eee8d5);
+  }
+`;
+i$6 `
+  :host {
+    --oscd-ace-editor-syntax-keyword-color: var(
+      --oscd-theme-secondary,
+      #0b335b
+    );
+    --oscd-ace-editor-syntax-string-color: var(--oscd-theme-base00, #46505d);
+    --oscd-ace-editor-syntax-tag-color: var(--oscd-theme-secondary, #0b335b);
+    --oscd-ace-editor-syntax-attribute-name-color: var(
+      --oscd-theme-primary,
+      #2485e5
+    );
+    --oscd-ace-editor-syntax-comment-color: var(--oscd-theme-base01, #3d4651);
+    --oscd-ace-editor-syntax-number-color: var(--oscd-theme-base00, #46505d);
+    --oscd-ace-editor-syntax-invalid-color: var(--oscd-theme-error, #dc322f);
+    --oscd-ace-editor-syntax-storage-color: var(--oscd-theme-primary, #2485e5);
+    --oscd-ace-editor-syntax-operator-color: var(--oscd-theme-base01, #3d4651);
+    --oscd-ace-editor-syntax-parameter-color: var(
+      --oscd-theme-warning,
+      #b58900
+    );
+    --oscd-ace-editor-syntax-regex-color: var(--oscd-theme-error, #dc322f);
+    --oscd-ace-editor-step-color: var(--oscd-theme-warning, #b58900);
+  }
+`;
+
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -2457,7 +2515,7 @@ const styles$g = i$6 `:host{display:inline-flex;outline:none;-webkit-tap-highlig
  */
 /**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
 /**
@@ -2493,468 +2551,24 @@ OscdFilledIconButton.scopedElements = {
 };
 OscdFilledIconButton.styles = [styles$g, styles$h];
 
-function isAttributesV2(attributes) {
-    if (typeof attributes !== 'object' || attributes === null) {
-        return false;
-    }
-    return Object.entries(attributes).every(([key, value]) => typeof key === 'string' && (value === null || typeof value === 'string'));
-}
-function isAttributesNS(attributesNS) {
-    if (typeof attributesNS !== 'object' || attributesNS === null) {
-        return false;
-    }
-    return Object.entries(attributesNS).every(([namespace, attributes]) => typeof namespace === 'string' &&
-        isAttributesV2(attributes));
-}
-function isComplexEditV2(edit) {
-    return edit instanceof Array && edit.every(e => isEditV2(e));
-}
-function isSetTextContent(edit) {
-    return (edit.element instanceof Element &&
-        typeof edit.textContent === 'string');
-}
-function isRemove(edit) {
-    return (edit.parent === undefined &&
-        edit.node instanceof Node);
-}
-function isSetAttributes(edit) {
-    const setAttrs = edit;
-    return (setAttrs.element instanceof Element &&
-        (isAttributesV2(setAttrs.attributes) ||
-            isAttributesNS(setAttrs.attributesNS)));
-}
-function isInsert(edit) {
-    return ((edit.parent instanceof Element ||
-        edit.parent instanceof Document ||
-        edit.parent instanceof DocumentFragment) &&
-        edit.node instanceof Node &&
-        (edit.reference instanceof Node ||
-            edit.reference === null));
-}
-function isEditV2(edit) {
-    if (isComplexEditV2(edit)) {
-        return true;
-    }
-    return (isSetAttributes(edit) ||
-        isSetTextContent(edit) ||
-        isInsert(edit) ||
-        isRemove(edit));
-}
-
-function handleSetTextContent({ element, textContent, }) {
-    const { childNodes } = element;
-    const restoreChildNodes = Array.from(childNodes).map(node => ({
-        parent: element,
-        node,
-        reference: null,
-    }));
-    element.textContent = textContent;
-    const undoTextContent = { element, textContent: '' };
-    return [undoTextContent, ...restoreChildNodes];
-}
-function handleSetAttributes({ element, attributes = {}, attributesNS = {}, }) {
-    const oldAttributes = { ...attributes };
-    const oldAttributesNS = { ...attributesNS };
-    // save element's non-prefixed attributes for undo
-    if (attributes)
-        Object.keys(attributes)
-            .reverse()
-            .forEach(name => {
-            oldAttributes[name] = element.getAttribute(name);
-        });
-    // change element's non-prefixed attributes
-    if (attributes)
-        for (const entry of Object.entries(attributes)) {
-            try {
-                const [name, value] = entry;
-                if (value === null)
-                    element.removeAttribute(name);
-                else
-                    element.setAttribute(name, value);
-            }
-            catch (_e) {
-                // undo nothing if update didn't work on this attribute
-                delete oldAttributes[entry[0]];
-            }
-        }
-    // save element's namespaced attributes for undo
-    if (attributesNS)
-        Object.entries(attributesNS).forEach(([ns, attrs]) => {
-            Object.keys(attrs)
-                .reverse()
-                .forEach(name => {
-                oldAttributesNS[ns] = {
-                    ...oldAttributesNS[ns],
-                    [name]: element.getAttributeNS(ns, name.split(':').pop()),
-                };
-            });
-        });
-    // change element's namespaced attributes
-    if (attributesNS)
-        for (const nsEntry of Object.entries(attributesNS)) {
-            const [ns, attrs] = nsEntry;
-            for (const entry of Object.entries(attrs)) {
-                try {
-                    const [name, value] = entry;
-                    if (value === null) {
-                        element.removeAttributeNS(ns, name.split(':').pop());
-                    }
-                    else {
-                        element.setAttributeNS(ns, name, value);
-                    }
-                }
-                catch (_e) {
-                    delete oldAttributesNS[ns][entry[0]];
-                }
-            }
-        }
-    return {
-        element,
-        attributes: oldAttributes,
-        attributesNS: oldAttributesNS,
-    };
-}
-function handleRemove({ node }) {
-    const { parentNode: parent, nextSibling: reference } = node;
-    if (!parent)
-        return [];
-    parent.removeChild(node);
-    return {
-        node,
-        parent,
-        reference,
-    };
-}
-function handleInsert({ parent, node, reference, }) {
-    try {
-        const { parentNode, nextSibling } = node;
-        parent.insertBefore(node, reference);
-        if (parentNode)
-            // undo: move child node back to original place
-            return {
-                node,
-                parent: parentNode,
-                reference: nextSibling,
-            };
-        // undo: remove orphaned node
-        return { node };
-    }
-    catch (_e) {
-        // undo nothing if insert doesn't work on these nodes
-        return [];
-    }
-}
-/** Applies an EditV2, returning the corresponding "undo" EditV2. */
-function handleEdit(edit) {
-    if (isInsert(edit))
-        return handleInsert(edit);
-    if (isRemove(edit))
-        return handleRemove(edit);
-    if (isSetAttributes(edit))
-        return handleSetAttributes(edit);
-    if (isSetTextContent(edit))
-        return handleSetTextContent(edit);
-    if (isComplexEditV2(edit))
-        return edit
-            .map(edit => handleEdit(edit))
-            .reverse()
-            .flat(Infinity);
-    return [];
-}
-
-var _XMLEditor_subscribers;
-const EMPTY_COMMIT = { undo: [], redo: [], time: Date.now() };
-class XMLEditor {
-    constructor() {
-        this.past = [];
-        this.future = [];
-        _XMLEditor_subscribers.set(this, []);
-    }
-    commit(change, { title, squash } = {}) {
-        const commit = squash && this.past.length
-            ? this.past[this.past.length - 1]
-            : { undo: [], redo: [], time: Date.now() };
-        const undo = handleEdit(change);
-        // typed as per https://github.com/microsoft/TypeScript/issues/49280#issuecomment-1144181818 recommendation:
-        commit.undo.unshift(...[undo].flat(Infinity));
-        commit.redo.push(...[change].flat(Infinity));
-        if (title)
-            commit.title = title;
-        if (squash && this.past.length)
-            this.past.pop();
-        this.past.push(commit);
-        this.future = [];
-        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").forEach(subscriber => subscriber(commit));
-        return commit;
-    }
-    undo() {
-        const commit = this.past.pop();
-        if (!commit)
-            return;
-        handleEdit(commit.undo);
-        this.future.unshift(commit);
-        const previousCommit = this.past[this.past.length - 1] || EMPTY_COMMIT;
-        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").forEach(subscriber => subscriber(previousCommit));
-        return commit;
-    }
-    redo() {
-        const commit = this.future.shift();
-        if (!commit)
-            return;
-        handleEdit(commit.redo);
-        this.past.push(commit);
-        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").forEach(subscriber => subscriber(commit));
-        return commit;
-    }
-    subscribe(txCallback) {
-        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").push(txCallback);
-        return () => {
-            __classPrivateFieldSet(this, _XMLEditor_subscribers, __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").filter(subscriber => subscriber !== txCallback), "f");
-            return txCallback;
-        };
-    }
-}
-_XMLEditor_subscribers = new WeakMap();
-
 /**
- * Hashes `str` using the cyrb64 variant of
- * https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
- * @returns digest - a rather insecure hash, very quickly
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
-function cyrb64(str) {
-    let h1 = 0xdeadbeef;
-    let h2 = 0x41c6ce57;
-    for (let i = 0, ch; i < str.length; i++) {
-        ch = str.charCodeAt(i);
-        h1 = Math.imul(h1 ^ ch, 2654435761);
-        h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 =
-        Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^
-            Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 =
-        Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^
-            Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    return ((h2 >>> 0).toString(16).padStart(8, '0') +
-        (h1 >>> 0).toString(16).padStart(8, '0'));
-}
-
-const pluginTags = new Map();
-/*
- * Generates a unique tag name for a plugin based on its source URI.
- * This is used to ensure that each plugin has a unique identifier in the CustomElements registry.
- * @param uri - The source URI of the plugin.
- * @returns A unique tag name for the plugin.
- */
-function pluginTag(uri) {
-    if (!pluginTags.has(uri)) {
-        pluginTags.set(uri, `oscd-p${cyrb64(uri)}`);
-    }
-    return pluginTags.get(uri);
-}
 /**
- * Helper fn to filter root plugins and grouped plugins, whilst preserving the structure.
+ * A component for elevation.
  */
-function filterPlugins(pluginItems, predicate) {
-    return pluginItems
-        .map(item => isPluginGroup(item)
-        ? {
-            ...item,
-            plugins: item.plugins.filter(predicate),
-        }
-        : item)
-        .filter(item => 
-    //remove empty groups or plugins which don't match the predicate
-    isPluginGroup(item) ? item.plugins.length > 0 : predicate(item));
-}
-/**
- * Returns a flattened array of all plugin entries from a given PluginSet, including those nested within PluginGroups.
- */
-function flattenPluginEntries(pluginSet) {
-    return pluginSet.flatMap(item => isPluginGroup(item) ? item.plugins : [item]);
-}
-/**
- * Filters plugins by a search term, matching (case-insensitively) against the
- * leaf plugin names only - group names are intentionally not matched. When a
- * `locale` is given, the plugin's localized label (`translations[locale]`) is
- * also matched, so users can search by the label they see. The group structure
- * is preserved and empty groups are dropped. An empty or whitespace-only term
- * returns the plugins unchanged.
- */
-function filterBySearchTerm(editors, searchTerm, locale) {
-    const term = searchTerm.trim().toLowerCase();
-    if (!term) {
-        return editors;
-    }
-    return filterPlugins(editors, (plugin) => {
-        const localizedName = locale ? plugin.translations?.[locale] : undefined;
-        return (plugin.name.toLowerCase().includes(term) ||
-            !!localizedName?.toLowerCase().includes(term));
-    });
-}
-/**
- * Flattens plugins (including those nested within groups) and returns the leaf
- * entries whose tagName is included in the given pinnedIds.
- */
-function filterByPinned(editors, pinnedIds) {
-    return flattenPluginEntries(editors).filter(plugin => pinnedIds.includes(plugin.tagName));
-}
-/**
- * Generates a Web Component class that displays an error message when a plugin fails to load.
- * This is used to provide feedback to the Distro developer when a plugin cannot be loaded due to an error.
- * @param plugin - The plugin object that failed to load.
- * @returns A Web Component class that displays the error message.
- */
-function generateErrorWcClass(plugin) {
-    const title = 'Error: Plugin failed to load.';
-    const details = `Plugin: ${JSON.stringify(plugin)}`;
-    const classString = `
-  return class extends HTMLElement {
-
+class Elevation extends i$3 {
     connectedCallback() {
-      this.innerHTML = '<h1>${title}</h1><p>${details}</p><emphasis>Check your plugins.json</emphasis>';
+        super.connectedCallback();
+        // Needed for VoiceOver, which will create a "group" if the element is a
+        // sibling to other content.
+        this.setAttribute('aria-hidden', 'true');
     }
-
-    async run() {
-      alert('${title}\\n\\n ${details}; \\n\\n Check your plugins.json');
+    render() {
+        return b `<span class="shadow"></span>`;
     }
-  }`;
-    return new Function(classString)();
-}
-function isPluginGroup(item) {
-    return (typeof item === 'object' &&
-        item !== null &&
-        'plugins' in item &&
-        Array.isArray(item.plugins));
-}
-/**
- * Checks whether the given object carries a `tagName`, i.e. names an element
- * the shell does not have to load itself.
- * @param item - The object to check.
- * @returns true if the object is a TaggedPlugin, false otherwise.
- */
-function isTaggedPlugin(item) {
-    return (typeof item === 'object' &&
-        item !== null &&
-        'tagName' in item &&
-        typeof item.tagName === 'string');
-}
-/**
- * Checks if the given object is a SourcedPlugin.
- * @param item - The object to check.
- * @returns true if the object is a SourcedPlugin, false otherwise.
- */
-function isSourcedPlugin(item) {
-    return (typeof item === 'object' &&
-        item !== null &&
-        'src' in item &&
-        typeof item.src === 'string');
-}
-/**
- * Validates a Plugin object, checking for required fields and types.
- * If the plugin is invalid, it logs an error and returns undefined.
- * @param plugin - The plugin object to validate.
- * @returns The validated Plugin object or undefined if invalid.
- */
-function validatePlugin(plugin) {
-    const missingFields = [];
-    if (!isTaggedPlugin(plugin)) {
-        missingFields.push('tagName');
-    }
-    const _plugin = plugin;
-    missingFields.push(...['name', 'icon'].filter(field => !_plugin[field] || typeof _plugin[field] !== 'string'));
-    if (typeof _plugin.requireDoc !== 'undefined' &&
-        typeof _plugin.requireDoc !== 'boolean') {
-        missingFields.push('requireDoc');
-    }
-    if (typeof _plugin.translations !== 'undefined' &&
-        (typeof _plugin.translations !== 'object' ||
-            Object.values(_plugin.translations).some(t => typeof t !== 'string'))) {
-        missingFields.push('translations');
-    }
-    if (missingFields.length > 0) {
-        console.error(`[Invalid Plugin]\n${JSON.stringify(plugin, null, 2)}\nMissing/Invalid fields [${missingFields.join(',')}] - skipping.`);
-        return undefined;
-    }
-    return _plugin;
-}
-function loadSourcedPlugins(plugins, registry) {
-    return plugins
-        .map((plugin) => {
-        if (isPluginGroup(plugin)) {
-            return {
-                ...plugin,
-                plugins: loadSourcedPlugins(plugin.plugins, registry),
-            };
-        }
-        if (!isSourcedPlugin(plugin)) {
-            if (isTaggedPlugin(plugin)) {
-                return validatePlugin(plugin);
-            }
-            console.error(`[Invalid Plugin] Requires a tagName or src - skipping. ${JSON.stringify(plugin)}`);
-            return undefined;
-        }
-        const { src, ...rest } = plugin;
-        const hashedTagName = pluginTag(src);
-        const validatedPlugin = validatePlugin({
-            ...rest,
-            tagName: hashedTagName,
-        });
-        if (!validatedPlugin) {
-            return undefined;
-        }
-        if (registry.get(hashedTagName)) {
-            return validatedPlugin;
-        }
-        const url = new URL(src, window.location.href).toString();
-        import(/* @vite-ignore */ url)
-            .then((mod) => {
-            // Because this is async, we need to check (again) if the element is already defined.
-            if (!registry?.get(hashedTagName)) {
-                registry.define(hashedTagName, mod.default);
-            }
-        })
-            .catch((err) => {
-            // Log this as a warning because we load an Error WC in place of the plugin.
-            console.warn(`[Invalid Plugin] Failed to load plugin ${plugin.name} <${hashedTagName}/> from ${url}`, err);
-            const ErrWc = generateErrorWcClass(plugin);
-            registry.define(hashedTagName, ErrWc);
-        });
-        return validatedPlugin;
-    })
-        .filter((plugin) => plugin !== undefined);
-}
-
-// Do not modify this file by hand!
-// Re-generate this file by running lit-localize.
-/**
- * The locale code that templates in this source code are written in.
- */
-const sourceLocale = `en`;
-/**
- * The other locale codes that this application is localized into. Sorted
- * lexicographically.
- */
-const targetLocales = [
-    `de`,
-];
-
-const { getLocale, setLocale } = window.localization ??
-    configureLocalization({
-        sourceLocale,
-        targetLocales,
-        loadLocale: (_locale) => {
-            return import(new URL(`./locales/de.js`, import.meta.url).href);
-        },
-    });
-/*
- * To prevent multiple calls to configureLocalization,
- * we store the getLocale and setLocale functions on the window object.
- * This happens now and again in development mode with HMR, perhaps
- * we should wrap this in a check for dev mode only?
- */
-if (!window.localization) {
-    window.localization = { getLocale, setLocale };
 }
 
 /**
@@ -2962,9 +2576,208 @@ if (!window.localization) {
  * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-// Generated stylesheet for ./iconbutton/internal/standard-styles.css.
-const styles$f = i$6 `:host{--_disabled-icon-color: var(--md-icon-button-disabled-icon-color, var(--md-sys-color-on-surface, #1d1b20));--_disabled-icon-opacity: var(--md-icon-button-disabled-icon-opacity, 0.38);--_icon-size: var(--md-icon-button-icon-size, 24px);--_selected-focus-icon-color: var(--md-icon-button-selected-focus-icon-color, var(--md-sys-color-primary, #6750a4));--_selected-hover-icon-color: var(--md-icon-button-selected-hover-icon-color, var(--md-sys-color-primary, #6750a4));--_selected-hover-state-layer-color: var(--md-icon-button-selected-hover-state-layer-color, var(--md-sys-color-primary, #6750a4));--_selected-hover-state-layer-opacity: var(--md-icon-button-selected-hover-state-layer-opacity, 0.08);--_selected-icon-color: var(--md-icon-button-selected-icon-color, var(--md-sys-color-primary, #6750a4));--_selected-pressed-icon-color: var(--md-icon-button-selected-pressed-icon-color, var(--md-sys-color-primary, #6750a4));--_selected-pressed-state-layer-color: var(--md-icon-button-selected-pressed-state-layer-color, var(--md-sys-color-primary, #6750a4));--_selected-pressed-state-layer-opacity: var(--md-icon-button-selected-pressed-state-layer-opacity, 0.12);--_state-layer-height: var(--md-icon-button-state-layer-height, 40px);--_state-layer-shape: var(--md-icon-button-state-layer-shape, var(--md-sys-shape-corner-full, 9999px));--_state-layer-width: var(--md-icon-button-state-layer-width, 40px);--_focus-icon-color: var(--md-icon-button-focus-icon-color, var(--md-sys-color-on-surface-variant, #49454f));--_hover-icon-color: var(--md-icon-button-hover-icon-color, var(--md-sys-color-on-surface-variant, #49454f));--_hover-state-layer-color: var(--md-icon-button-hover-state-layer-color, var(--md-sys-color-on-surface-variant, #49454f));--_hover-state-layer-opacity: var(--md-icon-button-hover-state-layer-opacity, 0.08);--_icon-color: var(--md-icon-button-icon-color, var(--md-sys-color-on-surface-variant, #49454f));--_pressed-icon-color: var(--md-icon-button-pressed-icon-color, var(--md-sys-color-on-surface-variant, #49454f));--_pressed-state-layer-color: var(--md-icon-button-pressed-state-layer-color, var(--md-sys-color-on-surface-variant, #49454f));--_pressed-state-layer-opacity: var(--md-icon-button-pressed-state-layer-opacity, 0.12);--_container-shape-start-start: 0;--_container-shape-start-end: 0;--_container-shape-end-end: 0;--_container-shape-end-start: 0;--_container-height: 0;--_container-width: 0;height:var(--_state-layer-height);width:var(--_state-layer-width)}:host([touch-target=wrapper]){margin:max(0px,(48px - var(--_state-layer-height))/2) max(0px,(48px - var(--_state-layer-width))/2)}md-focus-ring{--md-focus-ring-shape-start-start: var(--_state-layer-shape);--md-focus-ring-shape-start-end: var(--_state-layer-shape);--md-focus-ring-shape-end-end: var(--_state-layer-shape);--md-focus-ring-shape-end-start: var(--_state-layer-shape)}.standard{background-color:rgba(0,0,0,0);color:var(--_icon-color);--md-ripple-hover-color: var(--_hover-state-layer-color);--md-ripple-hover-opacity: var(--_hover-state-layer-opacity);--md-ripple-pressed-color: var(--_pressed-state-layer-color);--md-ripple-pressed-opacity: var(--_pressed-state-layer-opacity)}.standard:hover{color:var(--_hover-icon-color)}.standard:focus{color:var(--_focus-icon-color)}.standard:active{color:var(--_pressed-icon-color)}.standard:is(:disabled,[aria-disabled=true]){color:var(--_disabled-icon-color)}md-ripple{border-radius:var(--_state-layer-shape)}.standard:is(:disabled,[aria-disabled=true]){opacity:var(--_disabled-icon-opacity)}.selected{--md-ripple-hover-color: var(--_selected-hover-state-layer-color);--md-ripple-hover-opacity: var(--_selected-hover-state-layer-opacity);--md-ripple-pressed-color: var(--_selected-pressed-state-layer-color);--md-ripple-pressed-opacity: var(--_selected-pressed-state-layer-opacity)}.selected:not(:disabled,[aria-disabled=true]){color:var(--_selected-icon-color)}.selected:not(:disabled,[aria-disabled=true]):hover{color:var(--_selected-hover-icon-color)}.selected:not(:disabled,[aria-disabled=true]):focus{color:var(--_selected-focus-icon-color)}.selected:not(:disabled,[aria-disabled=true]):active{color:var(--_selected-pressed-icon-color)}
+// Generated stylesheet for ./elevation/internal/elevation-styles.css.
+const styles$f = i$6 `:host,.shadow,.shadow::before,.shadow::after{border-radius:inherit;inset:0;position:absolute;transition-duration:inherit;transition-property:inherit;transition-timing-function:inherit}:host{display:flex;pointer-events:none;transition-property:box-shadow,opacity}.shadow::before,.shadow::after{content:"";transition-property:box-shadow,opacity;--_level: var(--md-elevation-level, 0);--_shadow-color: var(--md-elevation-shadow-color, var(--md-sys-color-shadow, #000))}.shadow::before{box-shadow:0px calc(1px*(clamp(0,var(--_level),1) + clamp(0,var(--_level) - 3,1) + 2*clamp(0,var(--_level) - 4,1))) calc(1px*(2*clamp(0,var(--_level),1) + clamp(0,var(--_level) - 2,1) + clamp(0,var(--_level) - 4,1))) 0px var(--_shadow-color);opacity:.3}.shadow::after{box-shadow:0px calc(1px*(clamp(0,var(--_level),1) + clamp(0,var(--_level) - 1,1) + 2*clamp(0,var(--_level) - 2,3))) calc(1px*(3*clamp(0,var(--_level),2) + 2*clamp(0,var(--_level) - 2,3))) calc(1px*(clamp(0,var(--_level),4) + 2*clamp(0,var(--_level) - 4,1))) var(--_shadow-color);opacity:.15}
 `;
+
+/*
+ * GENERATED SOURCE FILE. DO NOT MODIFY.
+ * Modifications will be overwritten.
+ * To prevent this file from being overwritten, remove this comment entirely.
+ */
+/**
+ * @tagname oscd-elevation
+ * The `<oscd-elevation>` custom element with default styles.
+ *
+ * Elevation is the relative distance between two surfaces along the z-axis.
+ *
+ * @final
+ * @suppress {visibility}
+ */
+class OscdElevation extends Elevation {
+}
+OscdElevation.styles = [styles$f];
+
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/**
+ * @tag oscd-app-bar
+ * @class OscdAppBar
+ * @extends ScopedElementsMixin(LitElement)
+ * @summary A component that renders an app bar.
+ *
+ * The app bar is a top-level navigation component that displays information and actions relating to the current screen.
+ * It can contain a title, navigation icons, and action icons.
+ * The app bar is typically used in conjunction with a navigation drawer or bottom navigation.
+ *
+ * The main row follows the MD3 small top-app-bar defaults. Set `scrolled` when
+ * the consumer determines that the page has scrolled. The sub-bar keeps its
+ * primary-colored appearance in either state.
+ *
+ * @slot alignStart - Slot for action icons at the start of the app bar.
+ * @slot alignMiddle - Slot for the headline content.
+ * @slot alignEnd - Slot for action icons at the end of the app bar.
+ * @slot Default - Slot for additional content which will appear immediately under the main app bar.
+ *
+ * @cssprop [--oscd-app-bar-container-color=var(--md-sys-color-surface, #fef7ff)] - Main-row container color at rest.
+ * @cssprop [--oscd-app-bar-container-height=64px] - Main-row height.
+ * @cssprop [--oscd-app-bar-container-small-height=64px] - Main-row height at viewport widths up to 599px.
+ * @cssprop [--oscd-app-bar-container-elevation=0] - Main-row elevation at rest.
+ * @cssprop [--oscd-app-bar-container-shadow-color=var(--md-sys-color-shadow, #000)] - Main-row shadow color.
+ * @cssprop [--oscd-app-bar-headline-color=var(--md-sys-color-on-surface, #1d1b20)] - Headline color.
+ * @cssprop [--oscd-app-bar-headline-font=var(--md-sys-typescale-title-large-font, var(--md-ref-typeface-brand, Roboto))] - Headline font family.
+ * @cssprop [--oscd-app-bar-headline-size=var(--md-sys-typescale-title-large-size, 1.375rem)] - Headline font size.
+ * @cssprop [--oscd-app-bar-headline-line-height=var(--md-sys-typescale-title-large-line-height, 1.75rem)] - Headline line height.
+ * @cssprop [--oscd-app-bar-headline-weight=var(--md-sys-typescale-title-large-weight, 400)] - Headline font weight.
+ * @cssprop [--oscd-app-bar-leading-icon-color=var(--md-sys-color-on-surface, #1d1b20)] - Leading icon color.
+ * @cssprop [--oscd-app-bar-trailing-icon-color=var(--md-sys-color-on-surface-variant, #49454f)] - Trailing icon color.
+ * @cssprop [--oscd-app-bar-on-scroll-container-color=var(--md-sys-color-surface-container, #f3edf7)] - Main-row container color when `scrolled` is true.
+ * @cssprop [--oscd-app-bar-on-scroll-container-elevation=2] - Main-row elevation when `scrolled` is true.
+ */
+class OscdAppBar extends ScopedElementsMixin(i$3) {
+    constructor() {
+        super(...arguments);
+        this.scrolled = false;
+    }
+    static get scopedElements() {
+        return {
+            'oscd-elevation': OscdElevation,
+        };
+    }
+    // eslint-disable-next-line class-methods-use-this
+    render() {
+        return b `
+      <header>
+        <div>
+          <div class="main-header">
+            <slot name="alignStart"></slot>
+            <span class="spacer"></span>
+            <slot name="alignMiddle"></slot>
+            <span class="spacer"></span>
+            <slot name="alignEnd"></slot>
+          </div>
+          <div class="sub-header">
+            <slot></slot>
+          </div>
+        </div>
+        <oscd-elevation part="elevation"></oscd-elevation>
+      </header>
+    `;
+    }
+}
+OscdAppBar.styles = i$6 `
+    header {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      position: sticky;
+      top: 0;
+      z-index: 4;
+    }
+
+    .main-header {
+      padding: 0 12px;
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      height: var(--oscd-app-bar-container-height, 64px);
+      color: var(--md-sys-color-on-surface, #1d1b20);
+      background-color: var(
+        --oscd-app-bar-container-color,
+        var(--md-sys-color-surface, #fef7ff)
+      );
+    }
+
+    @media (max-width: 599px) {
+      .main-header {
+        height: var(--oscd-app-bar-container-small-height, 64px);
+      }
+    }
+
+    :host([scrolled]) .main-header {
+      background-color: var(
+        --oscd-app-bar-on-scroll-container-color,
+        var(--md-sys-color-surface-container, #f3edf7)
+      );
+    }
+
+    oscd-elevation {
+      --md-elevation-level: var(--oscd-app-bar-container-elevation, 0);
+      --md-elevation-shadow-color: var(
+        --oscd-app-bar-container-shadow-color,
+        var(--md-sys-color-shadow, #000)
+      );
+    }
+
+    :host([scrolled]) oscd-elevation {
+      --md-elevation-level: var(
+        --oscd-app-bar-on-scroll-container-elevation,
+        2
+      );
+    }
+
+    ::slotted([slot='title']),
+    ::slotted([slot='alignMiddle']) {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 16px;
+      color: var(
+        --oscd-app-bar-headline-color,
+        var(--md-sys-color-on-surface, #1d1b20)
+      );
+      font-family: var(
+        --oscd-app-bar-headline-font,
+        var(
+          --md-sys-typescale-title-large-font,
+          var(--md-ref-typeface-brand, Roboto)
+        )
+      );
+      font-size: var(
+        --oscd-app-bar-headline-size,
+        var(--md-sys-typescale-title-large-size, 1.375rem)
+      );
+      font-weight: var(
+        --oscd-app-bar-headline-weight,
+        var(--md-sys-typescale-title-large-weight, 400)
+      );
+      line-height: var(
+        --oscd-app-bar-headline-line-height,
+        var(--md-sys-typescale-title-large-line-height, 1.75rem)
+      );
+    }
+
+    ::slotted([slot='alignStart']) {
+      --md-icon-button-icon-color: var(
+        --oscd-app-bar-leading-icon-color,
+        var(--md-sys-color-on-surface, #1d1b20)
+      );
+    }
+
+    ::slotted([slot='alignEnd']) {
+      --md-icon-button-icon-color: var(
+        --oscd-app-bar-trailing-icon-color,
+        var(--md-sys-color-on-surface-variant, #49454f)
+      );
+    }
+
+    .sub-header {
+      display: flex;
+      width: 100%;
+      color: var(--md-sys-color-on-primary, #fff);
+      background-color: var(--md-sys-color-primary, #6750a4);
+    }
+
+    .spacer {
+      flex: 1;
+    }
+  `;
+__decorate([
+    n$3({ type: Boolean, reflect: true })
+], OscdAppBar.prototype, "scrolled", void 0);
 
 /**
  * @license
@@ -2972,41 +2785,62 @@ const styles$f = i$6 `:host{--_disabled-icon-color: var(--md-icon-button-disable
  * SPDX-License-Identifier: Apache-2.0
  */
 /**
+ * A divider component.
+ */
+class Divider extends i$3 {
+    constructor() {
+        super(...arguments);
+        /**
+         * Indents the divider with equal padding on both sides.
+         */
+        this.inset = false;
+        /**
+         * Indents the divider with padding on the leading side.
+         */
+        this.insetStart = false;
+        /**
+         * Indents the divider with padding on the trailing side.
+         */
+        this.insetEnd = false;
+    }
+}
+__decorate([
+    n$3({ type: Boolean, reflect: true })
+], Divider.prototype, "inset", void 0);
+__decorate([
+    n$3({ type: Boolean, reflect: true, attribute: 'inset-start' })
+], Divider.prototype, "insetStart", void 0);
+__decorate([
+    n$3({ type: Boolean, reflect: true, attribute: 'inset-end' })
+], Divider.prototype, "insetEnd", void 0);
+
+/**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+// Generated stylesheet for ./divider/internal/divider-styles.css.
+const styles$e = i$6 `:host{box-sizing:border-box;color:var(--md-divider-color, var(--md-sys-color-outline-variant, #cac4d0));display:flex;height:var(--md-divider-thickness, 1px);width:100%}:host([inset]),:host([inset-start]){padding-inline-start:16px}:host([inset]),:host([inset-end]){padding-inline-end:16px}:host::before{background:currentColor;content:"";height:100%;width:100%}@media(forced-colors: active){:host::before{background:CanvasText}}
+`;
+
+/*
+ * GENERATED SOURCE FILE. DO NOT MODIFY.
+ * Modifications will be overwritten.
+ * To prevent this file from being overwritten, remove this comment entirely.
+ */
 /**
- * @tagname oscd-icon-button
- * @summary Icon buttons help people take supplementary actions with a single
- * tap.
+ * @tagname oscd-divider
+ * @summary A divider is a thin line that groups content in lists and
+ * containers.
  *
- * __Emphasis:__ Low emphasis – For optional or supplementary actions with the
- * least amount of prominence.
- *
- * __Rationale:__ The most compact and unobtrusive type of button, icon buttons
- * are used for optional supplementary actions such as "Bookmark" or "Star."
- *
- * __Example usages:__
- * - Add to Favorites
- * - Print
+ * list items or define tappable regions in an accordion.
  *
  * @final
  * @suppress {visibility}
  */
-class OscdIconButton extends ScopedElementsMixin(IconButton) {
-    getRenderClasses() {
-        return {
-            ...super.getRenderClasses(),
-            standard: true,
-        };
-    }
+class OscdDivider extends Divider {
 }
-OscdIconButton.scopedElements = {
-    'md-ripple': OscdRipple,
-    'md-focus-ring': OscdFocusRing,
-};
-OscdIconButton.styles = [styles$g, styles$f];
+OscdDivider.styles = [styles$e];
 
 /**
  * @license
@@ -3654,20 +3488,23 @@ const furtherPowerSystemEquipmentLogicalNode = w `<svg viewBox="0 0 24 24">
 
 /**
  * @license
- * Copyright 2022 Google LLC
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
-/**
- * @license
- * Copyright 2025 Omicron Energy GmbH
- * SPDX-License-Identifier: Apache-2.0
- */
+function pathToSvg(type) {
+    return w `<svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="24"
+    viewBox="0 0 26.5 24"
+    width="24"
+  >
+    ${pathsSVG[type]}
+  </svg> `;
+}
 const SCL_ICONS = {
-    // From compare.ts
     elementIcon: elementIcon,
     attributeIcon: attributeIcon,
     contentIcon: contentIcon,
-    // From icons.ts
     editIcon: editIcon,
     gooseIcon: gooseIcon,
     reportIcon: reportIcon,
@@ -3696,11 +3533,9 @@ const SCL_ICONS = {
     lineIcon: lineIcon,
     processIcon: processIcon,
     transformerWindingIcon: transformerWindingIcon,
-    // From ied-icons.ts
     accessPointIcon: accessPointIcon,
     serverIcon: serverIcon,
     logicalDeviceIcon: logicalDeviceIcon,
-    // From lnode.ts
     systemLogicalNode: systemLogicalNode,
     automationLogicalNode: automationLogicalNode,
     controlLogicalNode: controlLogicalNode,
@@ -3728,97 +3563,10 @@ const SCL_ICONS = {
     EnumType: pathToSvg('enumIcon'),
     LNodeType: pathToSvg('lNIcon'),
 });
-function pathToSvg(type) {
-    return w `<svg
-    xmlns="http://www.w3.org/2000/svg"
-    height="24"
-    viewBox="0 0 26.5 24"
-    width="24"
-  >
-    ${pathsSVG[type]}
-  </svg> `;
-}
-// export function getFilterIcon(
-//   type: iconType,
-//   state: boolean,
-// ): SVGTemplateResult {
-//   if (type === 'reset') {
-//     return svg``;
-//   }
-//   const height = iconProperties[type]?.height ?? 24;
-//   const width = iconProperties[type]?.width ?? 24;
-//   return svg`<svg
-//     slot="${state ? 'onIcon' : 'offIcon'}"
-//     xmlns="http://www.w3.org/2000/svg"
-//     height="${height}"
-//     viewBox="0 0 ${width} ${height}"
-//     width="${width}"
-//   >
-//     ${icons.pathsSVG[type]}
-//   </svg> `;
-// }
-/**
- * Returns an SVG template result for the given icon name.
- * @param name - The name of the icon to retrieve
- * @returns The SVG template result, or undefined if the icon doesn't exist
- */
-function toSVG(name) {
-    return SCL_ICONS[name];
-}
-/**
- * @tagname oscd-scl-icon
- * @summary SCL icon component.
- * @final
- * @suppress {visibility}
- */
-class OscdSclIcon extends ScopedElementsMixin(i$3) {
-    constructor() {
-        super(...arguments);
-        this._name = '';
-    }
-    static get scopedElements() {
-        return {
-            'oscd-icon': OscdIcon,
-        };
-    }
-    // Read the text node (ligature-like API)
-    connectedCallback() {
-        super.connectedCallback();
-        this._updateName();
-        // Observe changes to text content
-        this._observer = new MutationObserver(() => {
-            this._updateName();
-        });
-        this._observer.observe(this, {
-            characterData: true,
-            subtree: true,
-            childList: true,
-        });
-    }
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        this._observer?.disconnect();
-    }
-    _updateName() {
-        const newName = (this.textContent || '').trim();
-        if (newName !== this._name) {
-            this._name = newName;
-            this.requestUpdate();
-        }
-    }
-    render() {
-        const svg = toSVG(this._name);
-        if (!svg) {
-            // Fallback: render the name for debugging (or a default icon)
-            return b `<span>${this._name}</span>`;
-        }
-        return b `<oscd-icon>${svg}</oscd-icon>`;
-    }
-}
 
 /**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
 /**
@@ -3875,7 +3623,7 @@ class Icon extends Icon$1 {
  * SPDX-License-Identifier: Apache-2.0
  */
 // Generated stylesheet for ./icon/internal/icon-styles.css.
-const styles$e = i$6 `:host{font-size:var(--md-icon-size, 24px);width:var(--md-icon-size, 24px);height:var(--md-icon-size, 24px);color:inherit;font-variation-settings:inherit;font-weight:400;font-family:var(--md-icon-font, Material Symbols Outlined);display:inline-flex;font-style:normal;place-items:center;place-content:center;line-height:1;overflow:hidden;letter-spacing:normal;text-transform:none;user-select:none;white-space:nowrap;word-wrap:normal;flex-shrink:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale}::slotted(svg){fill:currentColor}::slotted(*){height:100%;width:100%}
+const styles$d = i$6 `:host{font-size:var(--md-icon-size, 24px);width:var(--md-icon-size, 24px);height:var(--md-icon-size, 24px);color:inherit;font-variation-settings:inherit;font-weight:400;font-family:var(--md-icon-font, Material Symbols Outlined);display:inline-flex;font-style:normal;place-items:center;place-content:center;line-height:1;overflow:hidden;letter-spacing:normal;text-transform:none;user-select:none;white-space:nowrap;word-wrap:normal;flex-shrink:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale}::slotted(svg){fill:currentColor}::slotted(*){height:100%;width:100%}
 `;
 
 /**
@@ -3885,7 +3633,7 @@ const styles$e = i$6 `:host{font-size:var(--md-icon-size, 24px);width:var(--md-i
  */
 /**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
 /**
@@ -3908,7 +3656,522 @@ const styles$e = i$6 `:host{font-size:var(--md-icon-size, 24px);width:var(--md-i
 class OscdIcon extends Icon {
 }
 /** @nocollapse */
-OscdIcon.styles = [styles$e];
+OscdIcon.styles = [styles$d];
+
+function isAttributesV2(attributes) {
+    if (typeof attributes !== 'object' || attributes === null) {
+        return false;
+    }
+    return Object.entries(attributes).every(([key, value]) => typeof key === 'string' && (value === null || typeof value === 'string'));
+}
+function isAttributesNS(attributesNS) {
+    if (typeof attributesNS !== 'object' || attributesNS === null) {
+        return false;
+    }
+    return Object.entries(attributesNS).every(([namespace, attributes]) => typeof namespace === 'string' &&
+        isAttributesV2(attributes));
+}
+function isComplexEditV2(edit) {
+    return edit instanceof Array && edit.every(e => isEditV2(e));
+}
+function isSetTextContent(edit) {
+    return (edit.element instanceof Element &&
+        typeof edit.textContent === 'string');
+}
+function isRemove(edit) {
+    return (edit.parent === undefined &&
+        edit.node instanceof Node);
+}
+function isSetAttributes(edit) {
+    const setAttrs = edit;
+    return (setAttrs.element instanceof Element &&
+        (isAttributesV2(setAttrs.attributes) ||
+            isAttributesNS(setAttrs.attributesNS)));
+}
+function isInsert(edit) {
+    return ((edit.parent instanceof Element ||
+        edit.parent instanceof Document ||
+        edit.parent instanceof DocumentFragment) &&
+        edit.node instanceof Node &&
+        (edit.reference instanceof Node ||
+            edit.reference === null));
+}
+function isEditV2(edit) {
+    if (isComplexEditV2(edit)) {
+        return true;
+    }
+    return (isSetAttributes(edit) ||
+        isSetTextContent(edit) ||
+        isInsert(edit) ||
+        isRemove(edit));
+}
+
+function handleSetTextContent({ element, textContent, }) {
+    const { childNodes } = element;
+    const restoreChildNodes = Array.from(childNodes).map(node => ({
+        parent: element,
+        node,
+        reference: null,
+    }));
+    element.textContent = textContent;
+    const undoTextContent = { element, textContent: '' };
+    return [undoTextContent, ...restoreChildNodes];
+}
+function handleSetAttributes({ element, attributes = {}, attributesNS = {}, }) {
+    const oldAttributes = { ...attributes };
+    const oldAttributesNS = { ...attributesNS };
+    // save element's non-prefixed attributes for undo
+    if (attributes)
+        Object.keys(attributes)
+            .reverse()
+            .forEach(name => {
+            oldAttributes[name] = element.getAttribute(name);
+        });
+    // change element's non-prefixed attributes
+    if (attributes)
+        for (const entry of Object.entries(attributes)) {
+            try {
+                const [name, value] = entry;
+                if (value === null)
+                    element.removeAttribute(name);
+                else
+                    element.setAttribute(name, value);
+            }
+            catch (_e) {
+                // undo nothing if update didn't work on this attribute
+                delete oldAttributes[entry[0]];
+            }
+        }
+    // save element's namespaced attributes for undo
+    if (attributesNS)
+        Object.entries(attributesNS).forEach(([ns, attrs]) => {
+            Object.keys(attrs)
+                .reverse()
+                .forEach(name => {
+                oldAttributesNS[ns] = {
+                    ...oldAttributesNS[ns],
+                    [name]: element.getAttributeNS(ns, name.split(':').pop()),
+                };
+            });
+        });
+    // change element's namespaced attributes
+    if (attributesNS)
+        for (const nsEntry of Object.entries(attributesNS)) {
+            const [ns, attrs] = nsEntry;
+            for (const entry of Object.entries(attrs)) {
+                try {
+                    const [name, value] = entry;
+                    if (value === null) {
+                        element.removeAttributeNS(ns, name.split(':').pop());
+                    }
+                    else {
+                        element.setAttributeNS(ns, name, value);
+                    }
+                }
+                catch (_e) {
+                    delete oldAttributesNS[ns][entry[0]];
+                }
+            }
+        }
+    return {
+        element,
+        attributes: oldAttributes,
+        attributesNS: oldAttributesNS,
+    };
+}
+function handleRemove({ node }) {
+    const { parentNode: parent, nextSibling: reference } = node;
+    if (!parent)
+        return [];
+    parent.removeChild(node);
+    return {
+        node,
+        parent,
+        reference,
+    };
+}
+function handleInsert({ parent, node, reference, }) {
+    try {
+        const { parentNode, nextSibling } = node;
+        parent.insertBefore(node, reference);
+        if (parentNode)
+            // undo: move child node back to original place
+            return {
+                node,
+                parent: parentNode,
+                reference: nextSibling,
+            };
+        // undo: remove orphaned node
+        return { node };
+    }
+    catch (_e) {
+        // undo nothing if insert doesn't work on these nodes
+        return [];
+    }
+}
+/** Applies an EditV2, returning the corresponding "undo" EditV2. */
+function handleEdit(edit) {
+    if (isInsert(edit))
+        return handleInsert(edit);
+    if (isRemove(edit))
+        return handleRemove(edit);
+    if (isSetAttributes(edit))
+        return handleSetAttributes(edit);
+    if (isSetTextContent(edit))
+        return handleSetTextContent(edit);
+    if (isComplexEditV2(edit))
+        return edit
+            .map(edit => handleEdit(edit))
+            .reverse()
+            .flat(Infinity);
+    return [];
+}
+
+var _XMLEditor_subscribers;
+const EMPTY_COMMIT = { undo: [], redo: [], time: Date.now() };
+class XMLEditor {
+    constructor() {
+        this.past = [];
+        this.future = [];
+        _XMLEditor_subscribers.set(this, []);
+    }
+    commit(change, { title, squash } = {}) {
+        const commit = squash && this.past.length
+            ? this.past[this.past.length - 1]
+            : { undo: [], redo: [], time: Date.now() };
+        const undo = handleEdit(change);
+        // typed as per https://github.com/microsoft/TypeScript/issues/49280#issuecomment-1144181818 recommendation:
+        commit.undo.unshift(...[undo].flat(Infinity));
+        commit.redo.push(...[change].flat(Infinity));
+        if (title)
+            commit.title = title;
+        if (squash && this.past.length)
+            this.past.pop();
+        this.past.push(commit);
+        this.future = [];
+        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").forEach(subscriber => subscriber(commit));
+        return commit;
+    }
+    undo() {
+        const commit = this.past.pop();
+        if (!commit)
+            return;
+        handleEdit(commit.undo);
+        this.future.unshift(commit);
+        const previousCommit = this.past[this.past.length - 1] || EMPTY_COMMIT;
+        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").forEach(subscriber => subscriber(previousCommit));
+        return commit;
+    }
+    redo() {
+        const commit = this.future.shift();
+        if (!commit)
+            return;
+        handleEdit(commit.redo);
+        this.past.push(commit);
+        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").forEach(subscriber => subscriber(commit));
+        return commit;
+    }
+    subscribe(txCallback) {
+        __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").push(txCallback);
+        return () => {
+            __classPrivateFieldSet(this, _XMLEditor_subscribers, __classPrivateFieldGet(this, _XMLEditor_subscribers, "f").filter(subscriber => subscriber !== txCallback), "f");
+            return txCallback;
+        };
+    }
+}
+_XMLEditor_subscribers = new WeakMap();
+
+/**
+ * Hashes `str` using the cyrb64 variant of
+ * https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
+ * @returns digest - a rather insecure hash, very quickly
+ */
+function cyrb64(str) {
+    let h1 = 0xdeadbeef;
+    let h2 = 0x41c6ce57;
+    for (let i = 0, ch; i < str.length; i++) {
+        ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 =
+        Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^
+            Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 =
+        Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^
+            Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return ((h2 >>> 0).toString(16).padStart(8, '0') +
+        (h1 >>> 0).toString(16).padStart(8, '0'));
+}
+
+const pluginTags = new Map();
+/*
+ * Generates a unique tag name for a plugin based on its source URI.
+ * This is used to ensure that each plugin has a unique identifier in the CustomElements registry.
+ * @param uri - The source URI of the plugin.
+ * @returns A unique tag name for the plugin.
+ */
+function pluginTag(uri) {
+    if (!pluginTags.has(uri)) {
+        pluginTags.set(uri, `oscd-p${cyrb64(uri)}`);
+    }
+    return pluginTags.get(uri);
+}
+/**
+ * Helper fn to filter root plugins and grouped plugins, whilst preserving the structure.
+ */
+function filterPlugins(pluginItems, predicate) {
+    return pluginItems
+        .map(item => isPluginGroup(item)
+        ? {
+            ...item,
+            plugins: item.plugins.filter(predicate),
+        }
+        : item)
+        .filter(item => 
+    //remove empty groups or plugins which don't match the predicate
+    isPluginGroup(item) ? item.plugins.length > 0 : predicate(item));
+}
+/**
+ * Returns a flattened array of all plugin entries from a given PluginSet, including those nested within PluginGroups.
+ */
+function flattenPluginEntries(pluginSet) {
+    return pluginSet.flatMap(item => isPluginGroup(item) ? item.plugins : [item]);
+}
+/**
+ * Filters plugins by a search term, matching (case-insensitively) against the
+ * leaf plugin names only - group names are intentionally not matched. When a
+ * `locale` is given, the plugin's localized label (`translations[locale]`) is
+ * also matched, so users can search by the label they see. The group structure
+ * is preserved and empty groups are dropped. An empty or whitespace-only term
+ * returns the plugins unchanged.
+ */
+function filterBySearchTerm(editors, searchTerm, locale) {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) {
+        return editors;
+    }
+    return filterPlugins(editors, (plugin) => {
+        const localizedName = locale ? plugin.translations?.[locale] : undefined;
+        return (plugin.name.toLowerCase().includes(term) ||
+            !!localizedName?.toLowerCase().includes(term));
+    });
+}
+/**
+ * Flattens plugins (including those nested within groups) and returns the leaf
+ * entries whose tagName is included in the given pinnedIds.
+ */
+function filterByPinned(editors, pinnedIds) {
+    return flattenPluginEntries(editors).filter(plugin => pinnedIds.includes(plugin.tagName));
+}
+/**
+ * Generates a Web Component class that displays an error message when a plugin fails to load.
+ * This is used to provide feedback to the Distro developer when a plugin cannot be loaded due to an error.
+ * @param plugin - The plugin object that failed to load.
+ * @returns A Web Component class that displays the error message.
+ */
+function generateErrorWcClass(plugin) {
+    const title = 'Error: Plugin failed to load.';
+    const details = `Plugin: ${JSON.stringify(plugin)}`;
+    const classString = `
+  return class extends HTMLElement {
+
+    connectedCallback() {
+      this.innerHTML = '<h1>${title}</h1><p>${details}</p><emphasis>Check your plugins.json</emphasis>';
+    }
+
+    async run() {
+      alert('${title}\\n\\n ${details}; \\n\\n Check your plugins.json');
+    }
+  }`;
+    return new Function(classString)();
+}
+function isPluginGroup(item) {
+    return (typeof item === 'object' &&
+        item !== null &&
+        'plugins' in item &&
+        Array.isArray(item.plugins));
+}
+/**
+ * Checks whether the given object carries a `tagName`, i.e. names an element
+ * the shell does not have to load itself.
+ * @param item - The object to check.
+ * @returns true if the object is a TaggedPlugin, false otherwise.
+ */
+function isTaggedPlugin(item) {
+    return (typeof item === 'object' &&
+        item !== null &&
+        'tagName' in item &&
+        typeof item.tagName === 'string');
+}
+/**
+ * Checks if the given object is a SourcedPlugin.
+ * @param item - The object to check.
+ * @returns true if the object is a SourcedPlugin, false otherwise.
+ */
+function isSourcedPlugin(item) {
+    return (typeof item === 'object' &&
+        item !== null &&
+        'src' in item &&
+        typeof item.src === 'string');
+}
+/**
+ * Validates a Plugin object, checking for required fields and types.
+ * If the plugin is invalid, it logs an error and returns undefined.
+ * @param plugin - The plugin object to validate.
+ * @returns The validated Plugin object or undefined if invalid.
+ */
+function validatePlugin(plugin) {
+    const missingFields = [];
+    if (!isTaggedPlugin(plugin)) {
+        missingFields.push('tagName');
+    }
+    const _plugin = plugin;
+    missingFields.push(...['name', 'icon'].filter(field => !_plugin[field] || typeof _plugin[field] !== 'string'));
+    if (typeof _plugin.requireDoc !== 'undefined' &&
+        typeof _plugin.requireDoc !== 'boolean') {
+        missingFields.push('requireDoc');
+    }
+    if (typeof _plugin.translations !== 'undefined' &&
+        (typeof _plugin.translations !== 'object' ||
+            Object.values(_plugin.translations).some(t => typeof t !== 'string'))) {
+        missingFields.push('translations');
+    }
+    if (missingFields.length > 0) {
+        console.error(`[Invalid Plugin]\n${JSON.stringify(plugin, null, 2)}\nMissing/Invalid fields [${missingFields.join(',')}] - skipping.`);
+        return undefined;
+    }
+    return _plugin;
+}
+function loadSourcedPlugins(plugins, registry) {
+    return plugins
+        .map((plugin) => {
+        if (isPluginGroup(plugin)) {
+            return {
+                ...plugin,
+                plugins: loadSourcedPlugins(plugin.plugins, registry),
+            };
+        }
+        if (!isSourcedPlugin(plugin)) {
+            if (isTaggedPlugin(plugin)) {
+                return validatePlugin(plugin);
+            }
+            console.error(`[Invalid Plugin] Requires a tagName or src - skipping. ${JSON.stringify(plugin)}`);
+            return undefined;
+        }
+        const { src, ...rest } = plugin;
+        const hashedTagName = pluginTag(src);
+        const validatedPlugin = validatePlugin({
+            ...rest,
+            tagName: hashedTagName,
+        });
+        if (!validatedPlugin) {
+            return undefined;
+        }
+        if (registry.get(hashedTagName)) {
+            return validatedPlugin;
+        }
+        const url = new URL(src, window.location.href).toString();
+        import(/* @vite-ignore */ url)
+            .then((mod) => {
+            // Because this is async, we need to check (again) if the element is already defined.
+            if (!registry?.get(hashedTagName)) {
+                registry.define(hashedTagName, mod.default);
+            }
+        })
+            .catch((err) => {
+            // Log this as a warning because we load an Error WC in place of the plugin.
+            console.warn(`[Invalid Plugin] Failed to load plugin ${plugin.name} <${hashedTagName}/> from ${url}`, err);
+            const ErrWc = generateErrorWcClass(plugin);
+            registry.define(hashedTagName, ErrWc);
+        });
+        return validatedPlugin;
+    })
+        .filter((plugin) => plugin !== undefined);
+}
+
+// Do not modify this file by hand!
+// Re-generate this file by running lit-localize.
+/**
+ * The locale code that templates in this source code are written in.
+ */
+const sourceLocale = `en`;
+/**
+ * The other locale codes that this application is localized into. Sorted
+ * lexicographically.
+ */
+const targetLocales = [
+    `de`,
+];
+
+const { getLocale, setLocale } = window.localization ??
+    configureLocalization({
+        sourceLocale,
+        targetLocales,
+        loadLocale: (_locale) => {
+            return import(new URL(`./locales/de.js`, import.meta.url).href);
+        },
+    });
+/*
+ * To prevent multiple calls to configureLocalization,
+ * we store the getLocale and setLocale functions on the window object.
+ * This happens now and again in development mode with HMR, perhaps
+ * we should wrap this in a check for dev mode only?
+ */
+if (!window.localization) {
+    window.localization = { getLocale, setLocale };
+}
+
+/**
+ * @license
+ * Copyright 2024 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+// Generated stylesheet for ./iconbutton/internal/standard-styles.css.
+const styles$c = i$6 `:host{--_disabled-icon-color: var(--md-icon-button-disabled-icon-color, var(--md-sys-color-on-surface, #1d1b20));--_disabled-icon-opacity: var(--md-icon-button-disabled-icon-opacity, 0.38);--_icon-size: var(--md-icon-button-icon-size, 24px);--_selected-focus-icon-color: var(--md-icon-button-selected-focus-icon-color, var(--md-sys-color-primary, #6750a4));--_selected-hover-icon-color: var(--md-icon-button-selected-hover-icon-color, var(--md-sys-color-primary, #6750a4));--_selected-hover-state-layer-color: var(--md-icon-button-selected-hover-state-layer-color, var(--md-sys-color-primary, #6750a4));--_selected-hover-state-layer-opacity: var(--md-icon-button-selected-hover-state-layer-opacity, 0.08);--_selected-icon-color: var(--md-icon-button-selected-icon-color, var(--md-sys-color-primary, #6750a4));--_selected-pressed-icon-color: var(--md-icon-button-selected-pressed-icon-color, var(--md-sys-color-primary, #6750a4));--_selected-pressed-state-layer-color: var(--md-icon-button-selected-pressed-state-layer-color, var(--md-sys-color-primary, #6750a4));--_selected-pressed-state-layer-opacity: var(--md-icon-button-selected-pressed-state-layer-opacity, 0.12);--_state-layer-height: var(--md-icon-button-state-layer-height, 40px);--_state-layer-shape: var(--md-icon-button-state-layer-shape, var(--md-sys-shape-corner-full, 9999px));--_state-layer-width: var(--md-icon-button-state-layer-width, 40px);--_focus-icon-color: var(--md-icon-button-focus-icon-color, var(--md-sys-color-on-surface-variant, #49454f));--_hover-icon-color: var(--md-icon-button-hover-icon-color, var(--md-sys-color-on-surface-variant, #49454f));--_hover-state-layer-color: var(--md-icon-button-hover-state-layer-color, var(--md-sys-color-on-surface-variant, #49454f));--_hover-state-layer-opacity: var(--md-icon-button-hover-state-layer-opacity, 0.08);--_icon-color: var(--md-icon-button-icon-color, var(--md-sys-color-on-surface-variant, #49454f));--_pressed-icon-color: var(--md-icon-button-pressed-icon-color, var(--md-sys-color-on-surface-variant, #49454f));--_pressed-state-layer-color: var(--md-icon-button-pressed-state-layer-color, var(--md-sys-color-on-surface-variant, #49454f));--_pressed-state-layer-opacity: var(--md-icon-button-pressed-state-layer-opacity, 0.12);--_container-shape-start-start: 0;--_container-shape-start-end: 0;--_container-shape-end-end: 0;--_container-shape-end-start: 0;--_container-height: 0;--_container-width: 0;height:var(--_state-layer-height);width:var(--_state-layer-width)}:host([touch-target=wrapper]){margin:max(0px,(48px - var(--_state-layer-height))/2) max(0px,(48px - var(--_state-layer-width))/2)}md-focus-ring{--md-focus-ring-shape-start-start: var(--_state-layer-shape);--md-focus-ring-shape-start-end: var(--_state-layer-shape);--md-focus-ring-shape-end-end: var(--_state-layer-shape);--md-focus-ring-shape-end-start: var(--_state-layer-shape)}.standard{background-color:rgba(0,0,0,0);color:var(--_icon-color);--md-ripple-hover-color: var(--_hover-state-layer-color);--md-ripple-hover-opacity: var(--_hover-state-layer-opacity);--md-ripple-pressed-color: var(--_pressed-state-layer-color);--md-ripple-pressed-opacity: var(--_pressed-state-layer-opacity)}.standard:hover{color:var(--_hover-icon-color)}.standard:focus{color:var(--_focus-icon-color)}.standard:active{color:var(--_pressed-icon-color)}.standard:is(:disabled,[aria-disabled=true]){color:var(--_disabled-icon-color)}md-ripple{border-radius:var(--_state-layer-shape)}.standard:is(:disabled,[aria-disabled=true]){opacity:var(--_disabled-icon-opacity)}.selected{--md-ripple-hover-color: var(--_selected-hover-state-layer-color);--md-ripple-hover-opacity: var(--_selected-hover-state-layer-opacity);--md-ripple-pressed-color: var(--_selected-pressed-state-layer-color);--md-ripple-pressed-opacity: var(--_selected-pressed-state-layer-opacity)}.selected:not(:disabled,[aria-disabled=true]){color:var(--_selected-icon-color)}.selected:not(:disabled,[aria-disabled=true]):hover{color:var(--_selected-hover-icon-color)}.selected:not(:disabled,[aria-disabled=true]):focus{color:var(--_selected-focus-icon-color)}.selected:not(:disabled,[aria-disabled=true]):active{color:var(--_selected-pressed-icon-color)}
+`;
+
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/**
+ * @license
+ * Copyright 2026 OMICRON electronics GmbH
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/**
+ * @tagname oscd-icon-button
+ * @summary Icon buttons help people take supplementary actions with a single
+ * tap.
+ *
+ * __Emphasis:__ Low emphasis – For optional or supplementary actions with the
+ * least amount of prominence.
+ *
+ * __Rationale:__ The most compact and unobtrusive type of button, icon buttons
+ * are used for optional supplementary actions such as "Bookmark" or "Star."
+ *
+ * __Example usages:__
+ * - Add to Favorites
+ * - Print
+ *
+ * @final
+ * @suppress {visibility}
+ */
+class OscdIconButton extends ScopedElementsMixin(IconButton) {
+    getRenderClasses() {
+        return {
+            ...super.getRenderClasses(),
+            standard: true,
+        };
+    }
+}
+OscdIconButton.scopedElements = {
+    'md-ripple': OscdRipple,
+    'md-focus-ring': OscdFocusRing,
+};
+OscdIconButton.styles = [styles$g, styles$c];
 
 /**
  * @license
@@ -3991,7 +4254,7 @@ function slotHasContent(slot) {
  * SPDX-License-Identifier: Apache-2.0
  */
 // Generated stylesheet for ./labs/item/internal/item-styles.css.
-const styles$d = i$6 `:host{color:var(--md-sys-color-on-surface, #1d1b20);font-family:var(--md-sys-typescale-body-large-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-body-large-size, 1rem);font-weight:var(--md-sys-typescale-body-large-weight, var(--md-ref-typeface-weight-regular, 400));line-height:var(--md-sys-typescale-body-large-line-height, 1.5rem);align-items:center;box-sizing:border-box;display:flex;gap:16px;min-height:56px;overflow:hidden;padding:12px 16px;position:relative;text-overflow:ellipsis}:host([multiline]){min-height:72px}[name=overline]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-label-small-size, 0.6875rem);font-weight:var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500));line-height:var(--md-sys-typescale-label-small-line-height, 1rem)}[name=supporting-text]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-body-medium-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-body-medium-size, 0.875rem);font-weight:var(--md-sys-typescale-body-medium-weight, var(--md-ref-typeface-weight-regular, 400));line-height:var(--md-sys-typescale-body-medium-line-height, 1.25rem)}[name=trailing-supporting-text]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-label-small-size, 0.6875rem);font-weight:var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500));line-height:var(--md-sys-typescale-label-small-line-height, 1rem)}[name=container]::slotted(*){inset:0;position:absolute}.default-slot{display:inline}.default-slot,.text ::slotted(*){overflow:hidden;text-overflow:ellipsis}.text{display:flex;flex:1;flex-direction:column;overflow:hidden}
+const styles$b = i$6 `:host{color:var(--md-sys-color-on-surface, #1d1b20);font-family:var(--md-sys-typescale-body-large-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-body-large-size, 1rem);font-weight:var(--md-sys-typescale-body-large-weight, var(--md-ref-typeface-weight-regular, 400));line-height:var(--md-sys-typescale-body-large-line-height, 1.5rem);align-items:center;box-sizing:border-box;display:flex;gap:16px;min-height:56px;overflow:hidden;padding:12px 16px;position:relative;text-overflow:ellipsis}:host([multiline]){min-height:72px}[name=overline]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-label-small-size, 0.6875rem);font-weight:var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500));line-height:var(--md-sys-typescale-label-small-line-height, 1rem)}[name=supporting-text]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-body-medium-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-body-medium-size, 0.875rem);font-weight:var(--md-sys-typescale-body-medium-weight, var(--md-ref-typeface-weight-regular, 400));line-height:var(--md-sys-typescale-body-medium-line-height, 1.25rem)}[name=trailing-supporting-text]{color:var(--md-sys-color-on-surface-variant, #49454f);font-family:var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto));font-size:var(--md-sys-typescale-label-small-size, 0.6875rem);font-weight:var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500));line-height:var(--md-sys-typescale-label-small-line-height, 1rem)}[name=container]::slotted(*){inset:0;position:absolute}.default-slot{display:inline}.default-slot,.text ::slotted(*){overflow:hidden;text-overflow:ellipsis}.text{display:flex;flex:1;flex-direction:column;overflow:hidden}
 `;
 
 /*
@@ -4061,7 +4324,7 @@ const styles$d = i$6 `:host{color:var(--md-sys-color-on-surface, #1d1b20);font-f
  */
 class OscdItem extends Item {
 }
-OscdItem.styles = [styles$d];
+OscdItem.styles = [styles$b];
 
 /**
  * @license
@@ -4489,7 +4752,7 @@ __decorate([
  * SPDX-License-Identifier: Apache-2.0
  */
 // Generated stylesheet for ./list/internal/listitem/list-item-styles.css.
-const styles$c = i$6 `:host{display:flex;-webkit-tap-highlight-color:rgba(0,0,0,0);--md-ripple-hover-color: var(--md-list-item-hover-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-hover-opacity: var(--md-list-item-hover-state-layer-opacity, 0.08);--md-ripple-pressed-color: var(--md-list-item-pressed-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-pressed-opacity: var(--md-list-item-pressed-state-layer-opacity, 0.12)}:host(:is([type=button]:not([disabled]),[type=link])){cursor:pointer}md-focus-ring{z-index:1;--md-focus-ring-shape: 8px}a,button,li{background:none;border:none;cursor:inherit;padding:0;margin:0;text-align:unset;text-decoration:none}.list-item{border-radius:inherit;display:flex;flex:1;max-width:inherit;min-width:inherit;outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0);width:100%}.list-item.interactive{cursor:pointer}.list-item.disabled{opacity:var(--md-list-item-disabled-opacity, 0.3);pointer-events:none}[slot=container]{pointer-events:none}md-ripple{border-radius:inherit}md-item{border-radius:inherit;flex:1;height:100%;color:var(--md-list-item-label-text-color, var(--md-sys-color-on-surface, #1d1b20));font-family:var(--md-list-item-label-text-font, var(--md-sys-typescale-body-large-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-list-item-label-text-size, var(--md-sys-typescale-body-large-size, 1rem));line-height:var(--md-list-item-label-text-line-height, var(--md-sys-typescale-body-large-line-height, 1.5rem));font-weight:var(--md-list-item-label-text-weight, var(--md-sys-typescale-body-large-weight, var(--md-ref-typeface-weight-regular, 400)));min-height:var(--md-list-item-one-line-container-height, 56px);padding-top:var(--md-list-item-top-space, 12px);padding-bottom:var(--md-list-item-bottom-space, 12px);padding-inline-start:var(--md-list-item-leading-space, 16px);padding-inline-end:var(--md-list-item-trailing-space, 16px)}md-item[multiline]{min-height:var(--md-list-item-two-line-container-height, 72px)}[slot=supporting-text]{color:var(--md-list-item-supporting-text-color, var(--md-sys-color-on-surface-variant, #49454f));font-family:var(--md-list-item-supporting-text-font, var(--md-sys-typescale-body-medium-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-list-item-supporting-text-size, var(--md-sys-typescale-body-medium-size, 0.875rem));line-height:var(--md-list-item-supporting-text-line-height, var(--md-sys-typescale-body-medium-line-height, 1.25rem));font-weight:var(--md-list-item-supporting-text-weight, var(--md-sys-typescale-body-medium-weight, var(--md-ref-typeface-weight-regular, 400)))}[slot=trailing-supporting-text]{color:var(--md-list-item-trailing-supporting-text-color, var(--md-sys-color-on-surface-variant, #49454f));font-family:var(--md-list-item-trailing-supporting-text-font, var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-list-item-trailing-supporting-text-size, var(--md-sys-typescale-label-small-size, 0.6875rem));line-height:var(--md-list-item-trailing-supporting-text-line-height, var(--md-sys-typescale-label-small-line-height, 1rem));font-weight:var(--md-list-item-trailing-supporting-text-weight, var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500)))}:is([slot=start],[slot=end])::slotted(*){fill:currentColor}[slot=start]{color:var(--md-list-item-leading-icon-color, var(--md-sys-color-on-surface-variant, #49454f))}[slot=end]{color:var(--md-list-item-trailing-icon-color, var(--md-sys-color-on-surface-variant, #49454f))}@media(forced-colors: active){.disabled slot{color:GrayText}.list-item.disabled{color:GrayText;opacity:1}}
+const styles$a = i$6 `:host{display:flex;-webkit-tap-highlight-color:rgba(0,0,0,0);--md-ripple-hover-color: var(--md-list-item-hover-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-hover-opacity: var(--md-list-item-hover-state-layer-opacity, 0.08);--md-ripple-pressed-color: var(--md-list-item-pressed-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-pressed-opacity: var(--md-list-item-pressed-state-layer-opacity, 0.12)}:host(:is([type=button]:not([disabled]),[type=link])){cursor:pointer}md-focus-ring{z-index:1;--md-focus-ring-shape: 8px}a,button,li{background:none;border:none;cursor:inherit;padding:0;margin:0;text-align:unset;text-decoration:none}.list-item{border-radius:inherit;display:flex;flex:1;max-width:inherit;min-width:inherit;outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0);width:100%}.list-item.interactive{cursor:pointer}.list-item.disabled{opacity:var(--md-list-item-disabled-opacity, 0.3);pointer-events:none}[slot=container]{pointer-events:none}md-ripple{border-radius:inherit}md-item{border-radius:inherit;flex:1;height:100%;color:var(--md-list-item-label-text-color, var(--md-sys-color-on-surface, #1d1b20));font-family:var(--md-list-item-label-text-font, var(--md-sys-typescale-body-large-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-list-item-label-text-size, var(--md-sys-typescale-body-large-size, 1rem));line-height:var(--md-list-item-label-text-line-height, var(--md-sys-typescale-body-large-line-height, 1.5rem));font-weight:var(--md-list-item-label-text-weight, var(--md-sys-typescale-body-large-weight, var(--md-ref-typeface-weight-regular, 400)));min-height:var(--md-list-item-one-line-container-height, 56px);padding-top:var(--md-list-item-top-space, 12px);padding-bottom:var(--md-list-item-bottom-space, 12px);padding-inline-start:var(--md-list-item-leading-space, 16px);padding-inline-end:var(--md-list-item-trailing-space, 16px)}md-item[multiline]{min-height:var(--md-list-item-two-line-container-height, 72px)}[slot=supporting-text]{color:var(--md-list-item-supporting-text-color, var(--md-sys-color-on-surface-variant, #49454f));font-family:var(--md-list-item-supporting-text-font, var(--md-sys-typescale-body-medium-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-list-item-supporting-text-size, var(--md-sys-typescale-body-medium-size, 0.875rem));line-height:var(--md-list-item-supporting-text-line-height, var(--md-sys-typescale-body-medium-line-height, 1.25rem));font-weight:var(--md-list-item-supporting-text-weight, var(--md-sys-typescale-body-medium-weight, var(--md-ref-typeface-weight-regular, 400)))}[slot=trailing-supporting-text]{color:var(--md-list-item-trailing-supporting-text-color, var(--md-sys-color-on-surface-variant, #49454f));font-family:var(--md-list-item-trailing-supporting-text-font, var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-list-item-trailing-supporting-text-size, var(--md-sys-typescale-label-small-size, 0.6875rem));line-height:var(--md-list-item-trailing-supporting-text-line-height, var(--md-sys-typescale-label-small-line-height, 1rem));font-weight:var(--md-list-item-trailing-supporting-text-weight, var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500)))}:is([slot=start],[slot=end])::slotted(*){fill:currentColor}[slot=start]{color:var(--md-list-item-leading-icon-color, var(--md-sys-color-on-surface-variant, #49454f))}[slot=end]{color:var(--md-list-item-trailing-icon-color, var(--md-sys-color-on-surface-variant, #49454f))}@media(forced-colors: active){.disabled slot{color:GrayText}.list-item.disabled{color:GrayText;opacity:1}}
 `;
 
 /**
@@ -4499,7 +4762,7 @@ const styles$c = i$6 `:host{display:flex;-webkit-tap-highlight-color:rgba(0,0,0,
  */
 /**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
 /**
@@ -4547,54 +4810,7 @@ OscdListItem.scopedElements = {
     'md-item': OscdItem,
     'md-focus-ring': OscdFocusRing,
 };
-OscdListItem.styles = [styles$c];
-
-/**
- * @license
- * Copyright 2022 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-/**
- * A component for elevation.
- */
-class Elevation extends i$3 {
-    connectedCallback() {
-        super.connectedCallback();
-        // Needed for VoiceOver, which will create a "group" if the element is a
-        // sibling to other content.
-        this.setAttribute('aria-hidden', 'true');
-    }
-    render() {
-        return b `<span class="shadow"></span>`;
-    }
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-// Generated stylesheet for ./elevation/internal/elevation-styles.css.
-const styles$b = i$6 `:host,.shadow,.shadow::before,.shadow::after{border-radius:inherit;inset:0;position:absolute;transition-duration:inherit;transition-property:inherit;transition-timing-function:inherit}:host{display:flex;pointer-events:none;transition-property:box-shadow,opacity}.shadow::before,.shadow::after{content:"";transition-property:box-shadow,opacity;--_level: var(--md-elevation-level, 0);--_shadow-color: var(--md-elevation-shadow-color, var(--md-sys-color-shadow, #000))}.shadow::before{box-shadow:0px calc(1px*(clamp(0,var(--_level),1) + clamp(0,var(--_level) - 3,1) + 2*clamp(0,var(--_level) - 4,1))) calc(1px*(2*clamp(0,var(--_level),1) + clamp(0,var(--_level) - 2,1) + clamp(0,var(--_level) - 4,1))) 0px var(--_shadow-color);opacity:.3}.shadow::after{box-shadow:0px calc(1px*(clamp(0,var(--_level),1) + clamp(0,var(--_level) - 1,1) + 2*clamp(0,var(--_level) - 2,3))) calc(1px*(3*clamp(0,var(--_level),2) + 2*clamp(0,var(--_level) - 2,3))) calc(1px*(clamp(0,var(--_level),4) + 2*clamp(0,var(--_level) - 4,1))) var(--_shadow-color);opacity:.15}
-`;
-
-/*
- * GENERATED SOURCE FILE. DO NOT MODIFY.
- * Modifications will be overwritten.
- * To prevent this file from being overwritten, remove this comment entirely.
- */
-/**
- * @tagname oscd-elevation
- * The `<oscd-elevation>` custom element with default styles.
- *
- * Elevation is the relative distance between two surfaces along the z-axis.
- *
- * @final
- * @suppress {visibility}
- */
-class OscdElevation extends Elevation {
-}
-OscdElevation.styles = [styles$b];
+OscdListItem.styles = [styles$a];
 
 /**
  * @license
@@ -6453,7 +6669,7 @@ __decorate([
  * SPDX-License-Identifier: Apache-2.0
  */
 // Generated stylesheet for ./menu/internal/menu-styles.css.
-const styles$a = i$6 `:host{--md-elevation-level: var(--md-menu-container-elevation, 2);--md-elevation-shadow-color: var(--md-menu-container-shadow-color, var(--md-sys-color-shadow, #000));min-width:112px;color:unset;display:contents}md-focus-ring{--md-focus-ring-shape: var(--md-menu-container-shape, var(--md-sys-shape-corner-extra-small, 4px))}.menu{border-radius:var(--md-menu-container-shape, var(--md-sys-shape-corner-extra-small, 4px));display:none;inset:auto;border:none;padding:0px;overflow:visible;background-color:rgba(0,0,0,0);color:inherit;opacity:0;z-index:20;position:absolute;user-select:none;max-height:inherit;height:inherit;min-width:inherit;max-width:inherit;scrollbar-width:inherit}.menu::backdrop{display:none}.fixed{position:fixed}.items{display:block;list-style-type:none;margin:0;outline:none;box-sizing:border-box;background-color:var(--md-menu-container-color, var(--md-sys-color-surface-container, #f3edf7));height:inherit;max-height:inherit;overflow:auto;min-width:inherit;max-width:inherit;border-radius:inherit;scrollbar-width:inherit}.item-padding{padding-block:var(--md-menu-top-space, 8px) var(--md-menu-bottom-space, 8px)}.has-overflow:not([popover]) .items{overflow:visible}.has-overflow.animating .items,.animating .items{overflow:hidden}.has-overflow.animating .items{pointer-events:none}.animating ::slotted(.md-menu-hidden){opacity:0}slot{display:block;height:inherit;max-height:inherit}::slotted(:is(md-divider,[role=separator])){margin:8px 0}@media(forced-colors: active){.menu{border-style:solid;border-color:CanvasText;border-width:1px}}
+const styles$9 = i$6 `:host{--md-elevation-level: var(--md-menu-container-elevation, 2);--md-elevation-shadow-color: var(--md-menu-container-shadow-color, var(--md-sys-color-shadow, #000));min-width:112px;color:unset;display:contents}md-focus-ring{--md-focus-ring-shape: var(--md-menu-container-shape, var(--md-sys-shape-corner-extra-small, 4px))}.menu{border-radius:var(--md-menu-container-shape, var(--md-sys-shape-corner-extra-small, 4px));display:none;inset:auto;border:none;padding:0px;overflow:visible;background-color:rgba(0,0,0,0);color:inherit;opacity:0;z-index:20;position:absolute;user-select:none;max-height:inherit;height:inherit;min-width:inherit;max-width:inherit;scrollbar-width:inherit}.menu::backdrop{display:none}.fixed{position:fixed}.items{display:block;list-style-type:none;margin:0;outline:none;box-sizing:border-box;background-color:var(--md-menu-container-color, var(--md-sys-color-surface-container, #f3edf7));height:inherit;max-height:inherit;overflow:auto;min-width:inherit;max-width:inherit;border-radius:inherit;scrollbar-width:inherit}.item-padding{padding-block:var(--md-menu-top-space, 8px) var(--md-menu-bottom-space, 8px)}.has-overflow:not([popover]) .items{overflow:visible}.has-overflow.animating .items,.animating .items{overflow:hidden}.has-overflow.animating .items{pointer-events:none}.animating ::slotted(.md-menu-hidden){opacity:0}slot{display:block;height:inherit;max-height:inherit}::slotted(:is(md-divider,[role=separator])){margin:8px 0}@media(forced-colors: active){.menu{border-style:solid;border-color:CanvasText;border-width:1px}}
 `;
 
 /**
@@ -6463,12 +6679,12 @@ const styles$a = i$6 `:host{--md-elevation-level: var(--md-menu-container-elevat
  */
 /**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
 class InternalMenu extends Menu {
 }
-InternalMenu.styles = [styles$a];
+InternalMenu.styles = [styles$9];
 /**
  * @tagname oscd-menu
  * @summary Menus display a list of choices on a temporary surface.
@@ -6524,7 +6740,7 @@ OscdMenu.scopedElements = {
     'md-focus-ring': OscdFocusRing,
     'md-elevation': OscdElevation,
 };
-OscdMenu.styles = [styles$a];
+OscdMenu.styles = [styles$9];
 
 /**
  * @license
@@ -6870,7 +7086,7 @@ __decorate([
  * SPDX-License-Identifier: Apache-2.0
  */
 // Generated stylesheet for ./menu/internal/menuitem/menu-item-styles.css.
-const styles$9 = i$6 `:host{display:flex;--md-ripple-hover-color: var(--md-menu-item-hover-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-hover-opacity: var(--md-menu-item-hover-state-layer-opacity, 0.08);--md-ripple-pressed-color: var(--md-menu-item-pressed-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-pressed-opacity: var(--md-menu-item-pressed-state-layer-opacity, 0.12)}:host([disabled]){opacity:var(--md-menu-item-disabled-opacity, 0.3);pointer-events:none}md-focus-ring{z-index:1;--md-focus-ring-shape: 8px}a,button,li{background:none;border:none;padding:0;margin:0;text-align:unset;text-decoration:none}.list-item{border-radius:inherit;display:flex;flex:1;max-width:inherit;min-width:inherit;outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.list-item:not(.disabled){cursor:pointer}[slot=container]{pointer-events:none}md-ripple{border-radius:inherit}md-item{border-radius:inherit;flex:1;color:var(--md-menu-item-label-text-color, var(--md-sys-color-on-surface, #1d1b20));font-family:var(--md-menu-item-label-text-font, var(--md-sys-typescale-body-large-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-menu-item-label-text-size, var(--md-sys-typescale-body-large-size, 1rem));line-height:var(--md-menu-item-label-text-line-height, var(--md-sys-typescale-body-large-line-height, 1.5rem));font-weight:var(--md-menu-item-label-text-weight, var(--md-sys-typescale-body-large-weight, var(--md-ref-typeface-weight-regular, 400)));min-height:var(--md-menu-item-one-line-container-height, 56px);padding-top:var(--md-menu-item-top-space, 12px);padding-bottom:var(--md-menu-item-bottom-space, 12px);padding-inline-start:var(--md-menu-item-leading-space, 16px);padding-inline-end:var(--md-menu-item-trailing-space, 16px)}md-item[multiline]{min-height:var(--md-menu-item-two-line-container-height, 72px)}[slot=supporting-text]{color:var(--md-menu-item-supporting-text-color, var(--md-sys-color-on-surface-variant, #49454f));font-family:var(--md-menu-item-supporting-text-font, var(--md-sys-typescale-body-medium-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-menu-item-supporting-text-size, var(--md-sys-typescale-body-medium-size, 0.875rem));line-height:var(--md-menu-item-supporting-text-line-height, var(--md-sys-typescale-body-medium-line-height, 1.25rem));font-weight:var(--md-menu-item-supporting-text-weight, var(--md-sys-typescale-body-medium-weight, var(--md-ref-typeface-weight-regular, 400)))}[slot=trailing-supporting-text]{color:var(--md-menu-item-trailing-supporting-text-color, var(--md-sys-color-on-surface-variant, #49454f));font-family:var(--md-menu-item-trailing-supporting-text-font, var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-menu-item-trailing-supporting-text-size, var(--md-sys-typescale-label-small-size, 0.6875rem));line-height:var(--md-menu-item-trailing-supporting-text-line-height, var(--md-sys-typescale-label-small-line-height, 1rem));font-weight:var(--md-menu-item-trailing-supporting-text-weight, var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500)))}:is([slot=start],[slot=end])::slotted(*){fill:currentColor}[slot=start]{color:var(--md-menu-item-leading-icon-color, var(--md-sys-color-on-surface-variant, #49454f))}[slot=end]{color:var(--md-menu-item-trailing-icon-color, var(--md-sys-color-on-surface-variant, #49454f))}.list-item{background-color:var(--md-menu-item-container-color, transparent)}.list-item.selected{background-color:var(--md-menu-item-selected-container-color, var(--md-sys-color-secondary-container, #e8def8))}.selected:not(.disabled) ::slotted(*){color:var(--md-menu-item-selected-label-text-color, var(--md-sys-color-on-secondary-container, #1d192b))}@media(forced-colors: active){:host([disabled]),:host([disabled]) slot{color:GrayText;opacity:1}.list-item{position:relative}.list-item.selected::before{content:"";position:absolute;inset:0;box-sizing:border-box;border-radius:inherit;pointer-events:none;border:3px double CanvasText}}
+const styles$8 = i$6 `:host{display:flex;--md-ripple-hover-color: var(--md-menu-item-hover-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-hover-opacity: var(--md-menu-item-hover-state-layer-opacity, 0.08);--md-ripple-pressed-color: var(--md-menu-item-pressed-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-pressed-opacity: var(--md-menu-item-pressed-state-layer-opacity, 0.12)}:host([disabled]){opacity:var(--md-menu-item-disabled-opacity, 0.3);pointer-events:none}md-focus-ring{z-index:1;--md-focus-ring-shape: 8px}a,button,li{background:none;border:none;padding:0;margin:0;text-align:unset;text-decoration:none}.list-item{border-radius:inherit;display:flex;flex:1;max-width:inherit;min-width:inherit;outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.list-item:not(.disabled){cursor:pointer}[slot=container]{pointer-events:none}md-ripple{border-radius:inherit}md-item{border-radius:inherit;flex:1;color:var(--md-menu-item-label-text-color, var(--md-sys-color-on-surface, #1d1b20));font-family:var(--md-menu-item-label-text-font, var(--md-sys-typescale-body-large-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-menu-item-label-text-size, var(--md-sys-typescale-body-large-size, 1rem));line-height:var(--md-menu-item-label-text-line-height, var(--md-sys-typescale-body-large-line-height, 1.5rem));font-weight:var(--md-menu-item-label-text-weight, var(--md-sys-typescale-body-large-weight, var(--md-ref-typeface-weight-regular, 400)));min-height:var(--md-menu-item-one-line-container-height, 56px);padding-top:var(--md-menu-item-top-space, 12px);padding-bottom:var(--md-menu-item-bottom-space, 12px);padding-inline-start:var(--md-menu-item-leading-space, 16px);padding-inline-end:var(--md-menu-item-trailing-space, 16px)}md-item[multiline]{min-height:var(--md-menu-item-two-line-container-height, 72px)}[slot=supporting-text]{color:var(--md-menu-item-supporting-text-color, var(--md-sys-color-on-surface-variant, #49454f));font-family:var(--md-menu-item-supporting-text-font, var(--md-sys-typescale-body-medium-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-menu-item-supporting-text-size, var(--md-sys-typescale-body-medium-size, 0.875rem));line-height:var(--md-menu-item-supporting-text-line-height, var(--md-sys-typescale-body-medium-line-height, 1.25rem));font-weight:var(--md-menu-item-supporting-text-weight, var(--md-sys-typescale-body-medium-weight, var(--md-ref-typeface-weight-regular, 400)))}[slot=trailing-supporting-text]{color:var(--md-menu-item-trailing-supporting-text-color, var(--md-sys-color-on-surface-variant, #49454f));font-family:var(--md-menu-item-trailing-supporting-text-font, var(--md-sys-typescale-label-small-font, var(--md-ref-typeface-plain, Roboto)));font-size:var(--md-menu-item-trailing-supporting-text-size, var(--md-sys-typescale-label-small-size, 0.6875rem));line-height:var(--md-menu-item-trailing-supporting-text-line-height, var(--md-sys-typescale-label-small-line-height, 1rem));font-weight:var(--md-menu-item-trailing-supporting-text-weight, var(--md-sys-typescale-label-small-weight, var(--md-ref-typeface-weight-medium, 500)))}:is([slot=start],[slot=end])::slotted(*){fill:currentColor}[slot=start]{color:var(--md-menu-item-leading-icon-color, var(--md-sys-color-on-surface-variant, #49454f))}[slot=end]{color:var(--md-menu-item-trailing-icon-color, var(--md-sys-color-on-surface-variant, #49454f))}.list-item{background-color:var(--md-menu-item-container-color, transparent)}.list-item.selected{background-color:var(--md-menu-item-selected-container-color, var(--md-sys-color-secondary-container, #e8def8))}.selected:not(.disabled) ::slotted(*){color:var(--md-menu-item-selected-label-text-color, var(--md-sys-color-on-secondary-container, #1d192b))}@media(forced-colors: active){:host([disabled]),:host([disabled]) slot{color:GrayText;opacity:1}.list-item{position:relative}.list-item.selected::before{content:"";position:absolute;inset:0;box-sizing:border-box;border-radius:inherit;pointer-events:none;border:3px double CanvasText}}
 `;
 
 /**
@@ -6880,7 +7096,7 @@ const styles$9 = i$6 `:host{display:flex;--md-ripple-hover-color: var(--md-menu-
  */
 /**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
 /**
@@ -6905,7 +7121,7 @@ OscdMenuItem.scopedElements = {
     'md-item': OscdItem,
     'md-focus-ring': OscdFocusRing,
 };
-OscdMenuItem.styles = [styles$9];
+OscdMenuItem.styles = [styles$8];
 
 /**
  * @license
@@ -7458,7 +7674,7 @@ __decorate([
  * SPDX-License-Identifier: Apache-2.0
  */
 // Generated stylesheet for ./checkbox/internal/checkbox-styles.css.
-const styles$8 = i$6 `:host{border-start-start-radius:var(--md-checkbox-container-shape-start-start, var(--md-checkbox-container-shape, 2px));border-start-end-radius:var(--md-checkbox-container-shape-start-end, var(--md-checkbox-container-shape, 2px));border-end-end-radius:var(--md-checkbox-container-shape-end-end, var(--md-checkbox-container-shape, 2px));border-end-start-radius:var(--md-checkbox-container-shape-end-start, var(--md-checkbox-container-shape, 2px));display:inline-flex;height:var(--md-checkbox-container-size, 18px);position:relative;vertical-align:top;width:var(--md-checkbox-container-size, 18px);-webkit-tap-highlight-color:rgba(0,0,0,0);cursor:pointer}:host([disabled]){cursor:default}:host([touch-target=wrapper]){margin:max(0px,(48px - var(--md-checkbox-container-size, 18px))/2)}md-focus-ring{height:44px;inset:unset;width:44px}input{appearance:none;height:48px;margin:0;opacity:0;outline:none;position:absolute;width:48px;z-index:1;cursor:inherit}:host([touch-target=none]) input{height:100%;width:100%}.container{border-radius:inherit;display:flex;height:100%;place-content:center;place-items:center;position:relative;width:100%}.outline,.background,.icon{inset:0;position:absolute}.outline,.background{border-radius:inherit}.outline{border-color:var(--md-checkbox-outline-color, var(--md-sys-color-on-surface-variant, #49454f));border-style:solid;border-width:var(--md-checkbox-outline-width, 2px);box-sizing:border-box}.background{background-color:var(--md-checkbox-selected-container-color, var(--md-sys-color-primary, #6750a4))}.background,.icon{opacity:0;transition-duration:150ms,50ms;transition-property:transform,opacity;transition-timing-function:cubic-bezier(0.3, 0, 0.8, 0.15),linear;transform:scale(0.6)}:where(.selected) :is(.background,.icon){opacity:1;transition-duration:350ms,50ms;transition-timing-function:cubic-bezier(0.05, 0.7, 0.1, 1),linear;transform:scale(1)}md-ripple{border-radius:var(--md-checkbox-state-layer-shape, var(--md-sys-shape-corner-full, 9999px));height:var(--md-checkbox-state-layer-size, 40px);inset:unset;width:var(--md-checkbox-state-layer-size, 40px);--md-ripple-hover-color: var(--md-checkbox-hover-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-hover-opacity: var(--md-checkbox-hover-state-layer-opacity, 0.08);--md-ripple-pressed-color: var(--md-checkbox-pressed-state-layer-color, var(--md-sys-color-primary, #6750a4));--md-ripple-pressed-opacity: var(--md-checkbox-pressed-state-layer-opacity, 0.12)}.selected md-ripple{--md-ripple-hover-color: var(--md-checkbox-selected-hover-state-layer-color, var(--md-sys-color-primary, #6750a4));--md-ripple-hover-opacity: var(--md-checkbox-selected-hover-state-layer-opacity, 0.08);--md-ripple-pressed-color: var(--md-checkbox-selected-pressed-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-pressed-opacity: var(--md-checkbox-selected-pressed-state-layer-opacity, 0.12)}.icon{fill:var(--md-checkbox-selected-icon-color, var(--md-sys-color-on-primary, #fff));height:var(--md-checkbox-icon-size, 18px);width:var(--md-checkbox-icon-size, 18px)}.mark.short{height:2px;transition-property:transform,height;width:2px}.mark.long{height:2px;transition-property:transform,width;width:10px}.mark{animation-duration:150ms;animation-timing-function:cubic-bezier(0.3, 0, 0.8, 0.15);transition-duration:150ms;transition-timing-function:cubic-bezier(0.3, 0, 0.8, 0.15)}.selected .mark{animation-duration:350ms;animation-timing-function:cubic-bezier(0.05, 0.7, 0.1, 1);transition-duration:350ms;transition-timing-function:cubic-bezier(0.05, 0.7, 0.1, 1)}.checked .mark,.prev-checked.unselected .mark{transform:scaleY(-1) translate(7px, -14px) rotate(45deg)}.checked .mark.short,.prev-checked.unselected .mark.short{height:5.6568542495px}.checked .mark.long,.prev-checked.unselected .mark.long{width:11.313708499px}.indeterminate .mark,.prev-indeterminate.unselected .mark{transform:scaleY(-1) translate(4px, -10px) rotate(0deg)}.prev-unselected .mark{transition-property:none}.prev-unselected.checked .mark.long{animation-name:prev-unselected-to-checked}@keyframes prev-unselected-to-checked{from{width:0}}:where(:hover) .outline{border-color:var(--md-checkbox-hover-outline-color, var(--md-sys-color-on-surface, #1d1b20));border-width:var(--md-checkbox-hover-outline-width, 2px)}:where(:hover) .background{background:var(--md-checkbox-selected-hover-container-color, var(--md-sys-color-primary, #6750a4))}:where(:hover) .icon{fill:var(--md-checkbox-selected-hover-icon-color, var(--md-sys-color-on-primary, #fff))}:where(:focus-within) .outline{border-color:var(--md-checkbox-focus-outline-color, var(--md-sys-color-on-surface, #1d1b20));border-width:var(--md-checkbox-focus-outline-width, 2px)}:where(:focus-within) .background{background:var(--md-checkbox-selected-focus-container-color, var(--md-sys-color-primary, #6750a4))}:where(:focus-within) .icon{fill:var(--md-checkbox-selected-focus-icon-color, var(--md-sys-color-on-primary, #fff))}:where(:active) .outline{border-color:var(--md-checkbox-pressed-outline-color, var(--md-sys-color-on-surface, #1d1b20));border-width:var(--md-checkbox-pressed-outline-width, 2px)}:where(:active) .background{background:var(--md-checkbox-selected-pressed-container-color, var(--md-sys-color-primary, #6750a4))}:where(:active) .icon{fill:var(--md-checkbox-selected-pressed-icon-color, var(--md-sys-color-on-primary, #fff))}:where(.disabled,.prev-disabled) :is(.background,.icon,.mark){animation-duration:0s;transition-duration:0s}:where(.disabled) .outline{border-color:var(--md-checkbox-disabled-outline-color, var(--md-sys-color-on-surface, #1d1b20));border-width:var(--md-checkbox-disabled-outline-width, 2px);opacity:var(--md-checkbox-disabled-container-opacity, 0.38)}:where(.selected.disabled) .outline{visibility:hidden}:where(.selected.disabled) .background{background:var(--md-checkbox-selected-disabled-container-color, var(--md-sys-color-on-surface, #1d1b20));opacity:var(--md-checkbox-selected-disabled-container-opacity, 0.38)}:where(.disabled) .icon{fill:var(--md-checkbox-selected-disabled-icon-color, var(--md-sys-color-surface, #fef7ff))}@media(forced-colors: active){.background{background-color:CanvasText}.selected.disabled .background{background-color:GrayText;opacity:1}.outline{border-color:CanvasText}.disabled .outline{border-color:GrayText;opacity:1}.icon{fill:Canvas}}
+const styles$7 = i$6 `:host{border-start-start-radius:var(--md-checkbox-container-shape-start-start, var(--md-checkbox-container-shape, 2px));border-start-end-radius:var(--md-checkbox-container-shape-start-end, var(--md-checkbox-container-shape, 2px));border-end-end-radius:var(--md-checkbox-container-shape-end-end, var(--md-checkbox-container-shape, 2px));border-end-start-radius:var(--md-checkbox-container-shape-end-start, var(--md-checkbox-container-shape, 2px));display:inline-flex;height:var(--md-checkbox-container-size, 18px);position:relative;vertical-align:top;width:var(--md-checkbox-container-size, 18px);-webkit-tap-highlight-color:rgba(0,0,0,0);cursor:pointer}:host([disabled]){cursor:default}:host([touch-target=wrapper]){margin:max(0px,(48px - var(--md-checkbox-container-size, 18px))/2)}md-focus-ring{height:44px;inset:unset;width:44px}input{appearance:none;height:48px;margin:0;opacity:0;outline:none;position:absolute;width:48px;z-index:1;cursor:inherit}:host([touch-target=none]) input{height:100%;width:100%}.container{border-radius:inherit;display:flex;height:100%;place-content:center;place-items:center;position:relative;width:100%}.outline,.background,.icon{inset:0;position:absolute}.outline,.background{border-radius:inherit}.outline{border-color:var(--md-checkbox-outline-color, var(--md-sys-color-on-surface-variant, #49454f));border-style:solid;border-width:var(--md-checkbox-outline-width, 2px);box-sizing:border-box}.background{background-color:var(--md-checkbox-selected-container-color, var(--md-sys-color-primary, #6750a4))}.background,.icon{opacity:0;transition-duration:150ms,50ms;transition-property:transform,opacity;transition-timing-function:cubic-bezier(0.3, 0, 0.8, 0.15),linear;transform:scale(0.6)}:where(.selected) :is(.background,.icon){opacity:1;transition-duration:350ms,50ms;transition-timing-function:cubic-bezier(0.05, 0.7, 0.1, 1),linear;transform:scale(1)}md-ripple{border-radius:var(--md-checkbox-state-layer-shape, var(--md-sys-shape-corner-full, 9999px));height:var(--md-checkbox-state-layer-size, 40px);inset:unset;width:var(--md-checkbox-state-layer-size, 40px);--md-ripple-hover-color: var(--md-checkbox-hover-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-hover-opacity: var(--md-checkbox-hover-state-layer-opacity, 0.08);--md-ripple-pressed-color: var(--md-checkbox-pressed-state-layer-color, var(--md-sys-color-primary, #6750a4));--md-ripple-pressed-opacity: var(--md-checkbox-pressed-state-layer-opacity, 0.12)}.selected md-ripple{--md-ripple-hover-color: var(--md-checkbox-selected-hover-state-layer-color, var(--md-sys-color-primary, #6750a4));--md-ripple-hover-opacity: var(--md-checkbox-selected-hover-state-layer-opacity, 0.08);--md-ripple-pressed-color: var(--md-checkbox-selected-pressed-state-layer-color, var(--md-sys-color-on-surface, #1d1b20));--md-ripple-pressed-opacity: var(--md-checkbox-selected-pressed-state-layer-opacity, 0.12)}.icon{fill:var(--md-checkbox-selected-icon-color, var(--md-sys-color-on-primary, #fff));height:var(--md-checkbox-icon-size, 18px);width:var(--md-checkbox-icon-size, 18px)}.mark.short{height:2px;transition-property:transform,height;width:2px}.mark.long{height:2px;transition-property:transform,width;width:10px}.mark{animation-duration:150ms;animation-timing-function:cubic-bezier(0.3, 0, 0.8, 0.15);transition-duration:150ms;transition-timing-function:cubic-bezier(0.3, 0, 0.8, 0.15)}.selected .mark{animation-duration:350ms;animation-timing-function:cubic-bezier(0.05, 0.7, 0.1, 1);transition-duration:350ms;transition-timing-function:cubic-bezier(0.05, 0.7, 0.1, 1)}.checked .mark,.prev-checked.unselected .mark{transform:scaleY(-1) translate(7px, -14px) rotate(45deg)}.checked .mark.short,.prev-checked.unselected .mark.short{height:5.6568542495px}.checked .mark.long,.prev-checked.unselected .mark.long{width:11.313708499px}.indeterminate .mark,.prev-indeterminate.unselected .mark{transform:scaleY(-1) translate(4px, -10px) rotate(0deg)}.prev-unselected .mark{transition-property:none}.prev-unselected.checked .mark.long{animation-name:prev-unselected-to-checked}@keyframes prev-unselected-to-checked{from{width:0}}:where(:hover) .outline{border-color:var(--md-checkbox-hover-outline-color, var(--md-sys-color-on-surface, #1d1b20));border-width:var(--md-checkbox-hover-outline-width, 2px)}:where(:hover) .background{background:var(--md-checkbox-selected-hover-container-color, var(--md-sys-color-primary, #6750a4))}:where(:hover) .icon{fill:var(--md-checkbox-selected-hover-icon-color, var(--md-sys-color-on-primary, #fff))}:where(:focus-within) .outline{border-color:var(--md-checkbox-focus-outline-color, var(--md-sys-color-on-surface, #1d1b20));border-width:var(--md-checkbox-focus-outline-width, 2px)}:where(:focus-within) .background{background:var(--md-checkbox-selected-focus-container-color, var(--md-sys-color-primary, #6750a4))}:where(:focus-within) .icon{fill:var(--md-checkbox-selected-focus-icon-color, var(--md-sys-color-on-primary, #fff))}:where(:active) .outline{border-color:var(--md-checkbox-pressed-outline-color, var(--md-sys-color-on-surface, #1d1b20));border-width:var(--md-checkbox-pressed-outline-width, 2px)}:where(:active) .background{background:var(--md-checkbox-selected-pressed-container-color, var(--md-sys-color-primary, #6750a4))}:where(:active) .icon{fill:var(--md-checkbox-selected-pressed-icon-color, var(--md-sys-color-on-primary, #fff))}:where(.disabled,.prev-disabled) :is(.background,.icon,.mark){animation-duration:0s;transition-duration:0s}:where(.disabled) .outline{border-color:var(--md-checkbox-disabled-outline-color, var(--md-sys-color-on-surface, #1d1b20));border-width:var(--md-checkbox-disabled-outline-width, 2px);opacity:var(--md-checkbox-disabled-container-opacity, 0.38)}:where(.selected.disabled) .outline{visibility:hidden}:where(.selected.disabled) .background{background:var(--md-checkbox-selected-disabled-container-color, var(--md-sys-color-on-surface, #1d1b20));opacity:var(--md-checkbox-selected-disabled-container-opacity, 0.38)}:where(.disabled) .icon{fill:var(--md-checkbox-selected-disabled-icon-color, var(--md-sys-color-surface, #fef7ff))}@media(forced-colors: active){.background{background-color:CanvasText}.selected.disabled .background{background-color:GrayText;opacity:1}.outline{border-color:CanvasText}.disabled .outline{border-color:GrayText;opacity:1}.icon{fill:Canvas}}
 `;
 
 /**
@@ -7468,7 +7684,7 @@ const styles$8 = i$6 `:host{border-start-start-radius:var(--md-checkbox-containe
  */
 /**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
 /**
@@ -7490,7 +7706,7 @@ OscdCheckbox.scopedElements = {
     'md-ripple': OscdRipple,
     'md-focus-ring': OscdFocusRing,
 };
-OscdCheckbox.styles = [styles$8];
+OscdCheckbox.styles = [styles$7];
 
 /**
  * Internal base class for `oscd-tree-item`.
@@ -7578,24 +7794,10 @@ TreeItem.styles = i$6 `
       display: block;
       min-width: 0;
       color: inherit;
-      font-family: var(
-        --oscd-tree-item-font-family,
-        var(
-          --md-list-item-label-text-font,
-          var(--md-sys-typescale-body-large-font, Roboto)
-        )
-      );
-      font-size: var(
-        --oscd-tree-item-font-size,
-        var(--md-list-item-label-text-size, 1rem)
-      );
     }
 
     :host([disabled]) {
-      opacity: var(
-        --oscd-tree-item-disabled-opacity,
-        var(--md-list-item-disabled-opacity, 0.3)
-      );
+      opacity: var(--md-list-item-disabled-opacity, 0.3);
     }
 
     :host([selected]) .headline {
@@ -7634,10 +7836,7 @@ TreeItem.styles = i$6 `
       align-items: center;
       box-sizing: border-box;
       min-width: 0;
-      min-height: var(
-        --oscd-tree-item-min-height,
-        var(--md-list-item-one-line-container-height, 56px)
-      );
+      min-height: var(--md-list-item-one-line-container-height, 56px);
       width: 100%;
     }
 
@@ -7683,52 +7882,22 @@ TreeItem.styles = i$6 `
     }
 
     .headline {
-      color: var(
-        --oscd-tree-item-headline-color,
-        var(--md-list-item-label-text-color, currentColor)
-      );
-      font-family: var(
-        --oscd-tree-item-headline-font,
-        var(--md-list-item-label-text-font, inherit)
-      );
-      font-size: var(
-        --oscd-tree-item-headline-size,
-        var(--md-list-item-label-text-size, 1rem)
-      );
-      font-weight: var(
-        --oscd-tree-item-headline-weight,
-        var(--md-list-item-label-text-weight, 400)
-      );
-      line-height: var(
-        --oscd-tree-item-headline-line-height,
-        var(--md-list-item-label-text-line-height, 1.5rem)
-      );
+      color: var(--md-list-item-label-text-color, currentColor);
+      font-family: var(--md-list-item-label-text-font, inherit);
+      font-size: var(--md-list-item-label-text-size, 1rem);
+      font-weight: var(--md-list-item-label-text-weight, 400);
+      line-height: var(--md-list-item-label-text-line-height, 1.5rem);
     }
 
     .supporting-text {
       color: var(
-        --oscd-tree-item-supporting-text-color,
-        var(
-          --md-list-item-supporting-text-color,
-          var(--md-sys-color-on-surface-variant, #49454f)
-        )
+        --md-list-item-supporting-text-color,
+        var(--md-sys-color-on-surface-variant, #49454f)
       );
-      font-family: var(
-        --oscd-tree-item-supporting-text-font,
-        var(--md-list-item-supporting-text-font, inherit)
-      );
-      font-size: var(
-        --oscd-tree-item-supporting-text-size,
-        var(--md-list-item-supporting-text-size, 0.875rem)
-      );
-      font-weight: var(
-        --oscd-tree-item-supporting-text-weight,
-        var(--md-list-item-supporting-text-weight, 400)
-      );
-      line-height: var(
-        --oscd-tree-item-supporting-text-line-height,
-        var(--md-list-item-supporting-text-line-height, 1.25rem)
-      );
+      font-family: var(--md-list-item-supporting-text-font, inherit);
+      font-size: var(--md-list-item-supporting-text-size, 0.875rem);
+      font-weight: var(--md-list-item-supporting-text-weight, 400);
+      line-height: var(--md-list-item-supporting-text-line-height, 1.25rem);
     }
 
     ::slotted([slot='start']),
@@ -7738,22 +7907,16 @@ TreeItem.styles = i$6 `
 
     ::slotted([slot='start']) {
       color: var(
-        --oscd-tree-item-leading-icon-color,
-        var(
-          --md-list-item-leading-icon-color,
-          var(--md-sys-color-on-surface-variant, #49454f)
-        )
+        --md-list-item-leading-icon-color,
+        var(--md-sys-color-on-surface-variant, #49454f)
       );
     }
 
     ::slotted([slot='end']) {
       margin-inline-start: var(--oscd-tree-item-gap, 16px);
       color: var(
-        --oscd-tree-item-trailing-icon-color,
-        var(
-          --md-list-item-trailing-icon-color,
-          var(--md-sys-color-on-surface-variant, #49454f)
-        )
+        --md-list-item-trailing-icon-color,
+        var(--md-sys-color-on-surface-variant, #49454f)
       );
     }
   `;
@@ -7798,6 +7961,8 @@ __decorate([
  * between the icon and the text (the gap is `step - icon size`). The rarely
  * needed `--oscd-tree-item-leading-size` can decouple just the column width, but
  * keeping it equal to the indent step is what preserves the alignment.
+ *
+ * Text and icon styling uses the embedded `--md-list-item-*` tokens directly.
  *
  * @example
  * ```ts
@@ -8270,8 +8435,8 @@ class Tree extends ScopedElementsMixin(i$3) {
     >
       ${expandable
             ? b `<oscd-icon
-            >${expanded ? this.expandIcon : this.collapseIcon}</oscd-icon
-          >`
+              >${expanded ? this.expandIcon : this.collapseIcon}</oscd-icon
+            >`
             : A}
     </button>`;
     }
@@ -8309,7 +8474,7 @@ class Tree extends ScopedElementsMixin(i$3) {
       data-selected=${selected ? 'true' : 'false'}
       data-selection-mode=${this.selectionMode}
       data-disabled=${disabled ? 'true' : 'false'}
-      style=${`--oscd-tree-row-level: ${row.level};`}
+      style=${`--_level: ${row.level};`}
       @click=${(event) => this.handleRowClick(row, event)}
       @keydown=${(event) => this.handleKeyDown(row, event)}
     >
@@ -8370,46 +8535,18 @@ Tree.styles = i$6 `
        * default for every consumer.
        */
       min-width: 0;
-      color: var(--oscd-tree-color, var(--md-sys-color-on-surface, #1d1b20));
-      font-family: var(
-        --oscd-tree-font-family,
-        var(--md-sys-typescale-body-large-font, Roboto)
-      );
       outline: none;
-      /*
-       * Drives both the per-level indentation and the leading icon column width
-       * of each row (see OscdTreeItem). Keeping these fused means a leading icon
-       * occupies exactly one indent step, so icon-less descendants align their
-       * text under an iconed ancestor's text automatically. Set it large enough
-       * to hold your leading icon comfortably (e.g. 40px) when using icons.
-       */
-      --oscd-tree-indent-step: 24px;
-      --oscd-tree-toggle-size: 32px;
-      --oscd-tree-toggle-icon-size: 24px;
-      --oscd-tree-row-height: 44px;
-      --oscd-tree-row-shape: var(--md-sys-shape-corner-small, 4px);
-      --md-ripple-hover-color: var(
-        --oscd-tree-row-hover-state-layer-color,
-        var(--md-sys-color-on-surface, #1d1b20)
-      );
-      --md-ripple-hover-opacity: var(
-        --oscd-tree-row-hover-state-layer-opacity,
-        0.08
-      );
-      --md-ripple-pressed-color: var(
-        --oscd-tree-row-pressed-state-layer-color,
-        var(--md-sys-color-on-surface, #1d1b20)
-      );
-      --md-ripple-pressed-opacity: var(
-        --oscd-tree-row-pressed-state-layer-opacity,
-        0.12
-      );
     }
 
     .tree {
       display: flex;
       flex-direction: column;
       min-width: 0;
+      color: var(--oscd-tree-color, var(--md-sys-color-on-surface, #1d1b20));
+      font-family: var(
+        --oscd-tree-font-family,
+        var(--md-sys-typescale-body-large-font, Roboto)
+      );
       gap: var(--oscd-tree-row-gap, 0);
     }
 
@@ -8419,8 +8556,11 @@ Tree.styles = i$6 `
       align-items: center;
       box-sizing: border-box;
       min-width: 0;
-      min-height: var(--oscd-tree-row-height);
-      border-radius: var(--oscd-tree-row-shape);
+      min-height: var(--oscd-tree-row-height, 44px);
+      border-radius: var(
+        --oscd-tree-row-shape,
+        var(--md-sys-shape-corner-small, 4px)
+      );
       color: inherit;
       cursor: default;
       outline: none;
@@ -8438,18 +8578,18 @@ Tree.styles = i$6 `
 
     oscd-ripple,
     oscd-focus-ring {
-      border-radius: var(--oscd-tree-row-shape);
+      border-radius: var(
+        --oscd-tree-row-shape,
+        var(--md-sys-shape-corner-small, 4px)
+      );
     }
 
     oscd-focus-ring {
       z-index: 1;
-      --md-focus-ring-shape: var(--oscd-tree-row-shape);
-      --md-focus-ring-color: var(
-        --oscd-tree-row-focus-ring-color,
-        var(--md-sys-color-primary, #6750a4)
+      --md-focus-ring-shape: var(
+        --oscd-tree-row-shape,
+        var(--md-sys-shape-corner-small, 4px)
       );
-      --md-focus-ring-width: var(--oscd-tree-row-focus-ring-width, 2px);
-      --md-focus-ring-duration: var(--oscd-tree-row-focus-ring-duration, 0ms);
     }
 
     .row[data-disabled='true'] {
@@ -8499,11 +8639,9 @@ Tree.styles = i$6 `
 
     .indent {
       flex: 0 0
-        calc(
-          max(0, var(--oscd-tree-row-level) - 1) * var(--oscd-tree-indent-step)
-        );
+        calc(max(0, var(--_level) - 1) * var(--oscd-tree-indent-step, 24px));
       inline-size: calc(
-        max(0, var(--oscd-tree-row-level) - 1) * var(--oscd-tree-indent-step)
+        max(0, var(--_level) - 1) * var(--oscd-tree-indent-step, 24px)
       );
     }
 
@@ -8511,9 +8649,9 @@ Tree.styles = i$6 `
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      flex: 0 0 var(--oscd-tree-toggle-size);
-      inline-size: var(--oscd-tree-toggle-size);
-      block-size: var(--oscd-tree-toggle-size);
+      flex: 0 0 var(--oscd-tree-toggle-size, 32px);
+      inline-size: var(--oscd-tree-toggle-size, 32px);
+      block-size: var(--oscd-tree-toggle-size, 32px);
       border: 0;
       border-radius: 50%;
       padding: 0;
@@ -8525,11 +8663,11 @@ Tree.styles = i$6 `
     .leaf-toggle {
       flex-basis: var(
         --oscd-tree-leaf-toggle-size,
-        var(--oscd-tree-toggle-size)
+        var(--oscd-tree-toggle-size, 32px)
       );
       inline-size: var(
         --oscd-tree-leaf-toggle-size,
-        var(--oscd-tree-toggle-size)
+        var(--oscd-tree-toggle-size, 32px)
       );
     }
 
@@ -8549,17 +8687,13 @@ Tree.styles = i$6 `
       );
     }
 
-    .toggle oscd-icon {
-      --md-icon-size: var(--oscd-tree-toggle-icon-size, 24px);
-    }
-
     .accessory {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      flex: 0 0 var(--oscd-tree-toggle-size);
-      inline-size: var(--oscd-tree-toggle-size);
-      block-size: var(--oscd-tree-toggle-size);
+      flex: 0 0 var(--oscd-tree-toggle-size, 32px);
+      inline-size: var(--oscd-tree-toggle-size, 32px);
+      block-size: var(--oscd-tree-toggle-size, 32px);
       /*
        * Accessory visibility at rest. Defaults to fully opaque so accessories
        * are always shown; consumers can set --oscd-tree-accessory-rest-opacity
@@ -8580,19 +8714,12 @@ Tree.styles = i$6 `
       margin-inline-start: var(--oscd-tree-trailing-toggle-gap, 4px);
     }
 
-    .accessory oscd-icon {
-      --md-icon-size: var(
-        --oscd-tree-accessory-icon-size,
-        var(--oscd-tree-toggle-icon-size, 24px)
-      );
-    }
-
     .accessory button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      inline-size: var(--oscd-tree-toggle-size);
-      block-size: var(--oscd-tree-toggle-size);
+      inline-size: var(--oscd-tree-toggle-size, 32px);
+      block-size: var(--oscd-tree-toggle-size, 32px);
       border: 0;
       border-radius: 50%;
       padding: 0;
@@ -8615,14 +8742,6 @@ Tree.styles = i$6 `
       --md-focus-ring-width: 0;
       --md-ripple-hover-opacity: 0;
       --md-ripple-pressed-opacity: 0;
-      --md-checkbox-container-size: var(
-        --oscd-tree-selection-checkbox-size,
-        18px
-      );
-      --md-checkbox-icon-size: var(
-        --oscd-tree-selection-checkbox-icon-size,
-        18px
-      );
     }
 
     .content {
@@ -8711,6 +8830,9 @@ __decorate([
  * large enough to hold your icon (e.g. `40px`) when using leading icons. See
  * {@link OscdTreeItem} for details.
  *
+ * Row ripple and focus styling uses the embedded `--md-ripple-*` and
+ * `--md-focus-ring-*` tokens directly.
+ *
  * Every node may provide a stable `id`. If no ID is supplied, the tree uses
  * `getNodeId` when provided, then falls back to an index-path ID such as
  * `0/1/2`. Index-path IDs are convenient for static demos but are not stable
@@ -8771,69 +8893,6 @@ __decorate([
  */
 class OscdTree extends Tree {
 }
-
-/**
- * @license
- * Copyright 2023 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-/**
- * A divider component.
- */
-class Divider extends i$3 {
-    constructor() {
-        super(...arguments);
-        /**
-         * Indents the divider with equal padding on both sides.
-         */
-        this.inset = false;
-        /**
-         * Indents the divider with padding on the leading side.
-         */
-        this.insetStart = false;
-        /**
-         * Indents the divider with padding on the trailing side.
-         */
-        this.insetEnd = false;
-    }
-}
-__decorate([
-    n$3({ type: Boolean, reflect: true })
-], Divider.prototype, "inset", void 0);
-__decorate([
-    n$3({ type: Boolean, reflect: true, attribute: 'inset-start' })
-], Divider.prototype, "insetStart", void 0);
-__decorate([
-    n$3({ type: Boolean, reflect: true, attribute: 'inset-end' })
-], Divider.prototype, "insetEnd", void 0);
-
-/**
- * @license
- * Copyright 2024 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-// Generated stylesheet for ./divider/internal/divider-styles.css.
-const styles$7 = i$6 `:host{box-sizing:border-box;color:var(--md-divider-color, var(--md-sys-color-outline-variant, #cac4d0));display:flex;height:var(--md-divider-thickness, 1px);width:100%}:host([inset]),:host([inset-start]){padding-inline-start:16px}:host([inset]),:host([inset-end]){padding-inline-end:16px}:host::before{background:currentColor;content:"";height:100%;width:100%}@media(forced-colors: active){:host::before{background:CanvasText}}
-`;
-
-/*
- * GENERATED SOURCE FILE. DO NOT MODIFY.
- * Modifications will be overwritten.
- * To prevent this file from being overwritten, remove this comment entirely.
- */
-/**
- * @tagname oscd-divider
- * @summary A divider is a thin line that groups content in lists and
- * containers.
- *
- * list items or define tappable regions in an accordion.
- *
- * @final
- * @suppress {visibility}
- */
-class OscdDivider extends Divider {
-}
-OscdDivider.styles = [styles$7];
 
 function hasLocalStorage() {
     try {
@@ -10703,7 +10762,8 @@ OscdOutlinedField.styles = [styles$3, styles$4];
  * `--oscd-search-field-placeholder-color`.
  *
  * Like the outlined text field it wraps, the container has no background by
- * default; consumers can set one via `--oscd-search-field-container-color`.
+ * default. Container styling is available through the wrapped field's
+ * supported `--md-outlined-text-field-*` tokens.
  * */
 class OscdOutlinedSearchField extends ScopedElementsMixin(OutlinedSearchField) {
     constructor() {
@@ -11389,7 +11449,7 @@ EditorPluginsPanel.styles = i$6 `
          whichever tree follows. */
       flex-shrink: 0;
       --oscd-tree-row-height: 36px;
-      --oscd-tree-item-min-height: 36px;
+      --md-list-item-one-line-container-height: 36px;
       --oscd-tree-row-gap: 4px;
       --oscd-tree-row-padding-start: 8px;
       --oscd-tree-row-padding-end: 8px;
@@ -11407,8 +11467,8 @@ EditorPluginsPanel.styles = i$6 `
          to currentColor makes the icon track whatever colour the row itself
          resolves to (resting on-surface ink, or the active/selected colour),
          matching the label in both states. */
-      --oscd-tree-item-leading-icon-color: currentColor;
-      --oscd-tree-item-trailing-icon-color: currentColor;
+      --md-list-item-leading-icon-color: currentColor;
+      --md-list-item-trailing-icon-color: currentColor;
       --oscd-tree-row-selected-color: var(
         --editor-plugins-panel-item-active-bg
       );
@@ -11425,7 +11485,7 @@ EditorPluginsPanel.styles = i$6 `
          selected-row colour (which vanishes against the resting surface). */
       --oscd-tree-row-active-border-color: currentColor;
       --oscd-tree-row-active-text-color: inherit;
-      --oscd-tree-row-focus-ring-color: currentColor;
+      --md-focus-ring-color: currentColor;
     }
 
     oscd-tree.keyboard-active {
@@ -12403,7 +12463,7 @@ const styles = i$6 `:host{--_container-height: var(--md-text-button-container-he
  */
 /**
  * @license
- * Copyright 2025 Omicron Energy GmbH
+ * Copyright 2026 OMICRON electronics GmbH
  * SPDX-License-Identifier: Apache-2.0
  */
 /**
@@ -12730,24 +12790,6 @@ const oscdShellDesignTokens = i$6 `
     --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
     --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
 
-    /* Fallbacks for Material Design variables */
-    --md-sys-color-primary: var(--oscd-primary);
-    --md-sys-color-on-primary: var(--oscd-base3);
-    --md-sys-color-secondary: var(--oscd-secondary);
-    --md-sys-color-on-secondary: var(--oscd-base3);
-    --md-sys-color-secondary-container: var(--oscd-base2);
-    --md-sys-color-surface: var(--oscd-base3);
-    --md-sys-color-on-surface: var(--oscd-base00);
-    --md-sys-color-surface-variant: var(--oscd-base3);
-    --md-sys-color-on-surface-variant: var(--oscd-base00);
-    --md-sys-color-surface-bright: var(--oscd-base2);
-    --md-sys-color-surface-container: var(--oscd-base3);
-    --md-sys-color-surface-container-high: var(--oscd-base3);
-    --md-sys-color-surface-container-highest: var(--oscd-base3);
-    --md-sys-color-outline-variant: var(--oscd-primary);
-    --md-sys-color-scrim: #000000;
-    --md-sys-color-error: var(--oscd-error);
-    --md-sys-color-on-error: var(--oscd-base3);
     --md-icon-button-disabled-icon-color: var(--oscd-base3);
 
     /* Material shape scale, derived from --oscd-shape (the Material
@@ -12913,14 +12955,19 @@ const oscdShellDesignTokens = i$6 `
       0.38
     );
 
-    /* Bridge to oscd-ui app bar tokens */
-    --oscd-app-bar-color: var(--app-bar-color);
-    --oscd-app-bar-background-color: var(--app-bar-background-color);
-    --oscd-app-bar-elevation: var(--app-bar-elevation);
-    --oscd-app-bar-title-font-family: var(--app-bar-title-text-font-family);
-    --oscd-app-bar-title-font-size: var(--app-bar-title-text-font-size);
-    --oscd-app-bar-title-font-weight: var(--app-bar-title-text-font-weight);
-    --oscd-app-bar-title-line-height: var(--app-bar-title-text-line-height);
+    /* Bridge the shell's public app-bar tokens to oscd-ui facets. */
+    --oscd-app-bar-container-color: var(--app-bar-background-color);
+    --oscd-app-bar-container-height: var(--app-bar-height);
+    --oscd-app-bar-container-small-height: var(--app-bar-small-height);
+    --oscd-app-bar-container-elevation: 0;
+    --oscd-app-bar-headline-color: var(--app-bar-title-text-color);
+    --oscd-app-bar-headline-font: var(--app-bar-title-text-font-family);
+    --oscd-app-bar-headline-size: var(--app-bar-title-text-font-size);
+    --oscd-app-bar-headline-weight: var(--app-bar-title-text-font-weight);
+    --oscd-app-bar-headline-line-height: var(--app-bar-title-text-line-height);
+    --oscd-app-bar-leading-icon-color: var(--app-bar-action-icon-color);
+    --oscd-app-bar-trailing-icon-color: var(--app-bar-action-icon-color);
+    --oscd-app-bar-on-scroll-container-color: var(--app-bar-background-color);
 
     /* Files menu */
     --file-menu-text-font-family: var(
@@ -13084,155 +13131,6 @@ const oscdShellDesignTokens = i$6 `
     );
   }
 `;
-
-/**
- * @license
- * Copyright 2021 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-/**
- * @license
- * Copyright 2025 OMICRON Electronics GmbH
- * SPDX-License-Identifier: Apache-2.0
- */
-/**
- * @tag oscd-app-bar
- * @class OscdAppBar
- * @extends ScopedElementsMixin(LitElement)
- * @summary A component that renders an app bar.
- *
- * The app bar is a top-level navigation component that displays information and actions relating to the current screen.
- * It can contain a title, navigation icons, and action icons.
- * The app bar is typically used in conjunction with a navigation drawer or bottom navigation.
- *
- * @slot alignStart - Slot for action icons at the start of the app bar.
- * @slot alignMiddle - Slot for the middle content of the app bar.
- * @slot alignEnd - Slot for action icons at the end of the app bar.
- * @slot Default - Slot for additional content which will appear immediately under the main app bar.
- *
- * @cssprop --oscd-app-bar-elevation - The elevation level of the app bar.
- * @cssprop --oscd-app-bar-shadow-color - The shadow color of the app bar.
- * @cssprop --oscd-app-bar-color - The color of the app bar.
- * @cssprop --oscd-app-bar-background-color - The background color of the app bar.
- * @cssprop --oscd-app-bar-title-font-family - The font family of the app bar title.
- * @cssprop --oscd-app-bar-title-font-size - The font size of the app bar title.
- * @cssprop --oscd-app-bar-title-line-height - The line height of the app bar title.
- * @cssprop --oscd-app-bar-title-font-weight - The font weight of the app bar title.
- * @cssprop --md-icon-button-icon-color - The color of the icon button in the app bar.
- *
- */
-class OscdAppBar extends ScopedElementsMixin(i$3) {
-    static get scopedElements() {
-        return {
-            'oscd-elevation': OscdElevation,
-        };
-    }
-    // eslint-disable-next-line class-methods-use-this
-    render() {
-        return b `
-      <header>
-        <div>
-          <div class="main-header">
-            <slot name="alignStart"></slot>
-            <span class="spacer"></span>
-            <slot name="alignMiddle"></slot>
-            <span class="spacer"></span>
-            <slot name="alignEnd"></slot>
-          </div>
-          <div class="sub-header">
-            <slot></slot>
-          </div>
-        </div>
-        <oscd-elevation part="elevation"></oscd-elevation>
-      </header>
-    `;
-    }
-}
-OscdAppBar.styles = i$6 `
-    :host {
-      --md-elevation-level: var(--oscd-app-bar-elevation, 3);
-      --md-elevation-shadow-color: var(
-        --oscd-app-bar-shadow-color,
-        var(--md-sys-color-shadow, #000)
-      );
-      --app-bar-color: var(
-        --oscd-app-bar-color,
-        var(--md-sys-color-on-primary, #1d1b20)
-      );
-      --app-bar-background-color: var(
-        --oscd-app-bar-background-color,
-        var(--md-sys-color-primary, #fff)
-      );
-      --app-bar-title-font-family: var(
-        --oscd-app-bar-title-font-family,
-        var(
-          --md-sys-typescale-body-large-font,
-          var(--md-ref-typeface-plain, Roboto)
-        )
-      );
-      --app-bar-title-font-size: var(
-        --oscd-app-bar-title-font-size,
-        var(--md-sys-typescale-body-large-size, 1.25rem)
-      );
-      --app-bar-title-line-height: var(
-        --oscd-app-bar-title-line-height,
-        var(--md-sys-typescale-body-large-line-height, 2rem)
-      );
-      --app-bar-title-font-weight: var(
-        --oscd-app-bar-title-font-weight,
-        var(
-          --md-sys-typescale-body-large-weight,
-          var(--md-ref-typeface-weight-regular, 500)
-        )
-      );
-      --md-icon-button-icon-color: var(--app-bar-color);
-    }
-
-    header {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      position: sticky;
-      top: 0;
-      z-index: 4;
-      color: var(--app-bar-color);
-      background-color: var(--app-bar-background-color);
-    }
-
-    .main-header {
-      padding: 0 12px;
-      display: flex;
-      flex-grow: 1;
-      align-items: center;
-      height: var(--app-bar-height, 54px);
-    }
-
-    @media (max-width: 599px) {
-      .main-header {
-        height: var(--app-bar-small-height, 48px);
-      }
-    }
-
-    ::slotted([slot='title']) {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-left: 16px;
-      font-family: var(--app-bar-title-font-family);
-      font-size: var(--app-bar-title-font-size);
-      font-weight: var(--app-bar-title-font-weight);
-      line-height: var(--app-bar-title-line-height);
-    }
-
-    .sub-header {
-      display: flex;
-      width: 100%;
-    }
-
-    .spacer {
-      flex: 1;
-    }
-  `;
 
 let OscdShell = class OscdShell extends ScopedElementsMixin(i$3) {
     get locale() {
@@ -13621,6 +13519,7 @@ OscdShell.scopedElements = {
     'landing-page': LandingPage,
 };
 OscdShell.styles = [
+    oscdMd3Mappings,
     oscdShellDesignTokens,
     i$6 `
       :host {
@@ -13647,7 +13546,7 @@ OscdShell.styles = [
 
       oscd-app-bar {
         grid-area: header;
-        box-shadow: var(--md-sys-elevation-level-2);
+        box-shadow: var(--app-bar-elevation);
         z-index: 10;
       }
 

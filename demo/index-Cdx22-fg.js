@@ -32755,25 +32755,25 @@ const plugins = {
     {
       name: 'Generate SubStation',
       translations: { de: 'Unterstation erzeugen' },
-      icon: 'grid_on',
+      icon: 'grid_on',requireDoc: true,
       tagName: 'oscd-menu-open',
     },
     {
       name: 'Import IED',
       translations: { de: 'IED importieren' },
-      icon: 'note_add',
+      icon: 'note_add',requireDoc: true,
       tagName: 'oscd-menu-open',
     },
     {
       name: 'Generate IED',
       translations: { de: 'IED erzeugen' },
-      icon: 'grid_view',
+      icon: 'grid_view',requireDoc: true,
       tagName: 'oscd-menu-open',
     },
     {
       name: 'Generator Data Type',
       translations: { de: 'Datentyp erzeugen' },
-      icon: 'dvr',
+      icon: 'dvr',requireDoc: true,
       tagName: 'oscd-menu-open',
     },
     {
@@ -32934,4 +32934,4 @@ for (const [name, value] of params) {
 //   ),
 // };
 // oscdShell.docName = 'sample.scd';
-//# sourceMappingURL=index-C7g_8jZJ.js.map
+//# sourceMappingURL=index-Cdx22-fg.js.map
