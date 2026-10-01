@@ -10,7 +10,11 @@ import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 import { localized, msg } from '@lit/localize';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
+import { oscdMd3Mappings } from '@omicronenergy/oscd-ui/oscd-md3-mappings.js';
 import { OscdFilledIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdFilledIconButton.js';
+import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
+import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
+import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
 import { XMLEditor } from '@openscd/oscd-editor';
 import { EditEventV2, OpenEvent } from '@openscd/oscd-api';
 
@@ -25,9 +29,6 @@ import { LandingPage } from './landing-page/landing-page.js';
 import { RenameEvent, CloseEvent } from './foundation/events.js';
 import { FilesMenu } from './menus/files-menu.js';
 import { oscdShellDesignTokens } from './oscd-shell-design-tokens.js';
-import { OscdAppBar } from '@omicronenergy/oscd-ui/app-bar/OscdAppBar.js';
-import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
-import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
 
 /** Fields shared by plugin entries and the groups that contain them. */
 export interface PluginMetadata {
@@ -565,6 +566,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
   }
 
   static styles = [
+    oscdMd3Mappings,
     oscdShellDesignTokens,
     css`
       :host {
@@ -591,7 +593,7 @@ export class OscdShell extends ScopedElementsMixin(LitElement) {
 
       oscd-app-bar {
         grid-area: header;
-        box-shadow: var(--md-sys-elevation-level-2);
+        box-shadow: var(--app-bar-elevation);
         z-index: 10;
       }
 

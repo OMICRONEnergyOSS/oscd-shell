@@ -41,41 +41,27 @@ ships as a default here.
 
 ## Design Token Layering
 
-Every color/font token in `oscd-shell` flows through the same four layers,
-each of which should only ever reference the layer directly above it:
+Modern oscd-ui components use MD3 system roles supplied by the shared,
+opt-in `oscdMd3Mappings` adapter. The shell applies it at its Lit root, where
+it maps inherited `--oscd-theme-*` values (or Solarized defaults) to
+`--md-sys-color-*`. Without the adapter, oscd-ui components retain their
+Material defaults. See [oscd-ui theming](https://github.com/OMICRONEnergyOSS/oscd-ui/blob/main/THEMING.md#material-role-mapping)
+for the normative role table.
 
-`--oscd-theme-*` (public brand override)
-→ `--oscd-*` (internal Solarized palette + fonts)
-→ `--md-sys-color-*` / `--md-ref-typeface-*` (MD3 semantic layer)
-→ shell-specific tokens (`--oscd-shell-*`, e.g. `--oscd-shell-app-bar-color`)
+Because the shell applies the mapper on its host, those declarations take
+precedence over `--md-sys-color-*` values inherited from `:root` or `*`.
+Distros that need to preserve an existing direct MD3 mapping should keep the
+document-level values for UI outside the shell and set the same values on the
+`oscd-shell` element.
 
-All token tables below this section document their defaults in terms of the
-MD3 semantic layer (`--md-sys-color-*` / `--md-ref-typeface-*`), not the raw
-`--oscd-*` palette. The mapping between the two is fixed (not brand-specific)
-and documented once here:
+The shell also retains its internal `--oscd-*` Solarized palette and `--mdc-*`
+compatibility tokens for legacy consumers. Font mapping remains separate:
+`--md-ref-typeface-plain` uses `--oscd-text-font`, while icon and monospace
+fonts have no MD3 equivalent and are referenced directly.
 
-| MD3 Token                                          | Mapped from        |
-| -------------------------------------------------- | ------------------ |
-| `--md-sys-color-primary`                           | `--oscd-primary`   |
-| `--md-sys-color-on-primary`                        | `--oscd-base3`     |
-| `--md-sys-color-secondary`                         | `--oscd-secondary` |
-| `--md-sys-color-on-secondary`                      | `--oscd-base3`     |
-| `--md-sys-color-secondary-container`               | `--oscd-base2`     |
-| `--md-sys-color-surface`                           | `--oscd-base3`     |
-| `--md-sys-color-on-surface`                        | `--oscd-base00`    |
-| `--md-sys-color-surface-variant`                   | `--oscd-base3`     |
-| `--md-sys-color-on-surface-variant`                | `--oscd-base00`    |
-| `--md-sys-color-surface-bright`                    | `--oscd-base2`     |
-| `--md-sys-color-surface-container(-high/-highest)` | `--oscd-base3`     |
-| `--md-sys-color-outline-variant`                   | `--oscd-primary`   |
-| `--md-sys-color-error`                             | `--oscd-error`     |
-| `--md-sys-color-on-error`                          | `--oscd-base3`     |
-| `--md-ref-typeface-plain`                          | `--oscd-text-font` |
-
-**Exceptions**: MD3 does not standardize icon fonts or monospace fonts, so
-there is no `--md-*` equivalent for those. `--oscd-icon-font` and
-`--oscd-text-font-mono` are referenced directly (unmapped) wherever a shell
-token needs them.
+Shell-specific tokens (`--oscd-shell-*`) are layered over the MD3 roles or the
+relevant font token. The tables below document those defaults; they do not
+redefine the shared palette-to-MD3 mapping.
 
 ### The mapping block is declared on `:host` only
 
@@ -148,8 +134,8 @@ undocumented second source of truth that no distro can discover or override.
 | ------------------------------------------------- | ------------------------------------------------- | -------------------------- |
 | `--oscd-shell-app-bar-color`                      | `--md-sys-color-on-primary`                       | text color in app bar      |
 | `--oscd-shell-app-bar-background-color`           | `--md-sys-color-primary`                          | App bar background         |
-| `--oscd-shell-app-bar-height`                     | `54px` (oscd-ui default)                          | App bar height             |
-| `--oscd-shell-app-bar-small-height`               | `48px`                                            | Mobile app bar height      |
+| `--oscd-shell-app-bar-height`                     | `54px`                                            | Main app-bar row height    |
+| `--oscd-shell-app-bar-small-height`               | `48px`                                            | Main app-bar row height at widths up to 599px |
 | `--oscd-shell-app-bar-elevation`                  | `--md-sys-elevation-level-2`                      | App bar elevation          |
 | `--oscd-shell-app-bar-icon-height`                | `34.4px`                                          | App logo height            |
 | `--oscd-shell-app-bar-icon-width`                 | `auto`                                            | App logo width             |
@@ -174,6 +160,10 @@ undocumented second source of truth that no distro can discover or override.
 | `--oscd-shell-app-bar-action-icon-disabled-container-opacity` | `0`                                   | Disabled undo/redo container opacity |
 | `--oscd-shell-app-bar-separator-color`            | `currentColor`                                    | App bar vertical separator color |
 | `--oscd-shell-app-bar-separator-opacity`          | `0.38`                                            | App bar vertical separator opacity |
+
+The oscd-ui app bar defaults to a `64px` main row.
+oscd-shell preserves its designed `54px` desktop and `48px` small-screen rows
+through these public shell tokens.
 
 ## File Selection Menu
 

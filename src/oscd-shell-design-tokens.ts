@@ -39,24 +39,6 @@ export const oscdShellDesignTokens = css`
     --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
     --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
 
-    /* Fallbacks for Material Design variables */
-    --md-sys-color-primary: var(--oscd-primary);
-    --md-sys-color-on-primary: var(--oscd-base3);
-    --md-sys-color-secondary: var(--oscd-secondary);
-    --md-sys-color-on-secondary: var(--oscd-base3);
-    --md-sys-color-secondary-container: var(--oscd-base2);
-    --md-sys-color-surface: var(--oscd-base3);
-    --md-sys-color-on-surface: var(--oscd-base00);
-    --md-sys-color-surface-variant: var(--oscd-base3);
-    --md-sys-color-on-surface-variant: var(--oscd-base00);
-    --md-sys-color-surface-bright: var(--oscd-base2);
-    --md-sys-color-surface-container: var(--oscd-base3);
-    --md-sys-color-surface-container-high: var(--oscd-base3);
-    --md-sys-color-surface-container-highest: var(--oscd-base3);
-    --md-sys-color-outline-variant: var(--oscd-primary);
-    --md-sys-color-scrim: #000000;
-    --md-sys-color-error: var(--oscd-error);
-    --md-sys-color-on-error: var(--oscd-base3);
     --md-icon-button-disabled-icon-color: var(--oscd-base3);
 
     /* Material shape scale, derived from --oscd-shape (the Material
@@ -222,14 +204,19 @@ export const oscdShellDesignTokens = css`
       0.38
     );
 
-    /* Bridge to oscd-ui app bar tokens */
-    --oscd-app-bar-color: var(--app-bar-color);
-    --oscd-app-bar-background-color: var(--app-bar-background-color);
-    --oscd-app-bar-elevation: var(--app-bar-elevation);
-    --oscd-app-bar-title-font-family: var(--app-bar-title-text-font-family);
-    --oscd-app-bar-title-font-size: var(--app-bar-title-text-font-size);
-    --oscd-app-bar-title-font-weight: var(--app-bar-title-text-font-weight);
-    --oscd-app-bar-title-line-height: var(--app-bar-title-text-line-height);
+    /* Bridge the shell's public app-bar tokens to oscd-ui facets. */
+    --oscd-app-bar-container-color: var(--app-bar-background-color);
+    --oscd-app-bar-container-height: var(--app-bar-height);
+    --oscd-app-bar-container-small-height: var(--app-bar-small-height);
+    --oscd-app-bar-container-elevation: 0;
+    --oscd-app-bar-headline-color: var(--app-bar-title-text-color);
+    --oscd-app-bar-headline-font: var(--app-bar-title-text-font-family);
+    --oscd-app-bar-headline-size: var(--app-bar-title-text-font-size);
+    --oscd-app-bar-headline-weight: var(--app-bar-title-text-font-weight);
+    --oscd-app-bar-headline-line-height: var(--app-bar-title-text-line-height);
+    --oscd-app-bar-leading-icon-color: var(--app-bar-action-icon-color);
+    --oscd-app-bar-trailing-icon-color: var(--app-bar-action-icon-color);
+    --oscd-app-bar-on-scroll-container-color: var(--app-bar-background-color);
 
     /* Files menu */
     --file-menu-text-font-family: var(

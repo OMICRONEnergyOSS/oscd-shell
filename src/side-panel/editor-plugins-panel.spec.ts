@@ -129,6 +129,15 @@ describe('editor-plugins-panel', () => {
     expect(isPanelExpanded(editorPluginsPanel)).to.be.true;
   });
 
+  it('preserves the editor tree row height', () => {
+    const editorsTree = editorPluginsPanel.shadowRoot!.querySelector(
+      '.tree-container oscd-tree.editors-tree',
+    )!;
+    const item = editorsTree.shadowRoot!.querySelector('oscd-tree-item')!;
+
+    expect(item.getBoundingClientRect().height).to.equal(36);
+  });
+
   it('uses value stored in localstorage initially', async () => {
     localStorage.setItem(LS_KEYS.expanded, JSON.stringify(false));
     const editorPluginsPanel2 = await mountFreshPanel();

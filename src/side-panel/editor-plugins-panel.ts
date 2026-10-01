@@ -897,7 +897,7 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
          whichever tree follows. */
       flex-shrink: 0;
       --oscd-tree-row-height: 36px;
-      --oscd-tree-item-min-height: 36px;
+      --md-list-item-one-line-container-height: 36px;
       --oscd-tree-row-gap: 4px;
       --oscd-tree-row-padding-start: 8px;
       --oscd-tree-row-padding-end: 8px;
@@ -915,8 +915,8 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
          to currentColor makes the icon track whatever colour the row itself
          resolves to (resting on-surface ink, or the active/selected colour),
          matching the label in both states. */
-      --oscd-tree-item-leading-icon-color: currentColor;
-      --oscd-tree-item-trailing-icon-color: currentColor;
+      --md-list-item-leading-icon-color: currentColor;
+      --md-list-item-trailing-icon-color: currentColor;
       --oscd-tree-row-selected-color: var(
         --editor-plugins-panel-item-active-bg
       );
@@ -933,7 +933,7 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
          selected-row colour (which vanishes against the resting surface). */
       --oscd-tree-row-active-border-color: currentColor;
       --oscd-tree-row-active-text-color: inherit;
-      --oscd-tree-row-focus-ring-color: currentColor;
+      --md-focus-ring-color: currentColor;
     }
 
     oscd-tree.keyboard-active {

@@ -18,6 +18,7 @@ const tokenValue = (element: Element, token: string) =>
 
 const solarizedBase3 = '#fdf6e3';
 const solarizedBase3Rgb = 'rgb(253, 246, 227)';
+const solarizedPrimary = '#2aa198';
 
 /* Inline so the spec never depends on a network request for the logo. */
 const testLogo =
@@ -40,7 +41,35 @@ describe('shell design tokens', () => {
     await oscdShell.updateComplete;
   });
 
+  it('applies the Solarized palette through the opt-in mapper', () => {
+    expect(tokenValue(oscdShell, '--md-sys-color-primary')).to.equal(
+      solarizedPrimary,
+    );
+    expect(tokenValue(oscdShell, '--md-sys-color-surface')).to.equal(
+      solarizedBase3,
+    );
+  });
+
+  it('allows inherited OpenSCD palette values to override mapper defaults', () => {
+    oscdShell.style.setProperty('--oscd-theme-primary', 'rgb(1, 2, 3)');
+
+    expect(tokenValue(oscdShell, '--md-sys-color-primary')).to.equal(
+      'rgb(1, 2, 3)',
+    );
+  });
+
   it('resolves app bar tokens on every app bar descendant', async () => {
+    const appBar = oscdShell.shadowRoot!.querySelector('oscd-app-bar')!;
+    expect(tokenValue(appBar, '--oscd-app-bar-container-color')).to.equal(
+      solarizedPrimary,
+    );
+    expect(tokenValue(appBar, '--oscd-app-bar-headline-color')).to.equal(
+      solarizedBase3,
+    );
+    expect(
+      getComputedStyle(appBar.shadowRoot!.querySelector('.main-header')!).height,
+    ).to.equal('54px');
+
     const appBarChildren = Array.from(
       oscdShell.shadowRoot!.querySelectorAll('oscd-app-bar *'),
     );
@@ -56,6 +85,15 @@ describe('shell design tokens', () => {
         `--app-bar-action-icon-color empty on <${child.localName}>`,
       ).to.equal(solarizedBase3);
     });
+  });
+
+  it('honors the public shell app-bar height override', () => {
+    oscdShell.style.setProperty('--oscd-shell-app-bar-height', '60px');
+
+    const appBar = oscdShell.shadowRoot!.querySelector('oscd-app-bar')!;
+    const mainHeader = appBar.shadowRoot!.querySelector('.main-header')!;
+
+    expect(getComputedStyle(mainHeader).height).to.equal('60px');
   });
 
   it('resolves the file menu label color rather than the Material fallback', async () => {
