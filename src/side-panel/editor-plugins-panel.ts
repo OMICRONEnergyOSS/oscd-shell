@@ -476,7 +476,14 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     active,
   }: TreeRenderContext<EditorPluginTreeNode>) {
     const label = node.translations?.[this.locale] ?? node.name;
-    return html`<oscd-tree-item ?disabled=${disabled} ?active=${active}>
+    const isPlaceholder = 'kind' in node && node.kind === 'placeholder';
+    return html`<oscd-tree-item
+      ?disabled=${disabled}
+      ?active=${active}
+      style=${isPlaceholder
+        ? '--md-list-item-disabled-opacity: 0.75'
+        : nothing}
+    >
       ${level === 1 && !('kind' in node)
         ? html`<oscd-icon slot="start">${node.icon}</oscd-icon>`
         : nothing}

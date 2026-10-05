@@ -281,7 +281,7 @@ export const oscdShellDesignTokens = css`
     );
     --editor-plugins-panel-background-color: var(
       --oscd-shell-editor-plugins-panel-background-color,
-      var(--md-sys-color-surface)
+      var(--md-sys-color-surface-container-high)
     );
     --editor-plugins-panel-item-text-color: var(
       --oscd-shell-editor-plugins-panel-item-text-color,
