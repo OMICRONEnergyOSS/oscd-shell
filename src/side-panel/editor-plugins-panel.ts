@@ -980,6 +980,9 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
 
     /* Active group/editor: dark rounded square behind the glyph. */
     .rail-item.active {
+      --md-sys-color-on-surface-variant: var(
+        --editor-plugins-panel-item-active-color
+      );
       background: var(--editor-plugins-panel-item-active-bg);
     }
 
