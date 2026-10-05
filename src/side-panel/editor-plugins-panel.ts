@@ -492,6 +492,10 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
   }
 
   renderLeafAccessory({ node, id }: TreeRenderContext<EditorPluginTreeNode>) {
+    if ('kind' in node && node.kind === 'placeholder') {
+      return nothing;
+    }
+
     const pinned = this.pinnedPluginIds.includes(id);
     return html`<button
       aria-label=${pinned

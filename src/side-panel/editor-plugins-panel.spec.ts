@@ -99,6 +99,24 @@ describe('editor-plugins-panel', () => {
     await editorPluginsPanel.updateComplete;
   });
 
+  it('does not render a pin accessory for the empty pinned placeholder', async () => {
+    editorPluginsPanel.pinnedExpanded = ['pinned'];
+    await editorPluginsPanel.updateComplete;
+
+    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
+      '.tree-container oscd-tree.pinned-tree',
+    )!;
+    await pinnedTree.updateComplete;
+
+    const placeholderItem = Array.from(
+      pinnedTree.shadowRoot!.querySelectorAll('oscd-tree-item'),
+    ).find(item => item.textContent?.includes('Items you pin'));
+
+    expect(placeholderItem).to.exist;
+    expect(placeholderItem?.closest('[role="treeitem"]')?.querySelector('.accessory'))
+      .not.to.exist;
+  });
+
   afterEach(() => {
     oscdShell.remove();
     while (extraShells.length) {
