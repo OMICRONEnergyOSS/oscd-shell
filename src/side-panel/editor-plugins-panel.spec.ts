@@ -468,17 +468,18 @@ describe('editor-plugins-panel', () => {
     expect(editorPluginsPanel.pinnedPluginIds).to.not.include(tagName);
   });
 
-  it('reflects the selected editor into the pinned tree selectedIds', async () => {
+  it('does not track selection in the pinned tree', async () => {
     const editor = oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin;
 
     editorPluginsPanel.togglePin(editor.tagName);
     editorPluginsPanel.selectedEditor = editor;
     await editorPluginsPanel.updateComplete;
 
-    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector(
+    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
       '.tree-container oscd-tree:not(.editors-tree)',
-    ) as unknown as { selectedIds: string[] };
-    expect(pinnedTree.selectedIds).to.deep.equal([editor.tagName]);
+    )!;
+    expect(pinnedTree.selectionMode).to.equal('none');
+    expect(pinnedTree.selectedIds).to.deep.equal([]);
   });
 
   it('selects an editor chosen from the pinned tree', async () => {
@@ -491,17 +492,81 @@ describe('editor-plugins-panel', () => {
       selected = (event as CustomEvent).detail.editor;
     });
 
-    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector(
+    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
       '.tree-container oscd-tree:not(.editors-tree)',
     )!;
-    pinnedTree.dispatchEvent(
-      new CustomEvent('selected-ids-changed', {
-        detail: { selectedIds: [editor.tagName] },
-      }),
-    );
+    await pinnedTree.updateComplete;
+    const item = Array.from(
+      pinnedTree.shadowRoot!.querySelectorAll('oscd-tree-item'),
+    ).find(item => item.textContent?.includes(editor.name))!;
+    item.click();
     await editorPluginsPanel.updateComplete;
 
     expect(selected?.tagName).to.equal(editor.tagName);
+    expect(pinnedTree.selectedIds).to.deep.equal([]);
+  });
+
+  it('activates pinned editors with Enter and Space without tree selection', async () => {
+    const editor = oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin;
+    editorPluginsPanel.togglePin(editor.tagName);
+    await editorPluginsPanel.updateComplete;
+    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
+      '.pinned-tree',
+    )!;
+    pinnedTree.activeId = editor.tagName;
+    await pinnedTree.updateComplete;
+    const selectEditor = sinon.spy(editorPluginsPanel, 'selectEditor');
+    const activeRow = pinnedTree.shadowRoot!.querySelector(
+      '[data-active="true"]',
+    )!;
+
+    for (const key of ['Enter', ' ']) {
+      activeRow.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+        }),
+      );
+      expect(selectEditor.lastCall.args).to.deep.equal([[editor.tagName]]);
+      expect(pinnedTree.selectedIds).to.deep.equal([]);
+    }
+    expect(selectEditor.callCount).to.equal(2);
+
+    pinnedTree.activeId = 'pinned';
+    await pinnedTree.updateComplete;
+    pinnedTree.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    expect(pinnedTree.expandedIds).to.deep.equal([]);
+    expect(pinnedTree.selectedIds).to.deep.equal([]);
+  });
+
+  it('highlights the collapsed group instead of its selected editor', async () => {
+    oscdShell.plugins = { editor: groupedEditorPlugins };
+    await oscdShell.updateComplete;
+    await editorPluginsPanel.updateComplete;
+    const group = editorPluginsPanel.editorTreeNodes[0];
+    const editor = (oscdShell._resolvedPlugins.editor[0] as PluginGroup<ResolvedPlugin>)
+      .plugins[0];
+    editorPluginsPanel.selectedEditor = editor;
+    editorPluginsPanel.expandedIds = [];
+    await editorPluginsPanel.updateComplete;
+    const editorsTree = editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
+      '.editors-tree',
+    )!;
+    expect(editorsTree.selectedIds).to.deep.equal([group.id]);
+
+    editorPluginsPanel.expandedIds = [group.id!];
+    await editorPluginsPanel.updateComplete;
+    expect(editorsTree.selectedIds).to.deep.equal([editor.tagName]);
+
+    await setSearch(editor.name);
+    expect(editorsTree.selectedIds).to.deep.equal([editor.tagName]);
   });
 
   it('ignores an editor selection with no id', async () => {

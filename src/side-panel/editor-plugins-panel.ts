@@ -1,5 +1,5 @@
 import { css, html, LitElement, nothing } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { eventOptions, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 import { localized, msg, str } from '@lit/localize';
@@ -394,6 +394,35 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     this.focusedTree = kind;
   }
 
+  // With selection disabled, the tree no longer activates rows on Enter/Space.
+  // Handle activation separately, before its row keydown handler consumes them.
+  @eventOptions({ capture: true })
+  private handlePinnedKeydown(event: KeyboardEvent) {
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+    const tree = this.getTree('pinned');
+    if (!tree) {
+      return;
+    }
+    const accessoryTarget = event.composedPath().some(
+      target => target instanceof Element && target.matches('.accessory'),
+    );
+    if (accessoryTarget) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    if (tree.activeId) {
+      const activeNode = tree.data.find(node => node.id === tree.activeId);
+      if (activeNode?.children?.length) {
+        tree.toggle(tree.activeId);
+      } else {
+        this.selectEditor([tree.activeId]);
+      }
+    }
+  }
+
   private handleTreeSelection(
     kind: 'pinned' | 'editors',
     selectedIds: string[],
@@ -509,6 +538,23 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
   }
 
   private renderExpanded() {
+    const editorExpandedIds = this.searchValue.length === 0
+      ? this.expandedIds
+      : this.editorTreeNodes.map(node => node.id);
+    const selectedTagName = this.selectedEditor?.tagName;
+    const selectedRoot = this.editorTreeNodes.find(node =>
+      node.id === selectedTagName ||
+      node.children?.some(child => child.id === selectedTagName),
+    );
+    const selectedRootId = selectedRoot?.id;
+    const selectedEditorIds = selectedRootId && selectedTagName
+      ? [
+        !editorExpandedIds.includes(selectedRootId)
+          ? selectedRootId
+          : selectedTagName,
+      ]
+      : [];
+
     return html`
       <div class="tree-container">
         <oscd-outlined-search-field
@@ -524,14 +570,9 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
             ? html`<oscd-tree
                   .data=${this.pinnedTreeNodes}
                   .expandedIds=${this.pinnedExpanded}
-                  .selectionMode=${'single'}
-                  .selectedIds=${this.selectedEditor
-                    ? [this.selectedEditor.tagName]
-                    : []}
+                  .selectionMode=${'none'}
                   .isDisabled=${(node: EditorPluginTreeNode) =>
                     'kind' in node && node.kind === 'placeholder'}
-                  .isSelectable=${(node: EditorPluginTreeNode) =>
-                    !('kind' in node && node.kind === 'placeholder')}
                   class="pinned-tree"
                   ?keyboard-active=${this.focusedTree === 'pinned'}
                   @focusin=${() => this.handleTreeFocus('pinned')}
@@ -544,13 +585,10 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
                   toggle-position="trailing"
                   collapse-icon="arrow_drop_up"
                   expand-icon="arrow_drop_down"
-                  @selected-ids-changed=${(
-                    event: CustomEvent<{ selectedIds: string[] }>,
-                  ) =>
-                    this.handleTreeSelection(
-                      'pinned',
-                      event.detail.selectedIds,
-                    )}
+                  @node-click=${(
+                    event: CustomEvent<{ id: string }>,
+                  ) => this.selectEditor([event.detail.id])}
+                  @keydown=${this.handlePinnedKeydown}
                   @expanded-ids-changed=${(
                     event: CustomEvent<{ expandedIds: string[] }>,
                   ) => {
@@ -570,13 +608,9 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
             ?keyboard-active=${this.focusedTree === 'editors'}
             @focusin=${() => this.handleTreeFocus('editors')}
             .data=${this.editorTreeNodes}
-            .expandedIds=${this.searchValue.length === 0
-              ? this.expandedIds
-              : this.editorTreeNodes.map(node => node.id)}
+            .expandedIds=${editorExpandedIds}
             .selectionMode=${'single'}
-            .selectedIds=${this.selectedEditor
-              ? [this.selectedEditor.tagName]
-              : []}
+            .selectedIds=${selectedEditorIds}
             .isDisabled=${(node: EditorPluginTreeNode) =>
               'kind' in node && node.kind === 'placeholder'}
             .isSelectable=${(node: EditorPluginTreeNode) =>
