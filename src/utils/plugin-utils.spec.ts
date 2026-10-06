@@ -107,30 +107,33 @@ describe('validatePlugin', () => {
     expect(plugin).not.to.satisfy(validatePlugin);
   });
 
-  it('rejects a definition with missing icon and non-boolean requireDoc', async () => {
+  it('rejects an otherwise valid definition with non-boolean requireDoc', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       tagName: 'test-tagless-plugin',
+      icon: 'coronavirus',
       requireDoc: 'not-a-boolean',
     };
 
     expect(plugin).not.to.satisfy(validatePlugin);
   });
 
-  it('rejects a definition with missing icon and non-object translations', async () => {
+  it('rejects an otherwise valid definition with non-object translations', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       tagName: 'test-tagless-plugin',
+      icon: 'coronavirus',
       translations: 'ops',
     };
 
     expect(plugin).not.to.satisfy(validatePlugin);
   });
 
-  it('rejects a definition with missing icon and a non-string translation value', async () => {
+  it('rejects an otherwise valid definition with a non-string translation value', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       tagName: 'test-tagless-plugin',
+      icon: 'coronavirus',
       translations: {
         en: 'Tagless, Sourceless, Hopeless Plugin',
         fr: 123, // Invalid translation (not a string)
