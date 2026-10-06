@@ -13,7 +13,7 @@ import sinon from 'sinon';
 
 // A grouped editor fixture, used to exercise the collapsed rail's group
 // flyout (rendered only when `editors` contains a `PluginGroup<ResolvedPlugin>`).
-const groupedEditorPlugins: (ResolvedPlugin | PluginGroup<ResolvedPlugin>)[] = [
+const groupedEditorPlugins: PluginGroup<ResolvedPlugin>[] = [
   {
     name: 'Grouped Editors',
     icon: 'folder',
@@ -853,6 +853,51 @@ describe('editor-plugins-panel', () => {
       await groupedPanel.updateComplete;
 
       expect(findGroupRailButton().classList.contains('active')).to.be.true;
+    });
+
+    it('keeps the current editor selected during popout keyboard navigation', async () => {
+      const editor = groupedEditorPlugins[0].plugins[0];
+      groupedPanel.selectedEditor = editor;
+      await groupedPanel.updateComplete;
+
+      const items = findGroupFlyoutMenu().querySelectorAll('oscd-menu-item');
+      expect(items[0].selected).to.be.true;
+      expect(items[1].selected).to.be.false;
+
+      const menu = findGroupFlyoutMenu();
+      await menu.show();
+      items[0].focus();
+      items[0].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowDown',
+          bubbles: true,
+          composed: true,
+        }),
+      );
+      expect(items[0].selected).to.be.true;
+      expect(items[1].selected).to.be.false;
+      await menu.close();
+      await menu.show();
+      expect(items[0].selected).to.be.true;
+      expect(items[1].selected).to.be.false;
+
+      groupedPanel.selectedEditor = groupedEditorPlugins[0].plugins[1];
+      await groupedPanel.updateComplete;
+      expect(items[0].selected).to.be.false;
+      expect(items[1].selected).to.be.true;
+    });
+
+    it('does not mark the current editor in the pinned popout', async () => {
+      const editor = groupedEditorPlugins[0].plugins[0];
+      groupedPanel.togglePin(editor.tagName);
+      groupedPanel.selectedEditor = editor;
+      await groupedPanel.updateComplete;
+
+      const pinnedMenu = groupedPanel.shadowRoot!.querySelector(
+        'oscd-menu[data-flyout="pinned"]',
+      )!;
+      expect(pinnedMenu.querySelector('oscd-menu-item')).to.exist;
+      expect(pinnedMenu.querySelector('oscd-menu-item')!.selected).to.be.false;
     });
   });
 });

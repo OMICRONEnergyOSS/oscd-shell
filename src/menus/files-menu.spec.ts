@@ -41,4 +41,27 @@ describe('files-menu', () => {
     await oscdShell.updateComplete;
     expect(oscdShell).to.not.have.property('docName', oldDocName);
   });
+
+  it('preserves the current document selection when navigating and reopening', async () => {
+    const items = Array.from(filesMenu.menu.querySelectorAll('oscd-menu-item'));
+    const currentItem = items.find(item =>
+      item.textContent?.trim() === filesMenu.selectedDocName,
+    )!;
+    expect(currentItem.selected).to.be.true;
+
+    await filesMenu.menu.show();
+    currentItem.focus();
+    currentItem.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'ArrowDown',
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    expect(currentItem.selected).to.be.true;
+    expect(items.filter(item => item.selected)).to.have.lengthOf(1);
+    await filesMenu.menu.close();
+    await filesMenu.menu.show();
+    expect(currentItem.selected).to.be.true;
+  });
 });

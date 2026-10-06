@@ -9,6 +9,7 @@ import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
 import { OscdTextButton } from '@omicronenergy/oscd-ui/button/OscdTextButton.js';
 
 import { LocaleTag } from '../localization.js';
+import { menuStyles } from './menu-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -70,15 +71,15 @@ export class FilesMenu extends ScopedElementsMixin(LitElement) {
                   }),
                 );
               }}
-              ?selected=${this.selectedDocName === name}
-              >${name}</oscd-menu-item
+              .selected=${this.selectedDocName === name}
+              ><div slot="headline">${name}</div></oscd-menu-item
             >`,
         )}
       </oscd-menu>
     `;
   }
 
-  static styles = css`
+  static styles = [menuStyles, css`
     :host {
       position: relative;
       display: flex;
@@ -101,22 +102,6 @@ export class FilesMenu extends ScopedElementsMixin(LitElement) {
 
     oscd-menu {
       min-width: var(--plugins-menu-min-width);
-      padding: var(--plugins-menu-padding);
-      --md-menu-container-color: var(--plugins-menu-container-color);
     }
-
-    oscd-menu-item {
-      width: 100%;
-      --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
-      --md-menu-item-leading-icon-color: var(
-        --plugins-menu-item-leading-icon-color
-      );
-      --md-menu-item-selected-container-color: var(
-        --plugins-menu-item-selected-container-color
-      );
-      --md-menu-item-selected-label-text-color: var(
-        --plugins-menu-item-selected-label-color
-      );
-    }
-  `;
+  `];
 }

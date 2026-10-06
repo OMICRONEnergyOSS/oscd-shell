@@ -9,6 +9,8 @@ import sinon from 'sinon';
 import { LitElement } from 'lit';
 import { sampleMenuPlugins } from '../utils/testing/plugin-helpers.js';
 import { TestMenuPlugin1 } from '../utils/testing/test-plugins.js';
+import type { OscdSubMenu } from '@omicronenergy/oscd-ui/menu/OscdSubMenu.js';
+import { flattenPluginEntries } from '../utils/plugin-utils.js';
 
 const findMenuOpenButton = (pluginsMenu: PluginsMenu) => {
   const menuOpenButton = pluginsMenu.shadowRoot?.querySelector(
@@ -89,5 +91,45 @@ describe('plugins-menu', () => {
     menuOpenButton?.click();
     await pluginsMenu.updateComplete;
     expect(pluginsMenu.menu).to.have.property('open', false);
+  });
+
+  it('preserves Material selection and keyboard activation for submenu triggers', async () => {
+    oscdShell.plugins = {
+      menu: [{
+        name: 'Tools',
+        icon: 'folder',
+        plugins: [flattenPluginEntries(sampleMenuPlugins)[0]],
+      }],
+    };
+    await oscdShell.updateComplete;
+    await pluginsMenu.updateComplete;
+    await pluginsMenu.menu.show();
+
+    const submenu = pluginsMenu.menu.querySelector<OscdSubMenu>('oscd-sub-menu')!;
+    const trigger = submenu.querySelector<OscdMenuItem>('[slot="item"]')!;
+    const nestedMenu = submenu.querySelector('oscd-menu')!;
+    await submenu.updateComplete;
+    trigger.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      code: 'ArrowRight',
+      bubbles: true,
+      composed: true,
+    }));
+    await nestedMenu.updateComplete;
+    expect(nestedMenu.open).to.be.true;
+    expect(trigger.selected).to.be.true;
+    await submenu.close();
+    expect(nestedMenu.open).to.be.false;
+  });
+
+  it('keeps document-dependent menu actions disabled without a document', async () => {
+    oscdShell.plugins = {
+      menu: [{ ...flattenPluginEntries(sampleMenuPlugins)[0], requireDoc: true }],
+    };
+    await oscdShell.updateComplete;
+    pluginsMenu.editableDocs = [];
+    await pluginsMenu.updateComplete;
+    const item = pluginsMenu.menu.querySelector('oscd-menu-item')!;
+    expect(item.disabled).to.be.true;
   });
 });

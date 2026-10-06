@@ -27,6 +27,7 @@ import { OscdTreeItem } from '@omicronenergy/oscd-ui/tree/OscdTreeItem.js';
 import { OscdDivider } from '@omicronenergy/oscd-ui/divider/OscdDivider.js';
 import { localstorage } from '@omicronenergy/oscd-ui/decorators/localstorage.js';
 import { OscdOutlinedSearchField } from '@omicronenergy/oscd-ui/search-field/OscdOutlinedSearchField.js';
+import { menuStyles } from '../menus/menu-styles.js';
 
 type PlaceholderTreeNode = {
   kind: 'placeholder';
@@ -698,10 +699,12 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
         positioning="popover"
         quick
       >
-        <div class="flyout-header" role="presentation">${label}</div>
-        <oscd-divider class="flyout-divider"></oscd-divider>
+        <div class="menu-heading" role="presentation">${label}</div>
+        <oscd-divider class="menu-divider"></oscd-divider>
         ${group.plugins.length > 0
-          ? group.plugins.map(plugin => this.renderFlyoutItem(plugin))
+          ? group.plugins.map(plugin =>
+            this.renderFlyoutItem(plugin, anchorId !== 'pinned'),
+          )
           : showEmptyPlaceholder
             ? renderFlyoutPlaceholder()
             : nothing}
@@ -723,9 +726,10 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     `;
   }
 
-  private renderFlyoutItem(plugin: ResolvedPlugin) {
+  private renderFlyoutItem(plugin: ResolvedPlugin, highlightSelection: boolean) {
     const label = plugin.translations?.[this.locale] ?? plugin.name;
-    const selected = plugin.tagName === this.selectedEditor?.tagName;
+    const selected = highlightSelection &&
+      plugin.tagName === this.selectedEditor?.tagName;
     return html`
       <oscd-menu-item
         .selected=${selected}
@@ -771,7 +775,7 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     `;
   }
 
-  static styles = css`
+  static styles = [menuStyles, css`
     :host {
       /* Collapsed rail is the default width; the panel widens to its full width
          when persistently expanded OR while in transient search mode. The shell
@@ -798,14 +802,9 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
       background-color: var(--editor-plugins-panel-background-color);
     }
 
-    /* Material colour scheme for the panel's content. By default the panel's
-       background-color (above) is the dark --oscd-primary surface, so its
-       content is light ("white"/--oscd-base3) on a dark surface. We set the
-       *system* colours once here — not each component's final colour — so
-       resting text/icons AND every derived hover/pressed state layer resolve
-       to the light content colour from one place. (The flyout menus are a
-       light surface and reset these back to the shell defaults; see
-       .rail-flyout.)
+    /* Set the panel's system colours once so resting text/icons and derived
+       state layers follow its configured foreground. Popout menus instead
+       inherit the shell's shared Material menu tokens.
 
        NB: these are set on the content containers rather than :host on
        purpose. A :host declaration would sit on the same element that
@@ -1020,7 +1019,7 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
       background: var(--editor-plugins-panel-item-active-bg);
     }
 
-    .rail oscd-divider {
+    .rail > oscd-divider {
       /* 44px wide (aligned with the icon column), 12px clearance above and
          below, per the Figma collapsed spec. */
       width: 44px;
@@ -1028,50 +1027,8 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
       --md-divider-color: var(--editor-plugins-panel-divider-color);
     }
 
-    /* Flyout menu opened from a collapsed group icon. Figma "Links container":
-       padding 8px, gap 4px, 1px border, 5px radius, light surface + shadow.
-       Unlike the rest of the panel this is a LIGHT surface, so it resets the
-       system colours back to the shell defaults (dark content on a light
-       surface); everything inside then derives correctly. */
     .rail-flyout {
-      --md-sys-color-surface: var(--plugins-menu-container-color);
-      --md-sys-color-surface-container: var(--plugins-menu-container-color);
-      --md-sys-color-on-surface: var(--plugins-menu-item-label-color);
-      --md-sys-color-on-surface-variant: var(
-        --plugins-menu-item-leading-icon-color
-      );
-      --md-menu-container-color: var(--plugins-menu-container-color);
       min-width: 200px;
-    }
-
-    .flyout-header {
-      /* Group name heading: Material label-large, in the secondary blue, per the
-         Figma "Links container" header. */
-      padding: 8px 12px;
-      font-family: var(--oscd-text-font, Roboto), sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      letter-spacing: 0.1px;
-      color: var(--editor-plugins-panel-flyout-header-text-color);
-    }
-
-    .rail-flyout .flyout-divider {
-      /* Separates the group heading from its editor items. */
-      --md-divider-color: var(--editor-plugins-panel-divider-color);
-      margin-block: 4px;
-      width: 80%;
-      margin: auto;
-    }
-
-    .rail-flyout oscd-menu-item {
-      width: 100%;
-      --md-menu-item-selected-container-color: var(
-        --plugins-menu-item-selected-container-color
-      );
-      --md-menu-item-selected-label-text-color: var(
-        --plugins-menu-item-selected-label-color
-      );
     }
 
     /* --- Footer: collapse/expand toggle --- */
@@ -1120,5 +1077,5 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
       --md-icon-button-state-layer-height: 44px;
       --md-icon-button-state-layer-width: 44px;
     }
-  `;
+  `];
 }

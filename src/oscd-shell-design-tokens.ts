@@ -240,7 +240,7 @@ export const oscdShellDesignTokens = css`
       var(--md-sys-color-on-primary)
     );
     --plugins-menu-min-width: var(--oscd-shell-plugins-menu-min-width, 350px);
-    --plugins-menu-padding: var(--oscd-shell-plugins-menu-padding, 12px);
+    --plugins-menu-padding: var(--oscd-shell-plugins-menu-padding, 10px);
     --plugins-menu-container-color: var(
       --oscd-shell-plugins-menu-container-color,
       var(--md-sys-color-surface)
@@ -255,12 +255,37 @@ export const oscdShellDesignTokens = css`
     );
     --plugins-menu-item-selected-container-color: var(
       --oscd-shell-plugins-menu-item-selected-container-color,
-      var(--md-sys-color-secondary-container)
+      color-mix(
+        in srgb,
+        var(--md-sys-color-primary) 50%,
+        var(--plugins-menu-container-color)
+      )
     );
     --plugins-menu-item-selected-label-color: var(
       --oscd-shell-plugins-menu-item-selected-label-color,
-      var(--md-sys-color-on-surface)
+      var(--oscd-base02)
     );
+
+    /* Shared defaults for shell menus, including nested menus. */
+    --md-menu-container-color: var(--plugins-menu-container-color);
+    --md-menu-container-shape: 5px;
+    --md-menu-top-space: 8px;
+    --md-menu-bottom-space: 8px;
+    --md-menu-item-one-line-container-height: 36px;
+    --md-menu-item-top-space: 6px;
+    --md-menu-item-bottom-space: 6px;
+    --md-menu-item-leading-space: 8px;
+    --md-menu-item-trailing-space: 8px;
+    --md-menu-item-label-text-size: 16px;
+    --md-menu-item-label-text-line-height: 24px;
+    --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
+    --md-menu-item-leading-icon-color: var(--plugins-menu-item-leading-icon-color);
+    --md-menu-item-trailing-icon-color: var(--plugins-menu-item-leading-icon-color);
+    --md-menu-item-hover-state-layer-color: var(--plugins-menu-item-label-color);
+    --md-menu-item-hover-state-layer-opacity: 0.12;
+    --md-menu-item-pressed-state-layer-color: var(--plugins-menu-item-label-color);
+    --md-menu-item-selected-container-color: var(--plugins-menu-item-selected-container-color);
+    --md-menu-item-selected-label-text-color: var(--plugins-menu-item-selected-label-color);
 
     /* Editor plugins panel */
     --editor-plugins-panel-width: var(

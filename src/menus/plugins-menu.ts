@@ -12,6 +12,7 @@ import { OscdMenuItem } from '@omicronenergy/oscd-ui/menu/OscdMenuItem.js';
 import { LocaleTag, Translation } from '../localization.js';
 import { PluginGroup, ResolvedPlugin } from '../oscd-shell.js';
 import { isPluginGroup } from '../utils/plugin-utils.js';
+import { menuStyles } from './menu-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -116,6 +117,8 @@ export class PluginsMenu extends ScopedElementsMixin(LitElement) {
         has-overflow
         quick
         anchor="menu-button"
+        .xOffset=${16}
+        .yOffset=${18}
         menuCorner="START_END"
         anchorCorner="START_END"
       >
@@ -131,7 +134,7 @@ export class PluginsMenu extends ScopedElementsMixin(LitElement) {
     `;
   }
 
-  static styles = css`
+  static styles = [menuStyles, css`
     :host {
       display: flex;
       align-items: center;
@@ -168,22 +171,6 @@ export class PluginsMenu extends ScopedElementsMixin(LitElement) {
 
     oscd-menu {
       min-width: var(--plugins-menu-min-width);
-      padding: var(--plugins-menu-padding);
-      --md-menu-container-color: var(--plugins-menu-container-color);
     }
-
-    oscd-menu-item {
-      width: 100%;
-      --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
-      --md-menu-item-leading-icon-color: var(
-        --plugins-menu-item-leading-icon-color
-      );
-      --md-menu-item-selected-container-color: var(
-        --plugins-menu-item-selected-container-color
-      );
-      --md-menu-item-selected-label-text-color: var(
-        --plugins-menu-item-selected-label-color
-      );
-    }
-  `;
+  `];
 }
