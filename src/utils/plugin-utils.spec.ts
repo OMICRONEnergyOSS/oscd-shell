@@ -70,14 +70,14 @@ describe('Plugin Utils', () => {
 });
 
 describe('validatePlugin', () => {
-  it('accepts a valid tagged plugin definition', async () => {
+  it('returns the original plugin object for a valid tagged definition', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       icon: 'coronavirus',
       tagName: 'test-tagless-plugin',
     };
 
-    expect(plugin).satisfies(validatePlugin);
+    expect(validatePlugin(plugin)).to.equal(plugin);
   });
 
   it('rejects a plugin definition missing tagName', async () => {
@@ -86,7 +86,7 @@ describe('validatePlugin', () => {
       name: 'Tagless, Sourceless, Hopeless Plugin',
     };
 
-    expect(plugin).not.to.satisfy(validatePlugin);
+    expect(validatePlugin(plugin)).to.equal(undefined);
   });
 
   it('rejects a plugin definition missing name', async () => {
@@ -95,7 +95,7 @@ describe('validatePlugin', () => {
       tagName: 'test-tagless-plugin',
     };
 
-    expect(plugin).not.to.satisfy(validatePlugin);
+    expect(validatePlugin(plugin)).to.equal(undefined);
   });
 
   it('rejects a plugin definition missing icon', async () => {
@@ -104,7 +104,7 @@ describe('validatePlugin', () => {
       tagName: 'test-tagless-plugin',
     };
 
-    expect(plugin).not.to.satisfy(validatePlugin);
+    expect(validatePlugin(plugin)).to.equal(undefined);
   });
 
   it('rejects an otherwise valid definition with non-boolean requireDoc', async () => {
@@ -115,7 +115,7 @@ describe('validatePlugin', () => {
       requireDoc: 'not-a-boolean',
     };
 
-    expect(plugin).not.to.satisfy(validatePlugin);
+    expect(validatePlugin(plugin)).to.equal(undefined);
   });
 
   it('rejects an otherwise valid definition with non-object translations', async () => {
@@ -126,7 +126,7 @@ describe('validatePlugin', () => {
       translations: 'ops',
     };
 
-    expect(plugin).not.to.satisfy(validatePlugin);
+    expect(validatePlugin(plugin)).to.equal(undefined);
   });
 
   it('rejects an otherwise valid definition with a non-string translation value', async () => {
@@ -140,7 +140,7 @@ describe('validatePlugin', () => {
       },
     };
 
-    expect(plugin).not.to.satisfy(validatePlugin);
+    expect(validatePlugin(plugin)).to.equal(undefined);
   });
 });
 
