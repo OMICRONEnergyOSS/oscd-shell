@@ -41,7 +41,7 @@ describe('default landing-page', () => {
     landingPage = oscdShell.shadowRoot!.querySelector('landing-page')!;
   });
 
-  it('loads the default landing-page if no landing-page slot is used and not document loaded', async () => {
+  it('renders the default landing page when no custom slot or document is supplied', async () => {
     expect(landingPage).to.exist;
   });
 
@@ -64,7 +64,7 @@ describe('default landing-page', () => {
     expect(landingPageAfterOpen).to.be.null;
   });
 
-  it('renders all menu plugins, not requiring a document, as large tiles (buttons)', async () => {
+  it('renders one menu tile per resolved plugin that does not require a document', async () => {
     const menuPluginsNotRequiringDoc = flattenPluginEntries(
       oscdShell._resolvedPlugins.menu,
     ).filter(plugin => !plugin.requireDoc);
@@ -126,7 +126,7 @@ describe('custom landing-page', () => {
     expect(customLandingPage).to.exist;
   });
 
-  it('it no longer loads the landing page when a document is loaded', async () => {
+  it('omits the default landing page when a custom landing-page slot is supplied', async () => {
     const defaultLandingPage =
       oscdShell.shadowRoot!.querySelector('landing-page');
     expect(defaultLandingPage).to.be.null;

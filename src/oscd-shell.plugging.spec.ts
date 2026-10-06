@@ -53,21 +53,21 @@ describe('OscdShell Plugin Handling', () => {
   });
 
   describe('with sample plugins loaded', () => {
-    it('loads menu plugins', () => {
+    it('retains the three declared top-level menu entries', () => {
       expect(oscdShell)
         .property('plugins')
         .property('menu')
         .to.have.lengthOf(3);
     });
 
-    it('loads background plugins', () => {
+    it('retains the declared background plugin entry', () => {
       expect(oscdShell)
         .property('plugins')
         .property('background')
         .to.have.lengthOf(1);
     });
 
-    it('background plugins do something', async () => {
+    it('instantiates a background plugin that echoes test-tx detail through test-rx', async () => {
       // Use a real event listener and a Promise to avoid timing issues
       const eventPromise = new Promise<CustomEvent>((resolve) => {
         document.addEventListener(
@@ -83,7 +83,7 @@ describe('OscdShell Plugin Handling', () => {
       expect(event.detail).to.equal(testValue);
     });
 
-    it('loading the same plugins twice does not result in duplicates', () => {
+    it('reassigning the same menu configuration does not duplicate declared entries', () => {
       oscdShell.plugins = {
         menu: sampleMenuPlugins,
       };
@@ -100,7 +100,7 @@ describe('OscdShell Plugin Handling', () => {
         .to.have.lengthOf(3);
     });
 
-    it('loads editor plugins', async () => {
+    it('retains the two declared editor plugin entries', async () => {
       oscdShell.plugins = {
         editor: sampleEditorPlugins,
       };
@@ -152,7 +152,7 @@ describe('OscdShell Plugin Handling', () => {
     });
   });
 
-  describe('shows an error plugin inplace of corrupted src plugins', () => {
+  describe('error components for plugins whose source fails to load', () => {
     let alertStub: sinon.SinonStub;
 
     beforeEach(async () => {
@@ -180,7 +180,7 @@ describe('OscdShell Plugin Handling', () => {
       alertStub.restore();
     });
 
-    it('should replace the corrupted menu plugins wc with the Error WC', async () => {
+    it('renders a replacement menu plugin that alerts with an error when run', async () => {
       const { menu } = oscdShell._resolvedPlugins;
       expect(menu).to.have.lengthOf(1);
       const menuPluginElement = oscdShell.shadowRoot?.querySelector(
@@ -198,7 +198,7 @@ describe('OscdShell Plugin Handling', () => {
       expect(alertCalls.some(msg => msg.includes('Error'))).to.be.true;
     });
 
-    it('should replace the corrupted editor plugins wc with the Error WC', () => {
+    it('renders a replacement editor plugin with an error heading', () => {
       const { editor } = oscdShell._resolvedPlugins;
       expect(editor).to.have.lengthOf(1);
       const editorPluginElement = oscdShell.shadowRoot?.querySelector(

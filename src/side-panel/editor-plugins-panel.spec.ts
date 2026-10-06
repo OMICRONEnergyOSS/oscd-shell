@@ -166,7 +166,7 @@ describe('editor-plugins-panel', () => {
     Object.values(LS_KEYS).forEach(key => localStorage.removeItem(key));
   });
 
-  it('collapses on toggle button click when already expanded ', async () => {
+  it('collapses on toggle button click when already expanded', async () => {
     const toggleButton = findPanelToggleButton(editorPluginsPanel);
     expect(isPanelExpanded(editorPluginsPanel)).to.be.true;
     toggleButton.click();
@@ -197,7 +197,7 @@ describe('editor-plugins-panel', () => {
     expect(item.getBoundingClientRect().height).to.equal(36);
   });
 
-  it('uses value stored in localstorage initially', async () => {
+  it('starts collapsed when localStorage contains expanded=false', async () => {
     localStorage.setItem(LS_KEYS.expanded, JSON.stringify(false));
     const editorPluginsPanel2 = await mountFreshPanel();
     expect(isPanelExpanded(editorPluginsPanel2)).to.be.false;
@@ -301,7 +301,7 @@ describe('editor-plugins-panel', () => {
     expect(names).to.include('Test Editor Plugin');
   });
 
-  it('highlights editor nodes with arrow navigation without selecting them', async () => {
+  it('makes the Pinned root active on search-field ArrowDown with no search query', async () => {
     const field = getSearchField();
     field.dispatchEvent(
       new KeyboardEvent('keydown', {
@@ -388,7 +388,7 @@ describe('editor-plugins-panel', () => {
     expect(selected).to.exist;
   });
 
-  it('does nothing on search-field Enter when multiple results remain', async () => {
+  it('does not dispatch editor-select on search-field Enter when multiple results remain', async () => {
     await setSearch('Plugin');
     const field = getSearchField();
     let selected = false;
@@ -493,7 +493,7 @@ describe('editor-plugins-panel', () => {
     expect(editorPluginsPanel.focusedTree).to.equal('editors');
   });
 
-  it('pins and unpins an editor, persisting the ids to localStorage', async () => {
+  it('persists a pinned editor id and removes it from panel state on unpin', async () => {
     const tagName = (oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin)
       .tagName;
 
@@ -587,7 +587,7 @@ describe('editor-plugins-panel', () => {
     expect(pinnedTree.selectedIds).to.deep.equal([]);
   });
 
-  it('highlights the collapsed group instead of its selected editor', async () => {
+  it('selects the group row when collapsed and the editor row when expanded or searching', async () => {
     oscdShell.plugins = { editor: groupedEditorPlugins };
     await oscdShell.updateComplete;
     await editorPluginsPanel.updateComplete;
@@ -740,8 +740,8 @@ describe('editor-plugins-panel', () => {
     });
   });
 
-  describe('pinned/editors tree expand-state persistence', () => {
-    it('persists the pinned tree expanded ids on `expanded-ids-changed`', async () => {
+  describe('pinned/editor tree expansion event handling', () => {
+    it('updates pinnedExpanded on the pinned tree expanded-ids-changed event', async () => {
       const tagName = (oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin)
         .tagName;
       editorPluginsPanel.togglePin(tagName);
@@ -760,7 +760,7 @@ describe('editor-plugins-panel', () => {
       expect(editorPluginsPanel.pinnedExpanded).to.deep.equal(['pinned']);
     });
 
-    it('persists the editors tree expanded ids on `expanded-ids-changed`', async () => {
+    it('updates expandedIds on the editor tree expanded-ids-changed event', async () => {
       const editorsTree = editorPluginsPanel.shadowRoot!.querySelector(
         '.tree-container oscd-tree.editors-tree',
       )!;
@@ -777,7 +777,7 @@ describe('editor-plugins-panel', () => {
     });
   });
 
-  describe('collapsed rail group flyout', () => {
+  describe('grouped editors and collapsed rail flyouts', () => {
     let groupedShell: OscdShell;
     let groupedPanel: EditorPluginsPanel;
 
@@ -843,7 +843,7 @@ describe('editor-plugins-panel', () => {
       expect(findGroupFlyoutMenu().open).to.be.false;
     });
 
-    it('does nothing when toggling a flyout with no matching anchor', () => {
+    it('does not throw when toggling a flyout with no matching anchor', () => {
       expect(() =>
         // @ts-expect-error toggleFlyout is private; exercised directly to
         // cover the defensive "no matching anchor" guard.
@@ -867,7 +867,7 @@ describe('editor-plugins-panel', () => {
       expect(selected?.tagName).to.equal('test-grouped-editor-1');
     });
 
-    it('toggles a group when its tree selection is committed', async () => {
+    it('expands a group when its tree selection is committed', async () => {
       findPanelToggleButton(groupedPanel).click();
       await groupedPanel.updateComplete;
 
@@ -896,7 +896,7 @@ describe('editor-plugins-panel', () => {
       expect(findGroupRailButton().classList.contains('active')).to.be.true;
     });
 
-    it('keeps the current editor selected during popout keyboard navigation', async () => {
+    it('preserves popout selection after ArrowDown and reopening, and updates it when the current editor changes', async () => {
       const editor = groupedEditorPlugins[0].plugins[0];
       groupedPanel.selectedEditor = editor;
       await groupedPanel.updateComplete;

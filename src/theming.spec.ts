@@ -58,7 +58,7 @@ describe('shell design tokens', () => {
     );
   });
 
-  it('resolves app bar tokens on every app bar descendant', async () => {
+  it('resolves app bar container tokens and color tokens on its light-DOM descendants', async () => {
     const appBar = oscdShell.shadowRoot!.querySelector('oscd-app-bar')!;
     expect(tokenValue(appBar, '--oscd-app-bar-container-color')).to.equal(
       solarizedPrimary,
@@ -134,7 +134,7 @@ describe('shell design tokens', () => {
     );
   });
 
-  it('honours a distro override of the app bar action icon color', async () => {
+  it('applies the public app bar action icon color override to the Undo button', async () => {
     oscdShell.style.setProperty(
       '--oscd-shell-app-bar-action-icon-color',
       'rgb(1, 2, 3)',

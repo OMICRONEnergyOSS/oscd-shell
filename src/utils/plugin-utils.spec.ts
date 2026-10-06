@@ -11,7 +11,7 @@ import { PluginGroup, ResolvedPlugin } from '../oscd-shell.js';
 
 describe('Plugin Utils', () => {
   describe('isTaggedPlugin', () => {
-    it('should return true for a valid Plugin object', () => {
+    it('returns true for a plugin with a string tagName', () => {
       const plugin = {
         tagName: 'test-plugin',
         name: 'Test Plugin',
@@ -30,7 +30,7 @@ describe('Plugin Utils', () => {
       expect(plugin).to.not.satisfy(isTaggedPlugin);
     });
 
-    it('should return false for a SourcePlugin', () => {
+    it('returns false for a sourced plugin without a tagName', () => {
       const plugin = {
         name: 'Test Plugin',
         icon: 'test-icon',
@@ -40,8 +40,8 @@ describe('Plugin Utils', () => {
     });
   });
 
-  describe('isSourcePlugin', () => {
-    it('should return true for a valid SourcePlugin object', () => {
+  describe('isSourcedPlugin', () => {
+    it('returns true for a plugin with a string src', () => {
       const plugin = {
         name: 'Test Plugin',
         src: 'data:text/javascript;charset=utf-8,import%20%7B%20default%20as%20TestPlugin%20%7D%20from%20"./test-plugin.js";',
@@ -58,7 +58,7 @@ describe('Plugin Utils', () => {
       expect(plugin).not.to.satisfy(isSourcedPlugin);
     });
 
-    it('should return false for an Plugin object (has tagName, but no src)', () => {
+    it('returns false for a tagged plugin without a src', () => {
       const plugin = {
         name: 'Test Plugin',
         icon: 'test-icon',
@@ -70,7 +70,7 @@ describe('Plugin Utils', () => {
 });
 
 describe('validatePlugin', () => {
-  it('returns a Plugin object, for a valid plugin', async () => {
+  it('accepts a valid tagged plugin definition', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       icon: 'coronavirus',
@@ -80,7 +80,7 @@ describe('validatePlugin', () => {
     expect(plugin).satisfies(validatePlugin);
   });
 
-  it('returns undefined, for a plugin definition missing its "tagName" field', async () => {
+  it('rejects a plugin definition missing tagName', async () => {
     const plugin = {
       icon: 'coronavirus',
       name: 'Tagless, Sourceless, Hopeless Plugin',
@@ -89,7 +89,7 @@ describe('validatePlugin', () => {
     expect(plugin).not.to.satisfy(validatePlugin);
   });
 
-  it('returns undefined, for a plugin definition missing its "name" field', async () => {
+  it('rejects a plugin definition missing name', async () => {
     const plugin = {
       icon: 'coronavirus',
       tagName: 'test-tagless-plugin',
@@ -98,7 +98,7 @@ describe('validatePlugin', () => {
     expect(plugin).not.to.satisfy(validatePlugin);
   });
 
-  it('returns undefined, for a plugin definition missing its "icon" field', async () => {
+  it('rejects a plugin definition missing icon', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       tagName: 'test-tagless-plugin',
@@ -107,7 +107,7 @@ describe('validatePlugin', () => {
     expect(plugin).not.to.satisfy(validatePlugin);
   });
 
-  it('returns undefined, for a plugin definition with invalid requireDoc field', async () => {
+  it('rejects a definition with missing icon and non-boolean requireDoc', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       tagName: 'test-tagless-plugin',
@@ -117,7 +117,7 @@ describe('validatePlugin', () => {
     expect(plugin).not.to.satisfy(validatePlugin);
   });
 
-  it('returns undefined, for a plugin definition with invalid translations field', async () => {
+  it('rejects a definition with missing icon and non-object translations', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       tagName: 'test-tagless-plugin',
@@ -127,7 +127,7 @@ describe('validatePlugin', () => {
     expect(plugin).not.to.satisfy(validatePlugin);
   });
 
-  it('returns undefined, for a plugin definition with invalid translations', async () => {
+  it('rejects a definition with missing icon and a non-string translation value', async () => {
     const plugin = {
       name: 'Tagless, Sourceless, Hopeless Plugin',
       tagName: 'test-tagless-plugin',

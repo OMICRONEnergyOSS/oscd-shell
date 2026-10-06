@@ -24,7 +24,7 @@ const sclDocString = `<?xml version="1.0" encoding="UTF-8"?>
   <Substation ens1:foo="a" name="A1" desc="test substation"></Substation>
 </SCL>`;
 
-describe('oscd-shell', () => {
+describe('oscd-shell editing', () => {
   let oscdShell: OscdShell;
   let sclDoc: XMLDocument;
 
@@ -37,13 +37,13 @@ describe('oscd-shell', () => {
 
   [
     {
-      desc: 'Dispatched edit event',
+      desc: 'edits dispatched through oscd-edit-v2',
       dispatcher: (edit: EditV2) => {
         oscdShell.dispatchEvent(newEditEventV2(edit));
       },
     },
     {
-      desc: 'Commit edit directly to xmlEditor',
+      desc: 'edits committed directly to xmlEditor',
       dispatcher: (edit: EditV2) => {
         oscdShell.xmlEditor.commit(edit);
       },
@@ -67,7 +67,7 @@ describe('oscd-shell', () => {
         expect(sclDoc.querySelector('Substation')).to.not.exist;
       });
 
-      it("updates an element's attributes on Update", () => {
+      it('sets and removes attributes with SetAttributes, including namespaced attributes', () => {
         const element = sclDoc.querySelector('Substation')!;
         const edit = {
           element,
@@ -95,7 +95,7 @@ describe('oscd-shell', () => {
     });
   });
 
-  it('processes complex edits in the given order', () => {
+  it('applies an array of Insert edits in the given order', () => {
     const parent = sclDoc.documentElement;
     const reference = sclDoc.querySelector('Substation');
     const node1 = sclDoc.createElement('test1');
@@ -135,11 +135,11 @@ describe('oscd-shell', () => {
       ) as OscdFilledIconButton;
     });
 
-    it('disabled the Undo button when there is nothing to undo', async () => {
+    it('disables the Undo button when there is nothing to undo', async () => {
       expect(oscdShell.canUndo).to.be.false;
       expect(undoButton.disabled).to.be.true;
     });
-    it('enabled the Undo button when there is something to undo', async () => {
+    it('enables the Undo button when there is something to undo', async () => {
       const node = sclDoc.querySelector('Substation')!;
       oscdShell.dispatchEvent(newEditEventV2({ node }));
       await oscdShell.updateComplete;
@@ -148,12 +148,12 @@ describe('oscd-shell', () => {
       expect(undoButton.disabled).to.be.false;
     });
 
-    it('disabled the Redo button when there is nothing to redo', async () => {
+    it('disables the Redo button when there is nothing to redo', async () => {
       expect(oscdShell.canRedo).to.be.false;
       expect(redoButton.disabled).to.be.true;
     });
 
-    it('enabled the Redo button when there is something to redo', async () => {
+    it('enables the Redo button when there is something to redo', async () => {
       const node = sclDoc.querySelector('Substation')!;
       oscdShell.dispatchEvent(newEditEventV2({ node }));
       await oscdShell.updateComplete;
@@ -203,7 +203,7 @@ describe('oscd-shell', () => {
     });
   });
 
-  describe("Out of range Undo's and Redo's", () => {
+  describe('zero and excessive undo/redo counts', () => {
     it('does not change anything invoking undo(0)', async () => {
       const before = new XMLSerializer().serializeToString(sclDoc);
       oscdShell.undo(0);

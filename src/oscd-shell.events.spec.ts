@@ -141,7 +141,7 @@ describe('OscdShell Event Handling', () => {
   });
 
   describe('oscd-edit-v2 event', () => {
-    it('catches the oscd-edit-v2 event and calls undo on the xml editor', async () => {
+    it('applies a Remove edit from an oscd-edit-v2 event', async () => {
       //Sanity check
       expect(sclDoc.querySelector('Substation')).to.exist;
 
@@ -156,7 +156,7 @@ describe('OscdShell Event Handling', () => {
   });
 
   describe('oscd-undo event', () => {
-    it('catches the oscd-undo event and calls undo on the xml editor', async () => {
+    it('restores a removed node on an oscd-undo event', async () => {
       //Sanity check
       expect(sclDoc.querySelector('Substation')).to.exist;
 
@@ -181,7 +181,7 @@ describe('OscdShell Event Handling', () => {
   });
 
   describe('oscd-redo event', () => {
-    it('catches the oscd-redo event and calls redo on the xml editor', async () => {
+    it('reapplies a node removal on an oscd-redo event', async () => {
       //Sanity check
       expect(sclDoc.querySelector('Substation')).to.exist;
 
@@ -227,7 +227,7 @@ describe('OscdShell Event Handling', () => {
       expect(oscdShell.docName).to.not.equal(sclDocName);
     });
 
-    it('catches the oscd-close event and only closes the document if it exists', async () => {
+    it('leaves the current document open when oscd-close names an unknown document', async () => {
       // Sanity check
       expect(oscdShell.docs).to.have.property(sclDocName);
       expect(oscdShell.docName).to.equal(sclDocName);
@@ -246,7 +246,7 @@ describe('OscdShell Event Handling', () => {
   });
 
   describe('keypress events (the keyboard shortcuts)', () => {
-    it('focuses the expanded editor search with Ctrl+Shift+F', async () => {
+    it('requests search focus without entering search mode on an expanded panel with Ctrl+Shift+F', async () => {
       const panel = oscdShell.shadowRoot!.querySelector(
         'editor-plugins-panel',
       ) as EditorPluginsPanel;
@@ -331,7 +331,7 @@ describe('OscdShell Event Handling', () => {
       expect(sclDoc.querySelector('Substation')).to.not.exist;
     });
 
-    it('it redoes the last edit with Ctrl+Z', async () => {
+    it('redoes the last edit with Ctrl+Z', async () => {
       const node = sclDoc.querySelector('Substation')!;
       oscdShell.dispatchEvent(newEditEventV2({ node }));
       expect(sclDoc.querySelector('Substation')).to.not.exist;
@@ -343,7 +343,7 @@ describe('OscdShell Event Handling', () => {
       expect(sclDoc.querySelector('Substation')).to.not.exist;
     });
 
-    it('does not trigger anything if the Ctrl button was not pressed', async () => {
+    it('does not open the menu when m is pressed without Ctrl', async () => {
       simulateKeypressOnElement('m', false);
       await oscdShell.updateComplete;
       expect(oscdShell.pluginsMenu).to.exist;
@@ -353,7 +353,7 @@ describe('OscdShell Event Handling', () => {
       expect(oscdMenu).property('open').to.not.be.true;
     });
 
-    it('does not trigger anything if the Ctrl button was pressed but the key was not one of the shortcuts', async () => {
+    it('does not open the menu for Ctrl+a', async () => {
       simulateKeypressOnElement('a', true);
       await oscdShell.updateComplete;
       expect(oscdShell.pluginsMenu).to.exist;
@@ -363,7 +363,7 @@ describe('OscdShell Event Handling', () => {
       expect(oscdMenu).property('open').to.not.be.true;
     });
 
-    it('does not change anything if there is nothing to Undo', async () => {
+    it('leaves the document unchanged on Ctrl+Z when there is no redo history', async () => {
       const before = new XMLSerializer().serializeToString(sclDoc);
       simulateKeypressOnElement('Z', true);
       await oscdShell.updateComplete;

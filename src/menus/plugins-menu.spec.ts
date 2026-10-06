@@ -47,7 +47,7 @@ describe('plugins-menu', () => {
     await pluginsMenu.updateComplete;
   });
 
-  it('displays a menu item for each menu plugin', async () => {
+  it('opens the menu with one top-level entry per configured plugin or group', async () => {
     const menuOpenButton = findMenuOpenButton(pluginsMenu);
     menuOpenButton?.click();
     await pluginsMenu.updateComplete;

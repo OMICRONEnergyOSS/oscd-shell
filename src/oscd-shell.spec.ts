@@ -68,7 +68,7 @@ describe('OscdShell', () => {
       await waitForAllPluginsToInstantiate(oscdShell);
     });
 
-    it('loads menu plugins', () => {
+    it('retains declared menu entries and renders a document-independent menu plugin', () => {
       expect(oscdShell)
         .property('plugins')
         .property('menu')
@@ -80,14 +80,14 @@ describe('OscdShell', () => {
       ).to.have.lengthOf(1); //no document loaded, so no menu items should be shown.
     });
 
-    it('loads menu background plugins', () => {
+    it('retains the declared background plugin entry', () => {
       expect(oscdShell)
         .property('plugins')
         .property('background')
         .to.have.lengthOf(1);
     });
 
-    it('does not load editor plugins', () => {
+    it('retains editor definitions without rendering the first editor', () => {
       expect(oscdShell)
         .property('plugins')
         .property('editor')
@@ -214,7 +214,7 @@ describe('OscdShell', () => {
       ).to.have.lengthOf(2);
     });
 
-    it('passes attribute locale', () => {
+    it('passes the locale property to the editor plugin', () => {
       expect(editorPlugin.locale).to.equal('en');
     });
 
@@ -236,7 +236,7 @@ describe('OscdShell', () => {
       expect(editorPlugin.editCount).to.equal(0);
     });
 
-    it('updated passed docVersion property on edit events', async () => {
+    it('increments the editor plugin docVersion and editCount after an edit event', async () => {
       oscdShell.dispatchEvent(
         newEditEventV2({
           element: sclDoc.querySelector('Substation')!,
@@ -265,20 +265,20 @@ describe('OscdShell', () => {
       ) as HTMLElement & Plugin;
     });
 
-    it('passes attribute locale', () => {
+    it('passes the locale property to the menu plugin', () => {
       expect(menuPlugin.locale).to.equal('en');
     });
 
     describe('with no document loaded', () => {
-      it('has no docName property set', () => {
+      it('passes an empty docName to the menu plugin', () => {
         expect(menuPlugin.docName).to.equal('');
       });
 
-      it('has no doc property set', () => {
+      it('passes an undefined doc to the menu plugin', () => {
         expect(menuPlugin.doc).to.equal(undefined);
       });
 
-      it('has no docs property set', () => {
+      it('passes an empty docs object to the menu plugin', () => {
         expect(menuPlugin.docs).to.be.an('object');
         expect(menuPlugin.docs).to.be.empty;
       });
@@ -313,7 +313,7 @@ describe('OscdShell', () => {
         expect(menuPlugin).to.have.property('editCount', 0);
       });
 
-      it('updated passed docVersion property on edit events', async () => {
+      it('increments the menu plugin docVersion and editCount after an edit event', async () => {
         // const doc = createSclDocument();
         // oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
         await oscdShell.updateComplete;
@@ -371,7 +371,7 @@ describe('OscdShell', () => {
       expect(sclDoc.querySelector('Substation')).to.exist;
     });
 
-    it('does not attempt to call customElements.define if the plugin has already been defined', async () => {
+    it('does not redefine a source-derived tag already registered in the shell scoped registry', async () => {
       const customEditorPlugin = {
         name: 'Test 123 Editor Plugin',
         src: 'data:text/javascript;charset=utf-8,export%20default%20class%20TestEditorPlugin%20extends%20HTMLElement%20%7B%0D%0A%20%20constructor%20%28%29%20%7B%20super%28%29%3B%20this.innerHTML%20%3D%20%60%3Cp%3ETest123%20Editor%20Plugin%3C%2Fp%3E%60%3B%20%7D%0D%0A%7D',
@@ -453,7 +453,7 @@ describe('OscdShell', () => {
       await oscdShell.updateComplete;
     });
 
-    it('the menu items appear in german', () => {
+    it('finds no original menu labels in the queried light DOM after switching to German', () => {
       const untranslatedStrings = Array.from(
         oscdShell.pluginsMenu.querySelectorAll('oscd-menu-item > div'),
       )
@@ -463,7 +463,7 @@ describe('OscdShell', () => {
       expect(untranslatedStrings).to.be.empty;
     });
 
-    it('the editor plugin appears in german', () => {
+    it('finds no original editor-tree labels after switching to German', () => {
       const editorsTree =
         oscdShell.editorPluginsPanel.shadowRoot?.querySelector(
           'oscd-tree.editors-tree',
@@ -478,7 +478,7 @@ describe('OscdShell', () => {
       expect(untranslatedStrings).to.be.empty;
     });
 
-    it('it remains in english after attempting to load a non-existing locale', async () => {
+    it('keeps the shell locale English when an unsupported locale is requested', async () => {
       oscdShell.locale = 'en';
       // @ts-expect-error we want to test a non-existing locale
       oscdShell.locale = 'xx';
