@@ -16,7 +16,7 @@ const findMenuOpenButton = (pluginsMenu: PluginsMenu) => {
   const menuOpenButton = pluginsMenu.shadowRoot?.querySelector(
     'oscd-filled-icon-button',
   ) as OscdFilledIconButton;
-  expect(menuOpenButton).to.exist;
+  expect(menuOpenButton?.localName).to.equal('oscd-filled-icon-button');
   return menuOpenButton;
 };
 
@@ -51,8 +51,8 @@ describe('plugins-menu', () => {
     const menuOpenButton = findMenuOpenButton(pluginsMenu);
     menuOpenButton?.click();
     await pluginsMenu.updateComplete;
-    expect(pluginsMenu.menu).to.have.property('open', true);
-    expect(pluginsMenu.menu.children).to.have.length(
+    expect(pluginsMenu.menu.open).to.be.true;
+    expect(pluginsMenu.menu.children.length).to.equal(
       oscdShell.plugins!.menu.length,
     );
   });
@@ -85,12 +85,12 @@ describe('plugins-menu', () => {
     const menuOpenButton = findMenuOpenButton(pluginsMenu);
     menuOpenButton?.click();
     await pluginsMenu.updateComplete;
-    expect(pluginsMenu.menu).to.have.property('open', true);
+    expect(pluginsMenu.menu.open).to.be.true;
 
     // Click again to close
     menuOpenButton?.click();
     await pluginsMenu.updateComplete;
-    expect(pluginsMenu.menu).to.have.property('open', false);
+    expect(pluginsMenu.menu.open).to.be.false;
   });
 
   it('preserves Material selection and keyboard activation for submenu triggers', async () => {

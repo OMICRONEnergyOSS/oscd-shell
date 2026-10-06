@@ -61,14 +61,14 @@ it(`changes locales on attribute change`, async () => {
   oscdShell.setAttribute('locale', 'invalid');
   await oscdShell.updateComplete;
 
-  expect(oscdShell).to.have.property('locale', 'en');
+  expect(oscdShell.locale).to.equal('en');
 
   oscdShell.setAttribute('locale', 'de');
   await oscdShell.updateComplete;
 
   await timeout(180);
   await oscdShell.updateComplete;
-  expect(oscdShell).to.have.property('locale', 'de');
+  expect(oscdShell.locale).to.equal('de');
 });
 
 allLocales.forEach(lang =>
@@ -117,8 +117,8 @@ allLocales.forEach(lang =>
         pluginsMenuButton = pluginsMenu.shadowRoot?.querySelector(
           '#menu-button',
         ) as OscdFilledIconButton;
-        expect(pluginsMenuButton, 'plugins-menu:menu-button not found').to
-          .exist;
+        expect(pluginsMenuButton?.localName, 'plugins-menu:menu-button not found')
+          .to.equal('oscd-filled-icon-button');
       });
 
       it(`displays a top app bar`, async () => {

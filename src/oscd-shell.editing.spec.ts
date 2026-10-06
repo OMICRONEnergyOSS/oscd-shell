@@ -55,16 +55,16 @@ describe('oscd-shell editing', () => {
         const node = sclDoc.createElement('test');
         const reference = sclDoc.querySelector('Substation');
         dispatcher({ parent, node, reference });
-        expect(sclDoc.documentElement.querySelector('test')).to.have.property(
-          'nextSibling',
-          reference,
-        );
+        const inserted = sclDoc.documentElement.querySelector('test');
+        expect(inserted?.localName).to.equal('test');
+        expect(inserted?.nextSibling === reference, 'Inserted element precedes the reference')
+          .to.be.true;
       });
 
       it('removes an element on Remove', () => {
         const node = sclDoc.querySelector('Substation')!;
         dispatcher({ node });
-        expect(sclDoc.querySelector('Substation')).to.not.exist;
+        expect(sclDoc.querySelector('Substation') === null).to.be.true;
       });
 
       it('sets and removes attributes with SetAttributes, including namespaced attributes', () => {
@@ -106,14 +106,14 @@ describe('oscd-shell editing', () => {
         { parent, node: node2, reference },
       ]),
     );
-    expect(sclDoc.documentElement.querySelector('test1')).to.have.property(
-      'nextSibling',
-      node2,
-    );
-    expect(sclDoc.documentElement.querySelector('test2')).to.have.property(
-      'nextSibling',
-      reference,
-    );
+    const first = sclDoc.documentElement.querySelector('test1');
+    const second = sclDoc.documentElement.querySelector('test2');
+    expect(first?.localName).to.equal('test1');
+    expect(second?.localName).to.equal('test2');
+    expect(first?.nextSibling === node2, 'First inserted element precedes the second')
+      .to.be.true;
+    expect(second?.nextSibling === reference, 'Second inserted element precedes the reference')
+      .to.be.true;
   });
 
   describe('App-Bar Undo and Redo Buttons', () => {
@@ -122,7 +122,7 @@ describe('oscd-shell editing', () => {
 
     beforeEach(async () => {
       const appBar = oscdShell.shadowRoot?.querySelector('oscd-app-bar');
-      expect(appBar, 'expect oscd-app-bar to be present').to.exist;
+      expect(appBar?.localName, 'expect oscd-app-bar to be present').to.equal('oscd-app-bar');
       undoButton = queryButtonByIcon(
         appBar!,
         'oscd-filled-icon-button',

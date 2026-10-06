@@ -73,7 +73,7 @@ describe('shell design tokens', () => {
     const appBarChildren = Array.from(
       oscdShell.shadowRoot!.querySelectorAll('oscd-app-bar *'),
     );
-    expect(appBarChildren).to.not.be.empty;
+    expect(appBarChildren.length).to.be.greaterThan(0);
 
     appBarChildren.forEach((child) => {
       expect(
@@ -185,7 +185,7 @@ describe('shell design tokens', () => {
     const divider = oscdShell.shadowRoot!.querySelector(
       'oscd-divider.vertical',
     );
-    expect(divider, 'app bar separator not rendered').to.exist;
+    expect(divider?.localName, 'app bar separator not rendered').to.equal('oscd-divider');
 
     expect(tokenValue(divider!, '--app-bar-separator-color')).to.equal(
       'currentColor',

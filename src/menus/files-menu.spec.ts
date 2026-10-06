@@ -29,7 +29,7 @@ describe('files-menu', () => {
   it('allows the user to switch documents', async () => {
     const fileDropdownButton =
       filesMenu.shadowRoot?.querySelector('oscd-text-button');
-    expect(fileDropdownButton).to.exist;
+    expect(fileDropdownButton?.localName).to.equal('oscd-text-button');
     fileDropdownButton?.click();
     await filesMenu.updateComplete;
     (filesMenu.menu.firstElementChild as OscdMenuItem).click();
@@ -39,7 +39,7 @@ describe('files-menu', () => {
     await filesMenu.updateComplete;
     (filesMenu.menu.lastElementChild as OscdMenuItem).click();
     await oscdShell.updateComplete;
-    expect(oscdShell).to.not.have.property('docName', oldDocName);
+    expect(oscdShell.docName).to.not.equal(oldDocName);
   });
 
   it('renders a decorative leading folder and trailing dropdown icon', () => {
@@ -83,12 +83,12 @@ describe('files-menu', () => {
     expect(nextItem.matches(':focus-within')).to.be.true;
     expect(currentItem.matches(':focus-within')).to.be.false;
     expect(currentItem.selected).to.be.true;
-    expect(items.filter(item => item.selected)).to.have.lengthOf(1);
+    expect(items.filter(item => item.selected).length).to.equal(1);
     expect(oscdShell.docName).to.equal(docName);
     await filesMenu.menu.close();
     await filesMenu.menu.show();
     expect(currentItem.selected).to.be.true;
-    expect(items.filter(item => item.selected)).to.have.lengthOf(1);
+    expect(items.filter(item => item.selected).length).to.equal(1);
     expect(oscdShell.docName).to.equal(docName);
   });
 });

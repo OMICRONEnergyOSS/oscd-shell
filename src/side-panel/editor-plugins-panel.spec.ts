@@ -36,7 +36,7 @@ const findPanelToggleButton = (pluginsMenu: EditorPluginsPanel) => {
   const toggleButton = pluginsMenu.shadowRoot?.querySelector(
     '.toggle-button',
   ) as HTMLElement;
-  expect(toggleButton).to.exist;
+  expect(toggleButton?.classList.contains('toggle-button')).to.equal(true);
   return toggleButton;
 };
 
@@ -170,9 +170,9 @@ describe('editor-plugins-panel', () => {
       pinnedTree.shadowRoot!.querySelectorAll('oscd-tree-item'),
     ).find(item => item.textContent?.includes('Items you pin'));
 
-    expect(placeholderItem).to.exist;
-    expect(placeholderItem?.closest('[role="treeitem"]')?.querySelector('.accessory'))
-      .not.to.exist;
+    expect(placeholderItem?.localName).to.equal('oscd-tree-item');
+    expect(placeholderItem?.closest('[role="treeitem"]')?.querySelector('.accessory')?.localName)
+      .to.equal(undefined);
   });
 
   afterEach(() => {
@@ -607,7 +607,7 @@ describe('editor-plugins-panel', () => {
   it('leaves activation keys unconsumed when the pinned tree is absent', async () => {
     editorPluginsPanel.searchValue = 'Plugin';
     await editorPluginsPanel.updateComplete;
-    expect(editorPluginsPanel.shadowRoot!.querySelector('.pinned-tree')).to.be.null;
+    expect(editorPluginsPanel.shadowRoot!.querySelector('.pinned-tree') === null).to.be.true;
     const selectEditor = sinon.spy(editorPluginsPanel, 'selectEditor');
 
     for (const key of ['Enter', ' ']) {
@@ -632,7 +632,7 @@ describe('editor-plugins-panel', () => {
     const button = pinnedTree.shadowRoot!.querySelector<HTMLButtonElement>(
       '.accessory button',
     )!;
-    expect(button).to.exist;
+    expect(button?.localName).to.equal('button');
     const selectEditor = sinon.spy(editorPluginsPanel, 'selectEditor');
     const expandedIds = [...pinnedTree.expandedIds];
 
@@ -760,8 +760,8 @@ describe('editor-plugins-panel', () => {
       await editorPluginsPanel.updateComplete;
 
       expect(editorPluginsPanel.hasAttribute('search-mode')).to.be.true;
-      expect(editorPluginsPanel.shadowRoot!.querySelector('.tree-container')).to
-        .exist;
+      expect(editorPluginsPanel.shadowRoot!.querySelector('.tree-container')?.className)
+        .to.equal('tree-container');
       // Still collapsed as far as persisted state is concerned.
       expect(editorPluginsPanel.expanded).to.be.false;
       expect(localStorage.getItem('editor-plugins-panel:expanded')).to.equal(
@@ -1082,7 +1082,7 @@ describe('editor-plugins-panel', () => {
       const pinnedMenu = groupedPanel.shadowRoot!.querySelector(
         'oscd-menu[data-flyout="pinned"]',
       )!;
-      expect(pinnedMenu.querySelector('oscd-menu-item')).to.exist;
+      expect(pinnedMenu.querySelector('oscd-menu-item')?.localName).to.equal('oscd-menu-item');
       expect(pinnedMenu.querySelector('oscd-menu-item')!.selected).to.be.false;
     });
   });

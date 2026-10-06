@@ -46,34 +46,34 @@ describe('OscdShell Event Handling', () => {
       const fileName = 'anotherdoc.scd';
       const file = createSclDocument();
       // Sanity check
-      expect(oscdShell.docs).to.not.have.property(fileName);
+      expect(Object.keys(oscdShell.docs)).to.not.include(fileName);
 
       const openEvent = newOpenEvent(file, fileName);
       oscdShell.dispatchEvent(openEvent);
       await oscdShell.updateComplete;
       expect(oscdShell.docName).to.equal(fileName);
-      expect(oscdShell.doc).to.equal(file);
-      expect(oscdShell.docs).to.have.property(fileName);
+      expect(oscdShell.doc === file).to.be.true;
+      expect(Object.keys(oscdShell.docs)).to.include(fileName);
     });
 
     it('catches the oscd-open event for non-scl files, but does not set them as current document', async () => {
       const fileName = 'something.exe';
       const file = createNonSclDocument();
-      expect(oscdShell.docs).to.not.have.property(fileName);
+      expect(Object.keys(oscdShell.docs)).to.not.include(fileName);
 
       const openEvent = newOpenEvent(file, fileName);
       oscdShell.dispatchEvent(openEvent);
       await oscdShell.updateComplete;
       expect(oscdShell.docName).to.not.equal(fileName);
-      expect(oscdShell.doc).to.not.equal(file);
-      expect(oscdShell.docs).to.have.property(fileName);
+      expect(oscdShell.doc === file).to.be.false;
+      expect(Object.keys(oscdShell.docs)).to.include(fileName);
     });
   });
 
   describe('oscd-rename event', () => {
     it('catches the oscd-rename event and renames the appropriate file', async () => {
       // Sanity check
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
 
       const newName = 'renameddoc.scd';
       const renameEvent = newRenameEvent(sclDocName, newName);
@@ -81,22 +81,22 @@ describe('OscdShell Event Handling', () => {
       await oscdShell.updateComplete;
 
       expect(oscdShell.docName).to.equal(newName);
-      expect(oscdShell.docs).to.not.have.property(sclDocName);
-      expect(oscdShell.docs).to.have.property(newName);
+      expect(Object.keys(oscdShell.docs)).to.not.include(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(newName);
     });
 
     it('does not rename the file if that name matches another opened file', async () => {
       const fileName = 'testdoc2.scd';
       const file = createSclDocument();
-      expect(oscdShell.docs).to.not.have.property(fileName);
+      expect(Object.keys(oscdShell.docs)).to.not.include(fileName);
       openDocOnShell(oscdShell, fileName, file);
       await oscdShell.updateComplete;
       // Sanity check the file was opened and is the currently selected document
       expect(oscdShell.docName).to.equal(fileName);
 
       // Prove both files exist before renaming one with the name of the other
-      expect(oscdShell.docs).to.have.property(fileName);
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(fileName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
       // Let's try to rename to an existing file name
       const renameEvent = newRenameEvent(fileName, sclDocName);
       oscdShell.dispatchEvent(renameEvent);
@@ -104,14 +104,14 @@ describe('OscdShell Event Handling', () => {
 
       // Test nothing has changed
       expect(oscdShell.docName).to.equal(fileName);
-      expect(oscdShell.docs).to.have.property(fileName);
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(fileName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
     });
 
     it('does not rename the file if the new name is the same as the old name', async () => {
       // Sanity check the file was opened and is the currently selected document
       expect(oscdShell.docName).to.equal(sclDocName);
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
 
       const renameEvent = newRenameEvent(sclDocName, sclDocName);
       oscdShell.dispatchEvent(renameEvent);
@@ -119,14 +119,14 @@ describe('OscdShell Event Handling', () => {
 
       // Test nothing has changed
       expect(oscdShell.docName).to.equal(sclDocName);
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
     });
 
     it('does not rename the file if the old name does not exist', async () => {
       const wrongOldName = 'nonexistingname.scd';
-      expect(oscdShell.docs).to.not.have.property(wrongOldName);
+      expect(Object.keys(oscdShell.docs)).to.not.include(wrongOldName);
       expect(oscdShell.docName).to.equal(sclDocName);
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
 
       const newName = 'newname.scd';
       const renameEvent = newRenameEvent(wrongOldName, newName);
@@ -135,15 +135,15 @@ describe('OscdShell Event Handling', () => {
 
       // Test nothing has changed
       expect(oscdShell.docName).to.equal(sclDocName);
-      expect(oscdShell.docs).to.have.property(sclDocName);
-      expect(oscdShell.docs).to.not.have.property(newName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.not.include(newName);
     });
   });
 
   describe('oscd-edit-v2 event', () => {
     it('applies a Remove edit from an oscd-edit-v2 event', async () => {
       //Sanity check
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
 
       const node = sclDoc.querySelector('Substation')!;
       // Trigger a delete of the Substation node
@@ -151,14 +151,14 @@ describe('OscdShell Event Handling', () => {
       await oscdShell.updateComplete;
 
       // Check the Substation node is gone
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
     });
   });
 
   describe('oscd-undo event', () => {
     it('restores a removed node on an oscd-undo event', async () => {
       //Sanity check
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
 
       const node = sclDoc.querySelector('Substation')!;
       // Trigger a delete of the Substation node
@@ -166,7 +166,7 @@ describe('OscdShell Event Handling', () => {
       await oscdShell.updateComplete;
 
       // Check the Substation node is gone
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
 
       oscdShell.dispatchEvent(
         new CustomEvent('oscd-undo', {
@@ -176,14 +176,14 @@ describe('OscdShell Event Handling', () => {
       );
 
       // Check the Substation node is back
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
     });
   });
 
   describe('oscd-redo event', () => {
     it('reapplies a node removal on an oscd-redo event', async () => {
       //Sanity check
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
 
       const node = sclDoc.querySelector('Substation')!;
       // Trigger a delete of the Substation node
@@ -191,10 +191,10 @@ describe('OscdShell Event Handling', () => {
       await oscdShell.updateComplete;
 
       // Check the Substation node is gone
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
       oscdShell.undo();
       // Check the Substation node is back
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
 
       oscdShell.dispatchEvent(
         new CustomEvent('oscd-redo', {
@@ -205,14 +205,14 @@ describe('OscdShell Event Handling', () => {
       await oscdShell.updateComplete;
 
       // Check the Substation node is gone again
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
     });
   });
 
   describe('oscd-close event', () => {
     it('catches the oscd-close event and closes the specified document', async () => {
       // Sanity check
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
       expect(oscdShell.docName).to.equal(sclDocName);
 
       oscdShell.dispatchEvent(
@@ -223,13 +223,13 @@ describe('OscdShell Event Handling', () => {
         }),
       );
       await oscdShell.updateComplete;
-      expect(oscdShell.docs).to.not.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.not.include(sclDocName);
       expect(oscdShell.docName).to.not.equal(sclDocName);
     });
 
     it('leaves the current document open when oscd-close names an unknown document', async () => {
       // Sanity check
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
       expect(oscdShell.docName).to.equal(sclDocName);
 
       oscdShell.dispatchEvent(
@@ -240,7 +240,7 @@ describe('OscdShell Event Handling', () => {
         }),
       );
       await oscdShell.updateComplete;
-      expect(oscdShell.docs).to.have.property(sclDocName);
+      expect(Object.keys(oscdShell.docs)).to.include(sclDocName);
       expect(oscdShell.docName).to.equal(sclDocName);
     });
   });
@@ -299,15 +299,15 @@ describe('OscdShell Event Handling', () => {
         'Menu UI is undefined',
       );
 
-      expect(oscdShell.pluginsMenu).property('open').to.not.be.true;
+      expect(oscdShell.pluginsMenu.menu.open).to.be.false;
 
       simulateKeypressOnElement('m', true);
       await oscdShell.updateComplete;
-      expect(oscdShell.pluginsMenu).to.exist;
+      expect(oscdShell.pluginsMenu?.localName).to.equal('plugins-menu');
       const oscdMenu =
         oscdShell.pluginsMenu.shadowRoot?.querySelector('oscd-menu');
-      expect(oscdMenu).to.exist;
-      expect(oscdMenu).to.have.property('open').which.is.true;
+      expect(oscdMenu?.localName).to.equal('oscd-menu');
+      expect(oscdMenu?.open).to.be.true;
     });
 
     it('undoes the last edit with Ctrl+z', async () => {
@@ -315,54 +315,54 @@ describe('OscdShell Event Handling', () => {
       oscdShell.dispatchEvent(newEditEventV2({ node }));
       await oscdShell.updateComplete;
 
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
       simulateKeypressOnElement('z', true);
       await oscdShell.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
     });
 
     it('redoes the last edit with Ctrl+y', async () => {
       const node = sclDoc.querySelector('Substation')!;
       oscdShell.dispatchEvent(newEditEventV2({ node }));
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
       oscdShell.undo();
       await oscdShell.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
       simulateKeypressOnElement('y', true);
       await oscdShell.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
     });
 
     it('redoes the last edit with Ctrl+Z', async () => {
       const node = sclDoc.querySelector('Substation')!;
       oscdShell.dispatchEvent(newEditEventV2({ node }));
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
       oscdShell.undo();
       await oscdShell.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
       simulateKeypressOnElement('Z', true);
       await oscdShell.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
     });
 
     it('does not open the menu when m is pressed without Ctrl', async () => {
       simulateKeypressOnElement('m', false);
       await oscdShell.updateComplete;
-      expect(oscdShell.pluginsMenu).to.exist;
+      expect(oscdShell.pluginsMenu?.localName).to.equal('plugins-menu');
       const oscdMenu =
         oscdShell.pluginsMenu.shadowRoot?.querySelector('oscd-menu');
-      expect(oscdMenu).to.exist;
-      expect(oscdMenu).property('open').to.not.be.true;
+      expect(oscdMenu?.localName).to.equal('oscd-menu');
+      expect(oscdMenu?.open).to.not.be.true;
     });
 
     it('does not open the menu for Ctrl+a', async () => {
       simulateKeypressOnElement('a', true);
       await oscdShell.updateComplete;
-      expect(oscdShell.pluginsMenu).to.exist;
+      expect(oscdShell.pluginsMenu?.localName).to.equal('plugins-menu');
       const oscdMenu =
         oscdShell.pluginsMenu.shadowRoot?.querySelector('oscd-menu');
-      expect(oscdMenu).to.exist;
-      expect(oscdMenu).property('open').to.not.be.true;
+      expect(oscdMenu?.localName).to.equal('oscd-menu');
+      expect(oscdMenu?.open).to.not.be.true;
     });
 
     it('leaves the document unchanged on Ctrl+z when there is no undo history', async () => {

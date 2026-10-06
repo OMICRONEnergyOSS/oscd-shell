@@ -70,22 +70,16 @@ describe('OscdShell', () => {
     });
 
     it('retains declared menu entries and renders a document-independent menu plugin', () => {
-      expect(oscdShell)
-        .property('plugins')
-        .property('menu')
-        .to.have.lengthOf(2); //ok, they're set on the oscdShell. But that should be it.
+      expect(oscdShell.plugins.menu.length).to.equal(2); //ok, they're set on the oscdShell. But that should be it.
 
       //NOTE: This test relies on the fact that the landing page contains the plugins, so they're searched for in a different way.
       expect(
-        oscdShell.shadowRoot?.querySelectorAll('.menu-plugins > *'),
-      ).to.have.lengthOf(1); //no document loaded, so no menu items should be shown.
+        oscdShell.shadowRoot?.querySelectorAll('.menu-plugins > *').length,
+      ).to.equal(1); //no document loaded, so no menu items should be shown.
     });
 
     it('resolves, registers and renders the background plugin without a document', () => {
-      expect(oscdShell)
-        .property('plugins')
-        .property('background')
-        .to.have.lengthOf(1);
+      expect(oscdShell.plugins.background.length).to.equal(1);
       expect(oscdShell._resolvedPlugins.background).to.have.lengthOf(1);
       expect(oscdShell.registry!.get('test-background-plugin') === TestBackgroundPlugin)
         .to.be.true;
@@ -97,16 +91,13 @@ describe('OscdShell', () => {
     });
 
     it('retains editor definitions without rendering the first editor', () => {
-      expect(oscdShell)
-        .property('plugins')
-        .property('editor')
-        .to.have.lengthOf(2);
+      expect(oscdShell.plugins.editor.length).to.equal(2);
 
       expect(
         oscdShell.shadowRoot?.querySelector(
           (oscdShell.plugins.editor[0] as ResolvedPlugin).tagName,
-        ),
-      ).to.not.exist;
+        )?.localName,
+      ).to.equal(undefined);
     });
 
     it('does not load the file selector in the app-bar when no document is set', async () => {
@@ -117,8 +108,8 @@ describe('OscdShell', () => {
 
       const appBarEnd =
         oscdShell.shadowRoot?.querySelector('[slot="alignEnd"]');
-      expect(appBarEnd?.querySelector('files-menu')).not.to.exist;
-      expect(appBarEnd?.querySelector('oscd-divider')).not.to.exist;
+      expect(appBarEnd?.querySelector('files-menu')?.localName).to.equal(undefined);
+      expect(appBarEnd?.querySelector('oscd-divider')?.localName).to.equal(undefined);
     });
   });
 
@@ -153,7 +144,7 @@ describe('OscdShell', () => {
       ) as EditorPluginsPanel;
 
       //Pre-checks...
-      expect(editorPluginsSidePanel).to.exist;
+      expect(editorPluginsSidePanel?.localName).to.equal('editor-plugins-panel');
 
       const editorsTree = editorPluginsSidePanel.shadowRoot?.querySelector(
         'oscd-tree.editors-tree',
@@ -182,7 +173,7 @@ describe('OscdShell', () => {
       ).to.equal(testEditorPlugin2.name);
 
       const lastEditorItem = editorItems[editorItems.length - 1];
-      expect(lastEditorItem).to.exist;
+      expect(lastEditorItem?.localName).to.equal('oscd-tree-item');
       lastEditorItem!.click();
 
       await oscdShell.updateComplete;
@@ -213,15 +204,17 @@ describe('OscdShell', () => {
       expect(currentEditor?.textContent).to.contain(
         oscdShell.selectedEditor!.name,
       );
-      expect(currentEditor?.querySelector('oscd-divider.vertical')).to.exist;
+      expect(currentEditor?.querySelector('oscd-divider.vertical')?.localName)
+        .to.equal('oscd-divider');
 
       const appBarEnd =
         oscdShell.shadowRoot?.querySelector('[slot="alignEnd"]');
-      expect(appBarEnd?.querySelector('files-menu')).to.exist;
-      expect(appBarEnd?.querySelector('oscd-divider.vertical')).to.exist;
+      expect(appBarEnd?.querySelector('files-menu')?.localName).to.equal('files-menu');
+      expect(appBarEnd?.querySelector('oscd-divider.vertical')?.localName)
+        .to.equal('oscd-divider');
       expect(
-        appBarEnd?.querySelectorAll('oscd-filled-icon-button'),
-      ).to.have.lengthOf(2);
+        appBarEnd?.querySelectorAll('oscd-filled-icon-button').length,
+      ).to.equal(2);
     });
 
     it('passes the locale property to the editor plugin', () => {
@@ -233,12 +226,12 @@ describe('OscdShell', () => {
     });
 
     it('has its doc property set', () => {
-      expect(editorPlugin.doc).to.equal(sclDoc);
+      expect(editorPlugin.doc === sclDoc).to.be.true;
     });
 
     it('has its docs property set', () => {
-      expect(editorPlugin.docs).to.be.an('object');
-      expect(editorPlugin.docs['test.scd']).to.equal(sclDoc);
+      expect(typeof editorPlugin.docs).to.equal('object');
+      expect(editorPlugin.docs['test.scd'] === sclDoc).to.be.true;
     });
 
     it('passes property docVersion', async () => {
@@ -262,7 +255,7 @@ describe('OscdShell', () => {
   });
 
   describe('with menu plugins loaded', () => {
-    let menuPlugin: HTMLElement & Plugin;
+    let menuPlugin: HTMLElement & Plugin & { editCount: number };
     beforeEach(async () => {
       oscdShell.plugins = {
         menu: [testMenuPlugin1],
@@ -272,7 +265,7 @@ describe('OscdShell', () => {
 
       menuPlugin = oscdShell.shadowRoot?.querySelector(
         '.off-screen-plugin-container .menu-plugins > *:first-child',
-      ) as HTMLElement & Plugin;
+      ) as HTMLElement & Plugin & { editCount: number };
     });
 
     it('passes the locale property to the menu plugin', () => {
@@ -285,12 +278,12 @@ describe('OscdShell', () => {
       });
 
       it('passes an undefined doc to the menu plugin', () => {
-        expect(menuPlugin.doc).to.equal(undefined);
+        expect(menuPlugin.doc === undefined).to.be.true;
       });
 
       it('passes an empty docs object to the menu plugin', () => {
-        expect(menuPlugin.docs).to.be.an('object');
-        expect(menuPlugin.docs).to.be.empty;
+        expect(typeof menuPlugin.docs).to.equal('object');
+        expect(Object.keys(menuPlugin.docs).length).to.equal(0);
       });
     });
 
@@ -302,7 +295,7 @@ describe('OscdShell', () => {
         await oscdShell.updateComplete;
         menuPlugin = oscdShell.shadowRoot?.querySelector(
           '.off-screen-plugin-container .menu-plugins > *:first-child',
-        ) as HTMLElement & Plugin;
+        ) as HTMLElement & Plugin & { editCount: number };
       });
 
       it('has its docName property set', () => {
@@ -310,17 +303,17 @@ describe('OscdShell', () => {
       });
 
       it('has its doc property set', () => {
-        expect(menuPlugin.doc).to.equal(doc);
+        expect(menuPlugin.doc === doc).to.be.true;
       });
 
       it('has its docs property set', () => {
-        expect(menuPlugin.docs).to.be.an('object');
-        expect(menuPlugin.docs['test.scd']).to.equal(doc);
+        expect(typeof menuPlugin.docs).to.equal('object');
+        expect(menuPlugin.docs['test.scd'] === doc).to.be.true;
       });
 
       it('passes property docVersion', () => {
-        expect(menuPlugin).to.have.property('docVersion', 0);
-        expect(menuPlugin).to.have.property('editCount', 0);
+        expect(menuPlugin.docVersion).to.equal(0);
+        expect(menuPlugin.editCount).to.equal(0);
       });
 
       it('increments the menu plugin docVersion and editCount after an edit event', async () => {
@@ -337,8 +330,8 @@ describe('OscdShell', () => {
         );
         await oscdShell.updateComplete;
 
-        expect(menuPlugin).to.have.property('docVersion', 1);
-        expect(menuPlugin).to.have.property('editCount', 1);
+        expect(menuPlugin.docVersion).to.equal(1);
+        expect(menuPlugin.editCount).to.equal(1);
       });
     });
   });
@@ -366,7 +359,7 @@ describe('OscdShell', () => {
       const node = oscdShell.doc.querySelector('Substation')!;
       oscdShell.dispatchEvent(newEditEventV2({ node }));
       await oscdShell.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.not.exist;
+      expect(sclDoc.querySelector('Substation') === null).to.be.true;
 
       oscdShell.pluginsMenu.open();
       await oscdShell.pluginsMenu.updateComplete;
@@ -374,11 +367,11 @@ describe('OscdShell', () => {
       const pluginMenuItem = oscdShell.pluginsMenu.shadowRoot?.querySelectorAll(
         'oscd-menu-item',
       )[0] as OscdMenuItem;
-      expect(pluginMenuItem).to.exist;
-      expect(pluginMenuItem).to.have.property('disabled', false);
+      expect(pluginMenuItem?.localName).to.equal('oscd-menu-item');
+      expect(pluginMenuItem.disabled).to.be.false;
       pluginMenuItem?.click();
       await oscdShell.updateComplete;
-      expect(sclDoc.querySelector('Substation')).to.exist;
+      expect(sclDoc.querySelector('Substation')?.localName).to.equal('Substation');
     });
 
     it('does not redefine a source-derived tag already registered in the shell scoped registry', async () => {

@@ -42,7 +42,7 @@ describe('default landing-page', () => {
   });
 
   it('renders the default landing page when no custom slot or document is supplied', async () => {
-    expect(landingPage).to.exist;
+    expect(landingPage?.localName).to.equal('landing-page');
   });
 
   it('renders the landingPageHeading', async () => {
@@ -61,7 +61,7 @@ describe('default landing-page', () => {
     await oscdShell.updateComplete;
     const landingPageAfterOpen =
       oscdShell.shadowRoot!.querySelector('landing-page');
-    expect(landingPageAfterOpen).to.be.null;
+    expect(landingPageAfterOpen === null).to.be.true;
   });
 
   it('renders one menu tile per resolved plugin that does not require a document', async () => {
@@ -120,16 +120,16 @@ describe('custom landing-page', () => {
     const landingPageSlot = oscdShell.shadowRoot!.querySelector(
       'slot[name="landing-page"]',
     ) as HTMLSlotElement;
-    expect(landingPageSlot).to.exist;
+    expect(landingPageSlot?.localName).to.equal('slot');
     expect(landingPageSlot?.assignedElements().length).to.equal(1);
     const customLandingPage = landingPageSlot?.assignedElements()[0];
-    expect(customLandingPage).to.exist;
+    expect(customLandingPage?.localName).to.equal('div');
   });
 
   it('omits the default landing page when a custom landing-page slot is supplied', async () => {
     const defaultLandingPage =
       oscdShell.shadowRoot!.querySelector('landing-page');
-    expect(defaultLandingPage).to.be.null;
+    expect(defaultLandingPage === null).to.be.true;
   });
 
   it('stops displaying the custom landing page when a document opens without removing its supplied content', async () => {

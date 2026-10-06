@@ -55,10 +55,7 @@ describe('OscdShell Plugin Handling', () => {
 
   describe('with sample plugins loaded', () => {
     it('resolves, registers and renders each menu plugin, including grouped entries', () => {
-      expect(oscdShell)
-        .property('plugins')
-        .property('menu')
-        .to.have.lengthOf(3);
+      expect(oscdShell.plugins.menu.length).to.equal(3);
       expect(oscdShell._resolvedPlugins.menu).to.have.lengthOf(3);
       const plugins = flattenPluginEntries(oscdShell._resolvedPlugins.menu);
       expect(plugins).to.have.lengthOf(3);
@@ -76,10 +73,7 @@ describe('OscdShell Plugin Handling', () => {
     });
 
     it('resolves, registers and renders the background plugin', () => {
-      expect(oscdShell)
-        .property('plugins')
-        .property('background')
-        .to.have.lengthOf(1);
+      expect(oscdShell.plugins.background.length).to.equal(1);
       expect(oscdShell._resolvedPlugins.background).to.have.lengthOf(1);
       expect(oscdShell.registry!.get('test-background-plugin') === TestBackgroundPlugin)
         .to.be.true;
@@ -143,10 +137,7 @@ describe('OscdShell Plugin Handling', () => {
       };
       await oscdShell.updateComplete;
       await waitForAllPluginsToInstantiate(oscdShell);
-      expect(oscdShell)
-        .property('plugins')
-        .property('editor')
-        .to.have.lengthOf(2);
+      expect(oscdShell.plugins.editor.length).to.equal(2);
       const plugins = flattenPluginEntries(oscdShell._resolvedPlugins.editor);
       expect(plugins).to.have.lengthOf(2);
       for (const plugin of plugins) {
@@ -238,7 +229,8 @@ describe('OscdShell Plugin Handling', () => {
       ) as HTMLElement & {
         run: () => Promise<void>;
       };
-      expect(menuPluginElement, 'Menu Plugin Element').to.exist;
+      expect(menuPluginElement?.localName, 'Menu Plugin Element')
+        .to.equal((menu[0] as ResolvedPlugin).tagName);
       // lets trigger the menu plugin to verfiy it triggers a native window.alert
       await menuPluginElement.run();
       await oscdShell.updateComplete;
@@ -254,7 +246,8 @@ describe('OscdShell Plugin Handling', () => {
       const editorPluginElement = oscdShell.shadowRoot?.querySelector(
         (editor[0] as ResolvedPlugin).tagName,
       );
-      expect(editorPluginElement, 'Editor Plugin Element').to.exist;
+      expect(editorPluginElement?.localName, 'Editor Plugin Element')
+        .to.equal((editor[0] as ResolvedPlugin).tagName);
       expect(editorPluginElement?.querySelector('h1')?.textContent).to.contain(
         'Error',
       );
