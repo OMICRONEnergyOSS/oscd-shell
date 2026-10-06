@@ -222,15 +222,17 @@ for (const [name, value] of params) {
   oscdShell.setAttribute(name, value);
 }
 
-// const sclDocString = await fetch('sample.scd').then(r => r.text());
-// const sclDocString = `<?xml version="1.0" encoding="UTF-8"?>
-//   <SCL version="2007" revision="B" xmlns="http://www.iec.ch/61850/2003/SCL">
-//   <Substation name="A1" desc="test substation"></Substation>
-// </SCL>`;
-// oscdShell.docs = {
-//   ['sample.scd']: new DOMParser().parseFromString(
-//     sclDocString,
-//     'application/xml',
-//   ),
-// };
-// oscdShell.docName = 'sample.scd';
+/* By default, don't load a file. If a file name is passed as a paramter,
+ * try load it. Super handy during development not having to repeatidly
+ * re-open a file */
+const docFile = params.get('doc');
+if (docFile) {
+  const sample = await fetch(docFile).then(r => r.text());
+  oscdShell.docs = {
+    [docFile]: new DOMParser().parseFromString(
+      sample,
+      'application/xml',
+    ),
+  };
+  oscdShell.docName = docFile;
+}
