@@ -365,6 +365,16 @@ describe('OscdShell Event Handling', () => {
       expect(oscdMenu).property('open').to.not.be.true;
     });
 
+    it('leaves the document unchanged on Ctrl+z when there is no undo history', async () => {
+      expect(oscdShell.canUndo).to.be.false;
+      const before = new XMLSerializer().serializeToString(sclDoc);
+      simulateKeypressOnElement('z', true);
+      await oscdShell.updateComplete;
+      const after = new XMLSerializer().serializeToString(sclDoc);
+      expect(after).to.equal(before);
+      expect(oscdShell.canUndo).to.be.false;
+    });
+
     it('leaves the document unchanged on Ctrl+Z when there is no redo history', async () => {
       const before = new XMLSerializer().serializeToString(sclDoc);
       simulateKeypressOnElement('Z', true);
