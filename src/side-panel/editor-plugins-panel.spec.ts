@@ -547,6 +547,82 @@ describe('editor-plugins-panel', () => {
     expect(pinnedTree.selectedIds).to.deep.equal([]);
   });
 
+  it('leaves non-activation keys unconsumed by pinned activation handling', async () => {
+    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
+      '.pinned-tree',
+    )!;
+    const selectEditor = sinon.spy(editorPluginsPanel, 'selectEditor');
+    const event = new KeyboardEvent('keydown', {
+      key: 'a',
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    });
+    let propagated = false;
+    editorPluginsPanel.addEventListener('keydown', () => {
+      propagated = true;
+    }, { once: true });
+
+    pinnedTree.dispatchEvent(event);
+
+    expect(selectEditor.called).to.be.false;
+    expect(event.defaultPrevented).to.be.false;
+    expect(propagated).to.be.true;
+  });
+
+  it('leaves activation keys unconsumed when the pinned tree is absent', async () => {
+    editorPluginsPanel.searchValue = 'Plugin';
+    await editorPluginsPanel.updateComplete;
+    expect(editorPluginsPanel.shadowRoot!.querySelector('.pinned-tree')).to.be.null;
+    const selectEditor = sinon.spy(editorPluginsPanel, 'selectEditor');
+
+    for (const key of ['Enter', ' ']) {
+      const event = new KeyboardEvent('keydown', { key, cancelable: true });
+      // @ts-expect-error Exercise the private missing-tree guard directly.
+      editorPluginsPanel.handlePinnedKeydown(event);
+      expect(event.defaultPrevented).to.be.false;
+      expect(event.cancelBubble).to.be.false;
+    }
+    expect(selectEditor.called).to.be.false;
+  });
+
+  it('does not consume Enter or Space from a pinned editor unpin button', async () => {
+    const editor = oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin;
+    editorPluginsPanel.togglePin(editor.tagName);
+    await editorPluginsPanel.updateComplete;
+    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
+      '.pinned-tree',
+    )!;
+    pinnedTree.activeId = editor.tagName;
+    await pinnedTree.updateComplete;
+    const button = pinnedTree.shadowRoot!.querySelector<HTMLButtonElement>(
+      '.accessory button',
+    )!;
+    expect(button).to.exist;
+    const selectEditor = sinon.spy(editorPluginsPanel, 'selectEditor');
+    const expandedIds = [...pinnedTree.expandedIds];
+
+    for (const key of ['Enter', ' ']) {
+      const event = new KeyboardEvent('keydown', {
+        key,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      let reachedButton = false;
+      button.addEventListener('keydown', () => {
+        reachedButton = true;
+      }, { once: true });
+      button.dispatchEvent(event);
+      expect(reachedButton).to.be.true;
+      expect(event.defaultPrevented).to.be.false;
+      expect(pinnedTree.selectedIds).to.deep.equal([]);
+      expect(pinnedTree.expandedIds).to.deep.equal(expandedIds);
+    }
+    expect(selectEditor.called).to.be.false;
+    expect(editorPluginsPanel.pinnedPluginIds).to.include(editor.tagName);
+  });
+
   it('activates pinned editors with Enter and Space without tree selection', async () => {
     const editor = oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin;
     editorPluginsPanel.togglePin(editor.tagName);
