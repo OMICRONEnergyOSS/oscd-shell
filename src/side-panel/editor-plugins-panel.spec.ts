@@ -318,8 +318,14 @@ describe('editor-plugins-panel', () => {
     expect(names).to.include('Test Editor Plugin');
   });
 
-  it('makes the Pinned root active on search-field ArrowDown with no search query', async () => {
+  it('focuses the Pinned root on search-field ArrowDown without changing editor selection', async () => {
+    const selectedTagName = editorPluginsPanel.selectedEditor?.tagName;
+    expect(typeof selectedTagName).to.equal('string');
+    const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
+      '.pinned-tree',
+    )!;
     const field = getSearchField();
+    field.focus();
     field.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'ArrowDown',
@@ -334,7 +340,9 @@ describe('editor-plugins-panel', () => {
       (editorPluginsPanel.shadowRoot!.querySelector('.pinned-tree') as OscdTree)
         .activeId,
     ).to.equal('pinned');
-    expect(editorPluginsPanel.selectedEditor).to.exist;
+    expect(editorPluginsPanel.selectedEditor?.tagName).to.equal(selectedTagName);
+    expect(pinnedTree.selectedIds).to.deep.equal([]);
+    await waitUntil(() => pinnedTree.matches(':focus-within'), 'Pinned tree did not receive focus');
   });
 
   it('preserves the search query when the field is refocused', async () => {
@@ -387,6 +395,9 @@ describe('editor-plugins-panel', () => {
 
   it('selects the only search result when Enter is pressed in the search field', async () => {
     await setSearch('Plugin 2');
+    const expectedEditor = editorPluginsPanel.editorTreeNodes[0];
+    expect(editorPluginsPanel.editorTreeNodes.length).to.equal(1);
+    expect(expectedEditor.name).to.equal('Test Editor Plugin 2');
     const field = getSearchField();
     let selected: ResolvedPlugin | undefined;
     editorPluginsPanel.addEventListener('editor-select', (event: Event) => {
@@ -402,7 +413,7 @@ describe('editor-plugins-panel', () => {
     );
     await editorPluginsPanel.updateComplete;
 
-    expect(selected).to.exist;
+    expect(selected?.tagName).to.equal(expectedEditor.id);
   });
 
   it('does not dispatch editor-select on search-field Enter when multiple results remain', async () => {

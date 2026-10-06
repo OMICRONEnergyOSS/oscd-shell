@@ -246,12 +246,15 @@ describe('OscdShell Event Handling', () => {
   });
 
   describe('keypress events (the keyboard shortcuts)', () => {
-    it('requests search focus without entering search mode on an expanded panel with Ctrl+Shift+F', async () => {
+    it('focuses the search field without entering search mode on an expanded panel with Ctrl+Shift+F', async () => {
       const panel = oscdShell.shadowRoot!.querySelector(
         'editor-plugins-panel',
       ) as EditorPluginsPanel;
       panel.expanded = true;
-      const focusSearch = sinon.spy(panel, 'focusSearch');
+      await panel.updateComplete;
+      const searchField = panel.shadowRoot!.querySelector('oscd-outlined-search-field')!;
+      expect(searchField?.localName).to.equal('oscd-outlined-search-field');
+      expect(searchField.matches(':focus-within')).to.be.false;
 
       document.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -263,9 +266,8 @@ describe('OscdShell Event Handling', () => {
         }),
       );
 
-      expect(focusSearch.calledWith(true)).to.be.true;
+      await waitUntil(() => searchField.matches(':focus-within'), 'Search field did not receive shortcut focus');
       expect(panel.searchMode).to.be.false;
-      focusSearch.restore();
     });
 
     it('temporarily opens the collapsed panel with Meta+Shift+F', async () => {
