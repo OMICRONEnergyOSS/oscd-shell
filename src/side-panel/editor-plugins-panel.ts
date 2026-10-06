@@ -185,6 +185,26 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
   @state()
   pinnedExpanded!: string[];
 
+  @state()
+  private hasOverflow = false;
+
+  private overflowObserver = new ResizeObserver(() => this.updateOverflow());
+
+  private observedOverflowElements = new Set<Element>();
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('keydown', this.handleKeydown);
+    this.requestUpdate();
+  }
+
+  disconnectedCallback() {
+    this.overflowObserver.disconnect();
+    this.observedOverflowElements.clear();
+    this.removeEventListener('keydown', this.handleKeydown);
+    super.disconnectedCallback();
+  }
+
   willUpdate(changedProperties: Map<string, unknown>) {
     if (
       changedProperties.has('editors') ||
@@ -227,6 +247,38 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     }
   }
 
+  updated() {
+    if (!this.isConnected) {
+      return;
+    }
+    const scrollArea = this.shadowRoot?.querySelector('.tree-scroll, .rail');
+    const targets = new Set<Element>();
+    if (scrollArea !== null && scrollArea !== undefined) {
+      targets.add(scrollArea);
+      for (const child of scrollArea.children) {
+        targets.add(child);
+      }
+    }
+    for (const element of this.observedOverflowElements) {
+      if (!targets.has(element)) {
+        this.overflowObserver.unobserve(element);
+      }
+    }
+    for (const element of targets) {
+      if (!this.observedOverflowElements.has(element)) {
+        this.overflowObserver.observe(element);
+      }
+    }
+    this.observedOverflowElements = targets;
+    this.updateOverflow();
+  }
+
+  private updateOverflow() {
+    const scrollArea = this.shadowRoot?.querySelector('.tree-scroll, .rail');
+    this.hasOverflow = scrollArea !== null && scrollArea !== undefined
+      && scrollArea.scrollHeight > scrollArea.clientHeight;
+  }
+
   togglePin(id: string) {
     if (this.pinnedPluginIds.includes(id)) {
       this.pinnedPluginIds = this.pinnedPluginIds.filter(
@@ -267,16 +319,6 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
     if (this.searchMode) {
       this.exitSearchMode();
     }
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('keydown', this.handleKeydown);
-  }
-
-  disconnectedCallback() {
-    this.removeEventListener('keydown', this.handleKeydown);
-    super.disconnectedCallback();
   }
 
   private handleKeydown = (event: KeyboardEvent) => {
@@ -770,7 +812,10 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
   render() {
     return html`
       ${this.isOpen ? this.renderExpanded() : this.renderRail()}
-      <oscd-divider class="footer-divider"></oscd-divider>
+      <oscd-divider
+        class="footer-divider"
+        style=${this.hasOverflow ? 'visibility: visible' : 'visibility: hidden'}
+      ></oscd-divider>
       ${this.renderFooter()}
     `;
   }
@@ -1001,6 +1046,7 @@ export class EditorPluginsPanel extends ScopedElementsMixin(LitElement) {
       padding-inline: 16px;
       min-width: 0;
       min-height: 0;
+      overflow-x: hidden;
       overflow-y: auto;
     }
 

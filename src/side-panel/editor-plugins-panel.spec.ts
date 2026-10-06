@@ -1,4 +1,4 @@
-import { expect, fixture, html } from '@open-wc/testing';
+import { expect, fixture, html, waitUntil } from '@open-wc/testing';
 import type { OscdShell } from '../oscd-shell.js';
 import '../oscd-shell.js';
 import { EditorPluginsPanel } from './editor-plugins-panel.js';
@@ -97,6 +97,47 @@ describe('editor-plugins-panel', () => {
     )!;
     await oscdShell.updateComplete;
     await editorPluginsPanel.updateComplete;
+  });
+
+  for (const expanded of [true, false]) {
+    it(`shows the footer divider only during overflow (${expanded ? 'expanded' : 'collapsed'})`, async () => {
+      const panel = editorPluginsPanel;
+      panel.expanded = expanded;
+      panel.style.height = '1000px';
+      await panel.updateComplete;
+      const divider = panel.shadowRoot!.querySelector('.footer-divider')!;
+      const scrollArea = panel.shadowRoot!.querySelector('.tree-scroll, .rail')!;
+      await waitUntil(() => scrollArea.clientHeight > 0);
+      await waitUntil(() => getComputedStyle(divider).visibility === 'hidden');
+      expect(scrollArea.scrollHeight).to.be.at.most(scrollArea.clientHeight);
+
+      panel.style.height = '120px';
+      await waitUntil(() => getComputedStyle(divider).visibility === 'visible');
+      expect(scrollArea.scrollHeight).to.be.greaterThan(scrollArea.clientHeight);
+      if (!expanded) {
+        expect(getComputedStyle(scrollArea).overflowX).to.equal('hidden');
+      }
+      expect(findPanelToggleButton(panel).getBoundingClientRect().height).to.be.greaterThan(0);
+
+      panel.style.height = '1000px';
+      await waitUntil(() => getComputedStyle(divider).visibility === 'hidden');
+    });
+  }
+
+  it('updates the divider when filtering removes overflowing content', async () => {
+    const panel = editorPluginsPanel;
+    panel.style.height = '180px';
+    await panel.updateComplete;
+    const divider = panel.shadowRoot!.querySelector('.footer-divider')!;
+    await waitUntil(() => getComputedStyle(divider).visibility === 'visible');
+
+    panel.searchValue = 'no matching editor';
+    await panel.updateComplete;
+    await waitUntil(() => getComputedStyle(divider).visibility === 'hidden');
+
+    panel.searchValue = '';
+    await panel.updateComplete;
+    await waitUntil(() => getComputedStyle(divider).visibility === 'visible');
   });
 
   it('does not render a pin accessory for the empty pinned placeholder', async () => {
