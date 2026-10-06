@@ -399,7 +399,6 @@ describe('OscdShell', () => {
   });
 
   describe('localization', () => {
-    let menuItemStrings: string[] = [];
     let editorTabStrings: string[] = [];
 
     beforeEach(async () => {
@@ -413,11 +412,13 @@ describe('OscdShell', () => {
 
       await waitForAllPluginsToInstantiate(oscdShell);
 
-      menuItemStrings = Array.from(
-        oscdShell?.pluginsMenu?.shadowRoot?.querySelectorAll(
+      await oscdShell.pluginsMenu.updateComplete;
+      const menuItemStrings = Array.from(
+        oscdShell.pluginsMenu.shadowRoot!.querySelectorAll(
           "oscd-menu-item > div[slot='headline']",
-        ) || [],
-      ).map(span => (span as Element).textContent?.trim() || '');
+        ),
+      ).map(label => label.textContent?.trim());
+      expect(menuItemStrings).to.deep.equal([testMenuPlugin1.name]);
 
       const editorsTree =
         oscdShell?.editorPluginsPanel?.shadowRoot?.querySelector(
@@ -453,14 +454,16 @@ describe('OscdShell', () => {
       await oscdShell.updateComplete;
     });
 
-    it('finds no original menu labels in the queried light DOM after switching to German', () => {
-      const untranslatedStrings = Array.from(
-        oscdShell.pluginsMenu.querySelectorAll('oscd-menu-item > div'),
-      )
-        .map(span => (span as Element).textContent?.trim() || '')
-        .filter((text: string) => menuItemStrings.includes(text));
+    it('renders the German menu plugin label after switching locale', async () => {
+      await oscdShell.updateComplete;
+      await oscdShell.pluginsMenu.updateComplete;
+      const labels = Array.from(
+        oscdShell.pluginsMenu.shadowRoot!.querySelectorAll(
+          "oscd-menu-item > div[slot='headline']",
+        ),
+      ).map(label => label.textContent?.trim());
 
-      expect(untranslatedStrings).to.be.empty;
+      expect(labels).to.deep.equal([testMenuPlugin1.translations.de]);
     });
 
     it('finds no original editor-tree labels after switching to German', () => {
