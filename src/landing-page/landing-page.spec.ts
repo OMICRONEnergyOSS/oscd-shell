@@ -131,4 +131,27 @@ describe('custom landing-page', () => {
       oscdShell.shadowRoot!.querySelector('landing-page');
     expect(defaultLandingPage).to.be.null;
   });
+
+  it('stops displaying the custom landing page when a document opens without removing its supplied content', async () => {
+    const slot = oscdShell.shadowRoot!.querySelector<HTMLSlotElement>(
+      'slot[name="landing-page"]',
+    )!;
+    expect(slot?.localName).to.equal('slot');
+    expect(slot.assignedElements().map(element => element.textContent?.trim()))
+      .to.deep.equal(['Custom Landing Page']);
+
+    const doc = createSclDocument();
+    oscdShell.dispatchEvent(newOpenEvent(doc, 'test.scd'));
+    await oscdShell.updateComplete;
+
+    expect(oscdShell.docName).to.equal('test.scd');
+    expect(oscdShell.doc === doc).to.be.true;
+    expect(oscdShell.shadowRoot!.querySelectorAll(
+      '.landing-page-container, slot[name="landing-page"], landing-page',
+    ).length).to.equal(0);
+    expect(oscdShell.shadowRoot!.querySelector('oscd-app-bar')?.localName)
+      .to.equal('oscd-app-bar');
+    expect(oscdShell.querySelector('.my-custom-landing-page')?.textContent?.trim())
+      .to.equal('Custom Landing Page');
+  });
 });
