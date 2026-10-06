@@ -4,6 +4,7 @@ import { getFirstTextNodeContent } from '@omicronenergy/oscd-test-utils';
 import './oscd-shell.js';
 
 import { OscdTreeItem } from '@omicronenergy/oscd-ui/tree/OscdTreeItem.js';
+import type { OscdTree } from '@omicronenergy/oscd-ui/tree/OscdTree.js';
 import Sinon from 'sinon';
 
 import { newEditEventV2, newOpenEvent } from '@openscd/oscd-api/utils.js';
@@ -149,7 +150,8 @@ describe('OscdShell', () => {
       const editorsTree = editorPluginsSidePanel.shadowRoot?.querySelector(
         'oscd-tree.editors-tree',
       ) as HTMLElement;
-      expect(editorsTree).to.exist;
+      expect(editorsTree?.localName, 'Editor tree did not render')
+        .to.equal('oscd-tree');
 
       const queryEditorItems = () =>
         Array.from(
@@ -399,14 +401,34 @@ describe('OscdShell', () => {
   });
 
   describe('localization', () => {
-    let editorTabStrings: string[] = [];
+    const untranslatedEditor = {
+      ...testEditorPlugin2,
+      translations: undefined,
+    };
+
+    const getEditorLabels = async () => {
+      await oscdShell.updateComplete;
+      await oscdShell.editorPluginsPanel.updateComplete;
+      const editorsTree =
+        oscdShell.editorPluginsPanel.shadowRoot!.querySelector<OscdTree>(
+          'oscd-tree.editors-tree',
+        )!;
+      expect(editorsTree?.localName, 'Editor tree did not render')
+        .to.equal('oscd-tree');
+      await editorsTree.updateComplete;
+      return Array.from(
+        editorsTree.shadowRoot!.querySelectorAll(
+          'oscd-tree-item > span[slot="headline"]',
+        ),
+      ).map(label => label.textContent?.trim());
+    };
 
     beforeEach(async () => {
       const sclDoc = createSclDocument();
       openDocOnShell(oscdShell, 'test.scd', sclDoc);
       oscdShell.plugins = {
         menu: [testMenuPlugin1],
-        editor: [testEditorPlugin],
+        editor: [testEditorPlugin, untranslatedEditor],
       };
       await oscdShell.updateComplete;
 
@@ -420,25 +442,10 @@ describe('OscdShell', () => {
       ).map(label => label.textContent?.trim());
       expect(menuItemStrings).to.deep.equal([testMenuPlugin1.name]);
 
-      const editorsTree =
-        oscdShell?.editorPluginsPanel?.shadowRoot?.querySelector(
-          'oscd-tree.editors-tree',
-        );
-      await waitUntil(
-        () =>
-          (editorsTree?.shadowRoot?.querySelectorAll('oscd-tree-item')
-            ?.length ?? 0) > 0,
-        'editor items did not render',
-      );
-      editorTabStrings = Array.from(
-        editorsTree?.shadowRoot?.querySelectorAll('oscd-tree-item > span') ||
-          [],
-      ).map(
-        tab =>
-          Array.from((tab as Element).childNodes)
-            .filter(node => node.nodeType === Node.TEXT_NODE)
-            .map(node => node.textContent?.trim() ?? '')[0] || '',
-      );
+      expect(await getEditorLabels()).to.deep.equal([
+        testEditorPlugin.name,
+        untranslatedEditor.name,
+      ]);
 
       // we only change the locale after waiting for the plugins to load and getting their default strings
       oscdShell.locale = 'de';
@@ -466,19 +473,11 @@ describe('OscdShell', () => {
       expect(labels).to.deep.equal([testMenuPlugin1.translations.de]);
     });
 
-    it('finds no original editor-tree labels after switching to German', () => {
-      const editorsTree =
-        oscdShell.editorPluginsPanel.shadowRoot?.querySelector(
-          'oscd-tree.editors-tree',
-        );
-      const untranslatedStrings = Array.from(
-        editorsTree?.shadowRoot?.querySelectorAll('oscd-tree-item > span') ||
-          [],
-      )
-        .map(span => (span as Element).textContent?.trim() || '')
-        .filter((text: string) => editorTabStrings.includes(text));
-
-      expect(untranslatedStrings).to.be.empty;
+    it('renders the German editor label and falls back to the name for an untranslated editor', async () => {
+      expect(await getEditorLabels()).to.deep.equal([
+        testEditorPlugin.translations.de,
+        untranslatedEditor.name,
+      ]);
     });
 
     it('keeps the shell locale English when an unsupported locale is requested', async () => {
