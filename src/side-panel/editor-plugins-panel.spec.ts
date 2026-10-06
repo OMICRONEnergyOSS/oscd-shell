@@ -972,7 +972,7 @@ describe('editor-plugins-panel', () => {
       expect(findGroupRailButton().classList.contains('active')).to.be.true;
     });
 
-    it('preserves popout selection after ArrowDown and reopening, and updates it when the current editor changes', async () => {
+    it('moves popout focus with ArrowDown without changing selection, preserves selection on reopening, and follows editor changes', async () => {
       const editor = groupedEditorPlugins[0].plugins[0];
       groupedPanel.selectedEditor = editor;
       await groupedPanel.updateComplete;
@@ -984,15 +984,22 @@ describe('editor-plugins-panel', () => {
       const menu = findGroupFlyoutMenu();
       await menu.show();
       items[0].focus();
+      expect(items[0].matches(':focus-within')).to.be.true;
+      expect(items[1].matches(':focus-within')).to.be.false;
       items[0].dispatchEvent(
         new KeyboardEvent('keydown', {
           key: 'ArrowDown',
+          code: 'ArrowDown',
           bubbles: true,
           composed: true,
+          cancelable: true,
         }),
       );
+      expect(items[1].matches(':focus-within')).to.be.true;
+      expect(items[0].matches(':focus-within')).to.be.false;
       expect(items[0].selected).to.be.true;
       expect(items[1].selected).to.be.false;
+      expect(groupedPanel.selectedEditor?.tagName).to.equal(editor.tagName);
       await menu.close();
       await menu.show();
       expect(items[0].selected).to.be.true;

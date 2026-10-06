@@ -57,26 +57,38 @@ describe('files-menu', () => {
     );
   });
 
-  it('preserves the current document selection when navigating and reopening', async () => {
+  it('moves focus with ArrowDown without changing the current document selection, including after reopening', async () => {
     const items = Array.from(filesMenu.menu.querySelectorAll('oscd-menu-item'));
     const currentItem = items.find(item =>
       item.textContent?.trim() === filesMenu.selectedDocName,
     )!;
+    const nextItem = items[(items.indexOf(currentItem) + 1) % items.length];
+    const docName = oscdShell.docName;
+    expect(items.length).to.be.greaterThan(1);
     expect(currentItem.selected).to.be.true;
 
     await filesMenu.menu.show();
     currentItem.focus();
+    expect(currentItem.matches(':focus-within')).to.be.true;
+    expect(nextItem.matches(':focus-within')).to.be.false;
     currentItem.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'ArrowDown',
+        code: 'ArrowDown',
         bubbles: true,
         composed: true,
+        cancelable: true,
       }),
     );
+    expect(nextItem.matches(':focus-within')).to.be.true;
+    expect(currentItem.matches(':focus-within')).to.be.false;
     expect(currentItem.selected).to.be.true;
     expect(items.filter(item => item.selected)).to.have.lengthOf(1);
+    expect(oscdShell.docName).to.equal(docName);
     await filesMenu.menu.close();
     await filesMenu.menu.show();
     expect(currentItem.selected).to.be.true;
+    expect(items.filter(item => item.selected)).to.have.lengthOf(1);
+    expect(oscdShell.docName).to.equal(docName);
   });
 });
