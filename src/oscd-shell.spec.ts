@@ -81,11 +81,19 @@ describe('OscdShell', () => {
       ).to.have.lengthOf(1); //no document loaded, so no menu items should be shown.
     });
 
-    it('retains the declared background plugin entry', () => {
+    it('resolves, registers and renders the background plugin without a document', () => {
       expect(oscdShell)
         .property('plugins')
         .property('background')
         .to.have.lengthOf(1);
+      expect(oscdShell._resolvedPlugins.background).to.have.lengthOf(1);
+      expect(oscdShell.registry!.get('test-background-plugin') === TestBackgroundPlugin)
+        .to.be.true;
+      const instances = oscdShell.shadowRoot!.querySelectorAll(
+        '.background-plugins > test-background-plugin',
+      );
+      expect(instances.length).to.equal(1);
+      expect(instances[0] instanceof TestBackgroundPlugin).to.be.true;
     });
 
     it('retains editor definitions without rendering the first editor', () => {

@@ -15,6 +15,7 @@ import {
   waitForAllPluginsToInstantiate,
 } from './utils/testing/plugin-helpers.js';
 import { createSclDocument } from './utils/testing/test-doc-helpers.js';
+import { flattenPluginEntries } from './utils/plugin-utils.js';
 
 describe('OscdShell Plugin Handling', () => {
   let oscdShell: OscdShell;
@@ -53,18 +54,40 @@ describe('OscdShell Plugin Handling', () => {
   });
 
   describe('with sample plugins loaded', () => {
-    it('retains the three declared top-level menu entries', () => {
+    it('resolves, registers and renders each menu plugin, including grouped entries', () => {
       expect(oscdShell)
         .property('plugins')
         .property('menu')
         .to.have.lengthOf(3);
+      expect(oscdShell._resolvedPlugins.menu).to.have.lengthOf(3);
+      const plugins = flattenPluginEntries(oscdShell._resolvedPlugins.menu);
+      expect(plugins).to.have.lengthOf(3);
+      expect(oscdShell.shadowRoot!.querySelectorAll('.menu-plugins > *').length)
+        .to.equal(plugins.length);
+      for (const plugin of plugins) {
+        const definition = oscdShell.registry!.get(plugin.tagName);
+        expect(typeof definition, plugin.tagName).to.equal('function');
+        const instances = oscdShell.shadowRoot!.querySelectorAll(
+          `.menu-plugins > ${plugin.tagName}`,
+        );
+        expect(instances.length, plugin.tagName).to.equal(1);
+        expect(instances[0] instanceof definition!, plugin.tagName).to.be.true;
+      }
     });
 
-    it('retains the declared background plugin entry', () => {
+    it('resolves, registers and renders the background plugin', () => {
       expect(oscdShell)
         .property('plugins')
         .property('background')
         .to.have.lengthOf(1);
+      expect(oscdShell._resolvedPlugins.background).to.have.lengthOf(1);
+      expect(oscdShell.registry!.get('test-background-plugin') === TestBackgroundPlugin)
+        .to.be.true;
+      const instances = oscdShell.shadowRoot!.querySelectorAll(
+        '.background-plugins > test-background-plugin',
+      );
+      expect(instances.length).to.equal(1);
+      expect(instances[0] instanceof TestBackgroundPlugin).to.be.true;
     });
 
     it('instantiates a background plugin that echoes test-tx detail through test-rx', async () => {
@@ -83,32 +106,59 @@ describe('OscdShell Plugin Handling', () => {
       expect(event.detail).to.equal(testValue);
     });
 
-    it('reassigning the same menu configuration does not duplicate declared entries', () => {
-      oscdShell.plugins = {
-        menu: sampleMenuPlugins,
-      };
-      expect(oscdShell)
-        .property('plugins')
-        .property('menu')
-        .to.have.lengthOf(3);
-      oscdShell.plugins = {
-        menu: sampleMenuPlugins,
-      };
-      expect(oscdShell)
-        .property('plugins')
-        .property('menu')
-        .to.have.lengthOf(3);
+    it('reassigning the same menu configuration preserves single instances without redefining tags', async () => {
+      const plugins = flattenPluginEntries(oscdShell._resolvedPlugins.menu);
+      const originalInstances = plugins.map(plugin =>
+        oscdShell.shadowRoot!.querySelector(`.menu-plugins > ${plugin.tagName}`),
+      );
+      const defineSpy = sinon.spy(oscdShell.registry!, 'define');
+      try {
+        for (let assignment = 0; assignment < 2; assignment += 1) {
+          oscdShell.plugins = { menu: sampleMenuPlugins };
+          await oscdShell.updateComplete;
+          await waitForAllPluginsToInstantiate(oscdShell);
+          expect(oscdShell.plugins.menu).to.have.lengthOf(3);
+          expect(flattenPluginEntries(oscdShell._resolvedPlugins.menu))
+            .to.deep.equal(plugins);
+          expect(oscdShell.shadowRoot!.querySelectorAll('.menu-plugins > *').length)
+            .to.equal(plugins.length);
+          plugins.forEach((plugin, index) => {
+            const instances = oscdShell.shadowRoot!.querySelectorAll(
+              `.menu-plugins > ${plugin.tagName}`,
+            );
+            expect(instances.length, plugin.tagName).to.equal(1);
+            expect(instances[0] === originalInstances[index], plugin.tagName)
+              .to.be.true;
+          });
+          expect(defineSpy.called).to.be.false;
+        }
+      } finally {
+        defineSpy.restore();
+      }
     });
 
-    it('retains the two declared editor plugin entries', async () => {
+    it('resolves and registers editor definitions and renders only the selected editor', async () => {
       oscdShell.plugins = {
         editor: sampleEditorPlugins,
       };
       await oscdShell.updateComplete;
+      await waitForAllPluginsToInstantiate(oscdShell);
       expect(oscdShell)
         .property('plugins')
         .property('editor')
         .to.have.lengthOf(2);
+      const plugins = flattenPluginEntries(oscdShell._resolvedPlugins.editor);
+      expect(plugins).to.have.lengthOf(2);
+      for (const plugin of plugins) {
+        await oscdShell.registry!.whenDefined(plugin.tagName);
+        expect(typeof oscdShell.registry!.get(plugin.tagName)).to.equal('function');
+      }
+      expect(oscdShell.selectedEditor?.tagName).to.equal(plugins[0].tagName);
+      const instances = oscdShell.shadowRoot!.querySelectorAll('.editor-container > *');
+      expect(instances.length).to.equal(1);
+      expect(instances[0].localName).to.equal(plugins[0].tagName);
+      expect(instances[0] instanceof oscdShell.registry!.get(plugins[0].tagName)!)
+        .to.be.true;
     });
 
     it('keeps a plugin with no tagName or src in the declared set, but excludes it from the resolved set', async () => {

@@ -102,6 +102,20 @@ describe('editor-plugins-panel', () => {
     await editorPluginsPanel.updateComplete;
   });
 
+  it('completes a pending update after disconnection without observing layout', async () => {
+    const panel = editorPluginsPanel;
+    panel.requestUpdate();
+    oscdShell.remove();
+    const observeSpy = sinon.spy(ResizeObserver.prototype, 'observe');
+    try {
+      await panel.updateComplete;
+      expect(panel.isConnected).to.be.false;
+      expect(observeSpy.called).to.be.false;
+    } finally {
+      observeSpy.restore();
+    }
+  });
+
   for (const expanded of [true, false]) {
     it(`shows the footer divider only during overflow (${expanded ? 'expanded' : 'collapsed'})`, async () => {
       const panel = editorPluginsPanel;
