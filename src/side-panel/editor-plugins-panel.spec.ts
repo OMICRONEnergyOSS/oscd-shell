@@ -2,7 +2,7 @@ import { expect, fixture, html, waitUntil } from '@open-wc/testing';
 import type { OscdShell } from '../oscd-shell.js';
 import '../oscd-shell.js';
 import { EditorPluginsPanel } from './editor-plugins-panel.js';
-import type { ResolvedPlugin, PluginGroup } from '../oscd-shell.js';
+import type { OscdPlugin, ResolvedPlugin, PluginGroup } from '../oscd-shell.js';
 import { createTestDocs } from '../utils/testing/test-doc-helpers.js';
 import { sampleEditorPlugins } from '../utils/testing/plugin-helpers.js';
 import { TestMenuPlugin1 } from '../utils/testing/test-plugins.js';
@@ -59,7 +59,9 @@ describe('editor-plugins-panel', () => {
 
   // Mounts a brand-new shell + panel, simulating a page reload. Any pre-seeded
   // localStorage is therefore read by a freshly constructed panel.
-  const mountFreshPanel = async (): Promise<EditorPluginsPanel> => {
+  const mountFreshPanel = async (
+    editors: (OscdPlugin | PluginGroup<OscdPlugin>)[] = sampleEditorPlugins,
+  ): Promise<EditorPluginsPanel> => {
     const shell = <OscdShell>(
       await fixture(
         html`<oscd-shell
@@ -68,7 +70,7 @@ describe('editor-plugins-panel', () => {
         ></oscd-shell>`,
       )
     );
-    shell.plugins = { editor: sampleEditorPlugins };
+    shell.plugins = { editor: editors };
     const panel = shell.shadowRoot!.querySelector('editor-plugins-panel')!;
     await shell.updateComplete;
     await panel.updateComplete;
@@ -77,6 +79,7 @@ describe('editor-plugins-panel', () => {
   };
 
   beforeEach(async () => {
+    Object.values(LS_KEYS).forEach(key => localStorage.removeItem(key));
     docs = createTestDocs(1);
     oscdShell = <OscdShell>(
       await fixture(
@@ -493,20 +496,26 @@ describe('editor-plugins-panel', () => {
     expect(editorPluginsPanel.focusedTree).to.equal('editors');
   });
 
-  it('persists a pinned editor id and removes it from panel state on unpin', async () => {
+  it('persists pinning and unpinning and restores both states on a fresh mount', async () => {
     const tagName = (oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin)
       .tagName;
 
     editorPluginsPanel.togglePin(tagName);
     await editorPluginsPanel.updateComplete;
     expect(editorPluginsPanel.pinnedPluginIds).to.include(tagName);
-    expect(
-      localStorage.getItem('editor-plugins-panel:pinnedPluginIds'),
-    ).to.contain(tagName);
+    expect(localStorage.getItem(LS_KEYS.pinnedPluginIds)).to.equal(
+      JSON.stringify([tagName]),
+    );
+    const pinnedPanel = await mountFreshPanel();
+    expect(pinnedPanel.pinnedPluginIds).to.deep.equal([tagName]);
+    extraShells.pop()!.remove();
 
     editorPluginsPanel.togglePin(tagName);
     await editorPluginsPanel.updateComplete;
     expect(editorPluginsPanel.pinnedPluginIds).to.not.include(tagName);
+    expect(localStorage.getItem(LS_KEYS.pinnedPluginIds)).to.equal('[]');
+    const unpinnedPanel = await mountFreshPanel();
+    expect(unpinnedPanel.pinnedPluginIds).to.deep.equal([]);
   });
 
   it('does not track selection in the pinned tree', async () => {
@@ -816,8 +825,8 @@ describe('editor-plugins-panel', () => {
     });
   });
 
-  describe('pinned/editor tree expansion event handling', () => {
-    it('updates pinnedExpanded on the pinned tree expanded-ids-changed event', async () => {
+  describe('pinned/editor tree expansion persistence', () => {
+    it('persists pinned-tree collapse and expansion events and restores them on a fresh mount', async () => {
       const tagName = (oscdShell._resolvedPlugins.editor[0] as ResolvedPlugin)
         .tagName;
       editorPluginsPanel.togglePin(tagName);
@@ -826,30 +835,58 @@ describe('editor-plugins-panel', () => {
       const pinnedTree = editorPluginsPanel.shadowRoot!.querySelector(
         '.tree-container oscd-tree:not(.editors-tree)',
       )!;
-      pinnedTree.dispatchEvent(
-        new CustomEvent('expanded-ids-changed', {
-          detail: { expandedIds: ['pinned'] },
-        }),
-      );
-      await editorPluginsPanel.updateComplete;
+      for (const expandedIds of [[], ['pinned']]) {
+        pinnedTree.dispatchEvent(
+          new CustomEvent('expanded-ids-changed', {
+            detail: { expandedIds },
+          }),
+        );
+        await editorPluginsPanel.updateComplete;
 
-      expect(editorPluginsPanel.pinnedExpanded).to.deep.equal(['pinned']);
+        expect(editorPluginsPanel.pinnedExpanded).to.deep.equal(expandedIds);
+        expect(localStorage.getItem(LS_KEYS.pinnedExpanded)).to.equal(
+          JSON.stringify(expandedIds),
+        );
+        const restoredPanel = await mountFreshPanel();
+        expect(restoredPanel.pinnedExpanded).to.deep.equal(expandedIds);
+        const restoredTree = restoredPanel.shadowRoot!.querySelector<OscdTree>(
+          '.pinned-tree',
+        )!;
+        await restoredTree.updateComplete;
+        expect(restoredTree.expandedIds).to.deep.equal(expandedIds);
+        extraShells.pop()!.remove();
+      }
     });
 
-    it('updates expandedIds on the editor tree expanded-ids-changed event', async () => {
+    it('persists editor-group expansion and collapse events and restores them on a fresh mount', async () => {
+      oscdShell.plugins = { editor: groupedEditorPlugins };
+      await oscdShell.updateComplete;
+      await editorPluginsPanel.updateComplete;
+      const groupId = 'group:0:Grouped Editors';
       const editorsTree = editorPluginsPanel.shadowRoot!.querySelector(
         '.tree-container oscd-tree.editors-tree',
       )!;
-      editorsTree.dispatchEvent(
-        new CustomEvent('expanded-ids-changed', {
-          detail: { expandedIds: ['group:0:Communication'] },
-        }),
-      );
-      await editorPluginsPanel.updateComplete;
+      for (const expandedIds of [[groupId], []]) {
+        editorsTree.dispatchEvent(
+          new CustomEvent('expanded-ids-changed', {
+            detail: { expandedIds },
+          }),
+        );
+        await editorPluginsPanel.updateComplete;
 
-      expect(editorPluginsPanel.expandedIds).to.deep.equal([
-        'group:0:Communication',
-      ]);
+        expect(editorPluginsPanel.expandedIds).to.deep.equal(expandedIds);
+        expect(localStorage.getItem(LS_KEYS.expandedIds)).to.equal(
+          JSON.stringify(expandedIds),
+        );
+        const restoredPanel = await mountFreshPanel(groupedEditorPlugins);
+        expect(restoredPanel.expandedIds).to.deep.equal(expandedIds);
+        const restoredTree = restoredPanel.shadowRoot!.querySelector<OscdTree>(
+          '.editors-tree',
+        )!;
+        await restoredTree.updateComplete;
+        expect(restoredTree.expandedIds).to.deep.equal(expandedIds);
+        extraShells.pop()!.remove();
+      }
     });
   });
 
