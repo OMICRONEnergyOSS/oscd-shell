@@ -44,13 +44,15 @@ export class FilesMenu extends ScopedElementsMixin(LitElement) {
   render() {
     return html`
       <oscd-text-button
-          id="fileMenuButton"
-          @click=${() => this.menu.show()}
-          trailing-icon
-          >
-          ${this.selectedDocName}
-          <oscd-icon slot="icon">arrow_drop_down</oscd-icon></oscd-filled-icon-button
-        >
+        id="fileMenuButton"
+        @click=${() => this.menu.show()}
+        trailing-icon
+      >
+        <span class="file-menu-label">
+          <oscd-icon aria-hidden="true">folder</oscd-icon>
+          <span>${this.selectedDocName}</span>
+        </span>
+        <oscd-icon slot="icon" aria-hidden="true">arrow_drop_down</oscd-icon>
       </oscd-text-button>
 
       <oscd-menu
@@ -102,6 +104,16 @@ export class FilesMenu extends ScopedElementsMixin(LitElement) {
 
     oscd-menu {
       min-width: var(--plugins-menu-min-width);
+    }
+
+    .file-menu-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-menu-label oscd-icon {
+      --md-icon-size: var(--md-text-button-icon-size);
     }
   `];
 }

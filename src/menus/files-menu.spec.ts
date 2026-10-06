@@ -42,6 +42,21 @@ describe('files-menu', () => {
     expect(oscdShell).to.not.have.property('docName', oldDocName);
   });
 
+  it('renders a decorative leading folder and trailing dropdown icon', () => {
+    const button = filesMenu.shadowRoot!.querySelector('oscd-text-button')!;
+    const folder = button.querySelector('.file-menu-label oscd-icon')!;
+    const arrow = button.querySelector('oscd-icon[slot="icon"]')!;
+
+    expect(button.hasAttribute('trailing-icon')).to.be.true;
+    expect(folder.textContent).to.equal('folder');
+    expect(arrow.textContent).to.equal('arrow_drop_down');
+    expect(folder.getAttribute('aria-hidden')).to.equal('true');
+    expect(arrow.getAttribute('aria-hidden')).to.equal('true');
+    expect(button.querySelector('.file-menu-label span')!.textContent).to.equal(
+      filesMenu.selectedDocName,
+    );
+  });
+
   it('preserves the current document selection when navigating and reopening', async () => {
     const items = Array.from(filesMenu.menu.querySelectorAll('oscd-menu-item'));
     const currentItem = items.find(item =>
