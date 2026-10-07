@@ -185,17 +185,19 @@ through these public shell tokens.
 | `--oscd-shell-plugins-menu-container-color`               | `--md-sys-color-surface`             | Menu surface                 |
 | `--oscd-shell-plugins-menu-item-label-color`              | `--md-sys-color-on-surface`          | Menu item text color         |
 | `--oscd-shell-plugins-menu-item-leading-icon-color`       | `--md-sys-color-on-surface`          | Menu item leading icon color |
-| `--oscd-shell-plugins-menu-item-selected-container-color` | 50% primary/menu-surface mix         | Selected row background      |
-| `--oscd-shell-plugins-menu-item-selected-label-color`     | `--oscd-base02`                      | Selected row label color     |
+| `--oscd-shell-plugins-menu-item-selected-container-color` | `--md-sys-color-primary`             | Selected row background      |
+| `--oscd-shell-plugins-menu-item-selected-label-color`     | `--md-sys-color-on-primary`          | Selected row label color     |
+| `--oscd-shell-plugins-menu-divider-color`                 | `--md-sys-color-outline-variant`     | Divider in the editors rail popout menu |
 
 These tokens apply consistently to the plugins menu and its submenus, the
 files menu, and the editors popout menu. Shared `--md-menu-*` and
 `--md-menu-item-*` defaults are declared in `oscd-shell-design-tokens.ts`.
 The shared stylesheet in `src/menus/menu-styles.ts` handles row insets,
-gaps, headings, and dividers, which do not have Material menu tokens.
+gaps, headings, and dividers, which do not have Material menu tokens. The
+menu-divider token affects only the divider in the editors rail popout.
 
-Selected rows use a 50% mix of primary and the menu surface with `--oscd-base02`
-text by default. The selected-container and selected-label overrides above take
+Selected rows use primary backgrounds and on-primary text by default, matching
+the expanded editor tree and active rail icons. The selected-container and selected-label overrides above take
 precedence. Hover uses a 12% on-surface state layer. The current document/editor
 uses Material's menu-item `selected` property; submenu triggers retain Material's
 activation behavior. The pinned popout does not mark the current editor.

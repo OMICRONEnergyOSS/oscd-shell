@@ -255,15 +255,15 @@ export const oscdShellDesignTokens = css`
     );
     --plugins-menu-item-selected-container-color: var(
       --oscd-shell-plugins-menu-item-selected-container-color,
-      color-mix(
-        in srgb,
-        var(--md-sys-color-primary) 50%,
-        var(--plugins-menu-container-color)
-      )
+      var(--md-sys-color-primary)
     );
     --plugins-menu-item-selected-label-color: var(
       --oscd-shell-plugins-menu-item-selected-label-color,
-      var(--oscd-base02)
+      var(--md-sys-color-on-primary)
+    );
+    --plugins-menu-divider-color: var(
+      --oscd-shell-plugins-menu-divider-color,
+      var(--md-sys-color-outline-variant)
     );
 
     /* Shared defaults for shell menus, including nested menus. */

@@ -21,7 +21,7 @@ export const menuStyles = css`
   }
 
   oscd-divider.menu-divider {
-    --md-divider-color: var(--md-sys-color-outline-variant);
+    --md-divider-color: var(--plugins-menu-divider-color);
     width: calc(100% - 2 * var(--plugins-menu-padding));
     margin: 6px var(--plugins-menu-padding);
   }
