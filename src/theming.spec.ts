@@ -3,6 +3,7 @@ import { expect, fixture, html } from '@open-wc/testing';
 import './oscd-shell.js';
 import type { OscdShell } from './oscd-shell.js';
 import { createTestDocs } from './utils/testing/test-doc-helpers.js';
+import { testEditorPlugin } from './utils/testing/test-plugins.js';
 
 /**
  * Design tokens flow --oscd-theme-* -\> --oscd-* -\> --md-sys-* -\> --oscd-shell-*
@@ -182,16 +183,36 @@ describe('shell design tokens', () => {
   });
 
   it('exposes the app bar separator tokens it uses', async () => {
-    const divider = oscdShell.shadowRoot!.querySelector(
-      'oscd-divider.vertical',
-    );
-    expect(divider?.localName, 'app bar separator not rendered').to.equal('oscd-divider');
+    oscdShell.plugins = { editor: [testEditorPlugin] };
+    await oscdShell.updateComplete;
+    await oscdShell.updateComplete;
 
-    expect(tokenValue(divider!, '--app-bar-separator-color')).to.equal(
-      'currentColor',
+    const dividers = Array.from(
+      oscdShell.shadowRoot!.querySelectorAll('oscd-divider.vertical'),
     );
-    expect(tokenValue(divider!, '--app-bar-separator-opacity')).to.equal(
-      '0.38',
+    expect(dividers.length, 'app bar separators not rendered').to.equal(2);
+
+    dividers.forEach((divider) => {
+      expect(tokenValue(divider, '--app-bar-separator-color')).to.equal(
+        solarizedBase3,
+      );
+      expect(tokenValue(divider, '--app-bar-separator-opacity')).to.equal('0.38');
+    });
+  });
+
+  it('uses the app bar foreground for both separators', () => {
+    oscdShell.style.setProperty(
+      '--oscd-shell-app-bar-color',
+      'rgb(1, 2, 3)',
     );
+
+    const dividers = Array.from(
+      oscdShell.shadowRoot!.querySelectorAll('oscd-divider.vertical'),
+    );
+    dividers.forEach((divider) => {
+      expect(tokenValue(divider, '--app-bar-separator-color')).to.equal(
+        'rgb(1, 2, 3)',
+      );
+    });
   });
 });

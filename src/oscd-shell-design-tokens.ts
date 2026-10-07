@@ -197,7 +197,7 @@ export const oscdShellDesignTokens = css`
     );
     --app-bar-separator-color: var(
       --oscd-shell-app-bar-separator-color,
-      currentColor
+      var(--app-bar-color)
     );
     --app-bar-separator-opacity: var(
       --oscd-shell-app-bar-separator-opacity,
