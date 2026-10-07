@@ -2,6 +2,27 @@
 
 - fix npm publishing ([88c7af7](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/88c7af777019755d99824f57f1e2b8cb6cd5c18d))
 
+## [0.0.18](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.17...oscd-shell-v0.0.18) (2026-10-07)
+
+
+### Features
+
+* add a dedicated token for the editor rail divider ([1772a3c](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/1772a3c79bd6095450196660caf139c64fe4cbc6))
+* add file icon to files dropdown menu button ([1cd08db](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/1cd08dba704b5986186b64e451550dbac92d63b5))
+* add official openscd icon to demo app ([3fd0864](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/3fd0864cc078f12d39536d1e45a665045e939d83))
+
+
+### Bug Fixes
+
+* correct app-bar separator fg color ([a3c8b51](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/a3c8b517061c96734a037e8829d05530b2c2a23e))
+* divider in sidepanel footer, shown only when scrolling required ([98cd7a2](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/98cd7a2c4a5bbc2a3a1ada43b1661c2ce832fc9b))
+* editor side panel and main editor pane, need different background for contrast ([07a4d45](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/07a4d455d65ce52227967f092e1e18a17ca891d8))
+* group root item should be selected when child is selected and group collapsed ([6fc807e](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/6fc807e2d953fdf165e8d0f47ee97783e06b1f31))
+* logo + alignment corrections ([1c40892](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/1c40892308d14b2d3a5b5eb0dfef2d1bd766674f))
+* menu-items - padding & hightlighting corrections ([63d447d](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/63d447dcb7ae33895b059528e551979ccba2573f))
+* remove unpin icon for pinned section placeholder ([66f3535](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/66f353595928ac86823da5d76386b07ccab4a62f))
+* selected editor foreground on rail not set ([96af9c3](https://github.com/OMICRONEnergyOSS/oscd-shell/commit/96af9c3714a27b7e6b9ca83a92de237d7ed9a859))
+
 ## [0.0.17](https://github.com/OMICRONEnergyOSS/oscd-shell/compare/oscd-shell-v0.0.16...oscd-shell-v0.0.17) (2026-10-01)
 
 
