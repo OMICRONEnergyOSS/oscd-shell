@@ -30,6 +30,6 @@ export declare class PluginsMenu extends PluginsMenu_base {
     renderMenuGroup(plugin: PluginGroup<ResolvedPlugin>, hasDoc: boolean): import("lit-html").TemplateResult<1>;
     renderMenuItem(plugin: ResolvedPlugin, hasDoc: boolean): import("lit-html").TemplateResult<1>;
     render(): import("lit-html").TemplateResult<1>;
-    static styles: import("lit").CSSResult;
+    static styles: import("lit").CSSResult[];
 }
 export {};

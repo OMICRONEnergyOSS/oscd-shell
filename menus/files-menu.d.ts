@@ -22,6 +22,6 @@ export declare class FilesMenu extends FilesMenu_base {
     locale: LocaleTag;
     menu: OscdMenu;
     render(): import("lit-html").TemplateResult<1>;
-    static styles: import("lit").CSSResult;
+    static styles: import("lit").CSSResult[];
 }
 export {};

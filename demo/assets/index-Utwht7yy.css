@@ -13,3 +13,9 @@ html, body {
   height: 100%;
   margin: 0;
 }
+
+oscd-shell {
+  --oscd-shell-app-bar-icon-height: 28px;
+  --oscd-shell-app-bar-logo-gap: 16px;
+  --oscd-shell-app-bar-title-font-size: 16px;
+}

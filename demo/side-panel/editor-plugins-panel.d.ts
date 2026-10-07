@@ -1,4 +1,4 @@
-import { LitElement } from 'lit';
+import { LitElement, nothing } from 'lit';
 import { OscdIconButton } from '@omicronenergy/oscd-ui/iconbutton/OscdIconButton.js';
 import { OscdIcon } from '@omicronenergy/oscd-ui/icon/OscdIcon.js';
 import { OscdListItem } from '@omicronenergy/oscd-ui/list/OscdListItem.js';
@@ -59,7 +59,14 @@ export declare class EditorPluginsPanel extends EditorPluginsPanel_base {
     expandedIds: string[];
     pinnedPluginIds: string[];
     pinnedExpanded: string[];
+    private hasOverflow;
+    private overflowObserver;
+    private observedOverflowElements;
+    connectedCallback(): void;
+    disconnectedCallback(): void;
     willUpdate(changedProperties: Map<string, unknown>): void;
+    updated(): void;
+    private updateOverflow;
     togglePin(id: string): void;
     selectEditor(selectedIds: string[]): void;
     /**
@@ -67,8 +74,6 @@ export declare class EditorPluginsPanel extends EditorPluginsPanel_base {
      * active. Used by both the expanded trees and the collapsed rail flyouts.
      */
     private dispatchEditorSelect;
-    connectedCallback(): void;
-    disconnectedCallback(): void;
     private handleKeydown;
     /** Opens the panel transiently for searching (does not persist `expanded`). */
     private enterSearchMode;
@@ -81,6 +86,7 @@ export declare class EditorPluginsPanel extends EditorPluginsPanel_base {
     private startTreeNavigation;
     private handleTreeActiveChanged;
     private handleTreeFocus;
+    private handlePinnedKeydown;
     private handleTreeSelection;
     private handleTreeBoundary;
     private activateKeyboardTarget;
@@ -88,7 +94,7 @@ export declare class EditorPluginsPanel extends EditorPluginsPanel_base {
     private toggleExpanded;
     private toggleFlyout;
     renderPluginItem({ node, level, disabled, active, }: TreeRenderContext<EditorPluginTreeNode>): import("lit-html").TemplateResult<1>;
-    renderLeafAccessory({ node, id }: TreeRenderContext<EditorPluginTreeNode>): import("lit-html").TemplateResult<1>;
+    renderLeafAccessory({ node, id }: TreeRenderContext<EditorPluginTreeNode>): import("lit-html").TemplateResult<1> | typeof nothing;
     private renderExpanded;
     private renderRail;
     private renderRailGroup;
@@ -96,6 +102,6 @@ export declare class EditorPluginsPanel extends EditorPluginsPanel_base {
     private renderFlyoutItem;
     private renderFooter;
     render(): import("lit-html").TemplateResult<1>;
-    static styles: import("lit").CSSResult;
+    static styles: import("lit").CSSResult[];
 }
 export {};

@@ -45,7 +45,7 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t$3=globalThis,e$7=t$3.ShadowRoot&&(void 0===t$3.ShadyCSS||t$3.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$3=Symbol(),o$7=new WeakMap;let n$6 = class n{constructor(t,e,o){if(this._$cssResult$=true,o!==s$3)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$7&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=o$7.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&o$7.set(s,t));}return t}toString(){return this.cssText}};const r$6=t=>new n$6("string"==typeof t?t:t+"",void 0,s$3),i$6=(t,...e)=>{const o=1===t.length?t[0]:e.reduce((e,s,o)=>e+(t=>{if(true===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[o+1],t[0]);return new n$6(o,t,s$3)},S$1=(s,o)=>{if(e$7)s.adoptedStyleSheets=o.map(t=>t instanceof CSSStyleSheet?t:t.styleSheet);else for(const e of o){const o=document.createElement("style"),n=t$3.litNonce;void 0!==n&&o.setAttribute("nonce",n),o.textContent=e.cssText,s.appendChild(o);}},c$2=e$7?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$6(e)})(t):t;
+const t$4=globalThis,e$7=t$4.ShadowRoot&&(void 0===t$4.ShadyCSS||t$4.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$3=Symbol(),o$7=new WeakMap;let n$6 = class n{constructor(t,e,o){if(this._$cssResult$=true,o!==s$3)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$7&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=o$7.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&o$7.set(s,t));}return t}toString(){return this.cssText}};const r$6=t=>new n$6("string"==typeof t?t:t+"",void 0,s$3),i$6=(t,...e)=>{const o=1===t.length?t[0]:e.reduce((e,s,o)=>e+(t=>{if(true===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[o+1],t[0]);return new n$6(o,t,s$3)},S$1=(s,o)=>{if(e$7)s.adoptedStyleSheets=o.map(t=>t instanceof CSSStyleSheet?t:t.styleSheet);else for(const e of o){const o=document.createElement("style"),n=t$4.litNonce;void 0!==n&&o.setAttribute("nonce",n),o.textContent=e.cssText,s.appendChild(o);}},c$2=e$7?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$6(e)})(t):t;
 
 /**
  * @license
@@ -58,7 +58,7 @@ const t$3=globalThis,e$7=t$3.ShadowRoot&&(void 0===t$3.ShadyCSS||t$3.ShadyCSS.na
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t$2=globalThis,i$4=t=>t,s$2=t$2.trustedTypes,e$5=s$2?s$2.createPolicy("lit-html",{createHTML:t=>t}):void 0,h="$lit$",o$5=`lit$${Math.random().toFixed(9).slice(2)}$`,n$4="?"+o$5,r$4=`<${n$4}>`,l$2=document,c=()=>l$2.createComment(""),a$1=t=>null===t||"object"!=typeof t&&"function"!=typeof t,u$1=Array.isArray,d=t=>u$1(t)||"function"==typeof t?.[Symbol.iterator],f="[ \t\n\f\r]",v=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,_=/-->/g,m$1=/>/g,p$1=RegExp(`>|${f}(?:([^\\s"'>=/]+)(${f}*=${f}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),g=/'/g,$=/"/g,y=/^(?:script|style|textarea|title)$/i,x=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),b=x(1),w=x(2),E=Symbol.for("lit-noChange"),A=Symbol.for("lit-nothing"),C=new WeakMap,P=l$2.createTreeWalker(l$2,129);function V(t,i){if(!u$1(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==e$5?e$5.createHTML(i):i}const N=(t,i)=>{const s=t.length-1,e=[];let n,l=2===i?"<svg>":3===i?"<math>":"",c=v;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,f=0;for(;f<s.length&&(c.lastIndex=f,u=c.exec(s),null!==u);)f=c.lastIndex,c===v?"!--"===u[1]?c=_:void 0!==u[1]?c=m$1:void 0!==u[2]?(y.test(u[2])&&(n=RegExp("</"+u[2],"g")),c=p$1):void 0!==u[3]&&(c=p$1):c===p$1?">"===u[0]?(c=n??v,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?p$1:'"'===u[3]?$:g):c===$||c===g?c=p$1:c===_||c===m$1?c=v:(c=p$1,n=void 0);const x=c===p$1&&t[i+1].startsWith("/>")?" ":"";l+=c===v?s+r$4:d>=0?(e.push(a),s.slice(0,d)+h+s.slice(d)+o$5+x):s+o$5+(-2===d?i:x);}return [V(t,l+(t[s]||"<?>")+(2===i?"</svg>":3===i?"</math>":"")),e]};class S{constructor({strings:t,_$litType$:i},e){let r;this.parts=[];let l=0,a=0;const u=t.length-1,d=this.parts,[f,v]=N(t,i);if(this.el=S.createElement(f,e),P.currentNode=this.el.content,2===i||3===i){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=P.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(h)){const i=v[a++],s=r.getAttribute(t).split(o$5),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:l,name:e[2],strings:s,ctor:"."===e[1]?I:"?"===e[1]?L:"@"===e[1]?z:H}),r.removeAttribute(t);}else t.startsWith(o$5)&&(d.push({type:6,index:l}),r.removeAttribute(t));if(y.test(r.tagName)){const t=r.textContent.split(o$5),i=t.length-1;if(i>0){r.textContent=s$2?s$2.emptyScript:"";for(let s=0;s<i;s++)r.append(t[s],c()),P.nextNode(),d.push({type:2,index:++l});r.append(t[i],c());}}}else if(8===r.nodeType)if(r.data===n$4)d.push({type:2,index:l});else {let t=-1;for(;-1!==(t=r.data.indexOf(o$5,t+1));)d.push({type:7,index:l}),t+=o$5.length-1;}l++;}}static createElement(t,i){const s=l$2.createElement("template");return s.innerHTML=t,s}}function M(t,i,s=t,e){if(i===E)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=a$1(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(false),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=M(t,h._$AS(t,i.values),h,e)),i}class R{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??l$2).importNode(i,true);P.currentNode=e;let h=P.nextNode(),o=0,n=0,r=s[0];for(;void 0!==r;){if(o===r.index){let i;2===r.type?i=new k(h,h.nextSibling,this,t):1===r.type?i=new r.ctor(h,r.name,r.strings,this,t):6===r.type&&(i=new Z(h,this,t)),this._$AV.push(i),r=s[++n];}o!==r?.index&&(h=P.nextNode(),o++);}return P.currentNode=l$2,e}p(t){let i=0;for(const s of this._$AV) void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class k{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=A,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??true;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=M(this,t,i),a$1(t)?t===A||null==t||""===t?(this._$AH!==A&&this._$AR(),this._$AH=A):t!==this._$AH&&t!==E&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):d(t)?this.k(t):this._(t);}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t));}_(t){this._$AH!==A&&a$1(this._$AH)?this._$AA.nextSibling.data=t:this.T(l$2.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=S.createElement(V(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new R(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=C.get(t.strings);return void 0===i&&C.set(t.strings,i=new S(t)),i}k(t){u$1(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new k(this.O(c()),this.O(c()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,s){for(this._$AP?.(false,true,s);t!==this._$AB;){const s=i$4(t).nextSibling;i$4(t).remove(),t=s;}}setConnected(t){ void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}class H{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=A,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=A;}_$AI(t,i=this,s,e){const h=this.strings;let o=false;if(void 0===h)t=M(this,t,i,0),o=!a$1(t)||t!==this._$AH&&t!==E,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=M(this,e[s+n],i,n),r===E&&(r=this._$AH[n]),o||=!a$1(r)||r!==this._$AH[n],r===A?t=A:t!==A&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===A?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}}class I extends H{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===A?void 0:t;}}class L extends H{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==A);}}class z extends H{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=M(this,t,i,0)??A)===E)return;const s=this._$AH,e=t===A&&s!==A||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==A&&(s===A||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class Z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){M(this,t);}}const B=t$2.litHtmlPolyfillSupport;B?.(S,k),(t$2.litHtmlVersions??=[]).push("3.3.3");const D=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new k(i.insertBefore(c(),t),t,void 0,s??{});}return h._$AI(t),h};
+const t$3=globalThis,i$4=t=>t,s$2=t$3.trustedTypes,e$5=s$2?s$2.createPolicy("lit-html",{createHTML:t=>t}):void 0,h="$lit$",o$5=`lit$${Math.random().toFixed(9).slice(2)}$`,n$4="?"+o$5,r$4=`<${n$4}>`,l$2=document,c=()=>l$2.createComment(""),a$1=t=>null===t||"object"!=typeof t&&"function"!=typeof t,u$1=Array.isArray,d=t=>u$1(t)||"function"==typeof t?.[Symbol.iterator],f="[ \t\n\f\r]",v=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,_=/-->/g,m$1=/>/g,p$1=RegExp(`>|${f}(?:([^\\s"'>=/]+)(${f}*=${f}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),g=/'/g,$=/"/g,y=/^(?:script|style|textarea|title)$/i,x=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),b=x(1),w=x(2),E=Symbol.for("lit-noChange"),A=Symbol.for("lit-nothing"),C=new WeakMap,P=l$2.createTreeWalker(l$2,129);function V(t,i){if(!u$1(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==e$5?e$5.createHTML(i):i}const N=(t,i)=>{const s=t.length-1,e=[];let n,l=2===i?"<svg>":3===i?"<math>":"",c=v;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,f=0;for(;f<s.length&&(c.lastIndex=f,u=c.exec(s),null!==u);)f=c.lastIndex,c===v?"!--"===u[1]?c=_:void 0!==u[1]?c=m$1:void 0!==u[2]?(y.test(u[2])&&(n=RegExp("</"+u[2],"g")),c=p$1):void 0!==u[3]&&(c=p$1):c===p$1?">"===u[0]?(c=n??v,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?p$1:'"'===u[3]?$:g):c===$||c===g?c=p$1:c===_||c===m$1?c=v:(c=p$1,n=void 0);const x=c===p$1&&t[i+1].startsWith("/>")?" ":"";l+=c===v?s+r$4:d>=0?(e.push(a),s.slice(0,d)+h+s.slice(d)+o$5+x):s+o$5+(-2===d?i:x);}return [V(t,l+(t[s]||"<?>")+(2===i?"</svg>":3===i?"</math>":"")),e]};class S{constructor({strings:t,_$litType$:i},e){let r;this.parts=[];let l=0,a=0;const u=t.length-1,d=this.parts,[f,v]=N(t,i);if(this.el=S.createElement(f,e),P.currentNode=this.el.content,2===i||3===i){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=P.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(h)){const i=v[a++],s=r.getAttribute(t).split(o$5),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:l,name:e[2],strings:s,ctor:"."===e[1]?I:"?"===e[1]?L:"@"===e[1]?z:H}),r.removeAttribute(t);}else t.startsWith(o$5)&&(d.push({type:6,index:l}),r.removeAttribute(t));if(y.test(r.tagName)){const t=r.textContent.split(o$5),i=t.length-1;if(i>0){r.textContent=s$2?s$2.emptyScript:"";for(let s=0;s<i;s++)r.append(t[s],c()),P.nextNode(),d.push({type:2,index:++l});r.append(t[i],c());}}}else if(8===r.nodeType)if(r.data===n$4)d.push({type:2,index:l});else {let t=-1;for(;-1!==(t=r.data.indexOf(o$5,t+1));)d.push({type:7,index:l}),t+=o$5.length-1;}l++;}}static createElement(t,i){const s=l$2.createElement("template");return s.innerHTML=t,s}}function M(t,i,s=t,e){if(i===E)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=a$1(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(false),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=M(t,h._$AS(t,i.values),h,e)),i}class R{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??l$2).importNode(i,true);P.currentNode=e;let h=P.nextNode(),o=0,n=0,r=s[0];for(;void 0!==r;){if(o===r.index){let i;2===r.type?i=new k(h,h.nextSibling,this,t):1===r.type?i=new r.ctor(h,r.name,r.strings,this,t):6===r.type&&(i=new Z(h,this,t)),this._$AV.push(i),r=s[++n];}o!==r?.index&&(h=P.nextNode(),o++);}return P.currentNode=l$2,e}p(t){let i=0;for(const s of this._$AV) void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class k{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=A,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??true;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=M(this,t,i),a$1(t)?t===A||null==t||""===t?(this._$AH!==A&&this._$AR(),this._$AH=A):t!==this._$AH&&t!==E&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):d(t)?this.k(t):this._(t);}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t));}_(t){this._$AH!==A&&a$1(this._$AH)?this._$AA.nextSibling.data=t:this.T(l$2.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=S.createElement(V(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new R(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=C.get(t.strings);return void 0===i&&C.set(t.strings,i=new S(t)),i}k(t){u$1(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new k(this.O(c()),this.O(c()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,s){for(this._$AP?.(false,true,s);t!==this._$AB;){const s=i$4(t).nextSibling;i$4(t).remove(),t=s;}}setConnected(t){ void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}class H{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=A,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=A;}_$AI(t,i=this,s,e){const h=this.strings;let o=false;if(void 0===h)t=M(this,t,i,0),o=!a$1(t)||t!==this._$AH&&t!==E,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=M(this,e[s+n],i,n),r===E&&(r=this._$AH[n]),o||=!a$1(r)||r!==this._$AH[n],r===A?t=A:t!==A&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===A?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}}class I extends H{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===A?void 0:t;}}class L extends H{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==A);}}class z extends H{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=M(this,t,i,0)??A)===E)return;const s=this._$AH,e=t===A&&s!==A||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==A&&(s===A||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class Z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){M(this,t);}}const B=t$3.litHtmlPolyfillSupport;B?.(S,k),(t$3.litHtmlVersions??=[]).push("3.3.3");const D=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new k(i.insertBefore(c(),t),t,void 0,s??{});}return h._$AI(t),h};
 
 /**
  * @license
@@ -71,7 +71,7 @@ const t$2=globalThis,i$4=t=>t,s$2=t$2.trustedTypes,e$5=s$2?s$2.createPolicy("lit
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t$1=t=>(e,o)=>{ void 0!==o?o.addInitializer(()=>{customElements.define(t,e);}):customElements.define(t,e);};
+const t$2=t=>(e,o)=>{ void 0!==o?o.addInitializer(()=>{customElements.define(t,e);}):customElements.define(t,e);};
 
 /**
  * @license
@@ -84,6 +84,13 @@ const t$1=t=>(e,o)=>{ void 0!==o?o.addInitializer(()=>{customElements.define(t,e
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */function r$2(r){return n$3({...r,state:true,attribute:false})}
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+function t$1(t){return (n,o)=>{const c="function"==typeof n?n:n[o];Object.assign(c,t);}}
 
 /**
  * @license
@@ -10777,6 +10784,33 @@ OscdOutlinedSearchField.scopedElements = {
     'oscd-icon-button': OscdIconButton,
 };
 
+const menuStyles = i$6 `
+  oscd-menu-item {
+    margin-inline: var(--plugins-menu-padding);
+    border-radius: var(--md-menu-container-shape);
+  }
+
+  :is(oscd-menu-item, oscd-sub-menu) + :is(oscd-menu-item, oscd-sub-menu) {
+    margin-top: 6px;
+  }
+
+  .menu-heading {
+    padding: 6px calc(var(--plugins-menu-padding) + 8px);
+    font-family: var(--oscd-text-font, Roboto), sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+    color: var(--editor-plugins-panel-flyout-header-text-color);
+  }
+
+  oscd-divider.menu-divider {
+    --md-divider-color: var(--plugins-menu-divider-color);
+    width: calc(100% - 2 * var(--plugins-menu-padding));
+    margin: 6px var(--plugins-menu-padding);
+  }
+`;
+
 const unpinnedIcon = b `<svg
   xmlns="http://www.w3.org/2000/svg"
   width="28"
@@ -10851,6 +10885,9 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
         ];
         this.searchValue = '';
         this.focusedTree = null;
+        this.hasOverflow = false;
+        this.overflowObserver = new ResizeObserver(() => this.updateOverflow());
+        this.observedOverflowElements = new Set();
         this.handleKeydown = (event) => {
             const fromSearchField = event.currentTarget?.localName ===
                 'oscd-outlined-search-field' ||
@@ -10879,6 +10916,17 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
     /** True when the panel is visually open (persisted expanded OR transient search). */
     get isOpen() {
         return this.expanded || this.searchMode;
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('keydown', this.handleKeydown);
+        this.requestUpdate();
+    }
+    disconnectedCallback() {
+        this.overflowObserver.disconnect();
+        this.observedOverflowElements.clear();
+        this.removeEventListener('keydown', this.handleKeydown);
+        super.disconnectedCallback();
     }
     willUpdate(changedProperties) {
         if (changedProperties.has('editors') ||
@@ -10911,6 +10959,36 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
                 },
             ];
         }
+    }
+    updated() {
+        if (!this.isConnected) {
+            return;
+        }
+        const scrollArea = this.shadowRoot?.querySelector('.tree-scroll, .rail');
+        const targets = new Set();
+        if (scrollArea !== null && scrollArea !== undefined) {
+            targets.add(scrollArea);
+            for (const child of scrollArea.children) {
+                targets.add(child);
+            }
+        }
+        for (const element of this.observedOverflowElements) {
+            if (!targets.has(element)) {
+                this.overflowObserver.unobserve(element);
+            }
+        }
+        for (const element of targets) {
+            if (!this.observedOverflowElements.has(element)) {
+                this.overflowObserver.observe(element);
+            }
+        }
+        this.observedOverflowElements = targets;
+        this.updateOverflow();
+    }
+    updateOverflow() {
+        const scrollArea = this.shadowRoot?.querySelector('.tree-scroll, .rail');
+        this.hasOverflow = scrollArea !== null && scrollArea !== undefined
+            && scrollArea.scrollHeight > scrollArea.clientHeight;
     }
     togglePin(id) {
         if (this.pinnedPluginIds.includes(id)) {
@@ -10945,14 +11023,6 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
         if (this.searchMode) {
             this.exitSearchMode();
         }
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        this.addEventListener('keydown', this.handleKeydown);
-    }
-    disconnectedCallback() {
-        this.removeEventListener('keydown', this.handleKeydown);
-        super.disconnectedCallback();
     }
     /** Opens the panel transiently for searching (does not persist `expanded`). */
     enterSearchMode() {
@@ -11014,6 +11084,32 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
     handleTreeFocus(kind) {
         this.focusedTree = kind;
     }
+    // With selection disabled, the tree no longer activates rows on Enter/Space.
+    // Handle activation separately, before its row keydown handler consumes them.
+    handlePinnedKeydown(event) {
+        if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+        }
+        const tree = this.getTree('pinned');
+        if (!tree) {
+            return;
+        }
+        const accessoryTarget = event.composedPath().some(target => target instanceof Element && target.matches('.accessory'));
+        if (accessoryTarget) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        if (tree.activeId) {
+            const activeNode = tree.data.find(node => node.id === tree.activeId);
+            if (activeNode?.children?.length) {
+                tree.toggle(tree.activeId);
+            }
+            else {
+                this.selectEditor([tree.activeId]);
+            }
+        }
+    }
     handleTreeSelection(kind, selectedIds) {
         const tree = this.getTree(kind);
         const selectedId = selectedIds[0];
@@ -11068,7 +11164,14 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
     }
     renderPluginItem({ node, level, disabled, active, }) {
         const label = node.translations?.[this.locale] ?? node.name;
-        return b `<oscd-tree-item ?disabled=${disabled} ?active=${active}>
+        const isPlaceholder = 'kind' in node && node.kind === 'placeholder';
+        return b `<oscd-tree-item
+      ?disabled=${disabled}
+      ?active=${active}
+      style=${isPlaceholder
+            ? '--md-list-item-disabled-opacity: 0.75'
+            : A}
+    >
       ${level === 1 && !('kind' in node)
             ? b `<oscd-icon slot="start">${node.icon}</oscd-icon>`
             : A}
@@ -11076,6 +11179,9 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
     </oscd-tree-item>`;
     }
     renderLeafAccessory({ node, id }) {
+        if ('kind' in node && node.kind === 'placeholder') {
+            return A;
+        }
         const pinned = this.pinnedPluginIds.includes(id);
         return b `<button
       aria-label=${pinned
@@ -11088,6 +11194,20 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
     </button>`;
     }
     renderExpanded() {
+        const editorExpandedIds = this.searchValue.length === 0
+            ? this.expandedIds
+            : this.editorTreeNodes.map(node => node.id);
+        const selectedTagName = this.selectedEditor?.tagName;
+        const selectedRoot = this.editorTreeNodes.find(node => node.id === selectedTagName ||
+            node.children?.some(child => child.id === selectedTagName));
+        const selectedRootId = selectedRoot?.id;
+        const selectedEditorIds = selectedRootId && selectedTagName
+            ? [
+                !editorExpandedIds.includes(selectedRootId)
+                    ? selectedRootId
+                    : selectedTagName,
+            ]
+            : [];
         return b `
       <div class="tree-container">
         <oscd-outlined-search-field
@@ -11103,12 +11223,8 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
             ? b `<oscd-tree
                   .data=${this.pinnedTreeNodes}
                   .expandedIds=${this.pinnedExpanded}
-                  .selectionMode=${'single'}
-                  .selectedIds=${this.selectedEditor
-                ? [this.selectedEditor.tagName]
-                : []}
+                  .selectionMode=${'none'}
                   .isDisabled=${(node) => 'kind' in node && node.kind === 'placeholder'}
-                  .isSelectable=${(node) => !('kind' in node && node.kind === 'placeholder')}
                   class="pinned-tree"
                   ?keyboard-active=${this.focusedTree === 'pinned'}
                   @focusin=${() => this.handleTreeFocus('pinned')}
@@ -11117,7 +11233,8 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
                   toggle-position="trailing"
                   collapse-icon="arrow_drop_up"
                   expand-icon="arrow_drop_down"
-                  @selected-ids-changed=${(event) => this.handleTreeSelection('pinned', event.detail.selectedIds)}
+                  @node-click=${(event) => this.selectEditor([event.detail.id])}
+                  @keydown=${this.handlePinnedKeydown}
                   @expanded-ids-changed=${(event) => {
                 this.pinnedExpanded = event.detail.expandedIds;
             }}
@@ -11131,13 +11248,9 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
             ?keyboard-active=${this.focusedTree === 'editors'}
             @focusin=${() => this.handleTreeFocus('editors')}
             .data=${this.editorTreeNodes}
-            .expandedIds=${this.searchValue.length === 0
-            ? this.expandedIds
-            : this.editorTreeNodes.map(node => node.id)}
+            .expandedIds=${editorExpandedIds}
             .selectionMode=${'single'}
-            .selectedIds=${this.selectedEditor
-            ? [this.selectedEditor.tagName]
-            : []}
+            .selectedIds=${selectedEditorIds}
             .isDisabled=${(node) => 'kind' in node && node.kind === 'placeholder'}
             .isSelectable=${(node) => !('kind' in node && node.kind === 'placeholder')}
             .renderItem=${(context) => this.renderPluginItem(context)}
@@ -11198,10 +11311,10 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
         positioning="popover"
         quick
       >
-        <div class="flyout-header" role="presentation">${label}</div>
-        <oscd-divider class="flyout-divider"></oscd-divider>
+        <div class="menu-heading" role="presentation">${label}</div>
+        <oscd-divider class="menu-divider"></oscd-divider>
         ${group.plugins.length > 0
-            ? group.plugins.map(plugin => this.renderFlyoutItem(plugin))
+            ? group.plugins.map(plugin => this.renderFlyoutItem(plugin, anchorId !== 'pinned'))
             : showEmptyPlaceholder
                 ? renderFlyoutPlaceholder()
                 : A}
@@ -11221,9 +11334,10 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
       </oscd-icon-button>
     `;
     }
-    renderFlyoutItem(plugin) {
+    renderFlyoutItem(plugin, highlightSelection) {
         const label = plugin.translations?.[this.locale] ?? plugin.name;
-        const selected = plugin.tagName === this.selectedEditor?.tagName;
+        const selected = highlightSelection &&
+            plugin.tagName === this.selectedEditor?.tagName;
         return b `
       <oscd-menu-item
         .selected=${selected}
@@ -11262,7 +11376,10 @@ let EditorPluginsPanel = class EditorPluginsPanel extends ScopedElementsMixin(i$
     render() {
         return b `
       ${this.isOpen ? this.renderExpanded() : this.renderRail()}
-      <oscd-divider class="footer-divider"></oscd-divider>
+      <oscd-divider
+        class="footer-divider"
+        style=${this.hasOverflow ? 'visibility: visible' : 'visibility: hidden'}
+      ></oscd-divider>
       ${this.renderFooter()}
     `;
     }
@@ -11278,7 +11395,7 @@ EditorPluginsPanel.scopedElements = {
     'oscd-menu': OscdMenu,
     'oscd-menu-item': OscdMenuItem,
 };
-EditorPluginsPanel.styles = i$6 `
+EditorPluginsPanel.styles = [menuStyles, i$6 `
     :host {
       /* Collapsed rail is the default width; the panel widens to its full width
          when persistently expanded OR while in transient search mode. The shell
@@ -11305,14 +11422,9 @@ EditorPluginsPanel.styles = i$6 `
       background-color: var(--editor-plugins-panel-background-color);
     }
 
-    /* Material colour scheme for the panel's content. By default the panel's
-       background-color (above) is the dark --oscd-primary surface, so its
-       content is light ("white"/--oscd-base3) on a dark surface. We set the
-       *system* colours once here — not each component's final colour — so
-       resting text/icons AND every derived hover/pressed state layer resolve
-       to the light content colour from one place. (The flyout menus are a
-       light surface and reset these back to the shell defaults; see
-       .rail-flyout.)
+    /* Set the panel's system colours once so resting text/icons and derived
+       state layers follow its configured foreground. Popout menus instead
+       inherit the shell's shared Material menu tokens.
 
        NB: these are set on the content containers rather than :host on
        purpose. A :host declaration would sit on the same element that
@@ -11509,6 +11621,7 @@ EditorPluginsPanel.styles = i$6 `
       padding-inline: 16px;
       min-width: 0;
       min-height: 0;
+      overflow-x: hidden;
       overflow-y: auto;
     }
 
@@ -11521,10 +11634,13 @@ EditorPluginsPanel.styles = i$6 `
 
     /* Active group/editor: dark rounded square behind the glyph. */
     .rail-item.active {
+      --md-sys-color-on-surface-variant: var(
+        --editor-plugins-panel-item-active-color
+      );
       background: var(--editor-plugins-panel-item-active-bg);
     }
 
-    .rail oscd-divider {
+    .rail > oscd-divider {
       /* 44px wide (aligned with the icon column), 12px clearance above and
          below, per the Figma collapsed spec. */
       width: 44px;
@@ -11532,50 +11648,8 @@ EditorPluginsPanel.styles = i$6 `
       --md-divider-color: var(--editor-plugins-panel-divider-color);
     }
 
-    /* Flyout menu opened from a collapsed group icon. Figma "Links container":
-       padding 8px, gap 4px, 1px border, 5px radius, light surface + shadow.
-       Unlike the rest of the panel this is a LIGHT surface, so it resets the
-       system colours back to the shell defaults (dark content on a light
-       surface); everything inside then derives correctly. */
     .rail-flyout {
-      --md-sys-color-surface: var(--plugins-menu-container-color);
-      --md-sys-color-surface-container: var(--plugins-menu-container-color);
-      --md-sys-color-on-surface: var(--plugins-menu-item-label-color);
-      --md-sys-color-on-surface-variant: var(
-        --plugins-menu-item-leading-icon-color
-      );
-      --md-menu-container-color: var(--plugins-menu-container-color);
       min-width: 200px;
-    }
-
-    .flyout-header {
-      /* Group name heading: Material label-large, in the secondary blue, per the
-         Figma "Links container" header. */
-      padding: 8px 12px;
-      font-family: var(--oscd-text-font, Roboto), sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      letter-spacing: 0.1px;
-      color: var(--editor-plugins-panel-flyout-header-text-color);
-    }
-
-    .rail-flyout .flyout-divider {
-      /* Separates the group heading from its editor items. */
-      --md-divider-color: var(--editor-plugins-panel-divider-color);
-      margin-block: 4px;
-      width: 80%;
-      margin: auto;
-    }
-
-    .rail-flyout oscd-menu-item {
-      width: 100%;
-      --md-menu-item-selected-container-color: var(
-        --plugins-menu-item-selected-container-color
-      );
-      --md-menu-item-selected-label-text-color: var(
-        --plugins-menu-item-selected-label-color
-      );
     }
 
     /* --- Footer: collapse/expand toggle --- */
@@ -11624,7 +11698,7 @@ EditorPluginsPanel.styles = i$6 `
       --md-icon-button-state-layer-height: 44px;
       --md-icon-button-state-layer-width: 44px;
     }
-  `;
+  `];
 __decorate([
     n$3({ type: Array })
 ], EditorPluginsPanel.prototype, "editors", void 0);
@@ -11659,6 +11733,12 @@ __decorate([
     localstorage({ default: [] }),
     r$2()
 ], EditorPluginsPanel.prototype, "pinnedExpanded", void 0);
+__decorate([
+    r$2()
+], EditorPluginsPanel.prototype, "hasOverflow", void 0);
+__decorate([
+    t$1({ capture: true })
+], EditorPluginsPanel.prototype, "handlePinnedKeydown", null);
 EditorPluginsPanel = __decorate([
     localized()
 ], EditorPluginsPanel);
@@ -12160,6 +12240,8 @@ let PluginsMenu = class PluginsMenu extends ScopedElementsMixin(i$3) {
         has-overflow
         quick
         anchor="menu-button"
+        .xOffset=${16}
+        .yOffset=${18}
         menuCorner="START_END"
         anchorCorner="START_END"
       >
@@ -12181,7 +12263,7 @@ PluginsMenu.scopedElements = {
     'oscd-sub-menu': OscdSubMenu,
     'oscd-menu-item': OscdMenuItem,
 };
-PluginsMenu.styles = i$6 `
+PluginsMenu.styles = [menuStyles, i$6 `
     :host {
       display: flex;
       align-items: center;
@@ -12218,24 +12300,8 @@ PluginsMenu.styles = i$6 `
 
     oscd-menu {
       min-width: var(--plugins-menu-min-width);
-      padding: var(--plugins-menu-padding);
-      --md-menu-container-color: var(--plugins-menu-container-color);
     }
-
-    oscd-menu-item {
-      width: 100%;
-      --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
-      --md-menu-item-leading-icon-color: var(
-        --plugins-menu-item-leading-icon-color
-      );
-      --md-menu-item-selected-container-color: var(
-        --plugins-menu-item-selected-container-color
-      );
-      --md-menu-item-selected-label-text-color: var(
-        --plugins-menu-item-selected-label-color
-      );
-    }
-  `;
+  `];
 __decorate([
     n$3({ type: Array })
 ], PluginsMenu.prototype, "editableDocs", void 0);
@@ -12658,13 +12724,15 @@ let FilesMenu = class FilesMenu extends ScopedElementsMixin(i$3) {
     render() {
         return b `
       <oscd-text-button
-          id="fileMenuButton"
-          @click=${() => this.menu.show()}
-          trailing-icon
-          >
-          ${this.selectedDocName}
-          <oscd-icon slot="icon">arrow_drop_down</oscd-icon></oscd-filled-icon-button
-        >
+        id="fileMenuButton"
+        @click=${() => this.menu.show()}
+        trailing-icon
+      >
+        <span class="file-menu-label">
+          <oscd-icon aria-hidden="true">folder</oscd-icon>
+          <span>${this.selectedDocName}</span>
+        </span>
+        <oscd-icon slot="icon" aria-hidden="true">arrow_drop_down</oscd-icon>
       </oscd-text-button>
 
       <oscd-menu
@@ -12681,8 +12749,8 @@ let FilesMenu = class FilesMenu extends ScopedElementsMixin(i$3) {
                 detail: { name },
             }));
         }}
-              ?selected=${this.selectedDocName === name}
-              >${name}</oscd-menu-item
+              .selected=${this.selectedDocName === name}
+              ><div slot="headline">${name}</div></oscd-menu-item
             >`)}
       </oscd-menu>
     `;
@@ -12694,7 +12762,7 @@ FilesMenu.scopedElements = {
     'oscd-menu': OscdMenu,
     'oscd-menu-item': OscdMenuItem,
 };
-FilesMenu.styles = i$6 `
+FilesMenu.styles = [menuStyles, i$6 `
     :host {
       position: relative;
       display: flex;
@@ -12717,24 +12785,18 @@ FilesMenu.styles = i$6 `
 
     oscd-menu {
       min-width: var(--plugins-menu-min-width);
-      padding: var(--plugins-menu-padding);
-      --md-menu-container-color: var(--plugins-menu-container-color);
     }
 
-    oscd-menu-item {
-      width: 100%;
-      --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
-      --md-menu-item-leading-icon-color: var(
-        --plugins-menu-item-leading-icon-color
-      );
-      --md-menu-item-selected-container-color: var(
-        --plugins-menu-item-selected-container-color
-      );
-      --md-menu-item-selected-label-text-color: var(
-        --plugins-menu-item-selected-label-color
-      );
+    .file-menu-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
-  `;
+
+    .file-menu-label oscd-icon {
+      --md-icon-size: var(--md-text-button-icon-size);
+    }
+  `];
 __decorate([
     n$3({ type: Array })
 ], FilesMenu.prototype, "editableDocs", void 0);
@@ -12948,7 +13010,7 @@ const oscdShellDesignTokens = i$6 `
     );
     --app-bar-separator-color: var(
       --oscd-shell-app-bar-separator-color,
-      currentColor
+      var(--app-bar-color)
     );
     --app-bar-separator-opacity: var(
       --oscd-shell-app-bar-separator-opacity,
@@ -12991,7 +13053,7 @@ const oscdShellDesignTokens = i$6 `
       var(--md-sys-color-on-primary)
     );
     --plugins-menu-min-width: var(--oscd-shell-plugins-menu-min-width, 350px);
-    --plugins-menu-padding: var(--oscd-shell-plugins-menu-padding, 12px);
+    --plugins-menu-padding: var(--oscd-shell-plugins-menu-padding, 10px);
     --plugins-menu-container-color: var(
       --oscd-shell-plugins-menu-container-color,
       var(--md-sys-color-surface)
@@ -13006,12 +13068,37 @@ const oscdShellDesignTokens = i$6 `
     );
     --plugins-menu-item-selected-container-color: var(
       --oscd-shell-plugins-menu-item-selected-container-color,
-      var(--md-sys-color-secondary-container)
+      var(--md-sys-color-primary)
     );
     --plugins-menu-item-selected-label-color: var(
       --oscd-shell-plugins-menu-item-selected-label-color,
-      var(--md-sys-color-on-surface)
+      var(--md-sys-color-on-primary)
     );
+    --plugins-menu-divider-color: var(
+      --oscd-shell-plugins-menu-divider-color,
+      var(--md-sys-color-outline-variant)
+    );
+
+    /* Shared defaults for shell menus, including nested menus. */
+    --md-menu-container-color: var(--plugins-menu-container-color);
+    --md-menu-container-shape: 5px;
+    --md-menu-top-space: 8px;
+    --md-menu-bottom-space: 8px;
+    --md-menu-item-one-line-container-height: 36px;
+    --md-menu-item-top-space: 6px;
+    --md-menu-item-bottom-space: 6px;
+    --md-menu-item-leading-space: 8px;
+    --md-menu-item-trailing-space: 8px;
+    --md-menu-item-label-text-size: 16px;
+    --md-menu-item-label-text-line-height: 24px;
+    --md-menu-item-label-text-color: var(--plugins-menu-item-label-color);
+    --md-menu-item-leading-icon-color: var(--plugins-menu-item-leading-icon-color);
+    --md-menu-item-trailing-icon-color: var(--plugins-menu-item-leading-icon-color);
+    --md-menu-item-hover-state-layer-color: var(--plugins-menu-item-label-color);
+    --md-menu-item-hover-state-layer-opacity: 0.12;
+    --md-menu-item-pressed-state-layer-color: var(--plugins-menu-item-label-color);
+    --md-menu-item-selected-container-color: var(--plugins-menu-item-selected-container-color);
+    --md-menu-item-selected-label-text-color: var(--plugins-menu-item-selected-label-color);
 
     /* Editor plugins panel */
     --editor-plugins-panel-width: var(
@@ -13032,7 +13119,7 @@ const oscdShellDesignTokens = i$6 `
     );
     --editor-plugins-panel-background-color: var(
       --oscd-shell-editor-plugins-panel-background-color,
-      var(--md-sys-color-surface)
+      var(--md-sys-color-surface-container-high)
     );
     --editor-plugins-panel-item-text-color: var(
       --oscd-shell-editor-plugins-panel-item-text-color,
@@ -13696,7 +13783,7 @@ __decorate([
 ], OscdShell.prototype, "_landingPageNodes", void 0);
 OscdShell = __decorate([
     localized(),
-    t$1('oscd-shell')
+    t$2('oscd-shell')
 ], OscdShell);
 
 export { OscdShell };
