@@ -53,7 +53,7 @@
     "@lit/localize": "^0.12.2",
     "@omicronenergy/oscd-background-editv1": "^0.0.7",
     "@omicronenergy/oscd-editor-source": "^0.0.5",
-    "@omicronenergy/oscd-menu-commons": "^0.0.1",
+    "@omicronenergy/oscd-menu-commons": "^0.0.2",
     "@omicronenergy/oscd-menu-open": "^0.0.6",
     "@omicronenergy/oscd-menu-save": "^0.0.2",
     "@omicronenergy/oscd-test-utils": "^0.0.11",
